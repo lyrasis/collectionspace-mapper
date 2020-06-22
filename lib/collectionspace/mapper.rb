@@ -9,6 +9,5 @@ require 'nokogiri'
 module CollectionSpace
   module Mapper
     require 'collectionspace/mapper/data_mapper'
-    require 'collectionspace/mapper/tools'
   end    
 end

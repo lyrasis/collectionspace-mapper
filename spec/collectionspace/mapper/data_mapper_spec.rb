@@ -43,7 +43,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
                  "dataHashID"=>2
     }
   }
-  let(:rm_anthro_co) { RecordMapperUntangler.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').to_h }
+  let(:rm_anthro_co) { CCU::RecordMapper.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash }
   let(:dm) { DataMapper.new(record_mapper: rm_anthro_co, data: anthro_co_1) }
 
   it 'returns DataMapper object' do
