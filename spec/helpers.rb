@@ -3,6 +3,21 @@
 module Helpers
 
   FIXTUREDIR = 'spec/fixtures/files'
+
+  def anthro_cache
+    client = CollectionSpace::Client.new(
+      CollectionSpace::Configuration.new(
+        base_uri: 'https://anthro.dev.collectionspace.org/cspace-services',
+        username: 'admin@anthro.collectionspace.org',
+        password: 'Administrator'
+      )
+    )
+    cache_config = {
+      domain: 'anthro.collectionspace.org'
+    }
+    CollectionSpace::RefCache.new(config: cache_config, client: client)
+  end
+
   # returns RecordMapper hash read in from JSON file
   # path = String. Path to JSON file
   def get_json_record_mapper(path:)

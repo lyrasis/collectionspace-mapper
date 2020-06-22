@@ -1,0 +1,9 @@
+{
+    "delim": ";",
+    "deepdelim": "^^",
+    "transforms": {
+    },
+    "default_values": {
+    },
+    "force_default": false
+}

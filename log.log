@@ -1,5 +1,1 @@
-# Logfile created on 2020-06-22 15:29:39 -0400 by logger.rb/66358
-W, [2020-06-22T15:29:40.192022 #42393]  WARN -- : FORM STRUCTURE: EMPTY HASH: anthro_4_0_0 - collectionobject - photo contains empty hash under ["panel.collectionobject.desc"]
-W, [2020-06-22T15:29:40.193045 #42393]  WARN -- : FORM STRUCTURE: EMPTY HASH: anthro_4_0_0 - contact - default contains empty hash under ["panel.contact.info", "contacts_common.addressGroupList", "contacts_common.addressGroup"]
-W, [2020-06-22T15:29:40.999092 #42393]  WARN -- : FORM STRUCTURE: EMPTY HASH: anthro_4_0_0 - collectionobject - photo contains empty hash under ["panel.collectionobject.desc"]
-W, [2020-06-22T15:29:40.999989 #42393]  WARN -- : FORM STRUCTURE: EMPTY HASH: anthro_4_0_0 - contact - default contains empty hash under ["panel.contact.info", "contacts_common.addressGroupList", "contacts_common.addressGroup"]
+# Logfile created on 2020-06-22 17:08:49 -0400 by logger.rb/66358
