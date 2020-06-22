@@ -1,8 +1,14 @@
-require "collectionspace/mapper/version"
+require 'collectionspace/mapper/version'
+require 'cspace_config_untangler'
 
-module Collectionspace
+require 'json'
+
+require 'nokogiri'
+
+
+module CollectionSpace
   module Mapper
-    class Error < StandardError; end
-    # Your code goes here...
-  end
+    require 'collectionspace/mapper/data_mapper'
+    require 'collectionspace/mapper/tools'
+  end    
 end
