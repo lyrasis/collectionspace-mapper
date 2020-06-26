@@ -12,5 +12,17 @@ RSpec.describe CollectionSpace::Mapper do
   it 'can create anthro refcache' do
     expect(rc).to be_a(CollectionSpace::RefCache)  
   end
+
+  it 'gets config constants' do
+    expect(Mapper::CONFIG[:delim]).to eq(';')
+  end
+
+  context 'when constant overridden by test' do
+    before(:all) { Mapper::CONFIG[:delim] = '||' }
+    after(:all) { Mapper::CONFIG[:delim] = ';' }
+    it 'the override works' do
+      expect(Mapper::CONFIG[:delim]).to eq('||')
+    end
+  end
   
 end

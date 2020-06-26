@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
+
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   let(:anthro_co_1) {
     {"objectNumber"=>"20CS.001.0001",
@@ -43,15 +45,15 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
                  "dataHashID"=>2
     }
   }
-  let(:rm_anthro_co) { CCU::RecordMapper.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash }
-  let(:dm) { DataMapper.new(record_mapper: rm_anthro_co, data: anthro_co_1) }
+  let(:rm_anthro_co) { CCU::RecordMapper::RecordMapping.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash }
+  let(:dm) { DataMapper.new(record_mapper: rm_anthro_co, cache: anthro_cache) }
 
   it 'returns DataMapper object' do
     expect(dm).to be_a(CollectionSpace::Mapper::DataMapper)
   end
 
   describe '#doc' do
-    it 'returns XML document' do
+    xit 'returns XML document' do
       expect(dm.doc).to be_a(Nokogiri::XML::Document)
     end
   end

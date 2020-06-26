@@ -3,23 +3,24 @@
 module CollectionSpace
   module Mapper
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
-    class DataMapper
-      ::DataMapper = CollectionSpace::Mapper::DataMapper
-      attr_reader :mapper, :cache, :docs, :errors, :warnings, :newterms
-      def initialize(record_mapper:, cache:)
+    class RecordProcessor
+      ::RecordProcessor = CollectionSpace::Mapper::RecordProcessor
+      attr_reader :mapper, :cache, :data, :rec_id, :errors, :warnings, :newterms, :doc
+      def initialize(record_mapper:, cache:, data:)
         @mapper = record_mapper
         @cache = cache
-        @docs = {}
+        @data = data
+        @rec_id = @data.fetch(Mapper::CONFIG[:rec_id_field])
         @errors = []
         @warnings = []
         @newterms = []
         
       end
 
-      def process(data_hash)
-        v = RecordValidator.new(record_mapper: @mapper,
+      def process_record(record_data)
+        processed = RecordProcessor.new(record_mapper: @mapper,
                                         cache: @cache,
-                                        data: data_hash
+                                        data: record_data
                                        )
         
       end

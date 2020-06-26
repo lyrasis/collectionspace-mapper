@@ -1,4 +1,5 @@
 {
+    "rec_id_field": "dataHashID",
     "delim": ";",
     "deepdelim": "^^",
     "transforms": {

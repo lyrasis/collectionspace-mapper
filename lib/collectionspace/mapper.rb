@@ -12,8 +12,11 @@ require 'nokogiri'
 
 module CollectionSpace
   module Mapper
-    CONFIG = JSON.parse(File.read('config.json'))
-    puts CONFIG
+    ::Mapper = CollectionSpace::Mapper
+
+    CONFIG = JSON.parse(File.read('config.json'), symbolize_names: true)
+    
     require 'collectionspace/mapper/data_mapper'
+    require 'collectionspace/mapper/record_validator'
   end    
 end
