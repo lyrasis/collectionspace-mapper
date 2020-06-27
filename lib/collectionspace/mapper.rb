@@ -17,6 +17,7 @@ module CollectionSpace
     CONFIG = JSON.parse(File.read('config.json'), symbolize_names: true)
     
     require 'collectionspace/mapper/data_mapper'
-    require 'collectionspace/mapper/record_validator'
+    require 'collectionspace/mapper/data_processor'
+    require 'collectionspace/mapper/data_validator'
   end    
 end

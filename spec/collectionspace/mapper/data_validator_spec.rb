@@ -2,17 +2,18 @@
 
 require 'spec_helper'
 
-RSpec.describe CollectionSpace::Mapper::RecordValidator do
-  let(:rm_anthro_co) { CCU::RecordMapper::RecordMapping.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash }
-  let(:dm) { DataMapper.new(record_mapper: rm_anthro_co, cache: anthro_cache) }
-  let(:rv) { RecordValidator.new(record_mapper: dm.mapper, cache: dm.cache) }
-
+RSpec.describe CollectionSpace::Mapper::DataValidator do
+  before(:all) do
+    @rm_anthro_co = CCU::RecordMapper::RecordMapping.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash
+    @dv = DataValidator.new(record_mapper: @rm_anthro_co, cache: anthro_cache)
+  end
+  
   it 'sets record id field' do
-    expect(rv.id_field).to eq('datahashid')
+    expect(@dv.id_field).to eq('datahashid')
   end
   
   it 'gets downcased list of required fields' do
-    expect(rv.required_fields).to eq(['objectnumber'])
+    expect(@dv.required_fields).to eq(['objectnumber'])
   end
   
   context 'when required field present' do
@@ -21,8 +22,8 @@ RSpec.describe CollectionSpace::Mapper::RecordValidator do
         data = { 'objectNumber' => '123',
                 'dataHashID' => '1'
                }
-        rv.validate(data)
-        err = rv.errors.select{ |errhash| errhash[:type] == 'required fields' }
+        v = @dv.validate(data)
+        err = v.select{ |errhash| errhash[:type] == 'required fields' }
         expect(err.size).to eq(0)
       end
     end
@@ -32,8 +33,8 @@ RSpec.describe CollectionSpace::Mapper::RecordValidator do
         data = { 'objectNumber' => '',
                 'dataHashID' => '1'
                }
-        rv.validate(data)
-        err = rv.errors.select{ |errhash| errhash[:message] == 'required field is empty' }
+        v = @dv.validate(data)
+        err = v.select{ |errhash| errhash[:message] == 'required field is empty' }
         expect(err.size).to eq(1)
       end
     end
@@ -44,8 +45,8 @@ RSpec.describe CollectionSpace::Mapper::RecordValidator do
       data = {
         'dataHashID' => '1'
       }
-      rv.validate(data)
-      err = rv.errors.select{ |errhash| errhash[:message] == 'required field missing' }
+      v = @dv.validate(data)
+      err = v.select{ |errhash| errhash[:message] == 'required field missing' }
       expect(err.size).to eq(1)
     end
   end
