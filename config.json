@@ -1,7 +1,7 @@
 {
     "rec_id_field": "dataHashID",
     "delim": ";",
-    "deepdelim": "^^",
+    "subgroup_delim": "^^",
     "transforms": {
     },
     "default_values": {

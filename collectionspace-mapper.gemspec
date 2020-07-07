@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'nokogiri', '>= 1.10.9'
+  spec.add_dependency 'xxhash', '>= 0.4.0'
 
   spec.add_development_dependency 'bundler', '>= 2.1.2'
   spec.add_development_dependency "pry", ">= 0.13.0"
