@@ -3,27 +3,45 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
-  before(:all) { Mapper::CONFIG[:transforms] = {
+  before(:all) do
+
+    Mapper::CONFIG[:transforms] = {
     'collection' => {
       special: %i[downcase_value],
       replacements: [
         { find: ' ', replace: '-', type: :plain }
         ]
     }
-  } }
+  }
   
-  let(:rm_anthro_co) { CCU::RecordMapper::RecordMapping.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash }
-  let(:dm) { DataMapper.new(record_mapper: rm_anthro_co, cache: anthro_cache) }
+  @rm_anthro_co = CCU::RecordMapper::RecordMapping.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash
+  @dm = DataMapper.new(record_mapper: @rm_anthro_co, cache: anthro_cache)
+  @anthro_co_1_doc = @dm.map(anthro_co_1)
 
-  let(:rm_bonsai_cons) { CCU::RecordMapper::RecordMapping.new(profile: 'bonsai_4_0_0', rectype: 'conservation').hash }
-  let(:dm_bonsai_cons) { DataMapper.new(record_mapper: rm_bonsai_cons, cache: bonsai_cache) }
+  @rm_bonsai_cons = CCU::RecordMapper::RecordMapping.new(profile: 'bonsai_4_0_0', rectype: 'conservation').hash
+  @dm_bonsai_cons = DataMapper.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache)
+  end
+  
   describe '#map' do
     it 'returns XML doc' do
-      res = dm.map(anthro_co_1)
-      expect(res).to be_a(Nokogiri::XML::Document)
+      expect(@anthro_co_1_doc).to be_a(Nokogiri::XML::Document)
     end
   end
 
+  describe '#add_namespaces' do
+    it 'adds namespace definitions' do
+      urihash = @dm.mapper[:config][:ns_uri]
+      urihash.transform_keys!{ |k| "ns2:#{k}" }
+      docdefs = {}
+      @anthro_co_1_doc.xpath('/*/*').each do |ns|
+        docdefs[ns.name] = ns.namespace_definitions.select{ |d| d.prefix == 'ns2' }.first.href
+      end
+      unused_keys = urihash.keys - docdefs.keys
+      unused_keys.each{ |k| urihash.delete(k) }
+      expect(docdefs).to eq(urihash)
+    end
+  end
+  
   describe '#merge_config_transforms' do
     context 'anthro_4_0_0 profile' do
       context 'collectionobject record type' do
