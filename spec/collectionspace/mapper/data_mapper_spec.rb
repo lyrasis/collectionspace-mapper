@@ -7,13 +7,17 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     Mapper::CONFIG[:transforms] = {
     'collection' => {
-      special: %i[downcase_value],
+      special: %w[downcase_value],
       replacements: [
         { find: ' ', replace: '-', type: :plain }
         ]
     }
   }
-  
+    Mapper::CONFIG[:default_values] = {
+      'publishTo' => 'DPLA;Omeka',
+      'collection' => 'library-collection'
+    }
+    
   @rm_anthro_co = CCU::RecordMapper::RecordMapping.new(profile: 'anthro_4_0_0', rectype: 'collectionobject').hash
   @dm = DataMapper.new(record_mapper: @rm_anthro_co, cache: anthro_cache)
   @anthro_co_1_doc = @dm.map(anthro_co_1)
@@ -25,6 +29,29 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
   describe '#map' do
     it 'returns XML doc' do
       expect(@anthro_co_1_doc).to be_a(Nokogiri::XML::Document)
+    end
+
+    context 'when default_values for a field is specified in config' do
+      before(:all) do
+        @anthro_co_1_nsfree = @anthro_co_1_doc.clone.remove_namespaces!
+        @anthro_co_1_nsfree.xpath('/*/*').each{ |n| n.name = n.name.sub('ns2:', '') }
+      end
+      context 'and no value is given for that field in the incoming data' do
+        it 'maps the default values' do
+          path = '/document/collectionobjects_common/publishToList/publishTo'
+          res = @anthro_co_1_nsfree.xpath(path).text
+          ex = "urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(dpla)'DPLA'urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(omeka)'Omeka'"
+          expect(res).to eq(ex)
+        end
+      end
+      context 'and value is given for that field in the incoming data' do
+        it 'maps the value in the incoming data' do
+          path = '/document/collectionobjects_common/collection'
+          res = @anthro_co_1_nsfree.xpath(path).text
+          ex = 'permanent-collection'
+          expect(res).to eq(ex)
+        end
+      end
     end
   end
 

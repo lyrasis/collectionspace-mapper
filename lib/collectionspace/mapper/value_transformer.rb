@@ -35,6 +35,7 @@ module CollectionSpace
 
       def process_special
         special = @transforms[:special]
+        @value = @value.downcase if special.include?('downcase_value')
         process_behrensmeyer if special.include?('behrensmeyer_translate')
       end
       

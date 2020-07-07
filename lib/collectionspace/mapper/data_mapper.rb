@@ -5,12 +5,13 @@ module CollectionSpace
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataMapper
       ::DataMapper = CollectionSpace::Mapper::DataMapper
-      attr_reader :mapper, :cache, :blankdoc
+      attr_reader :mapper, :cache, :blankdoc, :defaults
       def initialize(record_mapper:, cache:)
         @mapper = record_mapper
         @mapper[:xpath] = xpath_hash
         @cache = cache
         @blankdoc = build_xml
+        @defaults = Mapper::CONFIG[:default_values].transform_keys{ |k| k.downcase }
         merge_config_transforms
       end
 
@@ -28,13 +29,23 @@ module CollectionSpace
       end
 
       def map(data_hash)
-        datafields = data_hash.keys.map{ |k| k.downcase }
-        mappings = @mapper[:mappings].select{ |m| datafields.include?(m[:datacolumn].downcase) }
+        data_hash = data_hash.transform_keys!{ |k| k.downcase}
+        data_hash = merge_default_values(data_hash)
+        mappings = @mapper[:mappings].select{ |m| data_hash.keys.include?(m[:datacolumn].downcase) }
         xpaths = mappings.map{ |m| m[:fullpath] }.uniq
         xpmapper = XpathMapper.new(data_hash, self, @blankdoc.clone)
         xpaths.each{ |xpath| xpmapper.map(xpath) }
         xpmapper.doc.traverse{ |node| node.remove unless node.text.match?(/\S/m) }
         add_namespaces(xpmapper.doc)
+      end
+
+      def merge_default_values(datafields)
+        data = datafields
+        @defaults.each do |f, val|
+          dataval = data.fetch(f, nil)
+          data[f] = val if dataval.nil? || dataval.empty?
+        end
+        data
       end
 
       def add_namespaces(doc)
