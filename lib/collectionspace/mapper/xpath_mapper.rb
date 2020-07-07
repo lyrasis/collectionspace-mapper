@@ -174,7 +174,6 @@ module CollectionSpace
             
             
           end
-                  binding.pry if xpath['mortuary']
         end
         @done << xpath
 

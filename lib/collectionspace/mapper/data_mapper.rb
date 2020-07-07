@@ -33,7 +33,18 @@ module CollectionSpace
         xpaths = mappings.map{ |m| m[:fullpath] }.uniq
         xpmapper = XpathMapper.new(data_hash, self, @blankdoc.clone)
         xpaths.each{ |xpath| xpmapper.map(xpath) }
-        xpmapper.doc
+        xpmapper.doc.traverse{ |node| node.remove unless node.text.match?(/\S/m) }
+        add_namespaces(xpmapper.doc)
+      end
+
+      def add_namespaces(doc)
+        doc.xpath('/*/*').each do |section|
+          uri = @mapper[:config][:ns_uri][section.name]
+          section.add_namespace_definition('ns2', uri)
+          section.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
+          section.name = "ns2:#{section.name}"
+        end
+        doc
       end
       
       def build_xml
@@ -46,8 +57,7 @@ module CollectionSpace
             end
           end
         end
-        # todo: add namespace attributes
-        Nokogiri::XML(builder.to_xml( indent: 2, indent_text: '.' ))
+        Nokogiri::XML(builder.to_xml)
       end
 
       def process_group(xml, grouppath)
