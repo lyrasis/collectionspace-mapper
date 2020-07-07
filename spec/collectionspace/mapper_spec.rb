@@ -29,9 +29,6 @@ RSpec.describe CollectionSpace::Mapper do
     it 'returns a Hash' do
       path = 'spec/fixtures/files/anthro_4_0_0-collectionobject.json'
       h = get_json_record_mapper(path: path)
-
-      pp(h[:config])
-      pp(h[:mappings].select{ |m| m[:fieldname] == 'behrensmeyerUpper' }.first)
       expect(h).to be_a(Hash)
     end
   end

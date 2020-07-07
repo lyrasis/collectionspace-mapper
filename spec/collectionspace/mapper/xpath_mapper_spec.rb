@@ -10,7 +10,6 @@ RSpec.describe CollectionSpace::Mapper::XpathMapper do
   describe '#map' do
     it 'returns XML doc' do
       res = xm.map('collectionobjects_common')
-      puts res
       expect(res).to be_a(Nokogiri::XML::Document)
     end
   end

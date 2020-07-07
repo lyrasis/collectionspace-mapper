@@ -31,6 +31,13 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       expect(@anthro_co_1_doc).to be_a(Nokogiri::XML::Document)
     end
 
+    it 'works with json RecordMapper' do
+      jsonrm = get_json_record_mapper(path: 'spec/fixtures/files/anthro_4_0_0-collectionobject.json')
+      jsondm = DataMapper.new(record_mapper: jsonrm, cache: anthro_cache)
+      jsondoc = jsondm.map(anthro_co_1)
+      expect(jsondoc).to be_a(Nokogiri::XML::Document)
+    end
+
     context 'when default_values for a field is specified in config' do
       before(:all) do
         @anthro_co_1_nsfree = @anthro_co_1_doc.clone.remove_namespaces!
@@ -57,7 +64,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
   describe '#add_namespaces' do
     it 'adds namespace definitions' do
-      urihash = @dm.mapper[:config][:ns_uri]
+      urihash = @dm.mapper[:config][:ns_uri].clone
       urihash.transform_keys!{ |k| "ns2:#{k}" }
       docdefs = {}
       @anthro_co_1_doc.xpath('/*/*').each do |ns|
@@ -74,10 +81,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       context 'collectionobject record type' do
         context 'collection data field' do
           it 'merges data field specific transforms from config.json' do
-            fieldmap = dm.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
+            fieldmap = @dm.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
             pp(fieldmap)
             xforms = {
-              special: %i[downcase_value],
+              special: %w[downcase_value],
               replacements: [
                 { find: ' ', replace: '-', type: :plain }
               ]
@@ -95,7 +102,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         'xmlns:ns2' => 'http://collectionspace.org/services/collectionobject/domain/annotation',
         'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
       }
-      res = dm.namespace_hash('collectionobjects_annotation')
+      res = @dm.namespace_hash('collectionobjects_annotation')
       expect(res).to eq(expected)
     end
   end
@@ -104,7 +111,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'anthro_4_0_0 profile' do
       context 'collectionobject record type' do
         context 'xpath ending with commingledRemainsGroup' do
-          let(:h) { dm.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup'] }
+          let(:h) { @dm.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup'] }
           it 'is_group = true' do
             expect(h[:is_group]).to be true
           end
@@ -123,7 +130,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
 
         context 'xpath ending with mortuaryTreatmentGroup' do
-          let(:h) { dm.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup/mortuaryTreatmentGroupList/mortuaryTreatmentGroup'] }
+          let(:h) { @dm.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup/mortuaryTreatmentGroupList/mortuaryTreatmentGroup'] }
           it 'is_group = true' do
             expect(h[:is_group]).to be true
           end
@@ -139,7 +146,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
 
         context 'xpath ending with collectionobjects_nagpra' do
-          let(:h) { dm.mapper[:xpath]['collectionobjects_nagpra'] }
+          let(:h) { @dm.mapper[:xpath]['collectionobjects_nagpra'] }
           it 'has 5 children' do
             expect(h[:children].size).to eq(5)
           end
@@ -151,14 +158,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       context 'conservation record type' do
         context 'xpath ending with fertilizersToBeUsed' do
           it 'is a repeating group' do
-            h = dm_bonsai_cons.mapper[:xpath]
+            h = @dm_bonsai_cons.mapper[:xpath]
             res = h['conservation_livingplant/fertilizationGroupList/fertilizationGroup/fertilizersToBeUsed'][:is_group]
             expect(res).to be true
           end
         end
         context 'xpath ending with conservators' do
           it 'is a repeating group' do
-            h = dm_bonsai_cons.mapper[:xpath]
+            h = @dm_bonsai_cons.mapper[:xpath]
             res = h['conservation_common/conservators'][:is_group]
             expect(res).to be false
           end
