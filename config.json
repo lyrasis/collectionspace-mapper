@@ -1,0 +1,10 @@
+{
+    "rec_id_field": "dataHashID",
+    "delim": ";",
+    "subgroup_delim": "^^",
+    "transforms": {
+    },
+    "default_values": {
+    },
+    "force_default": false
+}
