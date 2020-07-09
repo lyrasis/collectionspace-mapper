@@ -1,39 +1,27 @@
 # Collectionspace::Mapper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/collectionspace/mapper`. To experiment with that code, run `bin/console` for an interactive prompt.
+In general tests are currently assuming `cspace-config-untangler` is set up and hash RecordMapper objects are requestable from it. 
 
-TODO: Delete this and the text above, and describe your gem
+To test without setting up `cspace-config-untangler`, uncoment the `puts` line in `spec/collectionspace/mapper/data_mapper_spec.rb` `works with json RecordMapper` test and run that test. 
 
-## Installation
+This will use the anthro-collectionobject RecordMapper JSON file in `spec/fixtures/files` to produce collectionobject xml using the `anthro_co_1` data hash in `spec/helpers.rb`.
 
-Add this line to your application's Gemfile:
+## What it does so far
 
-```ruby
-gem 'collectionspace-mapper'
-```
+- has `config.json` where you define multivalue delimiter, subgroup delimiter, and any job-specific field transforms or default values
+- BEFORE MAPPING, validates that any required fields are present and populated in the data
+- applies default and custom (in config.json) data transformations, including: converting authority and vocabulary terms into refnames; replacements; bherensmeyer number translation; downcasing values
+- applies default field values specified in config.json if fields with default values are empty or nil in the data hash. Default field values do not overwrite actual data values from the data hash
+- returns Nokogiri::XML::Document (without empty/blank nodes) with appropriate namespace defintions
 
-And then execute:
+## Still to do
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install collectionspace-mapper
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/collectionspace-mapper.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+- Testing more broadly with different profiles and recordtypes, since there are some annoying outlier/inconsistencies in some configs
+- Refactor/redesign (I switched to "just make it work" rather than "what's the best way to design/organize this code" somewhere in the process. Advice welcome here)
+- Startup to run `spec/collectionspace/mapper/data_mapper_spec.rb` is quite slow. Figure out if there's some repetitive/inefficient code causing the slowness, or if it's due to refcache lookups or something.
+- Add post-mapping validation, including warnings about use of static option list values not in the option list (This needs to be done post-mapping because the data transformations are called in the mapping process)
+- Add transformations: structured date and other date formats; boolean; upcase first character
+- For authority record types, produce Short Identifier using first `termDisplayName` value (this will keep separate authorities from being added for non-preferred terms, I believe?)
+- Figure out how we want to return errors (required field value missing) and warnings (uses values not in option list; uneven number of values across a repeating fieldgroup) to be available in Converter UI
+- Figure out how to flag authority and vocabulary terms that don't already exist in the instance (and/or stub records for them) to be available for review/import via UI
+- Probably more...

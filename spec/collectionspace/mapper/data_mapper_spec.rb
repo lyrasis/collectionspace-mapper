@@ -35,6 +35,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       jsonrm = get_json_record_mapper(path: 'spec/fixtures/files/anthro_4_0_0-collectionobject.json')
       jsondm = DataMapper.new(record_mapper: jsonrm, cache: anthro_cache)
       jsondoc = jsondm.map(anthro_co_1)
+      #puts jsondoc
       expect(jsondoc).to be_a(Nokogiri::XML::Document)
     end
 
