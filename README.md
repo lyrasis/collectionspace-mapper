@@ -8,7 +8,7 @@ This will use the anthro-collectionobject RecordMapper JSON file in `spec/fixtur
 
 ## What it does so far
 
-- has `config.json` where you define multivalue delimiter, subgroup delimiter, and any job-specific field transforms or default values
+- has `config.json` where you define multivalue delimiter, subgroup delimiter, and any job-specific field transforms or default values. (How you'd define these can be seen at the top of `spec/collectionspace/mapper/data_mapper_spec.rb`)
 - BEFORE MAPPING, validates that any required fields are present and populated in the data
 - applies default and custom (in config.json) data transformations, including: converting authority and vocabulary terms into refnames; replacements; bherensmeyer number translation; downcasing values
 - applies default field values specified in config.json if fields with default values are empty or nil in the data hash. Default field values do not overwrite actual data values from the data hash
