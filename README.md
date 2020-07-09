@@ -2,7 +2,7 @@
 
 In general tests are currently assuming `cspace-config-untangler` is set up and hash RecordMapper objects are requestable from it. 
 
-To test without setting up `cspace-config-untangler`, uncoment the `puts` line in `spec/collectionspace/mapper/data_mapper_spec.rb` `works with json RecordMapper` test and run that test. 
+To test without setting up `cspace-config-untangler`, uncomment the `puts` line in `spec/collectionspace/mapper/data_mapper_spec.rb` `works with json RecordMapper` test and run that test. 
 
 This will use the anthro-collectionobject RecordMapper JSON file in `spec/fixtures/files` to produce collectionobject xml using the `anthro_co_1` data hash in `spec/helpers.rb`.
 
