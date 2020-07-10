@@ -1,0 +1,169 @@
+null
+config": {
+    "document_name": "valuationcontrols",
+    "service_name": "Valuationcontrols",
+    "service_path": "valuationcontrols",
+    "service_type": "procedure",
+    "object_name": "Valuationcontrol",
+    "profile_basename": "core",
+    "ns_uri": {
+      "valuationcontrols_common": "http://collectionspace.org/services/valuationcontrol"
+    }
+  },
+  "docstructure": {
+    "valuationcontrols_common": {
+      "valueAmountsList": {
+        "valueAmounts": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "valuationcontrolRefNumber",
+      "datacolumn": "valuationcontrolRefNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueCurrency",
+      "datacolumn": "valueCurrency",
+      "transforms": {
+        "vocabulary": "currency"
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+        "valueAmountsList",
+        "valueAmounts"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "valueAmount",
+      "datacolumn": "valueAmount",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+        "valueAmountsList",
+        "valueAmounts"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "valueDate",
+      "datacolumn": "valueDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueRenewalDate",
+      "datacolumn": "valueRenewalDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueSource",
+      "datacolumn": "valueSourcePerson",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueSource",
+      "datacolumn": "valueSourceOrganization",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueType",
+      "datacolumn": "valueType",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueNote",
+      "datacolumn": "valueNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+null
+config": {
+    "document_name": "groups",
+    "service_name": "Groups",
+    "service_path": "groups",
+    "service_type": "procedure",
+    "object_name": "Group",
+    "profile_basename": "core",
+    "ns_uri": {
+      "groups_common": "http://collectionspace.org/services/group"
+    }
+  },
+  "docstructure": {
+    "groups_common": {
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "title",
+      "datacolumn": "title",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "groups_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "responsibleDepartment",
+      "datacolumn": "responsibleDepartment",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "groups_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "owner",
+      "datacolumn": "owner",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "groups_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "groupEarliestSingleDate",
+      "datacolumn": "groupEarliestSingleDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "groups_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "groupLatestDate",
+      "datacolumn": "groupLatestDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "groups_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "scopeNote",
+      "datacolumn": "scopeNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "groups_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}
