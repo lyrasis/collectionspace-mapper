@@ -139,8 +139,8 @@ map_result = dh.map(data)
 `map_result` will be a `CollectionSpace::Mapper::MapResult` object that packages the following:
 
 - `doc` - `Nokogiri::XML::Document` - the main XML document for the record type you are processing
-- `warnings` - array of warning hashes having the same structure as the error hash described above, but `:level` will be `:warning` instead of `:error` - These warnings are about things that will not prevent transfer or update of records in CollectionSpace, but that might indicate data problems that should be fixed before you continue. Some of these warnings depend on steps in the mapping process to have aleady occurred before the result is examined.
-- authorities - hash of data for authority terms not found in cache or search of CollectionSpace. Structure is:
+- `warnings` - Array - Elements are warning hashes having the same structure as the error hash described above, but `:level` will be `:warning` instead of `:error` - These warnings are about things that will not prevent transfer or update of records in CollectionSpace, but that might indicate data problems that should be fixed before you continue. Some of these warnings depend on steps in the mapping process to have aleady occurred before the result is examined.
+- authorities - *not yet implemented* - Hash - data for authority terms not found in cache or search of CollectionSpace. Structure is:
 
 [source,ruby]
 ----
@@ -153,7 +153,7 @@ map_result = dh.map(data)
 }
 ----
 
-- vocabularies - hash of data for vocabulary terms not found in cache or search of CollectionSpace. Structure is:
+- vocabularies - *not yet implemented* - Hash - Data for vocabulary terms not found in cache or search of CollectionSpace. Structure is:
 
 [source,ruby]
 ----
