@@ -2,168 +2,185 @@
 
 module CollectionSpace
   module Mapper
-    # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataMapper
       ::DataMapper = CollectionSpace::Mapper::DataMapper
-      attr_reader :mapper, :cache, :blankdoc, :defaults
-      def initialize(record_mapper:, cache:)
-        @mapper = record_mapper
-        @mapper[:xpath] = xpath_hash
-        @cache = cache
-        @blankdoc = build_xml
-        @defaults = Mapper::CONFIG[:default_values].transform_keys{ |k| k.downcase }
-        merge_config_transforms
-      end
-
-      # you can specify per-data-key transforms in your config.json
-      # This method merges the config.json transforms into the RecordMapper field
-      #   mappings for the appropriate fields
-      def merge_config_transforms
-        Mapper::CONFIG[:transforms].each do |datacol, x|
-          target = @mapper[:mappings].select{ |m| m[:datacolumn] == datacol }
-          unless target.empty?
-          target = target.first
-          target[:transforms] = target[:transforms].merge(x)
-          end
-        end
-      end
-
-      def map(data_hash)
-        data_hash = data_hash.transform_keys!{ |k| k.downcase}
-        data_hash = merge_default_values(data_hash)
-        mappings = @mapper[:mappings].select{ |m| data_hash.keys.include?(m[:datacolumn].downcase) }
-        xpaths = mappings.map{ |m| m[:fullpath] }.uniq
-        xpmapper = XpathMapper.new(data_hash, self, @blankdoc.clone)
-        xpaths.each{ |xpath| xpmapper.map(xpath) }
-        xpmapper.doc.traverse{ |node| node.remove unless node.text.match?(/\S/m) }
-        add_namespaces(xpmapper.doc)
-      end
-
-      def merge_default_values(datafields)
-        data = datafields
-        @defaults.each do |f, val|
-          dataval = data.fetch(f, nil)
-          data[f] = val if dataval.nil? || dataval.empty?
-        end
-        data
-      end
-
-      def add_namespaces(doc)
-        doc.xpath('/*/*').each do |section|
-          uri = @mapper[:config][:ns_uri][section.name]
-          section.add_namespace_definition('ns2', uri)
-          section.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-          section.name = "ns2:#{section.name}"
-        end
-        doc
+      attr_reader :data, :mapper, :doc
+      def initialize(data_hash, mapper, doc)
+        @data = data_hash.transform_keys{ |k| k.downcase }
+        @mapper = mapper
+        @doc = doc.clone
+        @cache = @mapper.cache
+        @done = []
       end
       
-      def build_xml
-        builder = Nokogiri::XML::Builder.new do |xml|
-          xml.document do
-            @mapper[:docstructure].keys.each do |ns|
-              xml.send(ns) do
-                process_group(xml, [ns])
+
+      def map(xpath)
+        return @doc if @done.include?(xpath)
+        
+        xphash = @mapper.mapper[:xpath][xpath]
+        targetnode = @doc.xpath("//#{xpath}")[0]
+
+        if xphash[:is_group] == false
+          xphash[:mappings].each do |fm|
+            col = fm[:datacolumn].downcase
+            fn = fm[:fieldname]
+            data = @data.fetch(col, nil)
+            if data
+              data = fm[:repeats] == 'y' ? SimpleSplitter.new(data).result : [data.strip]
+              data.each do |val|
+                unless fm[:transforms].nil? || fm[:transforms].empty?
+                  val = ValueTransformer.new(val, fm[:transforms], @cache).result
+                end
+                child = Nokogiri::XML::Node.new(fn, @doc)
+                child.content = val
+                targetnode.add_child(child)
               end
             end
           end
-        end
-        Nokogiri::XML(builder.to_xml)
-      end
+        elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
+          pnode = targetnode.parent
+          groupname = targetnode.name.dup
+          targetnode.remove
 
-      def process_group(xml, grouppath)
-        @mapper[:docstructure].dig(*grouppath).keys.each do |key|
-          thispath = grouppath.clone.append(key)
-          xml.send(key){
-            process_group(xml, thispath)
-          }
-        end
-      end
+          dhash = {}
 
-      # builds hash containing information to be used in mapping the fields that are
-      #  children of each xpath
-      # keys - the XML doc xpaths that contain child fields
-      # value is a hash with the following keys:
-      #  :parent - String, xpath of parent (empty if it's a top level namespace)
-      #  :children - Array, of xpaths occuring beneath this one in the document
-      #  :is_group - Boolean, whether grouping of fields at xpath is a repeating field group
-      #  :is_subgroup - Boolean, whether grouping of fields is subgroup of another group
-      #  :subgroups - Array, xpaths of any repeating field groups that are children of an xpath
-      #     that itself contains direct child fields
-      #  :mappings - Array, of fieldmappings that are children of this xpath
-      def xpath_hash
-        h = {}
-        @mapper[:mappings].each do |mapping|
-          mapping[:fullpath] = ( [mapping[:namespace]] + mapping[:xpath] ).flatten.join('/')
-          h[mapping[:fullpath]] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
-        end
-        
-        @mapper[:mappings].each do |mapping|
-          h[mapping[:fullpath]][:mappings] << mapping
-        end
-        
-        # populate parent of all non-top xpaths
-        h.each do |xpath, ph|
-          if xpath['/']
-            keys = h.keys - [xpath]
-            keys = keys.select{ |k| xpath[k] }
-            keys = keys.sort{ |a, b| b.length <=> a.length }
-            ph[:parent] = keys[0] unless keys.empty?
+          # concatenate multiple columns that get mapped to the same row
+          xphash[:mappings].each do |fm|
+            val = @data.fetch(fm[:datacolumn].downcase, nil)
+            unless val.nil? || val.empty?
+              val = SimpleSplitter.new(val).result
+              unless fm[:transforms].empty? || fm[:transforms].nil?
+                val = val.map{ |v| ValueTransformer.new(v, fm[:transforms], @cache).result }
+              end
+              
+              if dhash.has_key?(fm[:fieldname])
+                dhash[fm[:fieldname]] << val
+              else
+                dhash[fm[:fieldname]] = [val]
+              end
+
+              dhash[fm[:fieldname]] = dhash[fm[:fieldname]].flatten
+            end
+          end
+          
+          dhash = dhash.reject{ |k, v| v.nil? }.to_h
+          dhash = dhash.reject{ |k, v| v.empty? }.to_h
+
+          unless dhash.empty?
+            val_ct = dhash.values.map{ |v| v.size }.uniq.sort.reverse
+            # todo: warn?
+            if val_ct.size > 1
+              rhash = dhash.map{ |k, v| "#{k} (#{v.size} values)" }
+              puts "WARNING: unequal number of values in record: #{rhash.join(' -- ')}"
+            end
+            
+            max_ct = val_ct[0]
+            max_ct.times do
+              group = Nokogiri::XML::Node.new(groupname, @doc)
+              pnode.add_child(group)
+            end
+
+            max_ct.times do |i|
+              path = "//#{xpath}"
+              parent = @doc.xpath(path)[i]
+              dhash.each do |k, v|
+                if v[i]
+                  child = Nokogiri::XML::Node.new(k, @doc)
+                  child.content = v[i]
+                  parent.add_child(child)
+                end
+              end
+            end
+          end
+        elsif xphash[:is_group] && xphash[:is_subgroup]
+          dhash = {}
+          parent_path = xphash[:parent]
+          parent_set = @doc.xpath("//#{parent_path}")
+          parent_size = parent_set.size
+          subgroup_path = xphash[:mappings].first[:fullpath].gsub("#{xphash[:parent]}/", '').split('/')
+          subgroup = subgroup_path.pop
+
+          parent_set.each_with_index do |p, i|
+            dhash[i] = { parent: p, data: {} }
+          end
+
+          fields = xphash[:mappings].map{ |m| m[:fieldname] }.uniq
+          dhash.each do |group, h|
+            fields.each{ |f| h[:data][f] = [] }
+          end
+
+          xphash[:mappings].each do |fm|
+            val = @data.fetch(fm[:datacolumn].downcase, nil)
+            unless val.nil? || val.empty?
+              val = SubgroupSplitter.new(val).result
+              #todo WARN?
+              unless val.size == parent_size
+                puts "#{fm[:fieldname]} size not equal to parent group (#{parent_path}) size"
+              end
+
+              val.each_with_index do |v, i|
+                v = v.map{ |vx| ValueTransformer.new(vx, fm[:transforms], @cache).result }
+                begin
+                  dhash[i][:data][fm[:fieldname]] << v
+                rescue
+                  puts [fm[:fieldname]]
+                end
+              end
+            end
+          end
+
+          dhash.each do |i, grp|
+            grp[:data].transform_values!{ |v| v.flatten }
+            
+            target = parent_set[i]
+            # create grouping-only fields in the hierarchy
+            unless subgroup_path.empty?
+              subgroup_path.each do |segment|
+                child = Nokogiri::XML::Node.new(segment, @doc)
+                target.add_child(child)
+                target = child
+              end
+            end
+
+            
+            grp[:data] = grp[:data].reject{ |k, v| v.nil? }.to_h
+            grp[:data] = grp[:data].reject{ |k, v| v.empty? }.to_h
+
+            unless grp[:data].empty?
+              val_ct = grp[:data].values.map{ |v| v.size }.uniq.sort.reverse
+              # todo: warn?
+              if val_ct.size > 1
+                rhash = grp[:data].map{ |k, v| "#{k} (#{v.size} values)" }
+                puts "WARNING: unequal number of values in record: #{rhash.join(' -- ')}"
+              end
+
+              max_ct = val_ct[0]
+              max_ct.times do
+                thisgroup = Nokogiri::XML::Node.new(subgroup, @doc)
+                target.add_child(thisgroup)
+              end
+
+              max_ct.times do |sgi|
+                parent = target.children[sgi]
+
+                grp[:data].each do |sgf, sgv|
+                  if sgv[sgi]
+                    child = Nokogiri::XML::Node.new(sgf, @doc)
+                    child.content = sgv[sgi]
+                    parent.add_child(child)
+                  end
+                end
+              end
+            end
+            
+            
+            
           end
         end
+        @done << xpath
 
-        # populate children
-        h.each do |xpath, ph|
-          keys = h.keys - [xpath]
-          ph[:children] = keys.select{ |k| k.start_with?(xpath) }
-        end
-        
-        # populate subgroups
-        h.each do |xpath, ph|
-          keys = h.keys - [xpath]
-          subpaths = keys.select{ |k| k.start_with?(xpath) }
-          subpaths.each{ |p| ph[:subgroups] << p } if !subpaths.empty? && !ph[:parent].empty?
-        end
-
-        # populate is_group
-        h.each do |xpath, ph|
-          ct = ph[:mappings].size
-          v = ph[:mappings].map{ |m| m[:in_repeating_group] }.uniq
-          ph[:is_group] = true if v == ['y']
-          if v.size > 1
-            puts "WARNING: #{xpath} has fields with different :in_repeating_group values (#{v}). Defaulting to treating NOT as a group"
-          end
-          ph[:is_group] = true if ct == 1 && v == ['as part of larger repeating group'] && ph[:mappings][0][:repeats] == 'y'
-        end
-
-        # populate is_subgroup
-        subgroups = []
-        h.each{ |k, v| subgroups << v[:subgroups] }
-        subgroups = subgroups.flatten.uniq
-        h.keys.each{ |k| h[k][:is_subgroup] = true if subgroups.include?(k) }
-        h
+        @doc
       end
-
-
-      
-
-      def namespace_hash(ns)
-          {
-            'xmlns:ns2' => @mapper[:config][:ns_uri][ns],
-            'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
-          }
-      end
-      
-      # def write_fields(xml, path)
-      #   @mapper.dig(*path).each do |mapping|
-      #     val = get_value(mapping[:datacolumn])
-      #     xml.send(mapping[:fieldname], val) unless val.nil? || val.empty?
-      #   end
-      # end
-
-      # def get_value(column)
-      #   @data.fetch(column, nil)
-      # end
     end
   end
 end

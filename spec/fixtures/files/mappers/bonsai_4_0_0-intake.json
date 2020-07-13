@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "intakes",
     "service_name": "Intake",
     "service_path": "intakes",

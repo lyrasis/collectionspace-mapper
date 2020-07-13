@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "collectionobjects",
     "service_name": "CollectionObjects",
     "service_path": "collectionobjects",

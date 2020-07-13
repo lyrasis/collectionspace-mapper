@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "media",
     "service_name": "Media",
     "service_path": "media",

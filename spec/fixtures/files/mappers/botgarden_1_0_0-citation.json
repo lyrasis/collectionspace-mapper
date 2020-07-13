@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "citations",
     "service_name": "Citations",
     "service_path": "citationauthorities",

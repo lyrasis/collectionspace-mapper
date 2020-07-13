@@ -5,14 +5,15 @@
     "service_path": "collectionobjects",
     "service_type": "object",
     "object_name": "CollectionObject",
-    "profile_basename": "anthro",
+    "profile_basename": "ohc",
     "ns_uri": {
       "collectionobjects_common": "http://collectionspace.org/services/collectionobject",
-      "collectionobjects_anthro": "http://collectionspace.org/services/collectionobject/domain/anthro",
+      "collectionobjects_anthro": null,
       "collectionobjects_annotation": "http://collectionspace.org/services/collectionobject/domain/annotation",
       "collectionobjects_culturalcare": "http://collectionspace.org/services/collectionobject/domain/collectionobject",
       "collectionobjects_nagpra": "http://collectionspace.org/services/collectionobject/domain/nagpra",
-      "collectionobjects_naturalhistory_extension": "http://collectionspace.org/services/collectionobject/domain/naturalhistory_extension"
+      "collectionobjects_naturalhistory_extension": "http://collectionspace.org/services/collectionobject/domain/naturalhistory_extension",
+      "collectionobjects_ohc": "http://collectionspace.org/services/collectionobject/domain/ohc"
     }
   },
   "docstructure": {
@@ -196,6 +197,20 @@
         }
       }
     },
+    "collectionobjects_ohc": {
+      "categoryGroupList": {
+        "categoryGroup": {
+        }
+      },
+      "oaiSiteGroupList": {
+        "oaiSiteGroup": {
+        }
+      },
+      "namedTimePeriods": {
+      },
+      "apparelSizes": {
+      }
+    },
     "collectionobjects_anthro": {
       "ethnoFileCodes": {
       },
@@ -231,9 +246,7 @@
       },
       "repatriationNotes": {
       },
-      "nagpraDetermGroupList": {
-        "nagpraDetermGroup": {
-        }
+      "nagpraCulturalDeterminations": {
       }
     },
     "collectionobjects_culturalcare": {
@@ -336,6 +349,41 @@
       },
       "sourcetype": null,
       "namespace": "collectionobjects_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "namedCollection",
+      "datacolumn": "namedCollection",
+      "transforms": {
+        "authority": [
+          "workauthorities",
+          "work"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "descriptionLevel",
+      "datacolumn": "descriptionLevel",
+      "transforms": {
+        "vocabulary": "descriptionlevel"
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
       "xpath": [
 
       ],
@@ -486,6 +534,10 @@
       "fieldname": "objectName",
       "datacolumn": "objectName",
       "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "nomenclature"
+        ]
       },
       "sourcetype": null,
       "namespace": "collectionobjects_common",
@@ -596,9 +648,53 @@
       "in_repeating_group": "y"
     },
     {
+      "fieldname": "category",
+      "datacolumn": "category",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "nomenclature"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+        "categoryGroupList",
+        "categoryGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "subCategory",
+      "datacolumn": "subCategory",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "nomenclature"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+        "categoryGroupList",
+        "categoryGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
       "fieldname": "assocPeople",
       "datacolumn": "assocPeople",
       "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "ethculture"
+        ]
       },
       "sourcetype": null,
       "namespace": "collectionobjects_common",
@@ -659,10 +755,13 @@
       "in_repeating_group": "n"
     },
     {
-      "fieldname": "annotationType",
-      "datacolumn": "annotationType",
+      "fieldname": "annotationAuthor",
+      "datacolumn": "annotationAuthor",
       "transforms": {
-        "vocabulary": "annotationtype"
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
       },
       "sourcetype": null,
       "namespace": "collectionobjects_annotation",
@@ -676,9 +775,10 @@
       "in_repeating_group": "y"
     },
     {
-      "fieldname": "annotationNote",
-      "datacolumn": "annotationNote",
+      "fieldname": "annotationType",
+      "datacolumn": "annotationType",
       "transforms": {
+        "vocabulary": "annotationtype"
       },
       "sourcetype": null,
       "namespace": "collectionobjects_annotation",
@@ -708,13 +808,9 @@
       "in_repeating_group": "y"
     },
     {
-      "fieldname": "annotationAuthor",
-      "datacolumn": "annotationAuthor",
+      "fieldname": "annotationNote",
+      "datacolumn": "annotationNote",
       "transforms": {
-        "authority": [
-          "personauthorities",
-          "person"
-        ]
       },
       "sourcetype": null,
       "namespace": "collectionobjects_annotation",
@@ -915,6 +1011,10 @@
       "fieldname": "material",
       "datacolumn": "material",
       "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "material_ca"
+        ]
       },
       "sourcetype": null,
       "namespace": "collectionobjects_common",
@@ -1103,6 +1203,62 @@
       "xpath": [
         "usageGroupList",
         "usageGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "oaiCollectionPlace",
+      "datacolumn": "oaiCollectionPlaceLocal",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+        "oaiSiteGroupList",
+        "oaiSiteGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "oaiCollectionPlace",
+      "datacolumn": "oaiCollectionPlaceTgn",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "tgn_place"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+        "oaiSiteGroupList",
+        "oaiSiteGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "oaiLocVerbatim",
+      "datacolumn": "oaiLocVerbatim",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+        "oaiSiteGroupList",
+        "oaiSiteGroup"
       ],
       "data_type": "string",
       "required": "n",
@@ -1327,6 +1483,22 @@
         "objectProductionDateGroupList"
       ],
       "data_type": "structured date group",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "namedTimePeriod",
+      "datacolumn": "namedTimePeriod",
+      "transforms": {
+        "vocabulary": "namedtimeperiods"
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+        "namedTimePeriods"
+      ],
+      "data_type": "string",
       "required": "n",
       "repeats": "y",
       "in_repeating_group": "n"
@@ -1646,97 +1818,19 @@
       "in_repeating_group": "n"
     },
     {
-      "fieldname": "nagpraDetermCulture",
-      "datacolumn": "nagpraDetermCulture",
-      "transforms": {
-        "authority": [
-          "conceptauthorities",
-          "archculture"
-        ]
-      },
-      "sourcetype": null,
-      "namespace": "collectionobjects_nagpra",
-      "xpath": [
-        "nagpraDetermGroupList",
-        "nagpraDetermGroup"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "n",
-      "in_repeating_group": "y"
-    },
-    {
-      "fieldname": "nagpraDetermType",
-      "datacolumn": "nagpraDetermType",
-      "transforms": {
-        "vocabulary": "nagpradetermtype"
-      },
-      "sourcetype": null,
-      "namespace": "collectionobjects_nagpra",
-      "xpath": [
-        "nagpraDetermGroupList",
-        "nagpraDetermGroup"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "n",
-      "in_repeating_group": "y"
-    },
-    {
-      "fieldname": "nagpraDetermBy",
-      "datacolumn": "nagpraDetermByPerson",
-      "transforms": {
-        "authority": [
-          "personauthorities",
-          "person"
-        ]
-      },
-      "sourcetype": null,
-      "namespace": "collectionobjects_nagpra",
-      "xpath": [
-        "nagpraDetermGroupList",
-        "nagpraDetermGroup"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "n",
-      "in_repeating_group": "y"
-    },
-    {
-      "fieldname": "nagpraDetermBy",
-      "datacolumn": "nagpraDetermByOrganization",
-      "transforms": {
-        "authority": [
-          "orgauthorities",
-          "organization"
-        ]
-      },
-      "sourcetype": null,
-      "namespace": "collectionobjects_nagpra",
-      "xpath": [
-        "nagpraDetermGroupList",
-        "nagpraDetermGroup"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "n",
-      "in_repeating_group": "y"
-    },
-    {
-      "fieldname": "nagpraDetermNote",
-      "datacolumn": "nagpraDetermNote",
+      "fieldname": "nagpraCulturalDetermination",
+      "datacolumn": "nagpraCulturalDetermination",
       "transforms": {
       },
       "sourcetype": null,
       "namespace": "collectionobjects_nagpra",
       "xpath": [
-        "nagpraDetermGroupList",
-        "nagpraDetermGroup"
+        "nagpraCulturalDeterminations"
       ],
       "data_type": "string",
       "required": "n",
-      "repeats": "n",
-      "in_repeating_group": "y"
+      "repeats": "y",
+      "in_repeating_group": "n"
     },
     {
       "fieldname": "nagpraReportFiled",
@@ -1990,6 +2084,22 @@
       "in_repeating_group": "n"
     },
     {
+      "fieldname": "apparelSize",
+      "datacolumn": "apparelSize",
+      "transforms": {
+        "vocabulary": "apparelsizes"
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
+      "xpath": [
+        "apparelSizes"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
       "fieldname": "physicalDescription",
       "datacolumn": "physicalDescription",
       "transforms": {
@@ -2073,6 +2183,22 @@
       },
       "sourcetype": null,
       "namespace": "collectionobjects_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "majorTaxon",
+      "datacolumn": "majorTaxon",
+      "transforms": {
+        "vocabulary": "majortaxon"
+      },
+      "sourcetype": null,
+      "namespace": "collectionobjects_ohc",
       "xpath": [
 
       ],
@@ -2261,38 +2387,6 @@
       "in_repeating_group": "y"
     },
     {
-      "fieldname": "reference",
-      "datacolumn": "reference",
-      "transforms": {
-      },
-      "sourcetype": null,
-      "namespace": "collectionobjects_naturalhistory_extension",
-      "xpath": [
-        "taxonomicIdentGroupList",
-        "taxonomicIdentGroup"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "n",
-      "in_repeating_group": "y"
-    },
-    {
-      "fieldname": "refPage",
-      "datacolumn": "refPage",
-      "transforms": {
-      },
-      "sourcetype": null,
-      "namespace": "collectionobjects_naturalhistory_extension",
-      "xpath": [
-        "taxonomicIdentGroupList",
-        "taxonomicIdentGroup"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "n",
-      "in_repeating_group": "y"
-    },
-    {
       "fieldname": "notes",
       "datacolumn": "notes",
       "transforms": {
@@ -2377,9 +2471,6 @@
       "fieldname": "dentition",
       "datacolumn": "dentition",
       "transforms": {
-        "special": [
-          "boolean"
-        ]
       },
       "sourcetype": null,
       "namespace": "collectionobjects_anthro",
@@ -2387,7 +2478,7 @@
         "commingledRemainsGroupList",
         "commingledRemainsGroup"
       ],
-      "data_type": "boolean",
+      "data_type": "string",
       "required": "n",
       "repeats": "n",
       "in_repeating_group": "y"
@@ -2566,30 +2657,11 @@
     },
     {
       "fieldname": "contentConcept",
-      "datacolumn": "contentConceptAssociated",
+      "datacolumn": "contentConcept",
       "transforms": {
         "authority": [
           "conceptauthorities",
           "concept"
-        ]
-      },
-      "sourcetype": null,
-      "namespace": "collectionobjects_common",
-      "xpath": [
-        "contentConcepts"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "y",
-      "in_repeating_group": "n"
-    },
-    {
-      "fieldname": "contentConcept",
-      "datacolumn": "contentConceptMaterial",
-      "transforms": {
-        "authority": [
-          "conceptauthorities",
-          "material_ca"
         ]
       },
       "sourcetype": null,

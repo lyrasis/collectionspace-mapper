@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "organizations",
     "service_name": "Organizations",
     "service_path": "orgauthorities",

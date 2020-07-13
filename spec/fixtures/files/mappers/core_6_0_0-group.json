@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "groups",
     "service_name": "Groups",
     "service_path": "groups",

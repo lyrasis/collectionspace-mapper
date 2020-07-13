@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "concepts",
     "service_name": "Concepts",
     "service_path": "conceptauthorities",

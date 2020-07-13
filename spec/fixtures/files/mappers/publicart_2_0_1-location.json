@@ -1,0 +1,548 @@
+{
+  "config": {
+    "document_name": "locations",
+    "service_name": "Locations",
+    "service_path": "locationauthorities",
+    "service_type": "authority",
+    "object_name": "Locationitem",
+    "profile_basename": "publicart",
+    "ns_uri": {
+      "locations_common": "http://collectionspace.org/services/locationes",
+      "locations_publicart": "http://collectionspace.org/services/locationes/domain/publicart"
+    }
+  },
+  "docstructure": {
+    "locations_common": {
+      "locTermGroupList": {
+        "locTermGroup": {
+        }
+      },
+      "conditionGroupList": {
+        "conditionGroup": {
+        }
+      }
+    },
+    "locations_publicart": {
+      "addrGroupList": {
+        "addrGroup": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "termDisplayName",
+      "datacolumn": "termDisplayName",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termName",
+      "datacolumn": "termName",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termQualifier",
+      "datacolumn": "termQualifier",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termStatus",
+      "datacolumn": "termStatus",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termType",
+      "datacolumn": "termType",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termFlag",
+      "datacolumn": "termFlag",
+      "transforms": {
+        "vocabulary": "locationtermflag"
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termLanguage",
+      "datacolumn": "termLanguage",
+      "transforms": {
+        "vocabulary": "languages"
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termPrefForLang",
+      "datacolumn": "termPrefForLang",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSource",
+      "datacolumn": "termSourceLocal",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "citation"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSource",
+      "datacolumn": "termSourceWorldcat",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "worldcat"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceDetail",
+      "datacolumn": "termSourceDetail",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceID",
+      "datacolumn": "termSourceID",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceNote",
+      "datacolumn": "termSourceNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "locTermGroupList",
+        "locTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "locationType",
+      "datacolumn": "locationType",
+      "transforms": {
+        "vocabulary": "locationtype"
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "securityNote",
+      "datacolumn": "securityNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "accessNote",
+      "datacolumn": "accessNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionNote",
+      "datacolumn": "conditionNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "conditionGroupList",
+        "conditionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "conditionNoteDate",
+      "datacolumn": "conditionNoteDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_common",
+      "xpath": [
+        "conditionGroupList",
+        "conditionGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressPlace1",
+      "datacolumn": "addressPlace1",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressPlace2",
+      "datacolumn": "addressPlace2",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressMunicipality",
+      "datacolumn": "addressMunicipalityLocal",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressMunicipality",
+      "datacolumn": "addressMunicipalityShared",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressStateOrProvince",
+      "datacolumn": "addressStateOrProvinceLocal",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressStateOrProvince",
+      "datacolumn": "addressStateOrProvinceShared",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressPostCode",
+      "datacolumn": "addressPostCode",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressCountry",
+      "datacolumn": "addressCountryLocal",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressCountry",
+      "datacolumn": "addressCountryShared",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "addressType",
+      "datacolumn": "addressType",
+      "transforms": {
+        "vocabulary": "addresstype"
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+        "addrGroupList",
+        "addrGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "decimalLatitude",
+      "datacolumn": "decimalLatitude",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "decimalLongitude",
+      "datacolumn": "decimalLongitude",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "locations_publicart",
+      "xpath": [
+
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

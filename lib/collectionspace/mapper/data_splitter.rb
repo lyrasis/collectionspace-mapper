@@ -7,8 +7,8 @@ module CollectionSpace
       attr_reader :data, :result
       def initialize(data)
         @data = data.strip
-        @delim = Mapper::CONFIG[:delim]
-        @sgdelim = Mapper::CONFIG[:subgroup_delim]
+        @delim = Mapper::CONFIG[:delimiter]
+        @sgdelim = Mapper::CONFIG[:subgroup_delimiter]
       end
     end
 

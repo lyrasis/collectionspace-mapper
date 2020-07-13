@@ -1,0 +1,427 @@
+{
+  "config": {
+    "document_name": "concepts",
+    "service_name": "Concepts",
+    "service_path": "conceptauthorities",
+    "service_type": "authority",
+    "object_name": "Conceptitem",
+    "profile_basename": "lhmc",
+    "ns_uri": {
+      "concepts_common": "http://collectionspace.org/services/conceptes"
+    }
+  },
+  "docstructure": {
+    "concepts_common": {
+      "conceptTermGroupList": {
+        "conceptTermGroup": {
+        }
+      },
+      "conceptRecordTypes": {
+      },
+      "citationGroupList": {
+        "citationGroup": {
+        }
+      },
+      "additionalSourceGroupList": {
+        "additionalSourceGroup": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "termDisplayName",
+      "datacolumn": "termDisplayName",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termName",
+      "datacolumn": "termName",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termQualifier",
+      "datacolumn": "termQualifier",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termStatus",
+      "datacolumn": "termStatus",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termType",
+      "datacolumn": "termType",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termFlag",
+      "datacolumn": "termFlag",
+      "transforms": {
+        "vocabulary": "concepttermflag"
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "historicalStatus",
+      "datacolumn": "historicalStatus",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termLanguage",
+      "datacolumn": "termLanguage",
+      "transforms": {
+        "vocabulary": "languages"
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termPrefForLang",
+      "datacolumn": "termPrefForLang",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSource",
+      "datacolumn": "termSourceLocal",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "citation"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSource",
+      "datacolumn": "termSourceWorldcat",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "worldcat"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceDetail",
+      "datacolumn": "termSourceDetail",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceID",
+      "datacolumn": "termSourceID",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceNote",
+      "datacolumn": "termSourceNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptTermGroupList",
+        "conceptTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "conceptRecordType",
+      "datacolumn": "conceptRecordType",
+      "transforms": {
+        "vocabulary": "concepttype"
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "conceptRecordTypes"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "scopeNote",
+      "datacolumn": "scopeNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "scopeNoteSource",
+      "datacolumn": "scopeNoteSource",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "scopeNoteSourceDetail",
+      "datacolumn": "scopeNoteSourceDetail",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "citationSource",
+      "datacolumn": "citationSource",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "citationGroupList",
+        "citationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "citationSourceDetail",
+      "datacolumn": "citationSourceDetail",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "citationGroupList",
+        "citationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalSource",
+      "datacolumn": "additionalSource",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "additionalSourceGroupList",
+        "additionalSourceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalSourceDetail",
+      "datacolumn": "additionalSourceDetail",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "additionalSourceGroupList",
+        "additionalSourceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalSourceID",
+      "datacolumn": "additionalSourceID",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "additionalSourceGroupList",
+        "additionalSourceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalSourceNote",
+      "datacolumn": "additionalSourceNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "concepts_common",
+      "xpath": [
+        "additionalSourceGroupList",
+        "additionalSourceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    }
+  ]
+}

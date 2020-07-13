@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "taxon",
     "service_name": "Taxon",
     "service_path": "taxonomyauthority",

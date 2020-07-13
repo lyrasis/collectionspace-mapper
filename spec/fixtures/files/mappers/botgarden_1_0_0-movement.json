@@ -1,0 +1,168 @@
+{
+  "config": {
+    "document_name": "movements",
+    "service_name": "Movements",
+    "service_path": "movements",
+    "service_type": "procedure",
+    "object_name": "Movement",
+    "profile_basename": "botgarden",
+    "ns_uri": {
+      "movements_common": "http://collectionspace.org/services/movement",
+      "movements_botgarden": "http://collectionspace.org/services/movement/domain/botgarden"
+    }
+  },
+  "docstructure": {
+    "movements_common": {
+    },
+    "movements_botgarden": {
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "locationDate",
+      "datacolumn": "locationDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "movements_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "reasonForMove",
+      "datacolumn": "reasonForMove",
+      "transforms": {
+        "vocabulary": "reasonformove"
+      },
+      "sourcetype": null,
+      "namespace": "movements_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "currentLocation",
+      "datacolumn": "currentLocation",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "movements_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "movementContact",
+      "datacolumn": "movementContact",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "movements_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "movementNote",
+      "datacolumn": "movementNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "movements_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "labelRequested",
+      "datacolumn": "labelRequested",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "movements_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "labelSize",
+      "datacolumn": "labelSize",
+      "transforms": {
+        "vocabulary": "labelsize"
+      },
+      "sourcetype": null,
+      "namespace": "movements_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "labelStandType",
+      "datacolumn": "labelStandType",
+      "transforms": {
+        "vocabulary": "labelstandtype"
+      },
+      "sourcetype": null,
+      "namespace": "movements_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "labelCount",
+      "datacolumn": "labelCount",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "movements_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "integer",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

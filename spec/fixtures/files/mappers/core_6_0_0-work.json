@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "works",
     "service_name": "Works",
     "service_path": "workauthorities",
