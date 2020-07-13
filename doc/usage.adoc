@@ -24,6 +24,7 @@ rm[:mappings].each do |m|
 end
 ----
 
+RecordMapper JSON files for all current profile/rectype combinations can be found in: `spec/fixtures/files/mappers`
 == Config
 
 A dataset-specific configuration hash must be passed in when creating a new DataHandler.
@@ -52,20 +53,20 @@ A dataset-specific configuration hash must be passed in when creating a new Data
 
 - `:delimiter` - *required* - String - delimiter character or string used to split repeatable values
 - `:subgroup_delimiter` - *required* - String - delimiter character or string used to split repeatable values nested inside other repeatable values (example: titleTranslation, titleTranslationLanguage)
-- `:transforms` - optional - Hash - Key (String)n is the data hash field to which the transforms should be applied. Value (Hash) is structured transformation instructions.
+- `:transforms` - optional - Hash - Key (String) is the data hash field to which the transforms should be applied. Value (Hash) is structured transformation instructions.
 - `:default_values` - optional - Hash - Key (String) is the data hash field that should be populated. Value (String) is the default value for the field.
 - `:force_defaults` - optional - Boolean - Defaults to false - If false, default values will not replace or be added to values passed in via the data hash; default value will be inserted if field is missing or empty in data hash. If true, default value will replace any data hash values.
 
 == Usage
 
-Once client, cache, config, and record mapper are set up, you will create a new DataHandler.
+Once client, cache, config, and record mapper are set up, create a new DataHandler:
 
 [source, ruby]
 ----
 dh = DataHandler.new(record_mapper: rm, cache: anthro_cache, config: config)
 ----
 
-The DataHandler processes the record mapper to generate a blank XML document template, and creates a list of xpaths to be mapped with information about how to map the children of each xpath (as stand-alone fields? as members of a repeating field group?).
+The DataHandler processes the record mapper to generate a blank XML document template, and creates a list of xpaths to be mapped with information about how to map the children of each xpath (e.g. as stand-alone fields? as members of a repeating field group?).
 
 Once the DataHandler is set up, you send it data hashes for initial validation and mapping.
 
@@ -79,8 +80,10 @@ data = {
        }
 ----
 
-
+[NOTE]
+====
 The keys of a data hash are downcased for processing.
+====
 
 === Initial validation
 
@@ -100,6 +103,7 @@ validation_result = dh.validate(data)
 If not empty, `validation_result` will contain one or more error hashes. *Presence of these errors indicates the data hash should _not_ be mapped.* The structure of the error hash is:
 
 [source,ruby]
+----
 {
   level: :error,
   field: 'fieldname',
