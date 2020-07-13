@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "uoc",
     "service_name": "Uoc",
     "service_path": "uoc",

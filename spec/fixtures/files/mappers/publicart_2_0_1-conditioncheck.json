@@ -1,0 +1,552 @@
+{
+  "config": {
+    "document_name": "conditionchecks",
+    "service_name": "Conditionchecks",
+    "service_path": "conditionchecks",
+    "service_type": "procedure",
+    "object_name": "Conditioncheck",
+    "profile_basename": "publicart",
+    "ns_uri": {
+      "conditionchecks_common": "http://collectionspace.org/services/conditioncheck",
+      "conditionchecks_publicart": "http://collectionspace.org/services/conditioncheck/domain/publicart"
+    }
+  },
+  "docstructure": {
+    "conditionchecks_common": {
+      "completenessGroupList": {
+        "completenessGroup": {
+        }
+      },
+      "techAssessmentGroupList": {
+        "techAssessmentGroup": {
+        }
+      },
+      "conditionCheckGroupList": {
+        "conditionCheckGroup": {
+        }
+      },
+      "envConditionNoteGroupList": {
+        "envConditionNoteGroup": {
+        }
+      },
+      "legalReqsHeldGroupList": {
+        "legalReqsHeldGroup": {
+        }
+      }
+    },
+    "conditionchecks_publicart": {
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "conditionCheckRefNumber",
+      "datacolumn": "conditionCheckRefNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionCheckAssessmentDate",
+      "datacolumn": "conditionCheckAssessmentDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionCheckMethod",
+      "datacolumn": "conditionCheckMethod",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionCheckReason",
+      "datacolumn": "conditionCheckReason",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionChecker",
+      "datacolumn": "conditionCheckerPersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionChecker",
+      "datacolumn": "conditionCheckerPersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionChecker",
+      "datacolumn": "conditionCheckerOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionChecker",
+      "datacolumn": "conditionCheckerOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conditionCheckNote",
+      "datacolumn": "conditionCheckNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "objectAuditCategory",
+      "datacolumn": "objectAuditCategory",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "conservationTreatmentPriority",
+      "datacolumn": "conservationTreatmentPriority",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "nextConditionCheckDate",
+      "datacolumn": "nextConditionCheckDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "completeness",
+      "datacolumn": "completeness",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "completenessGroupList",
+        "completenessGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "completenessDate",
+      "datacolumn": "completenessDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "completenessGroupList",
+        "completenessGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "completenessNote",
+      "datacolumn": "completenessNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "completenessGroupList",
+        "completenessGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "techAssessment",
+      "datacolumn": "techAssessment",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "techAssessmentGroupList",
+        "techAssessmentGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "techAssessmentDate",
+      "datacolumn": "techAssessmentDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "techAssessmentGroupList",
+        "techAssessmentGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "condition",
+      "datacolumn": "condition",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "conditionCheckGroupList",
+        "conditionCheckGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "conditionDate",
+      "datacolumn": "conditionDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "conditionCheckGroupList",
+        "conditionCheckGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "conditionNote",
+      "datacolumn": "conditionNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "conditionCheckGroupList",
+        "conditionCheckGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "envConditionNote",
+      "datacolumn": "envConditionNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "envConditionNoteGroupList",
+        "envConditionNoteGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "envConditionNoteDate",
+      "datacolumn": "envConditionNoteDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "envConditionNoteGroupList",
+        "envConditionNoteGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "displayRecommendations",
+      "datacolumn": "displayRecommendations",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "handlingRecommendations",
+      "datacolumn": "handlingRecommendations",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "installationRecommendations",
+      "datacolumn": "installationRecommendations",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_publicart",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "envRecommendations",
+      "datacolumn": "envRecommendations",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "specialRequirements",
+      "datacolumn": "specialRequirements",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "legalRequirements",
+      "datacolumn": "legalRequirements",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "legalReqsHeld",
+      "datacolumn": "legalReqsHeld",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "legalReqsHeldGroupList",
+        "legalReqsHeldGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "legalReqsHeldBeginDate",
+      "datacolumn": "legalReqsHeldBeginDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "legalReqsHeldGroupList",
+        "legalReqsHeldGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "legalReqsHeldEndDate",
+      "datacolumn": "legalReqsHeldEndDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "legalReqsHeldGroupList",
+        "legalReqsHeldGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "legalReqsHeldRenewDate",
+      "datacolumn": "legalReqsHeldRenewDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "conditionchecks_common",
+      "xpath": [
+        "legalReqsHeldGroupList",
+        "legalReqsHeldGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    }
+  ]
+}

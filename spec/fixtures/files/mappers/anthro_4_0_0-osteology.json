@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "osteology",
     "service_name": "Osteology",
     "service_path": "osteology",

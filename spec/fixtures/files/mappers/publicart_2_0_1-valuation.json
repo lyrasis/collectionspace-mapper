@@ -1,0 +1,358 @@
+{
+  "config": {
+    "document_name": "valuationcontrols",
+    "service_name": "Valuationcontrols",
+    "service_path": "valuationcontrols",
+    "service_type": "procedure",
+    "object_name": "Valuationcontrol",
+    "profile_basename": "publicart",
+    "ns_uri": {
+      "valuationcontrols_common": "http://collectionspace.org/services/valuationcontrol",
+      "valuationcontrols_publicart": "http://collectionspace.org/services/valuationcontrol/domain/publicart"
+    }
+  },
+  "docstructure": {
+    "valuationcontrols_common": {
+      "valueAmountsList": {
+        "valueAmounts": {
+        }
+      }
+    },
+    "valuationcontrols_publicart": {
+      "insuranceGroupList": {
+        "insuranceGroup": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "valuationcontrolRefNumber",
+      "datacolumn": "valuationcontrolRefNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueCurrency",
+      "datacolumn": "valueCurrency",
+      "transforms": {
+        "vocabulary": "currency"
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+        "valueAmountsList",
+        "valueAmounts"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "valueAmount",
+      "datacolumn": "valueAmount",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+        "valueAmountsList",
+        "valueAmounts"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "valueDate",
+      "datacolumn": "valueDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueRenewalDate",
+      "datacolumn": "valueRenewalDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueSource",
+      "datacolumn": "valueSourcePersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueSource",
+      "datacolumn": "valueSourcePersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueSource",
+      "datacolumn": "valueSourceOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueSource",
+      "datacolumn": "valueSourceOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueSourceRole",
+      "datacolumn": "valueSourceRole",
+      "transforms": {
+        "vocabulary": "valuationsourcerole"
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueType",
+      "datacolumn": "valueType",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "valueNote",
+      "datacolumn": "valueNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "insurer",
+      "datacolumn": "insurerPersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+        "insuranceGroupList",
+        "insuranceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "insurer",
+      "datacolumn": "insurerPersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+        "insuranceGroupList",
+        "insuranceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "insurer",
+      "datacolumn": "insurerOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+        "insuranceGroupList",
+        "insuranceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "insurer",
+      "datacolumn": "insurerOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+        "insuranceGroupList",
+        "insuranceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "insuranceNote",
+      "datacolumn": "insuranceNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+        "insuranceGroupList",
+        "insuranceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "insurancePolicyNumber",
+      "datacolumn": "insurancePolicyNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+        "insuranceGroupList",
+        "insuranceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "insuranceRenewalDate",
+      "datacolumn": "insuranceRenewalDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "valuationcontrols_publicart",
+      "xpath": [
+        "insuranceGroupList",
+        "insuranceGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+== Setup
+
+Requires:
+
+- collectionspace-client
+- collectionspace-refcache
+
+Examples of setting up client and refcache are available in https://github.com/collectionspace/collectionspace-refcache/blob/master/doc/REFCACHE.md[the REFCACHE doc] and in https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/helpers.rb[`/spec/helpers.rb`] in this repo.
+
+- a `cspace-config-untangler` RecordMapper
+** a RecordMapper can be requested directly from `cspace-config-untangler`, if you have that set up
+** a RecordMapper JSON file written by `cspace-config-untangler` may be read in and parsed as a hash, but the keys of some parts need to be transformed back into symbols:
+
+[source,ruby]
+----
+rm = JSON.parse(File.read(path))
+rm.transform_keys!(&:to_sym)
+rm[:config].transform_keys!(&:to_sym)
+rm[:mappings].each do |m|
+  m.transform_keys!(&:to_sym)
+  unless m[:transforms].empty?
+    m[:transforms].transform_keys!(&:to_sym)
+  end
+end
+----
+
+RecordMapper JSON files for all current profile/rectype combinations can be found in: `spec/fixtures/files/mappers`
+== Config
+
+A dataset-specific configuration hash must be passed in when creating a new DataHandler.
+
+.Example config hash
+[source,ruby]
+----
+{
+  delimiter: ';',
+  subgroup_delimiter: '^^',
+  transforms: {
+    'collection' => {
+      special: %w[downcase_value],
+      replacements: [
+        { find: ' ', replace: '-', type: :plain }
+      ]
+    }
+  },
+  default_values: {
+    'publishTo' => 'DPLA;Omeka',
+    'collection' => 'library-collection'
+  },
+  force_defaults: false
+}
+----
+
+- `:delimiter` - *required* - String - delimiter character or string used to split repeatable values
+- `:subgroup_delimiter` - *required* - String - delimiter character or string used to split repeatable values nested inside other repeatable values (example: titleTranslation, titleTranslationLanguage)
+- `:transforms` - optional - Hash - Key (String) is the data hash field to which the transforms should be applied. Value (Hash) is structured transformation instructions.
+- `:default_values` - optional - Hash - Key (String) is the data hash field that should be populated. Value (String) is the default value for the field.
+- `:force_defaults` - optional - Boolean - Defaults to false - If false, default values will not replace or be added to values passed in via the data hash; default value will be inserted if field is missing or empty in data hash. If true, default value will replace any data hash values.
+
+== Usage
+
+Once client, cache, config, and record mapper are set up, create a new DataHandler:
+
+[source, ruby]
+----
+dh = DataHandler.new(record_mapper: rm, cache: anthro_cache, config: config)
+----
+
+The DataHandler processes the record mapper to generate a blank XML document template, and creates a list of xpaths to be mapped with information about how to map the children of each xpath (e.g. as stand-alone fields? as members of a repeating field group?).
+
+Once the DataHandler is set up, you send it data hashes for initial validation and mapping.
+
+.Example data hash
+[source,ruby]
+----
+data = {
+        'objectNumber'=>'20CS.001.0001',
+        'numberValue'=>'123;456',
+        'numberType'=>'isbn;oclc'
+       }
+----
+
+[NOTE]
+====
+The keys of a data hash are downcased for processing.
+====
+
+=== Initial validation
+
+To validate a data hash: 
+
+[source,ruby]
+----
+validation_result = dh.validate(data)
+----
+
+`validation_result` will be an array. If empty, the data meets the minimum criteria to be mapped. Currently this means:
+
+- data hash includes all required fields
+- required fields in the data hash are _not_ empty
+
+
+If not empty, `validation_result` will contain one or more error hashes. *Presence of these errors indicates the data hash should _not_ be mapped.* The structure of the error hash is:
+
+[source,ruby]
+----
+{
+  level: :error,
+  field: 'fieldname',
+  type: 'error type/category',
+  message: 'specific error message/description'
+}
+----
+
+[NOTE]
+====
+Application calling `collectionspace-mapper` should keep track of which row (or other unit of data) is being sent as a data hash, so errors and warnings can be informative.
+====
+
+Currently, the only `:type` being created is 'required fields'.
+
+The `:message` may be "required field missing" or "required field is empty".
+
+[NOTE]
+====
+If application calling `collectionspace-mapper` is generating a hash from each row of a CSV without pre-processing, then receipt of "required field missing" error on the first data hash sent probably indicates the CSV is missing a required column entirely. In this case the best design may be to stop after validation of the first data row instead of sending all data to be validated/mapped.
+====
+
+=== Mapping
+
+If a data hash validates, the next step is to map it:
+
+[source,ruby]
+----
+map_result = dh.map(data)
+----
+
+`map_result` will be a `CollectionSpace::Mapper::MapResult` object that packages the following:
+
+- `doc` - `Nokogiri::XML::Document` - the main XML document for the record type you are processing
+- `warnings` - array of warning hashes having the same structure as the error hash described above, but `:level` will be `:warning` instead of `:error` - These warnings are about things that will not prevent transfer or update of records in CollectionSpace, but that might indicate data problems that should be fixed before you continue. Some of these warnings depend on steps in the mapping process to have aleady occurred before the result is examined.
+- authorities - hash of data for authority terms not found in cache or search of CollectionSpace. Structure is:
+
+[source,ruby]
+----
+{
+  authority_type: {
+    authority_subtype: [
+      { short_id: 'shortIdentifier12345', stub_doc: `Nokogiri::XML::Document` }
+    ]
+  }
+}
+----
+
+- vocabularies - hash of data for vocabulary terms not found in cache or search of CollectionSpace. Structure is:
+
+[source,ruby]
+----
+{
+  vocabulary_name: [
+    { short_id: 'shortIdentifier12345', stub_doc: `Nokogiri::XML::Document` }
+  ]
+}
+----

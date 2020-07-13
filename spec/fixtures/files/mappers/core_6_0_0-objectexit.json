@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "objectexit",
     "service_name": "ObjectExit",
     "service_path": "objectexit",

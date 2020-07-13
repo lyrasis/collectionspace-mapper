@@ -1,0 +1,189 @@
+{
+  "config": {
+    "document_name": "objectexit",
+    "service_name": "ObjectExit",
+    "service_path": "objectexit",
+    "service_type": "procedure",
+    "object_name": "ObjectExit",
+    "profile_basename": "botgarden",
+    "ns_uri": {
+      "objectexit_common": "http://collectionspace.org/services/objectexit",
+      "objectexit_naturalhistory_extension": "http://collectionspace.org/objectexit/domain/naturalhistory_extension"
+    }
+  },
+  "docstructure": {
+    "objectexit_common": {
+      "exitMethods": {
+      }
+    },
+    "objectexit_naturalhistory_extension": {
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "exitNumber",
+      "datacolumn": "exitNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "exitDateGroup",
+      "datacolumn": "exitDateGroup",
+      "transforms": {
+        "special": [
+          "structured_date"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "structured date group",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "currentOwner",
+      "datacolumn": "currentOwnerPerson",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "currentOwner",
+      "datacolumn": "currentOwnerOrganization",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "exitMethod",
+      "datacolumn": "exitMethod",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+        "exitMethods"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "depositor",
+      "datacolumn": "depositor",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "exitReason",
+      "datacolumn": "exitReason",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "count",
+      "datacolumn": "count",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_naturalhistory_extension",
+      "xpath": [
+
+      ],
+      "data_type": "integer",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "exitNote",
+      "datacolumn": "exitNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "packingNote",
+      "datacolumn": "packingNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "objectexit_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

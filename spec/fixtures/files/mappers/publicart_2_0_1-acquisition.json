@@ -1,0 +1,617 @@
+{
+  "config": {
+    "document_name": "acquisitions",
+    "service_name": "Acquisition",
+    "service_path": "acquisitions",
+    "service_type": "procedure",
+    "object_name": "Acquisition",
+    "profile_basename": "publicart",
+    "ns_uri": {
+      "acquisitions_common": "http://collectionspace.org/services/acquisition",
+      "acquisitions_publicart": "http://collectionspace.org/services/acquisition/domain/publicart",
+      "acquisitions_commission": null
+    }
+  },
+  "docstructure": {
+    "acquisitions_common": {
+      "acquisitionSources": {
+      },
+      "owners": {
+      },
+      "acquisitionFundingList": {
+        "acquisitionFunding": {
+        }
+      }
+    },
+    "acquisitions_publicart": {
+      "acquisitionDates": {
+      }
+    },
+    "acquisitions_commission": {
+      "commissioningBodyList": {
+      },
+      "commissionBudgetGroupList": {
+        "commissionBudgetGroup": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "acquisitionReferenceNumber",
+      "datacolumn": "acquisitionReferenceNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "accessionDate",
+      "datacolumn": "accessionDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_publicart",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "acquisitionAuthorizer",
+      "datacolumn": "acquisitionAuthorizer",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "acquisitionAuthorizerDate",
+      "datacolumn": "acquisitionAuthorizerDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "acquisitionDate",
+      "datacolumn": "acquisitionDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_publicart",
+      "xpath": [
+        "acquisitionDates"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "acquisitionMethod",
+      "datacolumn": "acquisitionMethod",
+      "transforms": {
+        "vocabulary": "acquisitionmethod"
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "acquisitionSource",
+      "datacolumn": "acquisitionSourcePersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionSources"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "acquisitionSource",
+      "datacolumn": "acquisitionSourcePersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionSources"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "acquisitionSource",
+      "datacolumn": "acquisitionSourceOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionSources"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "acquisitionSource",
+      "datacolumn": "acquisitionSourceOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionSources"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "owner",
+      "datacolumn": "ownerPersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "owners"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "owner",
+      "datacolumn": "ownerPersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "owners"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "owner",
+      "datacolumn": "ownerOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "owners"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "owner",
+      "datacolumn": "ownerOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "owners"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "acquisitionReason",
+      "datacolumn": "acquisitionReason",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "acquisitionNote",
+      "datacolumn": "acquisitionNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "acquisitionFundingCurrency",
+      "datacolumn": "acquisitionFundingCurrency",
+      "transforms": {
+        "vocabulary": "currency"
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionFundingList",
+        "acquisitionFunding"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "acquisitionFundingValue",
+      "datacolumn": "acquisitionFundingValue",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionFundingList",
+        "acquisitionFunding"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "acquisitionFundingSource",
+      "datacolumn": "acquisitionFundingSourcePersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionFundingList",
+        "acquisitionFunding"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "acquisitionFundingSource",
+      "datacolumn": "acquisitionFundingSourcePersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionFundingList",
+        "acquisitionFunding"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "acquisitionFundingSource",
+      "datacolumn": "acquisitionFundingSourceOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionFundingList",
+        "acquisitionFunding"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "acquisitionFundingSource",
+      "datacolumn": "acquisitionFundingSourceOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionFundingList",
+        "acquisitionFunding"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "acquisitionFundingSourceProvisos",
+      "datacolumn": "acquisitionFundingSourceProvisos",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+        "acquisitionFundingList",
+        "acquisitionFunding"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "creditLine",
+      "datacolumn": "creditLine",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "commissioningBody",
+      "datacolumn": "commissioningBodyPerson",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissioningBodyList"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "commissioningBody",
+      "datacolumn": "commissioningBodyOrganization",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissioningBodyList"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "commissionDate",
+      "datacolumn": "commissionDate",
+      "transforms": {
+        "special": [
+          "structured_date"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+
+      ],
+      "data_type": "structured date group",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "commissionBudgetType",
+      "datacolumn": "commissionBudgetType",
+      "transforms": {
+        "vocabulary": "budgettype"
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissionBudgetGroupList",
+        "commissionBudgetGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "commissionBudgetTypeNote",
+      "datacolumn": "commissionBudgetTypeNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissionBudgetGroupList",
+        "commissionBudgetGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "commissionProjectedValueCurrency",
+      "datacolumn": "commissionProjectedValueCurrency",
+      "transforms": {
+        "vocabulary": "currency"
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissionBudgetGroupList",
+        "commissionBudgetGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "commissionProjectedValueAmount",
+      "datacolumn": "commissionProjectedValueAmount",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissionBudgetGroupList",
+        "commissionBudgetGroup"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "commissionActualValueCurrency",
+      "datacolumn": "commissionActualValueCurrency",
+      "transforms": {
+        "vocabulary": "currency"
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissionBudgetGroupList",
+        "commissionBudgetGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "commissionActualValueAmount",
+      "datacolumn": "commissionActualValueAmount",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "acquisitions_commission",
+      "xpath": [
+        "commissionBudgetGroupList",
+        "commissionBudgetGroup"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    }
+  ]
+}

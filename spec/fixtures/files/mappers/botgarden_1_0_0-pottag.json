@@ -1,0 +1,132 @@
+{
+  "config": {
+    "document_name": "pottags",
+    "service_name": "Pottags",
+    "service_path": "pottags",
+    "service_type": "procedure",
+    "object_name": "Pottag",
+    "profile_basename": "botgarden",
+    "ns_uri": {
+      "pottags_common": "http://collectionspace.org/services/pottag"
+    }
+  },
+  "docstructure": {
+    "pottags_common": {
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "family",
+      "datacolumn": "family",
+      "transforms": {
+        "authority": [
+          "taxonomyauthority",
+          "taxon"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "pottags_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "commonName",
+      "datacolumn": "commonName",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "pottags_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "locale",
+      "datacolumn": "locale",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "pottags_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "taxonName",
+      "datacolumn": "taxonName",
+      "transforms": {
+        "authority": [
+          "taxonomyauthority",
+          "taxon"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "pottags_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "numberOfLabels",
+      "datacolumn": "numberOfLabels",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "pottags_common",
+      "xpath": [
+
+      ],
+      "data_type": "integer",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "printLabels",
+      "datacolumn": "printLabels",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "pottags_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "labelData",
+      "datacolumn": "labelData",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "pottags_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

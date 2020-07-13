@@ -4,12 +4,10 @@ module CollectionSpace
   module Mapper
     class DataValidator
       ::DataValidator = CollectionSpace::Mapper::DataValidator
-      attr_reader :mapper, :cache,
-        :id_field, :required_fields
+      attr_reader :mapper, :cache, :required_fields
       def initialize(record_mapper:, cache:)
         @mapper = record_mapper
         @cache = cache
-        @id_field = Mapper::CONFIG[:rec_id_field].downcase
         @required_fields = @mapper[:mappings].select{ |mapping| mapping[:required] == 'y' }
           .map{ |mapping| mapping[:datacolumn].downcase }
       end
@@ -31,14 +29,12 @@ module CollectionSpace
         err = nil
         if val.nil?
           err = {level: :error,
-                 data_id: data[@id_field],
                  field: f,
                  type: 'required fields',
                  message: 'required field missing'
                 }
         elsif val.empty?
           err = {level: :error,
-                 data_id: data[@id_field],
                  field: f,
                  type: 'required fields',
                  message: 'required field is empty'

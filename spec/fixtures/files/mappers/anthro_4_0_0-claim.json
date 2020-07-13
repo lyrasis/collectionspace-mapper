@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "claims",
     "service_name": "Claim",
     "service_path": "claims",

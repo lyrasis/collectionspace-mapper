@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "conservation",
     "service_name": "Conservation",
     "service_path": "conservation",

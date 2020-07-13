@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "movements",
     "service_name": "Movements",
     "service_path": "movements",

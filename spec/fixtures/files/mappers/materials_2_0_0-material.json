@@ -1,0 +1,1998 @@
+{
+  "config": {
+    "document_name": "materials",
+    "service_name": "Materials",
+    "service_path": "materialauthorities",
+    "service_type": "authority",
+    "object_name": "Materialitem",
+    "profile_basename": "materials",
+    "ns_uri": {
+      "materials_common": "http://collectionspace.org/services/materiales"
+    }
+  },
+  "docstructure": {
+    "materials_common": {
+      "materialTermGroupList": {
+        "materialTermGroup": {
+        }
+      },
+      "publishToList": {
+      },
+      "materialCompositionGroupList": {
+        "materialCompositionGroup": {
+        }
+      },
+      "typicalUses": {
+      },
+      "materialProductionOrganizationGroupList": {
+        "materialProductionOrganizationGroup": {
+        }
+      },
+      "materialProductionPersonGroupList": {
+        "materialProductionPersonGroup": {
+        }
+      },
+      "materialProductionPlaceGroupList": {
+        "materialProductionPlaceGroup": {
+        }
+      },
+      "featuredApplicationGroupList": {
+        "featuredApplicationGroup": {
+        }
+      },
+      "materialCitationGroupList": {
+        "materialCitationGroup": {
+        }
+      },
+      "externalUrlGroupList": {
+        "externalUrlGroup": {
+        }
+      },
+      "additionalResourceGroupList": {
+        "additionalResourceGroup": {
+        }
+      },
+      "materialTermAttributionContributingGroupList": {
+        "materialTermAttributionContributingGroup": {
+        }
+      },
+      "materialTermAttributionEditingGroupList": {
+        "materialTermAttributionEditingGroup": {
+        }
+      },
+      "formTypeGroupList": {
+        "formTypeGroup": {
+        }
+      },
+      "typicalSizeGroupList": {
+        "typicalSizeGroup": {
+          "typicalSizeDimensionGroupList": {
+            "typicalSizeDimensionGroup": {
+            }
+          }
+        }
+      },
+      "acousticalPropertyGroupList": {
+        "acousticalPropertyGroup": {
+        }
+      },
+      "durabilityPropertyGroupList": {
+        "durabilityPropertyGroup": {
+        }
+      },
+      "electricalPropertyGroupList": {
+        "electricalPropertyGroup": {
+        }
+      },
+      "hygrothermalPropertyGroupList": {
+        "hygrothermalPropertyGroup": {
+        }
+      },
+      "mechanicalPropertyGroupList": {
+        "mechanicalPropertyGroup": {
+        }
+      },
+      "opticalPropertyGroupList": {
+        "opticalPropertyGroup": {
+        }
+      },
+      "sensorialPropertyGroupList": {
+        "sensorialPropertyGroup": {
+        }
+      },
+      "smartMaterialPropertyGroupList": {
+        "smartMaterialPropertyGroup": {
+        }
+      },
+      "additionalPropertyGroupList": {
+        "additionalPropertyGroup": {
+        }
+      },
+      "recycledContentGroupList": {
+        "recycledContentGroup": {
+        }
+      },
+      "lifecycleComponentGroupList": {
+        "lifecycleComponentGroup": {
+        }
+      },
+      "embodiedEnergyGroupList": {
+        "embodiedEnergyGroup": {
+        }
+      },
+      "certificationCreditGroupList": {
+        "certificationCreditGroup": {
+        }
+      },
+      "castingProcesses": {
+      },
+      "joiningProcesses": {
+      },
+      "moldingProcesses": {
+      },
+      "surfacingProcesses": {
+      },
+      "deformingProcesses": {
+      },
+      "machiningProcesses": {
+      },
+      "rapidPrototypingProcesses": {
+      },
+      "additionalProcessGroupList": {
+        "additionalProcessGroup": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "termDisplayName",
+      "datacolumn": "termDisplayName",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termName",
+      "datacolumn": "termName",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termQualifier",
+      "datacolumn": "termQualifier",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termStatus",
+      "datacolumn": "termStatus",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termType",
+      "datacolumn": "termType",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termFlag",
+      "datacolumn": "termFlag",
+      "transforms": {
+        "vocabulary": "materialtermflag"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "historicalStatus",
+      "datacolumn": "historicalStatus",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termLanguage",
+      "datacolumn": "termLanguage",
+      "transforms": {
+        "vocabulary": "languages"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termPrefForLang",
+      "datacolumn": "termPrefForLang",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSource",
+      "datacolumn": "termSourceLocal",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "citation"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSource",
+      "datacolumn": "termSourceShared",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "citation_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceDetail",
+      "datacolumn": "termSourceDetail",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceID",
+      "datacolumn": "termSourceID",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "termSourceNote",
+      "datacolumn": "termSourceNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermGroupList",
+        "materialTermGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "publishTo",
+      "datacolumn": "publishTo",
+      "transforms": {
+        "vocabulary": "publishto"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "publishToList"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "materialCompositionFamilyName",
+      "datacolumn": "materialCompositionFamilyNameMaterialclassification",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "materialclassification"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCompositionGroupList",
+        "materialCompositionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCompositionFamilyName",
+      "datacolumn": "materialCompositionFamilyNameSharedmaterialclassification",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "materialclassification_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCompositionGroupList",
+        "materialCompositionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCompositionClassName",
+      "datacolumn": "materialCompositionClassNameMaterialclassification",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "materialclassification"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCompositionGroupList",
+        "materialCompositionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCompositionClassName",
+      "datacolumn": "materialCompositionClassNameSharedmaterialclassification",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "materialclassification_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCompositionGroupList",
+        "materialCompositionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCompositionGenericName",
+      "datacolumn": "materialCompositionGenericNameMaterialclassification",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "materialclassification"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCompositionGroupList",
+        "materialCompositionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCompositionGenericName",
+      "datacolumn": "materialCompositionGenericNameSharedmaterialclassification",
+      "transforms": {
+        "authority": [
+          "conceptauthorities",
+          "materialclassification_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCompositionGroupList",
+        "materialCompositionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "description",
+      "datacolumn": "description",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "typicalUse",
+      "datacolumn": "typicalUse",
+      "transforms": {
+        "vocabulary": "materialuse"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "typicalUses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "discontinued",
+      "datacolumn": "discontinued",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "discontinuedBy",
+      "datacolumn": "discontinuedByLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "discontinuedBy",
+      "datacolumn": "discontinuedByShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "discontinuedDate",
+      "datacolumn": "discontinuedDate",
+      "transforms": {
+        "special": [
+          "structured_date"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "structured date group",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "productionDate",
+      "datacolumn": "productionDate",
+      "transforms": {
+        "special": [
+          "structured_date"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "structured date group",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "productionNote",
+      "datacolumn": "productionNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "materialProductionOrganization",
+      "datacolumn": "materialProductionOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionOrganizationGroupList",
+        "materialProductionOrganizationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionOrganization",
+      "datacolumn": "materialProductionOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionOrganizationGroupList",
+        "materialProductionOrganizationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionOrganizationRole",
+      "datacolumn": "materialProductionOrganizationRole",
+      "transforms": {
+        "vocabulary": "materialproductionrole"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionOrganizationGroupList",
+        "materialProductionOrganizationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionPerson",
+      "datacolumn": "materialProductionPersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionPersonGroupList",
+        "materialProductionPersonGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionPerson",
+      "datacolumn": "materialProductionPersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionPersonGroupList",
+        "materialProductionPersonGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionPersonRole",
+      "datacolumn": "materialProductionPersonRole",
+      "transforms": {
+        "vocabulary": "materialproductionrole"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionPersonGroupList",
+        "materialProductionPersonGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionPlace",
+      "datacolumn": "materialProductionPlaceLocal",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionPlaceGroupList",
+        "materialProductionPlaceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionPlace",
+      "datacolumn": "materialProductionPlaceShared",
+      "transforms": {
+        "authority": [
+          "placeauthorities",
+          "place_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionPlaceGroupList",
+        "materialProductionPlaceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialProductionPlaceRole",
+      "datacolumn": "materialProductionPlaceRole",
+      "transforms": {
+        "vocabulary": "materialproductionrole"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialProductionPlaceGroupList",
+        "materialProductionPlaceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "featuredApplication",
+      "datacolumn": "featuredApplicationLocal",
+      "transforms": {
+        "authority": [
+          "workauthorities",
+          "work"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "featuredApplicationGroupList",
+        "featuredApplicationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "featuredApplication",
+      "datacolumn": "featuredApplicationShared",
+      "transforms": {
+        "authority": [
+          "workauthorities",
+          "work_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "featuredApplicationGroupList",
+        "featuredApplicationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "featuredApplicationNote",
+      "datacolumn": "featuredApplicationNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "featuredApplicationGroupList",
+        "featuredApplicationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCitationSource",
+      "datacolumn": "materialCitationSourceLocal",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "citation"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCitationGroupList",
+        "materialCitationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCitationSource",
+      "datacolumn": "materialCitationSourceShared",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "citation_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCitationGroupList",
+        "materialCitationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialCitationSourceDetail",
+      "datacolumn": "materialCitationSourceDetail",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialCitationGroupList",
+        "materialCitationGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "externalUrl",
+      "datacolumn": "externalUrl",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "externalUrlGroupList",
+        "externalUrlGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "externalUrlNote",
+      "datacolumn": "externalUrlNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "externalUrlGroupList",
+        "externalUrlGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalResource",
+      "datacolumn": "additionalResource",
+      "transforms": {
+        "vocabulary": "materialresource"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "additionalResourceGroupList",
+        "additionalResourceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalResourceNote",
+      "datacolumn": "additionalResourceNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "additionalResourceGroupList",
+        "additionalResourceGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionContributingOrganization",
+      "datacolumn": "materialTermAttributionContributingOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionContributingGroupList",
+        "materialTermAttributionContributingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionContributingOrganization",
+      "datacolumn": "materialTermAttributionContributingOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionContributingGroupList",
+        "materialTermAttributionContributingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionContributingPerson",
+      "datacolumn": "materialTermAttributionContributingPersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionContributingGroupList",
+        "materialTermAttributionContributingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionContributingPerson",
+      "datacolumn": "materialTermAttributionContributingPersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionContributingGroupList",
+        "materialTermAttributionContributingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionContributingDate",
+      "datacolumn": "materialTermAttributionContributingDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionContributingGroupList",
+        "materialTermAttributionContributingGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionEditingOrganization",
+      "datacolumn": "materialTermAttributionEditingOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionEditingGroupList",
+        "materialTermAttributionEditingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionEditingOrganization",
+      "datacolumn": "materialTermAttributionEditingOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionEditingGroupList",
+        "materialTermAttributionEditingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionEditingPerson",
+      "datacolumn": "materialTermAttributionEditingPersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionEditingGroupList",
+        "materialTermAttributionEditingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionEditingPerson",
+      "datacolumn": "materialTermAttributionEditingPersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionEditingGroupList",
+        "materialTermAttributionEditingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionEditingNote",
+      "datacolumn": "materialTermAttributionEditingNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionEditingGroupList",
+        "materialTermAttributionEditingGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "materialTermAttributionEditingDate",
+      "datacolumn": "materialTermAttributionEditingDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "materialTermAttributionEditingGroupList",
+        "materialTermAttributionEditingGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "commonForm",
+      "datacolumn": "commonForm",
+      "transforms": {
+        "vocabulary": "materialform"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "formType",
+      "datacolumn": "formType",
+      "transforms": {
+        "vocabulary": "materialformtype"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "formTypeGroupList",
+        "formTypeGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "typicalSize",
+      "datacolumn": "typicalSize",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "typicalSizeGroupList",
+        "typicalSizeGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "dimension",
+      "datacolumn": "dimension",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "typicalSizeGroupList",
+        "typicalSizeGroup",
+        "typicalSizeDimensionGroupList",
+        "typicalSizeDimensionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "measurementUnit",
+      "datacolumn": "measurementUnit",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "typicalSizeGroupList",
+        "typicalSizeGroup",
+        "typicalSizeDimensionGroupList",
+        "typicalSizeDimensionGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "value",
+      "datacolumn": "value",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "typicalSizeGroupList",
+        "typicalSizeGroup",
+        "typicalSizeDimensionGroupList",
+        "typicalSizeDimensionGroup"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "formNote",
+      "datacolumn": "formNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "acousticalPropertyType",
+      "datacolumn": "acousticalPropertyType",
+      "transforms": {
+        "vocabulary": "acousticalproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "acousticalPropertyGroupList",
+        "acousticalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "acousticalPropertyNote",
+      "datacolumn": "acousticalPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "acousticalPropertyGroupList",
+        "acousticalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "durabilityPropertyType",
+      "datacolumn": "durabilityPropertyType",
+      "transforms": {
+        "vocabulary": "durabilityproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "durabilityPropertyGroupList",
+        "durabilityPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "durabilityPropertyNote",
+      "datacolumn": "durabilityPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "durabilityPropertyGroupList",
+        "durabilityPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "electricalPropertyType",
+      "datacolumn": "electricalPropertyType",
+      "transforms": {
+        "vocabulary": "electricalproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "electricalPropertyGroupList",
+        "electricalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "electricalPropertyNote",
+      "datacolumn": "electricalPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "electricalPropertyGroupList",
+        "electricalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "hygrothermalPropertyType",
+      "datacolumn": "hygrothermalPropertyType",
+      "transforms": {
+        "vocabulary": "hygrothermalproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "hygrothermalPropertyGroupList",
+        "hygrothermalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "hygrothermalPropertyNote",
+      "datacolumn": "hygrothermalPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "hygrothermalPropertyGroupList",
+        "hygrothermalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "mechanicalPropertyType",
+      "datacolumn": "mechanicalPropertyType",
+      "transforms": {
+        "vocabulary": "mechanicalproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "mechanicalPropertyGroupList",
+        "mechanicalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "mechanicalPropertyNote",
+      "datacolumn": "mechanicalPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "mechanicalPropertyGroupList",
+        "mechanicalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "opticalPropertyType",
+      "datacolumn": "opticalPropertyType",
+      "transforms": {
+        "vocabulary": "opticalproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "opticalPropertyGroupList",
+        "opticalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "opticalPropertyNote",
+      "datacolumn": "opticalPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "opticalPropertyGroupList",
+        "opticalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "sensorialPropertyType",
+      "datacolumn": "sensorialPropertyType",
+      "transforms": {
+        "vocabulary": "sensorialproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "sensorialPropertyGroupList",
+        "sensorialPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "sensorialPropertyNote",
+      "datacolumn": "sensorialPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "sensorialPropertyGroupList",
+        "sensorialPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "smartMaterialPropertyType",
+      "datacolumn": "smartMaterialPropertyType",
+      "transforms": {
+        "vocabulary": "smartmaterialproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "smartMaterialPropertyGroupList",
+        "smartMaterialPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "smartMaterialPropertyNote",
+      "datacolumn": "smartMaterialPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "smartMaterialPropertyGroupList",
+        "smartMaterialPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalPropertyType",
+      "datacolumn": "additionalPropertyType",
+      "transforms": {
+        "vocabulary": "additionalproperties"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "additionalPropertyGroupList",
+        "additionalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalPropertyNote",
+      "datacolumn": "additionalPropertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "additionalPropertyGroupList",
+        "additionalPropertyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "propertyNote",
+      "datacolumn": "propertyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "recycledContent",
+      "datacolumn": "recycledContent",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "recycledContentGroupList",
+        "recycledContentGroup"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "recycledContentHigh",
+      "datacolumn": "recycledContentHigh",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "recycledContentGroupList",
+        "recycledContentGroup"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "recycledContentQualifier",
+      "datacolumn": "recycledContentQualifier",
+      "transforms": {
+        "vocabulary": "recycledcontentqualifiers"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "recycledContentGroupList",
+        "recycledContentGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lifecycleComponent",
+      "datacolumn": "lifecycleComponent",
+      "transforms": {
+        "vocabulary": "lifecyclecomponents"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "lifecycleComponentGroupList",
+        "lifecycleComponentGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lifecycleComponentNote",
+      "datacolumn": "lifecycleComponentNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "lifecycleComponentGroupList",
+        "lifecycleComponentGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "embodiedEnergyValue",
+      "datacolumn": "embodiedEnergyValue",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "embodiedEnergyGroupList",
+        "embodiedEnergyGroup"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "embodiedEnergyValueHigh",
+      "datacolumn": "embodiedEnergyValueHigh",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "embodiedEnergyGroupList",
+        "embodiedEnergyGroup"
+      ],
+      "data_type": "float",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "embodiedEnergyUnit",
+      "datacolumn": "embodiedEnergyUnit",
+      "transforms": {
+        "vocabulary": "energyunits"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "embodiedEnergyGroupList",
+        "embodiedEnergyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "embodiedEnergyNote",
+      "datacolumn": "embodiedEnergyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "embodiedEnergyGroupList",
+        "embodiedEnergyGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "certificationProgram",
+      "datacolumn": "certificationProgram",
+      "transforms": {
+        "vocabulary": "ecologicalcertifications"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "certificationCreditGroupList",
+        "certificationCreditGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "certificationCreditNote",
+      "datacolumn": "certificationCreditNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "certificationCreditGroupList",
+        "certificationCreditGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "ecologyNote",
+      "datacolumn": "ecologyNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "castingProcess",
+      "datacolumn": "castingProcess",
+      "transforms": {
+        "vocabulary": "castingprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "castingProcesses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "joiningProcess",
+      "datacolumn": "joiningProcess",
+      "transforms": {
+        "vocabulary": "joiningprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "joiningProcesses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "moldingProcess",
+      "datacolumn": "moldingProcess",
+      "transforms": {
+        "vocabulary": "moldingprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "moldingProcesses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "surfacingProcess",
+      "datacolumn": "surfacingProcess",
+      "transforms": {
+        "vocabulary": "surfacingprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "surfacingProcesses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "deformingProcess",
+      "datacolumn": "deformingProcess",
+      "transforms": {
+        "vocabulary": "deformingprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "deformingProcesses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "machiningProcess",
+      "datacolumn": "machiningProcess",
+      "transforms": {
+        "vocabulary": "machiningprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "machiningProcesses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "rapidPrototypingProcess",
+      "datacolumn": "rapidPrototypingProcess",
+      "transforms": {
+        "vocabulary": "rapidprototypingprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "rapidPrototypingProcesses"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "additionalProcess",
+      "datacolumn": "additionalProcess",
+      "transforms": {
+        "vocabulary": "additionalprocesses"
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "additionalProcessGroupList",
+        "additionalProcessGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "additionalProcessNote",
+      "datacolumn": "additionalProcessNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+        "additionalProcessGroupList",
+        "additionalProcessGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "processNote",
+      "datacolumn": "processNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "materials_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

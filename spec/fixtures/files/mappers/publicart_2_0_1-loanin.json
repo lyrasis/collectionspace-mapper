@@ -1,0 +1,359 @@
+{
+  "config": {
+    "document_name": "loansin",
+    "service_name": "Loanin",
+    "service_path": "loansin",
+    "service_type": "procedure",
+    "object_name": "Loanin",
+    "profile_basename": "publicart",
+    "ns_uri": {
+      "loansin_common": "http://collectionspace.org/services/loanin"
+    }
+  },
+  "docstructure": {
+    "loansin_common": {
+      "loanStatusGroupList": {
+        "loanStatusGroup": {
+        }
+      },
+      "lenderGroupList": {
+        "lenderGroup": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "loanInNumber",
+      "datacolumn": "loanInNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "y",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanPurpose",
+      "datacolumn": "loanPurpose",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanGroup",
+      "datacolumn": "loanGroup",
+      "transforms": {
+        "vocabulary": "deaccessionapprovalgroup"
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "loanStatusGroupList",
+        "loanStatusGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "loanIndividual",
+      "datacolumn": "loanIndividualLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "loanStatusGroupList",
+        "loanStatusGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "loanIndividual",
+      "datacolumn": "loanIndividualShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "loanStatusGroupList",
+        "loanStatusGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "loanStatus",
+      "datacolumn": "loanStatus",
+      "transforms": {
+        "vocabulary": "loanoutstatus"
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "loanStatusGroupList",
+        "loanStatusGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "loanStatusDate",
+      "datacolumn": "loanStatusDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "loanStatusGroupList",
+        "loanStatusGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "loanStatusNote",
+      "datacolumn": "loanStatusNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "loanStatusGroupList",
+        "loanStatusGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lender",
+      "datacolumn": "lenderPersonLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "lenderGroupList",
+        "lenderGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lender",
+      "datacolumn": "lenderPersonShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "lenderGroupList",
+        "lenderGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lender",
+      "datacolumn": "lenderOrganizationLocal",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "lenderGroupList",
+        "lenderGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lender",
+      "datacolumn": "lenderOrganizationShared",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "lenderGroupList",
+        "lenderGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lendersContact",
+      "datacolumn": "lendersContactLocal",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "lenderGroupList",
+        "lenderGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lendersContact",
+      "datacolumn": "lendersContactShared",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person_shared"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "lenderGroupList",
+        "lenderGroup"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "lendersAuthorizationDate",
+      "datacolumn": "lendersAuthorizationDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+        "lenderGroupList",
+        "lenderGroup"
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "y"
+    },
+    {
+      "fieldname": "loanInConditions",
+      "datacolumn": "loanInConditions",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanInNote",
+      "datacolumn": "loanInNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanInDate",
+      "datacolumn": "loanInDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanReturnDate",
+      "datacolumn": "loanReturnDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansin_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

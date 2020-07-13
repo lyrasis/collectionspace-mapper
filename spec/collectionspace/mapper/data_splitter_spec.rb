@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::SimpleSplitter do
+  before(:all) do
+    Mapper.const_set('CONFIG', { delimiter: ';', subgroup_delimiter: '^^' })
+  end
+  
   describe '#result' do
     context 'when "a"' do
       it 'returns ["a"]' do
@@ -44,7 +48,11 @@ RSpec.describe CollectionSpace::Mapper::SimpleSplitter do
 end
 
 RSpec.describe CollectionSpace::Mapper::SubgroupSplitter do
-  describe '#result' do
+   before(:all) do
+    Mapper.const_set('CONFIG', { delimiter: ';', subgroup_delimiter: '^^' })
+  end
+
+   describe '#result' do
     context 'when "a^^b;c^^d"' do
       it 'returns [["a", "b"], ["c", "d"]]' do
         s = SubgroupSplitter.new('a^^b;c^^d')

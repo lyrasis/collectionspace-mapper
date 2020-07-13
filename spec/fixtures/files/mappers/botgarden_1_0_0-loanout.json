@@ -1,0 +1,361 @@
+{
+  "config": {
+    "document_name": "loansout",
+    "service_name": "Loanout",
+    "service_path": "loansout",
+    "service_type": "procedure",
+    "object_name": "Loanout",
+    "profile_basename": "botgarden",
+    "ns_uri": {
+      "loansout_common": "http://collectionspace.org/services/loanout",
+      "loansout_botgarden": "http://collectionspace.org/services/loanout/domain/botgarden",
+      "loansout_naturalhistory_extension": "http://collectionspace.org/services/loanout/domain/naturalhistory_extension"
+    }
+  },
+  "docstructure": {
+    "loansout_botgarden": {
+      "collectorList": {
+      }
+    },
+    "loansout_common": {
+    },
+    "loansout_naturalhistory_extension": {
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "collector",
+      "datacolumn": "collector",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+        "collectorList"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n"
+    },
+    {
+      "fieldname": "loanOutDate",
+      "datacolumn": "loanOutDate",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_common",
+      "xpath": [
+
+      ],
+      "data_type": "date",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanOutNumber",
+      "datacolumn": "loanOutNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "sterile",
+      "datacolumn": "sterile",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "fertile",
+      "datacolumn": "fertile",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "flowering",
+      "datacolumn": "flowering",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "fruiting",
+      "datacolumn": "fruiting",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "inSpore",
+      "datacolumn": "inSpore",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "hortWild",
+      "datacolumn": "hortWild",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "gardenLocation",
+      "datacolumn": "gardenLocation",
+      "transforms": {
+        "authority": [
+          "locationauthorities",
+          "location"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanPurpose",
+      "datacolumn": "loanPurpose",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "loanOutNote",
+      "datacolumn": "loanOutNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "fieldCollectionNote",
+      "datacolumn": "fieldCollectionNote",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "annotation",
+      "datacolumn": "annotation",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "borrower",
+      "datacolumn": "borrower",
+      "transforms": {
+        "authority": [
+          "orgauthorities",
+          "organization"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "numLent",
+      "datacolumn": "numLent",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_naturalhistory_extension",
+      "xpath": [
+
+      ],
+      "data_type": "integer",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "sheetAccessionNumber",
+      "datacolumn": "sheetAccessionNumber",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "lendersAuthorizer",
+      "datacolumn": "lendersAuthorizer",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "reviewComplete",
+      "datacolumn": "reviewComplete",
+      "transforms": {
+        "special": [
+          "boolean"
+        ]
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "boolean",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    },
+    {
+      "fieldname": "labelRequested",
+      "datacolumn": "labelRequested",
+      "transforms": {
+      },
+      "sourcetype": null,
+      "namespace": "loansout_botgarden",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "n",
+      "in_repeating_group": "n/a"
+    }
+  ]
+}

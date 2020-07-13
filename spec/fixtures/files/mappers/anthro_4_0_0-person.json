@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "persons",
     "service_name": "Persons",
     "service_path": "personauthorities",

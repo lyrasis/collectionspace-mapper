@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "loansout",
     "service_name": "Loanout",
     "service_path": "loansout",

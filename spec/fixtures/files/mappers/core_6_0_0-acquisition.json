@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "acquisitions",
     "service_name": "Acquisition",
     "service_path": "acquisitions",

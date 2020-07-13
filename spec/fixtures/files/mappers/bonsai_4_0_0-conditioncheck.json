@@ -1,5 +1,5 @@
-null
-config": {
+{
+  "config": {
     "document_name": "conditionchecks",
     "service_name": "Conditionchecks",
     "service_path": "conditionchecks",
