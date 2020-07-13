@@ -24,7 +24,7 @@ rm[:mappings].each do |m|
 end
 ----
 
-RecordMapper JSON files for all current profile/rectype combinations can be found in: `spec/fixtures/files/mappers`
+RecordMapper JSON files for all current profile/rectype combinations can be found in: https://github.com/collectionspace/collectionspace-mapper/tree/master/spec/fixtures/files/mappers[`spec/fixtures/files/mappers`].
 == Config
 
 A dataset-specific configuration hash must be passed in when creating a new DataHandler.
