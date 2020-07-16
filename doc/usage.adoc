@@ -48,7 +48,8 @@ A dataset-specific configuration hash must be passed in when creating a new Data
     'publishTo' => 'DPLA;Omeka',
     'collection' => 'library-collection'
   },
-  force_defaults: false
+  force_defaults: false,
+  date_element_order: 'month-day-year'
 }
 ----
 
@@ -57,6 +58,7 @@ A dataset-specific configuration hash must be passed in when creating a new Data
 - `:transforms` - optional - Hash - Key (String) is the data hash field to which the transforms should be applied. Value (Hash) is structured transformation instructions.
 - `:default_values` - optional - Hash - Key (String) is the data hash field that should be populated. Value (String) is the default value for the field.
 - `:force_defaults` - optional - Boolean - Defaults to false - If false, default values will not replace or be added to values passed in via the data hash; default value will be inserted if field is missing or empty in data hash. If true, default value will replace any data hash values.
+- `:date_element_order` - optional - String (`'month-day-year'` or `'day-month-year'`) - Defaults to `'month-day-year'`. Used to determine whether '11-02-1980' gets parsed as '1980-11-02' or '1980-02-11'.
 
 == Usage
 
@@ -140,26 +142,28 @@ map_result = dh.map(data)
 
 - `doc` - `Nokogiri::XML::Document` - the main XML document for the record type you are processing
 - `warnings` - Array - Elements are warning hashes having the same structure as the error hash described above, but `:level` will be `:warning` instead of `:error` - These warnings are about things that will not prevent transfer or update of records in CollectionSpace, but that might indicate data problems that should be fixed before you continue. Some of these warnings depend on steps in the mapping process to have aleady occurred before the result is examined.
-- authorities - *not yet implemented* - Hash - data for authority terms not found in cache or search of CollectionSpace. Structure is:
+- `:missing_terms` - Array - Elements are hashes of info about authority and vocabulary terms in the mapped data that were not found in the cache or a search of the instance.
 
+.Structure of a not-found authority term
 [source,ruby]
 ----
 {
-  authority_type: {
-    authority_subtype: [
-      { short_id: 'shortIdentifier12345', stub_doc: `Nokogiri::XML::Document` }
-    ]
-  }
+  category: :authority,
+  type: 'conceptauthorities',
+  subtype: 'archculture',
+  value: 'term string'
 }
 ----
 
-- vocabularies - *not yet implemented* - Hash - Data for vocabulary terms not found in cache or search of CollectionSpace. Structure is:
-
+.Structure of a not-found vocabulary term
 [source,ruby]
 ----
 {
-  vocabulary_name: [
-    { short_id: 'shortIdentifier12345', stub_doc: `Nokogiri::XML::Document` }
-  ]
+  category: :vocabulary,
+  type: 'vocabularies',
+  subtype: 'agerange',
+  value: 'middle aged'
 }
 ----
+
+
