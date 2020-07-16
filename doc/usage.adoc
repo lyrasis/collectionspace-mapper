@@ -48,8 +48,7 @@ A dataset-specific configuration hash must be passed in when creating a new Data
     'publishTo' => 'DPLA;Omeka',
     'collection' => 'library-collection'
   },
-  force_defaults: false,
-  date_element_order: 'month-day-year'
+  force_defaults: false
 }
 ----
 
@@ -58,7 +57,6 @@ A dataset-specific configuration hash must be passed in when creating a new Data
 - `:transforms` - optional - Hash - Key (String) is the data hash field to which the transforms should be applied. Value (Hash) is structured transformation instructions.
 - `:default_values` - optional - Hash - Key (String) is the data hash field that should be populated. Value (String) is the default value for the field.
 - `:force_defaults` - optional - Boolean - Defaults to false - If false, default values will not replace or be added to values passed in via the data hash; default value will be inserted if field is missing or empty in data hash. If true, default value will replace any data hash values.
-- `:date_element_order` - optional - String (`'month-day-year'` or `'day-month-year'`) - Defaults to `'month-day-year'`. Used to determine whether '11-02-1980' gets parsed as '1980-11-02' or '1980-02-11'.
 
 == Usage
 
