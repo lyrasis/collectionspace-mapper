@@ -59,7 +59,7 @@
       "datacolumn": "exhibitionNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
 
@@ -67,7 +67,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "type",
@@ -75,7 +78,7 @@
       "transforms": {
         "vocabulary": "exhibitiontype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "exhibitions_common",
       "xpath": [
 
@@ -83,14 +86,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "title",
       "datacolumn": "title",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
 
@@ -98,7 +104,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "sponsor",
@@ -109,7 +118,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "sponsors"
@@ -117,7 +126,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "sponsor",
@@ -128,7 +140,7 @@
           "ulan_pa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "sponsors"
@@ -136,7 +148,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "sponsor",
@@ -147,7 +162,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "sponsors"
@@ -155,7 +170,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "sponsor",
@@ -166,7 +184,7 @@
           "ulan_oa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "sponsors"
@@ -174,7 +192,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "organizer",
@@ -185,7 +206,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "organizers"
@@ -193,7 +214,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "organizer",
@@ -204,7 +228,7 @@
           "ulan_pa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "organizers"
@@ -212,7 +236,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "organizer",
@@ -223,7 +250,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "organizers"
@@ -231,7 +258,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "organizer",
@@ -242,7 +272,7 @@
           "ulan_oa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "organizers"
@@ -250,7 +280,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venue",
@@ -261,7 +294,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -270,7 +303,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venue",
@@ -281,7 +317,7 @@
           "ulan_oa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -290,7 +326,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venue",
@@ -301,7 +340,7 @@
           "location"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -310,7 +349,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venue",
@@ -321,7 +363,7 @@
           "offsite_sla"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -330,7 +372,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venue",
@@ -341,7 +386,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -350,7 +395,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venue",
@@ -361,7 +409,7 @@
           "tgn_place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -370,14 +418,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venueOpeningDate",
       "datacolumn": "venueOpeningDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -386,14 +437,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venueClosingDate",
       "datacolumn": "venueClosingDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -402,14 +456,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venueAttendance",
       "datacolumn": "venueAttendance",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -418,14 +475,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "venueUrl",
       "datacolumn": "venueUrl",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "venueGroupList",
@@ -434,14 +494,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "workingGroupTitle",
       "datacolumn": "workingGroupTitle",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "workingGroupList",
@@ -450,14 +513,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "workingGroupNote",
       "datacolumn": "workingGroupNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "workingGroupList",
@@ -466,7 +532,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionPerson",
@@ -477,7 +546,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "workingGroupList",
@@ -488,7 +557,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionPerson",
@@ -499,7 +571,7 @@
           "ulan_pa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "workingGroupList",
@@ -510,7 +582,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionPerson",
@@ -521,7 +596,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "workingGroupList",
@@ -532,7 +607,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionPerson",
@@ -543,7 +621,7 @@
           "ulan_oa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "workingGroupList",
@@ -554,7 +632,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionPersonRole",
@@ -562,7 +643,7 @@
       "transforms": {
         "vocabulary": "exhibitionpersonrole"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "exhibitions_common",
       "xpath": [
         "workingGroupList",
@@ -573,14 +654,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "planningNote",
       "datacolumn": "planningNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
 
@@ -588,14 +672,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "curatorialNote",
       "datacolumn": "curatorialNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
 
@@ -603,14 +690,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "generalNote",
       "datacolumn": "generalNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
 
@@ -618,14 +708,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "boilerplateText",
       "datacolumn": "boilerplateText",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
 
@@ -633,14 +726,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "restrictions",
       "datacolumn": "restrictions",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_lhmc",
       "xpath": [
 
@@ -648,14 +744,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "galleryRotationName",
       "datacolumn": "galleryRotationName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "galleryRotationGroupList",
@@ -664,17 +763,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "galleryRotationStartDateGroup",
       "datacolumn": "galleryRotationStartDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "galleryRotationGroupList",
@@ -683,17 +782,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "galleryRotationEndDateGroup",
       "datacolumn": "galleryRotationEndDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "galleryRotationGroupList",
@@ -702,14 +801,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "galleryRotationNote",
       "datacolumn": "galleryRotationNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "galleryRotationGroupList",
@@ -718,7 +820,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionReference",
@@ -729,7 +834,7 @@
           "citation"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionReferenceGroupList",
@@ -738,7 +843,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionReference",
@@ -749,7 +857,7 @@
           "worldcat"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionReferenceGroupList",
@@ -758,7 +866,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionReferenceType",
@@ -766,7 +877,7 @@
       "transforms": {
         "vocabulary": "exhibitionreferencetype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionReferenceGroupList",
@@ -775,14 +886,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionReferenceNote",
       "datacolumn": "exhibitionReferenceNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionReferenceGroupList",
@@ -791,14 +905,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionSectionName",
       "datacolumn": "exhibitionSectionName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionSectionGroupList",
@@ -807,14 +924,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionSectionLocation",
       "datacolumn": "exhibitionSectionLocation",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionSectionGroupList",
@@ -823,14 +943,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionSectionObjects",
       "datacolumn": "exhibitionSectionObjects",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionSectionGroupList",
@@ -839,14 +962,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionSectionNote",
       "datacolumn": "exhibitionSectionNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionSectionGroupList",
@@ -855,7 +981,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionStatus",
@@ -863,7 +992,7 @@
       "transforms": {
         "vocabulary": "exhibitionstatus"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionStatusGroupList",
@@ -872,14 +1001,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionStatusDate",
       "datacolumn": "exhibitionStatusDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionStatusGroupList",
@@ -888,14 +1020,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionStatusNote",
       "datacolumn": "exhibitionStatusNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionStatusGroupList",
@@ -904,14 +1039,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectNumber",
       "datacolumn": "exhibitionObjectNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -920,14 +1058,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectName",
       "datacolumn": "exhibitionObjectName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -936,14 +1077,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectConsCheckDate",
       "datacolumn": "exhibitionObjectConsCheckDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -952,14 +1096,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectConsTreatment",
       "datacolumn": "exhibitionObjectConsTreatment",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -968,14 +1115,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "Done",
+        "Needed",
+        "Not needed"
+      ]
     },
     {
       "fieldname": "exhibitionObjectMount",
       "datacolumn": "exhibitionObjectMount",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -984,14 +1136,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "Done",
+        "Needed",
+        "Not needed"
+      ]
     },
     {
       "fieldname": "exhibitionObjectSection",
       "datacolumn": "exhibitionObjectSection",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -1000,14 +1157,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectCase",
       "datacolumn": "exhibitionObjectCase",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -1016,14 +1176,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectSeqNum",
       "datacolumn": "exhibitionObjectSeqNum",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -1032,14 +1195,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectRotation",
       "datacolumn": "exhibitionObjectRotation",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -1048,14 +1214,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exhibitionObjectNote",
       "datacolumn": "exhibitionObjectNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "exhibitions_common",
       "xpath": [
         "exhibitionObjectGroupList",
@@ -1064,7 +1233,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

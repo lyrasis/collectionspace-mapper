@@ -26,7 +26,7 @@
       "datacolumn": "exitNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -34,17 +34,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exitDateGroup",
       "datacolumn": "exitDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -52,14 +52,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exitReason",
       "datacolumn": "exitReason",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -67,14 +70,22 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "betterExampleExists",
+        "cantPreserve",
+        "deteriorated",
+        "nagpraRepatriation",
+        "noLongerUseful",
+        "notCollectionThemed"
+      ]
     },
     {
       "fieldname": "exitQuantity",
       "datacolumn": "exitQuantity",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -82,14 +93,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exitMethod",
       "datacolumn": "exitMethod",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "objectexit_common",
       "xpath": [
         "exitMethods"
@@ -97,7 +111,12 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+        "deaccession",
+        "disposal",
+        "transfer"
+      ]
     },
     {
       "fieldname": "deaccessionApprovalGroup",
@@ -105,7 +124,7 @@
       "transforms": {
         "vocabulary": "deaccessionapprovalgroup"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "objectexit_common",
       "xpath": [
         "deacApprovalGroupList",
@@ -114,7 +133,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "deaccessionApprovalIndividual",
@@ -125,7 +147,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "objectexit_common",
       "xpath": [
         "deacApprovalGroupList",
@@ -134,7 +156,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "deaccessionApprovalStatus",
@@ -142,7 +167,7 @@
       "transforms": {
         "vocabulary": "deaccessionapprovalstatus"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "objectexit_common",
       "xpath": [
         "deacApprovalGroupList",
@@ -151,14 +176,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "deaccessionApprovalDate",
       "datacolumn": "deaccessionApprovalDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
         "deacApprovalGroupList",
@@ -167,14 +195,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "deaccessionApprovalNote",
       "datacolumn": "deaccessionApprovalNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
         "deacApprovalGroupList",
@@ -183,14 +214,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "exitNote",
       "datacolumn": "exitNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -198,14 +232,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "packingNote",
       "datacolumn": "packingNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -213,14 +250,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "deaccessionDate",
       "datacolumn": "deaccessionDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -228,14 +268,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "disposalDate",
       "datacolumn": "disposalDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -243,7 +286,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "disposalMethod",
@@ -251,7 +297,7 @@
       "transforms": {
         "vocabulary": "disposalmethod"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -259,14 +305,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "displosalReason",
       "datacolumn": "displosalReason",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -274,7 +323,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "disposalProposedRecipient",
@@ -285,7 +337,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -293,7 +345,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "disposalProposedRecipient",
@@ -304,7 +359,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -312,7 +367,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "disposalRecipient",
@@ -323,7 +381,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -331,7 +389,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "disposalRecipient",
@@ -342,7 +403,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -350,7 +411,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "disposalCurrency",
@@ -358,7 +422,7 @@
       "transforms": {
         "vocabulary": "currency"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -366,14 +430,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "displosalValue",
       "datacolumn": "displosalValue",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -381,7 +448,10 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "groupDisposalCurrency",
@@ -389,7 +459,7 @@
       "transforms": {
         "vocabulary": "currency"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -397,14 +467,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "groupDisplosalValue",
       "datacolumn": "groupDisplosalValue",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -412,14 +485,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "displosalProvisos",
       "datacolumn": "displosalProvisos",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -427,14 +503,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "displosalNote",
       "datacolumn": "displosalNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "objectexit_common",
       "xpath": [
 
@@ -442,7 +521,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

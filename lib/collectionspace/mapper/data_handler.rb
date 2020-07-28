@@ -5,14 +5,15 @@ module CollectionSpace
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
-      attr_reader :mapper, :cache, :blankdoc, :defaults, :validator
-      def initialize(record_mapper:, cache:, config:)
+      attr_reader :mapper, :cache, :client, :blankdoc, :defaults, :validator
+      def initialize(record_mapper:, client:, cache:, config:)
         @mapper = record_mapper
         @mapper[:xpath] = xpath_hash
         Mapper.const_set('CONFIG', config)
         @cache = cache
+        @client = client
         @blankdoc = build_xml
-        @defaults = Mapper::CONFIG[:default_values].transform_keys(&:downcase)
+        @defaults = Mapper::CONFIG[:default_values] ? Mapper::CONFIG[:default_values].transform_keys(&:downcase) : nil
         merge_config_transforms
         @validator = DataValidator.new(record_mapper: @mapper, cache: @cache)
       end
@@ -22,14 +23,8 @@ module CollectionSpace
       end
 
       def map(data_hash)
-        data_hash = data_hash.transform_keys!{ |k| k.downcase}
-        data_hash = merge_default_values(data_hash)
-        mappings = @mapper[:mappings].select{ |m| data_hash.keys.include?(m[:datacolumn].downcase) }
-        xpaths = mappings.map{ |m| m[:fullpath] }.uniq
-        datamapper = DataMapper.new(data_hash, self, @blankdoc.clone)
-        xpaths.each{ |xpath| datamapper.map(xpath) }
-        datamapper.doc.traverse{ |node| node.remove unless node.text.match?(/\S/m) }
-        add_namespaces(datamapper.doc)
+        datamapper = DataMapper.new(data_hash, self)
+        datamapper.result
       end
 
       private
@@ -38,6 +33,7 @@ module CollectionSpace
       # This method merges the config.json transforms into the RecordMapper field
       #   mappings for the appropriate fields
       def merge_config_transforms
+        return unless Mapper::CONFIG[:transforms]
         Mapper::CONFIG[:transforms].each do |datacol, x|
           target = @mapper[:mappings].select{ |m| m[:datacolumn] == datacol }
           unless target.empty?
@@ -47,26 +43,6 @@ module CollectionSpace
         end
       end
 
-
-      def merge_default_values(datafields)
-        data = datafields
-        @defaults.each do |f, val|
-          dataval = data.fetch(f, nil)
-          data[f] = val if dataval.nil? || dataval.empty?
-        end
-        data
-      end
-
-      def add_namespaces(doc)
-        doc.xpath('/*/*').each do |section|
-          uri = @mapper[:config][:ns_uri][section.name]
-          section.add_namespace_definition('ns2', uri)
-          section.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-          section.name = "ns2:#{section.name}"
-        end
-        doc
-      end
-      
       def build_xml
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.document do

@@ -24,7 +24,7 @@
       "datacolumn": "valuationcontrolRefNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "valuationcontrols_common",
       "xpath": [
 
@@ -32,7 +32,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueCurrency",
@@ -40,7 +43,7 @@
       "transforms": {
         "vocabulary": "currency"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "valuationcontrols_common",
       "xpath": [
         "valueAmountsList",
@@ -49,14 +52,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueAmount",
       "datacolumn": "valueAmount",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "valuationcontrols_common",
       "xpath": [
         "valueAmountsList",
@@ -65,14 +71,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueDate",
       "datacolumn": "valueDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "valuationcontrols_common",
       "xpath": [
 
@@ -80,14 +89,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueRenewalDate",
       "datacolumn": "valueRenewalDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "valuationcontrols_common",
       "xpath": [
 
@@ -95,7 +107,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueSource",
@@ -106,7 +121,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "valuationcontrols_common",
       "xpath": [
 
@@ -114,7 +129,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueSource",
@@ -125,7 +143,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "valuationcontrols_common",
       "xpath": [
 
@@ -133,14 +151,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueType",
       "datacolumn": "valueType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "valuationcontrols_common",
       "xpath": [
 
@@ -148,14 +169,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "Current Value",
+        "Original Value",
+        "Replacement Value"
+      ]
     },
     {
       "fieldname": "valueNote",
       "datacolumn": "valueNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "valuationcontrols_common",
       "xpath": [
 
@@ -163,7 +189,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

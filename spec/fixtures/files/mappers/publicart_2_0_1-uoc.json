@@ -50,7 +50,7 @@
       "datacolumn": "referenceNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -58,7 +58,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "method",
@@ -66,7 +69,7 @@
       "transforms": {
         "vocabulary": "uocmethods"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "methodList"
@@ -74,7 +77,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "collectionType",
@@ -82,7 +88,7 @@
       "transforms": {
         "vocabulary": "uoccollectiontypes"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "collectionTypeList"
@@ -90,7 +96,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "projectId",
@@ -98,7 +107,7 @@
       "transforms": {
         "vocabulary": "uocprojectid"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -106,7 +115,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "subcollection",
@@ -114,7 +126,7 @@
       "transforms": {
         "vocabulary": "uocsubcollections"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -122,7 +134,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "materialType",
@@ -130,7 +145,7 @@
       "transforms": {
         "vocabulary": "uocmaterialtypes"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "materialTypeList"
@@ -138,7 +153,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "user",
@@ -149,7 +167,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -158,7 +176,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "user",
@@ -169,7 +190,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -178,7 +199,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "user",
@@ -189,7 +213,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -198,7 +222,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "user",
@@ -209,7 +236,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -218,7 +245,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "userUocRole",
@@ -226,7 +256,7 @@
       "transforms": {
         "vocabulary": "uocuserroles"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -235,7 +265,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "userInstitution",
@@ -246,7 +279,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -255,7 +288,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "userInstitution",
@@ -266,7 +302,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -275,7 +311,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "userInstitutionRole",
@@ -283,7 +322,7 @@
       "transforms": {
         "vocabulary": "uocusertypes"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "userGroupList",
@@ -292,14 +331,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "title",
       "datacolumn": "title",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -307,14 +349,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "dateRequested",
       "datacolumn": "dateRequested",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -322,14 +367,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "dateCompleted",
       "datacolumn": "dateCompleted",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -337,7 +385,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "occasion",
@@ -348,7 +399,7 @@
           "occasion"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "occasionList"
@@ -356,14 +407,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "projectDescription",
       "datacolumn": "projectDescription",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -371,7 +425,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "authorizedBy",
@@ -382,7 +439,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "authorizationGroupList",
@@ -391,7 +448,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "authorizedBy",
@@ -402,7 +462,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "authorizationGroupList",
@@ -411,7 +471,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "authorizedBy",
@@ -422,7 +485,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "authorizationGroupList",
@@ -431,7 +494,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "authorizedBy",
@@ -442,7 +508,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "authorizationGroupList",
@@ -451,14 +517,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "authorizationDate",
       "datacolumn": "authorizationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "authorizationGroupList",
@@ -467,7 +536,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "authorizationStatus",
@@ -475,7 +547,7 @@
       "transforms": {
         "vocabulary": "uocauthorizationstatuses"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "authorizationGroupList",
@@ -484,14 +556,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "authorizationNote",
       "datacolumn": "authorizationNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "authorizationGroupList",
@@ -500,14 +575,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "useDate",
       "datacolumn": "useDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "useDateGroupList",
@@ -516,14 +594,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "useDateTimeNote",
       "datacolumn": "useDateTimeNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "useDateGroupList",
@@ -532,14 +613,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "useDateNumberOfVisitors",
       "datacolumn": "useDateNumberOfVisitors",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "useDateGroupList",
@@ -548,14 +632,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "useDateHoursSpent",
       "datacolumn": "useDateHoursSpent",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "useDateGroupList",
@@ -564,14 +651,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "useDateVisitorNote",
       "datacolumn": "useDateVisitorNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "useDateGroupList",
@@ -580,14 +670,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "endDate",
       "datacolumn": "endDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -595,7 +688,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "staffName",
@@ -606,7 +702,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "staffGroupList",
@@ -615,7 +711,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "staffName",
@@ -626,7 +725,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "staffGroupList",
@@ -635,7 +734,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "staffName",
@@ -646,7 +748,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "staffGroupList",
@@ -655,7 +757,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "staffName",
@@ -666,7 +771,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "staffGroupList",
@@ -675,7 +780,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "staffRole",
@@ -683,7 +791,7 @@
       "transforms": {
         "vocabulary": "uocstaffroles"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "staffGroupList",
@@ -692,14 +800,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "staffHours",
       "datacolumn": "staffHours",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "staffGroupList",
@@ -708,14 +819,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "staffNote",
       "datacolumn": "staffNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "staffGroupList",
@@ -724,7 +838,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "location",
@@ -735,7 +852,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "locationList"
@@ -743,7 +860,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "location",
@@ -754,7 +874,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "locationList"
@@ -762,7 +882,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "location",
@@ -773,7 +896,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "locationList"
@@ -781,7 +904,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "location",
@@ -792,7 +918,7 @@
           "place_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "locationList"
@@ -800,7 +926,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "location",
@@ -811,7 +940,7 @@
           "location"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "uoc_common",
       "xpath": [
         "locationList"
@@ -819,7 +948,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "feeCurrency",
@@ -827,7 +959,7 @@
       "transforms": {
         "vocabulary": "currency"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "uoc_common",
       "xpath": [
         "feeGroupList",
@@ -836,14 +968,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "feeValue",
       "datacolumn": "feeValue",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "feeGroupList",
@@ -852,7 +987,10 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "feePaid",
@@ -862,7 +1000,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "feeGroupList",
@@ -871,14 +1009,17 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "feeNote",
       "datacolumn": "feeNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
         "feeGroupList",
@@ -887,14 +1028,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "note",
       "datacolumn": "note",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -902,14 +1046,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "provisos",
       "datacolumn": "provisos",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -917,7 +1064,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "obligationsFulfilled",
@@ -927,7 +1077,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -935,14 +1085,17 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "result",
       "datacolumn": "result",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "uoc_common",
       "xpath": [
 
@@ -950,7 +1103,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

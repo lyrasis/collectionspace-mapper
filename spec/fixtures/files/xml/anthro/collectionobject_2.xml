@@ -164,11 +164,11 @@
     <otherNumberList/>
     <objectProductionPeopleGroupList>
       <objectProductionPeopleGroup>
-        <objectProductionPeople>urn:cspace:anthro.collectionspace.org:conceptauthorities:name(ethculture):item:name(Batak1576172496916)'Batak'</objectProductionPeople>
+        <objectProductionPeople>urn:cspace:anthro.collectionspace.org:conceptauthorities:name(archculture):item:name(Blackfoot1576172504869)'Blackfoot'</objectProductionPeople>
         <objectProductionPeopleRole>urn:cspace:anthro.collectionspace.org:vocabularies:name(prodpeoplerole):item:name(traditionalMakers)'traditional makers'</objectProductionPeopleRole>
       </objectProductionPeopleGroup>
       <objectProductionPeopleGroup>
-        <objectProductionPeople>urn:cspace:anthro.collectionspace.org:conceptauthorities:name(archculture):item:name(Blackfoot1576172504869)'Blackfoot'</objectProductionPeople>
+        <objectProductionPeople>urn:cspace:anthro.collectionspace.org:conceptauthorities:name(ethculture):item:name(Batak1576172496916)'Batak'</objectProductionPeople>
         <objectProductionPeopleRole>urn:cspace:anthro.collectionspace.org:vocabularies:name(prodpeoplerole):item:name(designedAfter)'designed after'</objectProductionPeopleRole>
       </objectProductionPeopleGroup>
     </objectProductionPeopleGroupList>
@@ -250,7 +250,8 @@
     <viewersReferences/>
     <objectProductionOrganizationGroupList/>
     <publishToList>
-      <publishTo>urn:cspace:core.collectionspace.org:vocabularies:name(publishto):item:name(none)'None'</publishTo>
+      <publishTo>urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(dpla)'DPLA'</publishTo>
+      <publishTo>urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(omeka)'Omeka'</publishTo>
     </publishToList>
     <assocOrganizationGroupList/>
     <contentOrganizations/>
@@ -287,7 +288,7 @@
     <assocEventPeoples/>
     <techniqueGroupList/>
     <inventoryStatusList>
-      <inventoryStatus>urn:cspace:core.collectionspace.org:vocabularies:name(inventorystatus):item:name(unknown)'unknown'</inventoryStatus>
+      <inventoryStatus>urn:cspace:anthro.collectionspace.org:vocabularies:name(inventorystatus):item:name(unknown)'unknown'</inventoryStatus>
     </inventoryStatusList>
     <contentPositions/>
     <forms/>

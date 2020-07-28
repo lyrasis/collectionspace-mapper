@@ -7,8 +7,8 @@
     "object_name": "Placeitem",
     "profile_basename": "lhmc",
     "ns_uri": {
-      "places_common": "http://collectionspace.org/services/placees",
-      "places_lhmc": "http://collectionspace.org/services/placees/domain/lhmc"
+      "places_common": null,
+      "places_lhmc": "http://collectionspace.org/services//domain/lhmc"
     }
   },
   "docstructure": {
@@ -39,7 +39,7 @@
       "datacolumn": "termDisplayName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -48,14 +48,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termName",
       "datacolumn": "termName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -64,14 +67,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termQualifier",
       "datacolumn": "termQualifier",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -80,14 +86,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termStatus",
       "datacolumn": "termStatus",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -96,14 +105,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "accepted",
+        "provisional",
+        "rejected",
+        "under review"
+      ]
     },
     {
       "fieldname": "termType",
       "datacolumn": "termType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -112,7 +127,16 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "common",
+        "descriptive",
+        "local",
+        "native",
+        "non-native",
+        "spelling-variant",
+        "technical-scientific"
+      ]
     },
     {
       "fieldname": "termFlag",
@@ -120,7 +144,7 @@
       "transforms": {
         "vocabulary": "placetermflag"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -129,14 +153,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "historicalStatus",
       "datacolumn": "historicalStatus",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -145,7 +172,12 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "both",
+        "current",
+        "historical"
+      ]
     },
     {
       "fieldname": "termLanguage",
@@ -153,7 +185,7 @@
       "transforms": {
         "vocabulary": "languages"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -162,7 +194,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termPrefForLang",
@@ -172,7 +207,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -181,14 +216,17 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "nameAbbrev",
       "datacolumn": "nameAbbrev",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -197,14 +235,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "nameNote",
       "datacolumn": "nameNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -213,17 +254,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "nameDateGroup",
       "datacolumn": "nameDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -232,7 +273,10 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSource",
@@ -243,7 +287,7 @@
           "citation"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -252,7 +296,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSource",
@@ -263,7 +310,7 @@
           "worldcat"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -272,14 +319,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceDetail",
       "datacolumn": "termSourceDetail",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -288,14 +338,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceID",
       "datacolumn": "termSourceID",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -304,14 +357,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceNote",
       "datacolumn": "termSourceNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeTermGroupList",
@@ -320,14 +376,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "placeType",
       "datacolumn": "placeType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
 
@@ -335,14 +394,49 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "autonomous-region",
+        "borough",
+        "city",
+        "collection-site",
+        "continent",
+        "country",
+        "country-code",
+        "county",
+        "dependent-state",
+        "deserted-settlement",
+        "district-national",
+        "general-region",
+        "governorate",
+        "inhabited-place",
+        "island",
+        "island-group",
+        "localilty",
+        "metropolitan-area",
+        "municipality",
+        "nation",
+        "national-division",
+        "neighborhood",
+        "occupied-territory",
+        "prefecture",
+        "province",
+        "region",
+        "state",
+        "state-province",
+        "territory",
+        "union-territory",
+        "unitary-authority",
+        "urban-prefecture",
+        "water-body"
+      ]
     },
     {
       "fieldname": "placeWidth",
       "datacolumn": "placeWidth",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_lhmc",
       "xpath": [
 
@@ -350,14 +444,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "placeLength",
       "datacolumn": "placeLength",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_lhmc",
       "xpath": [
 
@@ -365,14 +462,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "placeSource",
       "datacolumn": "placeSource",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -380,7 +480,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "owner",
@@ -391,7 +494,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "placeOwnerGroupList",
@@ -400,7 +503,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "owner",
@@ -411,7 +517,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "placeOwnerGroupList",
@@ -420,17 +526,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "ownershipDateGroup",
       "datacolumn": "ownershipDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeOwnerGroupList",
@@ -439,14 +545,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "ownershipNote",
       "datacolumn": "ownershipNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeOwnerGroupList",
@@ -455,14 +564,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "placeNote",
       "datacolumn": "placeNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -470,14 +582,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressPlace1",
       "datacolumn": "addressPlace1",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -486,14 +601,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressPlace2",
       "datacolumn": "addressPlace2",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -502,7 +620,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressMunicipality",
@@ -513,7 +634,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -522,7 +643,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressMunicipality",
@@ -533,7 +657,7 @@
           "tgn_place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -542,7 +666,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressStateOrProvince",
@@ -553,7 +680,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -562,7 +689,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressStateOrProvince",
@@ -573,7 +703,7 @@
           "tgn_place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -582,14 +712,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressPostCode",
       "datacolumn": "addressPostCode",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -598,7 +731,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressCountry",
@@ -609,7 +745,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -618,7 +754,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressCountry",
@@ -629,7 +768,7 @@
           "tgn_place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -638,7 +777,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressType",
@@ -646,7 +788,7 @@
       "transforms": {
         "vocabulary": "addresstype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "places_common",
       "xpath": [
         "addrGroupList",
@@ -655,14 +797,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vCoordinates",
       "datacolumn": "vCoordinates",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -670,14 +815,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vLatitude",
       "datacolumn": "vLatitude",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -685,14 +833,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vLongitude",
       "datacolumn": "vLongitude",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -700,14 +851,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vCoordSys",
       "datacolumn": "vCoordSys",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
 
@@ -715,14 +869,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "altitude-depth",
+        "latitude-longitude",
+        "national-grid-reference",
+        "utm"
+      ]
     },
     {
       "fieldname": "vSpatialReferenceSystem",
       "datacolumn": "vSpatialReferenceSystem",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
 
@@ -730,14 +890,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "epsg4267-nad27",
+        "epsg4269-nad83",
+        "epsg4326-wgs84",
+        "unknown"
+      ]
     },
     {
       "fieldname": "vElevation",
       "datacolumn": "vElevation",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -745,14 +911,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vDepth",
       "datacolumn": "vDepth",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -760,14 +929,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vDistanceAboveSurface",
       "datacolumn": "vDistanceAboveSurface",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -775,14 +947,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vUnitofMeasure",
       "datacolumn": "vUnitofMeasure",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
 
@@ -790,14 +965,29 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "acres",
+        "centimeters",
+        "feet",
+        "hectares",
+        "inches",
+        "kilometers",
+        "meters",
+        "miles",
+        "millimeters",
+        "square-feet",
+        "square-meters",
+        "square-yards",
+        "stories"
+      ]
     },
     {
       "fieldname": "minElevationInMeters",
       "datacolumn": "minElevationInMeters",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -805,14 +995,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "maxElevationInMeters",
       "datacolumn": "maxElevationInMeters",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -820,14 +1013,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "minDepthInMeters",
       "datacolumn": "minDepthInMeters",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -835,14 +1031,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "maxDepthInMeters",
       "datacolumn": "maxDepthInMeters",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -850,14 +1049,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "minDistanceAboveSurfaceInMeters",
       "datacolumn": "minDistanceAboveSurfaceInMeters",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -865,14 +1067,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "maxDistanceAboveSurfaceInMeters",
       "datacolumn": "maxDistanceAboveSurfaceInMeters",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -880,14 +1085,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vCoordSource",
       "datacolumn": "vCoordSource",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -895,14 +1103,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "vCoordSourceRefId",
       "datacolumn": "vCoordSourceRefId",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
 
@@ -910,14 +1121,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "decimalLatitude",
       "datacolumn": "decimalLatitude",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -926,14 +1140,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "decimalLongitude",
       "datacolumn": "decimalLongitude",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -942,14 +1159,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geodeticDatum",
       "datacolumn": "geodeticDatum",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -958,14 +1178,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "epsg4267-nad27",
+        "epsg4269-nad83",
+        "epsg4326-wgs84",
+        "unknown"
+      ]
     },
     {
       "fieldname": "coordUncertaintyInMeters",
       "datacolumn": "coordUncertaintyInMeters",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -974,14 +1200,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "coordPrecision",
       "datacolumn": "coordPrecision",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -990,14 +1219,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "pointRadiusSpatialFit",
       "datacolumn": "pointRadiusSpatialFit",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1006,14 +1238,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "footprintWKT",
       "datacolumn": "footprintWKT",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1022,14 +1257,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "footprintSRS",
       "datacolumn": "footprintSRS",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1038,14 +1276,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "footprintSpatialFit",
       "datacolumn": "footprintSpatialFit",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1054,7 +1295,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geoReferencedBy",
@@ -1065,7 +1309,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1074,7 +1318,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geoReferencedBy",
@@ -1085,7 +1332,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1094,17 +1341,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geoRefDateGroup",
       "datacolumn": "geoRefDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1113,14 +1360,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geoRefProtocol",
       "datacolumn": "geoRefProtocol",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1129,14 +1379,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "biogeomancer",
+        "chapman-wieczorek-2006-guide-best-practices-georeferencing",
+        "georeferencing-dummies",
+        "manis-herpnet-ornis-georeferencing-guidelines"
+      ]
     },
     {
       "fieldname": "geoRefSource",
       "datacolumn": "geoRefSource",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1145,14 +1401,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geoRefVerificationStatus",
       "datacolumn": "geoRefVerificationStatus",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1161,14 +1420,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "unverified",
+        "verified-contributor",
+        "verified-data-custodian"
+      ]
     },
     {
       "fieldname": "geoRefRemarks",
       "datacolumn": "geoRefRemarks",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1177,14 +1441,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geoRefPlaceName",
       "datacolumn": "geoRefPlaceName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "places_common",
       "xpath": [
         "placeGeoRefGroupList",
@@ -1193,7 +1460,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

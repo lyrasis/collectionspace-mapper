@@ -40,7 +40,7 @@
       "datacolumn": "identificationNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -48,14 +48,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "title",
       "datacolumn": "title",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -63,14 +66,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "name",
       "datacolumn": "name",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "blobs_common",
       "xpath": [
 
@@ -78,14 +84,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "mimeType",
       "datacolumn": "mimeType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "blobs_common",
       "xpath": [
 
@@ -93,14 +102,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "length",
       "datacolumn": "length",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "blobs_common",
       "xpath": [
 
@@ -108,14 +120,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "externalUrl",
       "datacolumn": "externalUrl",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -123,14 +138,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "measuredPart",
       "datacolumn": "measuredPart",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -139,14 +157,24 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "base",
+        "frame",
+        "framed",
+        "image-size",
+        "mount",
+        "paper-size",
+        "plate-size",
+        "unframed"
+      ]
     },
     {
       "fieldname": "dimensionSummary",
       "datacolumn": "dimensionSummary",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -155,14 +183,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "dimension",
       "datacolumn": "dimension",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -173,7 +204,23 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "area",
+        "base",
+        "circumference",
+        "count",
+        "depth",
+        "diameter",
+        "height",
+        "length",
+        "running-time",
+        "target",
+        "thickness",
+        "volume",
+        "weight",
+        "width"
+      ]
     },
     {
       "fieldname": "measuredBy",
@@ -184,7 +231,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -195,7 +242,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "measuredBy",
@@ -206,7 +256,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -217,14 +267,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "measurementMethod",
       "datacolumn": "measurementMethod",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -235,14 +288,36 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "balance_beam_scale",
+        "electronic_distance_measurement",
+        "goniometer",
+        "hydraulic_or_pneumatic_scale",
+        "measuring_tape_cloth",
+        "measuring_tape_metal",
+        "microscopy_reticule",
+        "odometer",
+        "optical_range_finder",
+        "osteometric_board",
+        "pacing_pedometer",
+        "protractor",
+        "ruler",
+        "sliding_calipers",
+        "spreading_calipers",
+        "spring_scale",
+        "stadia_transit",
+        "standard_mesh_screen",
+        "taping_chaining",
+        "theodolite_total_station"
+      ]
     },
     {
       "fieldname": "value",
       "datacolumn": "value",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -253,14 +328,17 @@
       "data_type": "float",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "measurementUnit",
       "datacolumn": "measurementUnit",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -271,14 +349,32 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "acres",
+        "carats",
+        "centimeters",
+        "cubic-centimeters",
+        "feet",
+        "grams",
+        "inches",
+        "kilograms",
+        "liters",
+        "meters",
+        "millimeters",
+        "minutes",
+        "pixels",
+        "pounds",
+        "square-feet",
+        "stories"
+      ]
     },
     {
       "fieldname": "valueQualifier",
       "datacolumn": "valueQualifier",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -289,14 +385,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "valueDate",
       "datacolumn": "valueDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "measuredPartGroupList",
@@ -307,7 +406,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "contributor",
@@ -318,7 +420,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -326,7 +428,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "contributor",
@@ -337,7 +442,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -345,7 +450,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "creator",
@@ -356,7 +464,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -364,7 +472,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "creator",
@@ -375,7 +486,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -383,7 +494,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "language",
@@ -391,7 +505,7 @@
       "transforms": {
         "vocabulary": "languages"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "media_common",
       "xpath": [
         "languageList"
@@ -399,7 +513,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publisher",
@@ -410,7 +527,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -418,7 +535,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publisher",
@@ -429,7 +549,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -437,14 +557,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "relation",
       "datacolumn": "relation",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "relationList"
@@ -452,14 +575,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "copyrightStatement",
       "datacolumn": "copyrightStatement",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -467,14 +593,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "type",
       "datacolumn": "type",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "media_common",
       "xpath": [
         "typeList"
@@ -482,14 +611,21 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+        "dataset",
+        "document",
+        "moving_image",
+        "sound",
+        "still_image"
+      ]
     },
     {
       "fieldname": "coverage",
       "datacolumn": "coverage",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -497,17 +633,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "dateGroup",
       "datacolumn": "dateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "dateGroupList"
@@ -515,14 +651,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "source",
       "datacolumn": "source",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -530,14 +669,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "subject",
       "datacolumn": "subject",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "subjectList"
@@ -545,7 +687,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "rightsHolder",
@@ -556,7 +701,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -564,7 +709,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "rightsHolder",
@@ -575,7 +723,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -583,14 +731,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "description",
       "datacolumn": "description",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -598,7 +749,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }
