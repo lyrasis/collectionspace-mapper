@@ -7,7 +7,7 @@
     "object_name": "Organization",
     "profile_basename": "herbarium",
     "ns_uri": {
-      "organizations_common": "http://collectionspace.org/services/orges",
+      "organizations_common": null,
       "contacts_common": null
     }
   },
@@ -57,7 +57,7 @@
       "datacolumn": "termDisplayName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -66,14 +66,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termName",
       "datacolumn": "termName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -82,14 +85,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termQualifier",
       "datacolumn": "termQualifier",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -98,14 +104,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termStatus",
       "datacolumn": "termStatus",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -114,14 +123,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "accepted",
+        "provisional",
+        "rejected",
+        "under review"
+      ]
     },
     {
       "fieldname": "termType",
       "datacolumn": "termType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -130,7 +145,12 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "alternate descriptor",
+        "descriptor",
+        "used for term"
+      ]
     },
     {
       "fieldname": "termFlag",
@@ -138,7 +158,7 @@
       "transforms": {
         "vocabulary": "orgtermflag"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -147,7 +167,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termLanguage",
@@ -155,7 +178,7 @@
       "transforms": {
         "vocabulary": "languages"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -164,7 +187,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termPrefForLang",
@@ -174,7 +200,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -183,14 +209,17 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "mainBodyName",
       "datacolumn": "mainBodyName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -199,14 +228,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "additionsToName",
       "datacolumn": "additionsToName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -215,7 +247,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSource",
@@ -226,7 +261,7 @@
           "citation"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -235,7 +270,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSource",
@@ -246,7 +284,7 @@
           "worldcat"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -255,14 +293,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceDetail",
       "datacolumn": "termSourceDetail",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -271,14 +312,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceID",
       "datacolumn": "termSourceID",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -287,14 +331,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceNote",
       "datacolumn": "termSourceNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "orgTermGroupList",
@@ -303,7 +350,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "organizationRecordType",
@@ -311,7 +361,7 @@
       "transforms": {
         "vocabulary": "organizationtype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "organizations_common",
       "xpath": [
         "organizationRecordTypes"
@@ -319,17 +369,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "foundingDateGroup",
       "datacolumn": "foundingDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
 
@@ -337,14 +387,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "foundingPlace",
       "datacolumn": "foundingPlace",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
 
@@ -352,17 +405,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "dissolutionDateGroup",
       "datacolumn": "dissolutionDateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
 
@@ -370,7 +423,10 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "contactName",
@@ -381,7 +437,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "organizations_common",
       "xpath": [
         "contactNames"
@@ -389,14 +445,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "group",
       "datacolumn": "group",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "groups"
@@ -404,14 +463,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "function",
       "datacolumn": "function",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "functions"
@@ -419,14 +481,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "historyNote",
       "datacolumn": "historyNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "organizations_common",
       "xpath": [
         "historyNotes"
@@ -434,14 +499,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "email",
       "datacolumn": "email",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "emailGroupList",
@@ -450,14 +518,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "emailType",
       "datacolumn": "emailType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "contacts_common",
       "xpath": [
         "emailGroupList",
@@ -466,14 +537,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "business",
+        "other",
+        "personal"
+      ]
     },
     {
       "fieldname": "telephoneNumber",
       "datacolumn": "telephoneNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "telephoneNumberGroupList",
@@ -482,14 +558,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "telephoneNumberType",
       "datacolumn": "telephoneNumberType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "contacts_common",
       "xpath": [
         "telephoneNumberGroupList",
@@ -498,14 +577,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "business",
+        "home",
+        "mobile",
+        "other"
+      ]
     },
     {
       "fieldname": "faxNumber",
       "datacolumn": "faxNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "faxNumberGroupList",
@@ -514,14 +599,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "faxNumberType",
       "datacolumn": "faxNumberType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "contacts_common",
       "xpath": [
         "faxNumberGroupList",
@@ -530,14 +618,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "business",
+        "home",
+        "other"
+      ]
     },
     {
       "fieldname": "webAddress",
       "datacolumn": "webAddress",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "webAddressGroupList",
@@ -546,14 +639,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "webAddressType",
       "datacolumn": "webAddressType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "contacts_common",
       "xpath": [
         "webAddressGroupList",
@@ -562,14 +658,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "business",
+        "other",
+        "personal"
+      ]
     },
     {
       "fieldname": "addressPlace1",
       "datacolumn": "addressPlace1",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "addressGroupList",
@@ -578,14 +679,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressPlace2",
       "datacolumn": "addressPlace2",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "addressGroupList",
@@ -594,14 +698,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressMunicipality",
       "datacolumn": "addressMunicipality",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "addressGroupList",
@@ -610,14 +717,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressStateOrProvince",
       "datacolumn": "addressStateOrProvince",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "addressGroupList",
@@ -626,14 +736,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressPostCode",
       "datacolumn": "addressPostCode",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "contacts_common",
       "xpath": [
         "addressGroupList",
@@ -642,14 +755,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "addressCountry",
       "datacolumn": "addressCountry",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "contacts_common",
       "xpath": [
         "addressGroupList",
@@ -658,14 +774,265 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "AD",
+        "AE",
+        "AF",
+        "AG",
+        "AI",
+        "AL",
+        "AM",
+        "AO",
+        "AQ",
+        "AR",
+        "AS",
+        "AT",
+        "AU",
+        "AW",
+        "AX",
+        "AZ",
+        "BA",
+        "BB",
+        "BD",
+        "BE",
+        "BF",
+        "BG",
+        "BH",
+        "BI",
+        "BJ",
+        "BL",
+        "BM",
+        "BN",
+        "BO",
+        "BQ",
+        "BR",
+        "BS",
+        "BT",
+        "BV",
+        "BW",
+        "BY",
+        "BZ",
+        "CA",
+        "CC",
+        "CD",
+        "CF",
+        "CG",
+        "CH",
+        "CI",
+        "CK",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CR",
+        "CU",
+        "CV",
+        "CW",
+        "CX",
+        "CY",
+        "CZ",
+        "DE",
+        "DJ",
+        "DK",
+        "DM",
+        "DO",
+        "DZ",
+        "EC",
+        "EE",
+        "EG",
+        "EH",
+        "ER",
+        "ES",
+        "ET",
+        "FI",
+        "FJ",
+        "FK",
+        "FM",
+        "FO",
+        "FR",
+        "GA",
+        "GB",
+        "GD",
+        "GE",
+        "GF",
+        "GG",
+        "GH",
+        "GI",
+        "GL",
+        "GM",
+        "GN",
+        "GP",
+        "GQ",
+        "GR",
+        "GS",
+        "GT",
+        "GU",
+        "GW",
+        "GY",
+        "HK",
+        "HM",
+        "HN",
+        "HR",
+        "HT",
+        "HU",
+        "ID",
+        "IE",
+        "IL",
+        "IM",
+        "IN",
+        "IO",
+        "IQ",
+        "IR",
+        "IS",
+        "IT",
+        "JE",
+        "JM",
+        "JO",
+        "JP",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KM",
+        "KN",
+        "KP",
+        "KR",
+        "KW",
+        "KY",
+        "KZ",
+        "LA",
+        "LB",
+        "LC",
+        "LI",
+        "LK",
+        "LR",
+        "LS",
+        "LT",
+        "LU",
+        "LV",
+        "LY",
+        "MA",
+        "MC",
+        "MD",
+        "ME",
+        "MF",
+        "MG",
+        "MH",
+        "MK",
+        "ML",
+        "MM",
+        "MN",
+        "MO",
+        "MP",
+        "MQ",
+        "MR",
+        "MS",
+        "MT",
+        "MU",
+        "MV",
+        "MW",
+        "MX",
+        "MY",
+        "MZ",
+        "NA",
+        "NC",
+        "NE",
+        "NF",
+        "NG",
+        "NI",
+        "NL",
+        "NO",
+        "NP",
+        "NR",
+        "NU",
+        "NZ",
+        "OM",
+        "PA",
+        "PE",
+        "PF",
+        "PG",
+        "PH",
+        "PK",
+        "PL",
+        "PM",
+        "PN",
+        "PR",
+        "PS",
+        "PT",
+        "PW",
+        "PY",
+        "QA",
+        "RE",
+        "RO",
+        "RS",
+        "RU",
+        "RW",
+        "SA",
+        "SB",
+        "SC",
+        "SD",
+        "SE",
+        "SG",
+        "SH",
+        "SI",
+        "SJ",
+        "SK",
+        "SL",
+        "SM",
+        "SN",
+        "SO",
+        "SR",
+        "SS",
+        "ST",
+        "SV",
+        "SX",
+        "SY",
+        "SZ",
+        "TC",
+        "TD",
+        "TF",
+        "TG",
+        "TH",
+        "TJ",
+        "TK",
+        "TL",
+        "TM",
+        "TN",
+        "TO",
+        "TR",
+        "TT",
+        "TV",
+        "TW",
+        "TZ",
+        "UA",
+        "UG",
+        "UM",
+        "US",
+        "UY",
+        "UZ",
+        "VA",
+        "VC",
+        "VE",
+        "VG",
+        "VI",
+        "VN",
+        "VU",
+        "WF",
+        "WS",
+        "YE",
+        "YT",
+        "ZA",
+        "ZM",
+        "ZW"
+      ]
     },
     {
       "fieldname": "addressType",
       "datacolumn": "addressType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "contacts_common",
       "xpath": [
         "addressGroupList",
@@ -674,7 +1041,12 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "business",
+        "home",
+        "other"
+      ]
     }
   ]
 }

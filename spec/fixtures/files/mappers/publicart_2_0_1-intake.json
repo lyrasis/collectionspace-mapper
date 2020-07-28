@@ -42,7 +42,7 @@
       "datacolumn": "entryNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -50,14 +50,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "entryDate",
       "datacolumn": "entryDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -65,14 +68,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "entryReason",
       "datacolumn": "entryReason",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -80,7 +86,13 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "commission",
+        "consideration",
+        "enquiry",
+        "loan"
+      ]
     },
     {
       "fieldname": "entryMethod",
@@ -88,7 +100,7 @@
       "transforms": {
         "vocabulary": "entrymethod"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "intakes_common",
       "xpath": [
         "entryMethods"
@@ -96,14 +108,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "returnDate",
       "datacolumn": "returnDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -111,7 +126,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentOwner",
@@ -122,7 +140,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentOwners"
@@ -130,7 +148,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentOwner",
@@ -141,7 +162,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentOwners"
@@ -149,7 +170,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentOwner",
@@ -160,7 +184,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentOwners"
@@ -168,7 +192,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentOwner",
@@ -179,7 +206,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentOwners"
@@ -187,7 +214,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "depositor",
@@ -198,7 +228,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
@@ -207,7 +237,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "depositor",
@@ -218,7 +251,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
@@ -227,7 +260,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "depositor",
@@ -238,7 +274,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
@@ -247,7 +283,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "depositor",
@@ -258,7 +297,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
@@ -267,14 +306,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "depositorsRequirements",
       "datacolumn": "depositorsRequirements",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
@@ -283,7 +325,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "approvalGroup",
@@ -291,7 +336,7 @@
       "transforms": {
         "vocabulary": "deaccessionapprovalgroup"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
@@ -300,7 +345,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "approvalIndividual",
@@ -311,7 +359,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
@@ -320,7 +368,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "approvalIndividual",
@@ -331,7 +382,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
@@ -340,7 +391,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "approvalStatus",
@@ -348,7 +402,7 @@
       "transforms": {
         "vocabulary": "deaccessionapprovalstatus"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
@@ -357,14 +411,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "approvalDate",
       "datacolumn": "approvalDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
@@ -373,14 +430,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "approvalNote",
       "datacolumn": "approvalNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
@@ -389,14 +449,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "entryNote",
       "datacolumn": "entryNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -404,14 +467,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "packingNote",
       "datacolumn": "packingNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -419,7 +485,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -430,7 +499,7 @@
           "location"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -439,7 +508,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -450,7 +522,7 @@
           "offsite_sla"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -459,7 +531,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -470,7 +545,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -479,7 +554,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -490,7 +568,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -499,7 +577,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -510,7 +591,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -519,7 +600,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -530,7 +614,7 @@
           "place_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -539,7 +623,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocationFitness",
@@ -547,7 +634,7 @@
       "transforms": {
         "vocabulary": "conditionfitness"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -556,14 +643,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocationNote",
       "datacolumn": "currentLocationNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
@@ -572,14 +662,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "locationDate",
       "datacolumn": "locationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -587,7 +680,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "normalLocation",
@@ -598,7 +694,7 @@
           "location"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -606,7 +702,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "normalLocation",
@@ -617,7 +716,7 @@
           "offsite_sla"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -625,7 +724,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "normalLocation",
@@ -636,7 +738,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -644,7 +746,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "normalLocation",
@@ -655,7 +760,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -663,7 +768,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "normalLocation",
@@ -674,7 +782,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -682,7 +790,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "normalLocation",
@@ -693,7 +804,7 @@
           "place_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -701,7 +812,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckMethod",
@@ -709,7 +823,7 @@
       "transforms": {
         "vocabulary": "conditioncheckmethod"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckMethods"
@@ -717,7 +831,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckReason",
@@ -725,7 +842,7 @@
       "transforms": {
         "vocabulary": "conditioncheckreason"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckReasons"
@@ -733,7 +850,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckerOrAssessor",
@@ -744,7 +864,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckersOrAssessors"
@@ -752,7 +872,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckerOrAssessor",
@@ -763,7 +886,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckersOrAssessors"
@@ -771,7 +894,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckerOrAssessor",
@@ -782,7 +908,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckersOrAssessors"
@@ -790,7 +916,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckerOrAssessor",
@@ -801,7 +930,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckersOrAssessors"
@@ -809,14 +938,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckDate",
       "datacolumn": "conditionCheckDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -824,14 +956,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckReferenceNumber",
       "datacolumn": "conditionCheckReferenceNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -839,14 +974,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditionCheckNote",
       "datacolumn": "conditionCheckNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "intakes_common",
       "xpath": [
 
@@ -854,7 +992,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

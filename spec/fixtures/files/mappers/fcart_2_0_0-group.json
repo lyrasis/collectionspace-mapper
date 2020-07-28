@@ -20,7 +20,7 @@
       "datacolumn": "title",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "groups_common",
       "xpath": [
 
@@ -28,14 +28,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "responsibleDepartment",
       "datacolumn": "responsibleDepartment",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "groups_common",
       "xpath": [
 
@@ -43,7 +46,18 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "antiquities",
+        "architecture-design",
+        "decorative-arts",
+        "ethnography",
+        "library",
+        "media-performance-art",
+        "paintings-sculpture",
+        "photographs",
+        "prints-drawings"
+      ]
     },
     {
       "fieldname": "owner",
@@ -54,7 +68,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "groups_common",
       "xpath": [
 
@@ -62,14 +76,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "groupEarliestSingleDate",
       "datacolumn": "groupEarliestSingleDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "groups_common",
       "xpath": [
 
@@ -77,14 +94,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "groupLatestDate",
       "datacolumn": "groupLatestDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "groups_common",
       "xpath": [
 
@@ -92,14 +112,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "scopeNote",
       "datacolumn": "scopeNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "groups_common",
       "xpath": [
 
@@ -107,7 +130,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

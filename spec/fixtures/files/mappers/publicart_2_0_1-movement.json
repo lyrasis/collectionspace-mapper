@@ -22,7 +22,7 @@
       "datacolumn": "movementReferenceNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -30,7 +30,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -41,7 +44,7 @@
           "location"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -49,7 +52,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -60,7 +66,7 @@
           "offsite_sla"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -68,7 +74,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -79,7 +88,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -87,7 +96,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -98,7 +110,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -106,7 +118,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -117,7 +132,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -125,7 +140,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -136,7 +154,7 @@
           "place_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -144,14 +162,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocationFitness",
       "datacolumn": "currentLocationFitness",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "movements_common",
       "xpath": [
 
@@ -159,14 +180,20 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "dangerous",
+        "suitable",
+        "temporary",
+        "unsuitable"
+      ]
     },
     {
       "fieldname": "currentLocationNote",
       "datacolumn": "currentLocationNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -174,14 +201,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "locationDate",
       "datacolumn": "locationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -189,14 +219,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "reasonForMove",
       "datacolumn": "reasonForMove",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "movements_common",
       "xpath": [
 
@@ -204,14 +237,23 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "conservation",
+        "exhibition",
+        "inventory",
+        "loan",
+        "newstoragelocation",
+        "photography",
+        "research"
+      ]
     },
     {
       "fieldname": "movementMethod",
       "datacolumn": "movementMethod",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "movements_common",
       "xpath": [
         "movementMethods"
@@ -219,14 +261,19 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+        "forklift",
+        "handcarried",
+        "trolley"
+      ]
     },
     {
       "fieldname": "plannedRemovalDate",
       "datacolumn": "plannedRemovalDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -234,14 +281,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "removalDate",
       "datacolumn": "removalDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -249,7 +299,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "movementContact",
@@ -260,7 +313,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -268,7 +321,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "movementContact",
@@ -279,7 +335,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -287,14 +343,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "movementNote",
       "datacolumn": "movementNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -302,7 +361,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

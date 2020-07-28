@@ -7,7 +7,7 @@
     "object_name": "Citation",
     "profile_basename": "bonsai",
     "ns_uri": {
-      "citations_common": "http://collectionspace.org/services/citationes"
+      "citations_common": null
     }
   },
   "docstructure": {
@@ -40,7 +40,7 @@
       "datacolumn": "termDisplayName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -49,14 +49,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termStatus",
       "datacolumn": "termStatus",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -65,7 +68,13 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+        "accepted",
+        "provisional",
+        "rejected",
+        "under review"
+      ]
     },
     {
       "fieldname": "termType",
@@ -73,7 +82,7 @@
       "transforms": {
         "vocabulary": "citationtermtype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -82,7 +91,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termFlag",
@@ -90,7 +102,7 @@
       "transforms": {
         "vocabulary": "citationtermflag"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -99,7 +111,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termLanguage",
@@ -107,7 +122,7 @@
       "transforms": {
         "vocabulary": "languages"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -116,7 +131,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termPrefForLang",
@@ -126,7 +144,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -135,14 +153,17 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termFullCitation",
       "datacolumn": "termFullCitation",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -151,14 +172,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termTitle",
       "datacolumn": "termTitle",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -167,14 +191,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSubTitle",
       "datacolumn": "termSubTitle",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -183,14 +210,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSectionTitle",
       "datacolumn": "termSectionTitle",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -199,14 +229,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termVolume",
       "datacolumn": "termVolume",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -215,14 +248,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termIssue",
       "datacolumn": "termIssue",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -231,7 +267,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSource",
@@ -242,7 +281,7 @@
           "citation"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -251,7 +290,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSource",
@@ -262,7 +304,7 @@
           "worldcat"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -271,14 +313,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceDetail",
       "datacolumn": "termSourceDetail",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -287,14 +332,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceID",
       "datacolumn": "termSourceID",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -303,14 +351,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "termSourceNote",
       "datacolumn": "termSourceNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationTermGroupList",
@@ -319,7 +370,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publisher",
@@ -330,7 +384,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationPublicationInfoGroupList",
@@ -339,7 +393,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publicationPlace",
@@ -350,7 +407,7 @@
           "place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationPublicationInfoGroupList",
@@ -359,7 +416,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publicationPlace",
@@ -370,7 +430,7 @@
           "tgn_place"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationPublicationInfoGroupList",
@@ -379,17 +439,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publicationDate",
       "datacolumn": "publicationDate",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationPublicationInfoGroupList",
@@ -398,14 +458,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "edition",
       "datacolumn": "edition",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationPublicationInfoGroupList",
@@ -414,14 +477,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "pages",
       "datacolumn": "pages",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationPublicationInfoGroupList",
@@ -430,7 +496,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "agent",
@@ -441,7 +510,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationAgentInfoGroupList",
@@ -450,7 +519,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "agent",
@@ -461,7 +533,7 @@
           "ulan_pa"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationAgentInfoGroupList",
@@ -470,7 +542,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "agent",
@@ -481,7 +556,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationAgentInfoGroupList",
@@ -490,7 +565,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "role",
@@ -498,7 +576,7 @@
       "transforms": {
         "vocabulary": "agentinfotype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "citations_common",
       "xpath": [
         "citationAgentInfoGroupList",
@@ -507,14 +585,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "note",
       "datacolumn": "note",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationAgentInfoGroupList",
@@ -523,14 +604,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "citationNote",
       "datacolumn": "citationNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
 
@@ -538,14 +622,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "resourceIdent",
       "datacolumn": "resourceIdent",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationResourceIdentGroupList",
@@ -554,7 +641,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "type",
@@ -562,7 +652,7 @@
       "transforms": {
         "vocabulary": "resourceidtype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "citations_common",
       "xpath": [
         "citationResourceIdentGroupList",
@@ -571,17 +661,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "captureDate",
       "datacolumn": "captureDate",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "citations_common",
       "xpath": [
         "citationResourceIdentGroupList",
@@ -590,7 +680,10 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "relatedTerm",
@@ -601,7 +694,7 @@
           "concept"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationRelatedTermsGroupList",
@@ -610,7 +703,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "relatedTerm",
@@ -621,7 +717,7 @@
           "activity"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationRelatedTermsGroupList",
@@ -630,7 +726,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "relatedTerm",
@@ -641,7 +740,7 @@
           "material_ca"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "citations_common",
       "xpath": [
         "citationRelatedTermsGroupList",
@@ -650,7 +749,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "relationType",
@@ -658,7 +760,7 @@
       "transforms": {
         "vocabulary": "relationtypetype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "citations_common",
       "xpath": [
         "citationRelatedTermsGroupList",
@@ -667,7 +769,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

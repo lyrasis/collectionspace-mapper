@@ -24,7 +24,7 @@
           "taxon"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "pottags_common",
       "xpath": [
 
@@ -32,14 +32,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "commonName",
       "datacolumn": "commonName",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "pottags_common",
       "xpath": [
 
@@ -47,14 +50,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "locale",
       "datacolumn": "locale",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "pottags_common",
       "xpath": [
 
@@ -62,7 +68,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "taxonName",
@@ -73,7 +82,7 @@
           "taxon"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "pottags_common",
       "xpath": [
 
@@ -81,14 +90,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "numberOfLabels",
       "datacolumn": "numberOfLabels",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "pottags_common",
       "xpath": [
 
@@ -96,14 +108,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "printLabels",
       "datacolumn": "printLabels",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "pottags_common",
       "xpath": [
 
@@ -111,14 +126,18 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "no",
+        "yes"
+      ]
     },
     {
       "fieldname": "labelData",
       "datacolumn": "labelData",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "pottags_common",
       "xpath": [
 
@@ -126,7 +145,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

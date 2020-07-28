@@ -48,7 +48,7 @@
       "datacolumn": "loanOutNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -56,14 +56,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanPurpose",
       "datacolumn": "loanPurpose",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -71,7 +74,16 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "analysis",
+        "conservationotherrequestedservices",
+        "exhibition",
+        "longtermcollectionsmanagementandstorage",
+        "photography",
+        "research",
+        "scientificorexhibitpreparation"
+      ]
     },
     {
       "fieldname": "lendersAuthorizer",
@@ -82,7 +94,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -90,7 +102,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "lendersContact",
@@ -101,7 +116,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -109,14 +124,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "lendersAuthorizationDate",
       "datacolumn": "lendersAuthorizationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -124,7 +142,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "borrower",
@@ -135,7 +156,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -143,7 +164,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "borrower",
@@ -154,7 +178,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -162,7 +186,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "borrowersContact",
@@ -173,7 +200,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -181,7 +208,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "borrowersAuthorizer",
@@ -192,7 +222,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -200,14 +230,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "borrowersAuthorizationDate",
       "datacolumn": "borrowersAuthorizationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -215,14 +248,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "specialConditionsOfLoan",
       "datacolumn": "specialConditionsOfLoan",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -230,14 +266,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanOutNote",
       "datacolumn": "loanOutNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -245,7 +284,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "majorGroup",
@@ -253,7 +295,7 @@
       "transforms": {
         "vocabulary": "majortaxongroup"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "loansout_herbarium",
       "xpath": [
 
@@ -261,14 +303,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "geography",
       "datacolumn": "geography",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_herbarium",
       "xpath": [
         "geographyList"
@@ -276,7 +321,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "taxonomy",
@@ -287,7 +335,7 @@
           "taxon"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_herbarium",
       "xpath": [
         "taxonomyList"
@@ -295,7 +343,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "taxonomy",
@@ -306,7 +357,7 @@
           "common_ta"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_herbarium",
       "xpath": [
         "taxonomyList"
@@ -314,7 +365,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "objKind",
@@ -322,7 +376,7 @@
       "transforms": {
         "vocabulary": "objectkind"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "loansout_herbarium",
       "xpath": [
         "objKindList"
@@ -330,7 +384,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanGroup",
@@ -338,7 +395,7 @@
       "transforms": {
         "vocabulary": "deaccessionapprovalgroup"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "loansout_common",
       "xpath": [
         "loanStatusGroupList",
@@ -347,7 +404,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanIndividual",
@@ -358,7 +418,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_common",
       "xpath": [
         "loanStatusGroupList",
@@ -367,7 +427,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanStatus",
@@ -375,7 +438,7 @@
       "transforms": {
         "vocabulary": "loanoutstatus"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "loansout_common",
       "xpath": [
         "loanStatusGroupList",
@@ -384,14 +447,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanStatusDate",
       "datacolumn": "loanStatusDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
         "loanStatusGroupList",
@@ -400,14 +466,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanStatusNote",
       "datacolumn": "loanStatusNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
         "loanStatusGroupList",
@@ -416,14 +485,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanOutDate",
       "datacolumn": "loanOutDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -431,14 +503,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "shipDate",
       "datacolumn": "shipDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_herbarium",
       "xpath": [
 
@@ -446,7 +521,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "transportMethod",
@@ -454,7 +532,7 @@
       "transforms": {
         "vocabulary": "transportmethod"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "loansout_herbarium",
       "xpath": [
 
@@ -462,14 +540,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "numPackages",
       "datacolumn": "numPackages",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_herbarium",
       "xpath": [
 
@@ -477,14 +558,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "acknowledgeDate",
       "datacolumn": "acknowledgeDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_herbarium",
       "xpath": [
 
@@ -492,14 +576,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanReturnDate",
       "datacolumn": "loanReturnDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -507,14 +594,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanRenewalApplicationDate",
       "datacolumn": "loanRenewalApplicationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_common",
       "xpath": [
 
@@ -522,14 +612,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "loanoutItems",
       "datacolumn": "loanoutItems",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
 
@@ -537,14 +630,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "objectNumbers",
       "datacolumn": "objectNumbers",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "objectGroupList",
@@ -553,14 +649,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "objectQuantity",
       "datacolumn": "objectQuantity",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "objectGroupList",
@@ -569,14 +668,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "objectConditions",
       "datacolumn": "objectConditions",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "objectGroupList",
@@ -585,14 +687,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "objectNotes",
       "datacolumn": "objectNotes",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "objectGroupList",
@@ -601,14 +706,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "returnObjectNumbers",
       "datacolumn": "returnObjectNumbers",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "returnGroupList",
@@ -617,14 +725,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "returnQuantity",
       "datacolumn": "returnQuantity",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "returnGroupList",
@@ -633,14 +744,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "returnDate",
       "datacolumn": "returnDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "returnGroupList",
@@ -649,7 +763,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "returnDetermination",
@@ -660,7 +777,7 @@
           "taxon"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "returnGroupList",
@@ -669,14 +786,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "returnNotes",
       "datacolumn": "returnNotes",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "returnGroupList",
@@ -685,14 +805,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "transferDate",
       "datacolumn": "transferDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "transferGroupList",
@@ -701,7 +824,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "transferOrg",
@@ -712,7 +838,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "transferGroupList",
@@ -721,7 +847,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "transferPerson",
@@ -732,7 +861,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "transferGroupList",
@@ -741,7 +870,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "transferDirector",
@@ -752,7 +884,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "transferGroupList",
@@ -761,14 +893,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "transferQuantity",
       "datacolumn": "transferQuantity",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "transferGroupList",
@@ -777,14 +912,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "transferNotes",
       "datacolumn": "transferNotes",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "loansout_naturalhistory_extension",
       "xpath": [
         "transferGroupList",
@@ -793,7 +931,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

@@ -33,7 +33,7 @@
       "datacolumn": "identificationNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -41,14 +41,17 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "title",
       "datacolumn": "title",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -56,14 +59,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "name",
       "datacolumn": "name",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "blobs_common",
       "xpath": [
 
@@ -71,14 +77,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "mimeType",
       "datacolumn": "mimeType",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "blobs_common",
       "xpath": [
 
@@ -86,14 +95,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "length",
       "datacolumn": "length",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "blobs_common",
       "xpath": [
 
@@ -101,14 +113,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "externalUrl",
       "datacolumn": "externalUrl",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -116,7 +131,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "contributor",
@@ -127,7 +145,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -135,7 +153,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "contributor",
@@ -146,7 +167,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -154,7 +175,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "contributor",
@@ -165,7 +189,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -173,7 +197,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "contributor",
@@ -184,7 +211,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -192,7 +219,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "creator",
@@ -203,7 +233,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -211,7 +241,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "creator",
@@ -222,7 +255,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -230,7 +263,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "creator",
@@ -241,7 +277,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -249,7 +285,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "creator",
@@ -260,7 +299,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_common",
       "xpath": [
 
@@ -268,14 +307,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "copyrightStatement",
       "datacolumn": "copyrightStatement",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -283,14 +325,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "type",
       "datacolumn": "type",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "media_common",
       "xpath": [
         "typeList"
@@ -298,7 +343,14 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+        "dataset",
+        "document",
+        "moving_image",
+        "sound",
+        "still_image"
+      ]
     },
     {
       "fieldname": "publishTo",
@@ -306,7 +358,7 @@
       "transforms": {
         "vocabulary": "publishto"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "media_publicart",
       "xpath": [
         "publishToList"
@@ -314,17 +366,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "dateGroup",
       "datacolumn": "dateGroup",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
         "dateGroupList"
@@ -332,14 +384,17 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "source",
       "datacolumn": "source",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -347,7 +402,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publicartRightsHolder",
@@ -358,7 +416,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_publicart",
       "xpath": [
         "publicartRightsHolders"
@@ -366,7 +424,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publicartRightsHolder",
@@ -377,7 +438,7 @@
           "person_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_publicart",
       "xpath": [
         "publicartRightsHolders"
@@ -385,7 +446,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publicartRightsHolder",
@@ -396,7 +460,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_publicart",
       "xpath": [
         "publicartRightsHolders"
@@ -404,7 +468,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "publicartRightsHolder",
@@ -415,7 +482,7 @@
           "organization_shared"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "media_publicart",
       "xpath": [
         "publicartRightsHolders"
@@ -423,14 +490,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "y",
-      "in_repeating_group": "n"
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "description",
       "datacolumn": "description",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "media_common",
       "xpath": [
 
@@ -438,7 +508,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

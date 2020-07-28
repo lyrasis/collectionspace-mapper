@@ -23,7 +23,7 @@
       "datacolumn": "locationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -31,7 +31,10 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "reasonForMove",
@@ -39,7 +42,7 @@
       "transforms": {
         "vocabulary": "reasonformove"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "movements_common",
       "xpath": [
 
@@ -47,7 +50,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "currentLocation",
@@ -58,7 +64,7 @@
           "organization"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -66,7 +72,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "movementContact",
@@ -77,7 +86,7 @@
           "person"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "movements_common",
       "xpath": [
 
@@ -85,14 +94,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "movementNote",
       "datacolumn": "movementNote",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_common",
       "xpath": [
 
@@ -100,14 +112,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "labelRequested",
       "datacolumn": "labelRequested",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "optionlist",
       "namespace": "movements_botgarden",
       "xpath": [
 
@@ -115,7 +130,11 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+        "No",
+        "Yes"
+      ]
     },
     {
       "fieldname": "labelSize",
@@ -123,7 +142,7 @@
       "transforms": {
         "vocabulary": "labelsize"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "movements_botgarden",
       "xpath": [
 
@@ -131,7 +150,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "labelStandType",
@@ -139,7 +161,7 @@
       "transforms": {
         "vocabulary": "labelstandtype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "movements_botgarden",
       "xpath": [
 
@@ -147,14 +169,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "labelCount",
       "datacolumn": "labelCount",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "movements_botgarden",
       "xpath": [
 
@@ -162,7 +187,10 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }

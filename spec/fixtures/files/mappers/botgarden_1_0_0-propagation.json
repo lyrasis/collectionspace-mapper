@@ -28,7 +28,7 @@
       "datacolumn": "propNumber",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -36,7 +36,10 @@
       "data_type": "string",
       "required": "y",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "propType",
@@ -44,7 +47,7 @@
       "transforms": {
         "vocabulary": "proptype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -52,14 +55,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "numStarted",
       "datacolumn": "numStarted",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -67,17 +73,17 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "propDate",
       "datacolumn": "propDate",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -85,7 +91,10 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "propReason",
@@ -93,7 +102,7 @@
       "transforms": {
         "vocabulary": "propreason"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -101,14 +110,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "propComments",
       "datacolumn": "propComments",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -116,7 +128,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "scarStrat",
@@ -124,7 +139,7 @@
       "transforms": {
         "vocabulary": "scarstrat"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
         "scarStratGroupList",
@@ -133,14 +148,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "duration",
       "datacolumn": "duration",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
         "scarStratGroupList",
@@ -149,7 +167,10 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "durationUnit",
@@ -157,7 +178,7 @@
       "transforms": {
         "vocabulary": "durationunit"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
         "scarStratGroupList",
@@ -166,7 +187,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "extraSeeds",
@@ -176,7 +200,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -184,7 +208,10 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "spores",
@@ -194,7 +221,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -202,7 +229,10 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "cuttingType",
@@ -210,7 +240,7 @@
       "transforms": {
         "vocabulary": "cuttingtype"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -218,7 +248,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "hormone",
@@ -226,7 +259,7 @@
       "transforms": {
         "vocabulary": "propHormones"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -234,14 +267,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "concentration",
       "datacolumn": "concentration",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -249,7 +285,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "wounded",
@@ -259,7 +298,7 @@
           "boolean"
         ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -267,7 +306,10 @@
       "data_type": "boolean",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "plantType",
@@ -275,7 +317,7 @@
       "transforms": {
         "vocabulary": "propPlantType"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -283,17 +325,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "activityDate",
       "datacolumn": "activityDate",
       "transforms": {
-        "special": [
-          "structured_date"
-        ]
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -302,7 +344,10 @@
       "data_type": "structured date group",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "activityType",
@@ -310,7 +355,7 @@
       "transforms": {
         "vocabulary": "propActivityType"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -319,14 +364,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "propCount",
       "datacolumn": "propCount",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -335,7 +383,10 @@
       "data_type": "integer",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "medium",
@@ -346,7 +397,7 @@
           "concept"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -355,7 +406,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "potSize",
@@ -363,7 +417,7 @@
       "transforms": {
         "vocabulary": "potsize"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -372,7 +426,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "nurseryLocation",
@@ -383,7 +440,7 @@
           "location"
         ]
       },
-      "sourcetype": null,
+      "source_type": "authority",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -392,7 +449,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "conditions",
@@ -400,7 +460,7 @@
       "transforms": {
         "vocabulary": "propConditions"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -409,7 +469,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "chemicalApplied",
@@ -417,7 +480,7 @@
       "transforms": {
         "vocabulary": "propChemicals"
       },
-      "sourcetype": null,
+      "source_type": "vocabulary",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -426,14 +489,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "activityConcentration",
       "datacolumn": "activityConcentration",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -442,14 +508,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "activityComments",
       "datacolumn": "activityComments",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
@@ -458,14 +527,17 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "y"
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "germinationDate",
       "datacolumn": "germinationDate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -473,14 +545,17 @@
       "data_type": "date",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     },
     {
       "fieldname": "successRate",
       "datacolumn": "successRate",
       "transforms": {
       },
-      "sourcetype": null,
+      "source_type": "na",
       "namespace": "propagation_common",
       "xpath": [
 
@@ -488,7 +563,10 @@
       "data_type": "string",
       "required": "n",
       "repeats": "n",
-      "in_repeating_group": "n/a"
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ]
     }
   ]
 }
