@@ -33,9 +33,9 @@ module CollectionSpace
 
       def check_terms
         if @data.first.is_a?(String)
-          @data.each{ |val| check_term(val) }
+          @data.each{ |val| check_term(val) unless val.blank? }
         else
-          @data.each{ |arr| arr.each{ |val| check_term(val) } }
+          @data.each{ |arr| arr.each{ |val| check_term(val) unless val.blank? } }
         end
       end
 
@@ -53,9 +53,9 @@ module CollectionSpace
       def check_opt_list_vals
         @opts = @mapping[:opt_list_values]
         if @data.first.is_a?(String)
-          @data.each{ |val| check_opt_list_val(val) }
+          @data.each{ |val| check_opt_list_val(val) unless val.blank? }
         else
-          @data.each{ |arr| arr.each{ |val| check_opt_list_val(val) } }
+          @data.each{ |arr| arr.each{ |val| check_opt_list_val(val) unless val.blank? } }
         end
       end
 
