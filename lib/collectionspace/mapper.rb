@@ -10,6 +10,7 @@ require 'pp'
 require 'nokogiri'
 require 'xxhash'
 
+require 'facets/kernel/blank'
 
 module CollectionSpace
   module Mapper
