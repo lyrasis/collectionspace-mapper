@@ -5,21 +5,22 @@ module CollectionSpace
     class DataValidator
       ::DataValidator = CollectionSpace::Mapper::DataValidator
       attr_reader :mapper, :cache, :required_fields
-      def initialize(record_mapper:, cache:)
+      def initialize(record_mapper, cache)
         @mapper = record_mapper
         @cache = cache
         @required_fields = @mapper[:mappings].select{ |mapping| mapping[:required] == 'y' }
           .map{ |mapping| mapping[:datacolumn].downcase }
       end
 
-    def validate(record_hash)
-      report = []
-      data = record_hash.transform_keys(&:downcase)
-      res = check_required_fields(data)
-      report << res
-      report.flatten.compact
-    end
-    
+      def validate(data_hash, response = nil)
+        response = response.nil? ? Response.new(data_hash) : response
+        data = data_hash.transform_keys(&:downcase)
+        res = check_required_fields(data)
+        response.errors << res
+        response.errors = response.errors.flatten.compact
+        response
+      end
+      
     private
 
     def check_required_fields(data)
@@ -30,14 +31,14 @@ module CollectionSpace
         if val.nil?
           err = {level: :error,
                  field: f,
-                 type: 'required fields',
-                 message: 'required field missing'
+                 type: 'required field missing',
+                 message: "required field #{f} is missing"
                 }
         elsif val.empty?
           err = {level: :error,
                  field: f,
-                 type: 'required fields',
-                 message: 'required field is empty'
+                 type: 'required field empty',
+                 message: "required field #{f} is empty"
                 }
         else
         end

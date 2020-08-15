@@ -16,19 +16,19 @@ RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
       source_type: 'authority',
     }
     context 'and value does not start with URN' do
-      it 'returns missing_terms' do
+      it 'returns warnings' do
         data = ['Ann Analyst', 'Gabriel Solares']
-        res = DataQualityChecker.new(mapping, data).missing_terms
+        res = DataQualityChecker.new(mapping, data).warnings
         expect(res.size).to eq(2)
       end
     end
     context 'and value starts with URN' do
-      it 'does not return missing_terms' do
+      it 'does not return warnings' do
         data = [
           "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(AnnAnalyst1574450792195)'Ann Analyst'",
           "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(GabrielSolares1574683843262)'Gabriel Solares'"
         ]
-        res = DataQualityChecker.new(mapping, data).missing_terms
+        res = DataQualityChecker.new(mapping, data).warnings
         expect(res).to be_empty
       end
     end
@@ -44,19 +44,19 @@ RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
       source_type: 'vocabulary',
     }
     context 'and value does not start with URN' do
-      it 'returns missing_terms' do
+      it 'returns warnings' do
         data = [['newterm'], ['anothernewterm']]
-        res = DataQualityChecker.new(mapping, data).missing_terms
+        res = DataQualityChecker.new(mapping, data).warnings
         expect(res.size).to eq(2)
       end
     end
     context 'and value starts with URN' do
-      it 'does not return missing_terms' do
+      it 'does not return warnings' do
         data = [
           ["urn:cspace:anthro.collectionspace.org:vocabularies:name(inventorystatus):item:name(unknown)'newterm'"],
           ["urn:cspace:anthro.collectionspace.org:vocabularies:name(inventorystatus):item:name(unknown)'anothernewterm'"]
         ]
-        res = DataQualityChecker.new(mapping, data).missing_terms
+        res = DataQualityChecker.new(mapping, data).warnings
         expect(res).to be_empty
       end
     end

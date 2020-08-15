@@ -8,7 +8,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       delimiter: ';',
       subgroup_delimiter: '^^',
       transforms: {
-        'collection' => {
+        'Collection' => {
           special: %w[downcase_value],
           replacements: [
             { find: ' ', replace: '-', type: :plain }
@@ -22,73 +22,54 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       force_defaults: false
     }
 
-  @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
-  @dh = DataHandler.new(record_mapper: @rm_anthro_co, cache: anthro_cache, client: anthro_client, config: config)
-  @anthro_co_1_doc = @dh.map(anthro_co_1)
+    @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
+    @dh = DataHandler.new(record_mapper: @rm_anthro_co, client: anthro_client, cache: anthro_cache, config: config)
+    #  @anthro_co_1_doc = @dh.map(anthro_co_1)
 
-  @rm_bonsai_cons = get_json_record_mapper(path: 'spec/fixtures/files/mappers/bonsai_4_0_0-conservation.json')
-  @dm_bonsai_cons = DataHandler.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache, client: bonsai_client, config: config)
+    @rm_bonsai_cons = get_json_record_mapper(path: 'spec/fixtures/files/mappers/bonsai_4_0_0-conservation.json')
+    @dm_bonsai_cons = DataHandler.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache, client: bonsai_client, config: config)
   end
 
+  describe '#process' do
+    context 'when data hash is valid' do
+    before(:all) do
+      data = { 'objectNumber' => '123' }
+      @result = @dh.process(data)
+    end
+    end
+  end
+  
   describe '#validate' do
-    context 'when required field(s) present and populated' do
-      it 'returns empty array' do
-        data = { 'objectNumber' => '123' }
-        result = @dh.validate(data)
-        expect(result).to eq([])
-      end
-    end
-    context 'when required field(s) not present' do
-      let(:data) { { 'nonrequiredField' => '123' } }
-      let(:result) { @dh.validate(data) }
-      it 'returns array' do
-        expect(result).to be_a(Array)
-      end
-      it 'array contains one error' do
-        expect(result.size).to eq(1)
-      end
-      it 'error has field "objectnumber"' do
-        expect(result[0][:field]).to eq('objectnumber')
-      end
-      it 'error has type "required fields"' do
-        expect(result[0][:type]).to eq('required fields')
-      end
-      it 'error has message "required field missing"' do
-        expect(result[0][:message]).to eq('required field missing')
-      end
-    end
-    context 'when required field(s) present but empty' do
-      let(:data) { { 'objectNumber' => '' } }
-      let(:result) { @dh.validate(data) }
-      it 'returns array' do
-        expect(result).to be_a(Array)
-      end
-      it 'array contains one error' do
-        expect(result.size).to eq(1)
-      end
-      it 'error has field "objectnumber"' do
-        expect(result[0][:field]).to eq('objectnumber')
-      end
-      it 'error has type "required fields"' do
-        expect(result[0][:type]).to eq('required fields')
-      end
-      it 'error has message "required field is empty"' do
-        expect(result[0][:message]).to eq('required field is empty')
-      end
+    it 'returns Mapper::Response object' do
+      data = { 'objectNumber' => '123' }
+      result = @dh.validate(data)
+      expect(result).to be_a(Mapper::Response)
     end
   end
   
   describe '#map' do
-    it 'returns Mapper::MapResult object' do
-      expect(@anthro_co_1_doc).to be_a(CollectionSpace::Mapper::MapResult)
+    before(:all) do
+      data = { 'objectNumber' => '123' }
+      prepper = DataPrepper.new(data, @dh)
+      prepresponse = @dh.prep(data)
+      @result = @dh.map(prepresponse, prepper.xphash)
     end
+    
+    it 'returns Mapper::Response object' do
+      expect(@result).to be_a(Mapper::Response)
+    end
+
+    it 'the Mapper::Response object doc attribute is a Nokogiri XML Document' do
+      expect(@result.doc).to be_a(Nokogiri::XML::Document)
+    end
+    
   end
   
   describe '#merge_config_transforms' do
     context 'anthro_4_0_0 profile' do
       context 'collectionobject record type' do
         context 'collection data field' do
-          it 'merges data field specific transforms from config.json' do
+          it 'merges data field specific transforms' do
             fieldmap = @dh.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
             xforms = {
               special: %w[downcase_value],

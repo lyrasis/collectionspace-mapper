@@ -48,7 +48,8 @@ A dataset-specific configuration hash must be passed in when creating a new Data
     'publishTo' => 'DPLA;Omeka',
     'collection' => 'library-collection'
   },
-  force_defaults: false
+  force_defaults: false,
+  date_format: 'month day year'
 }
 ----
 

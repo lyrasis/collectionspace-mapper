@@ -12,7 +12,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
     it 'returns refname urn' do
       value = 'Blackfoot'
       transforms = { authority: %w[conceptauthorities archculture] }
-      res = ValueTransformer.new(value, transforms, @cache).result[:value]
+      res = ValueTransformer.new(value, transforms, @cache).result
       ex = /urn:cspace:anthro.collectionspace.org:conceptauthorities:name\(archculture\):item:name\(Blackfoot\d+\)'Blackfoot'/
       expect(res).to match(ex)
     end
@@ -24,16 +24,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
         @result = ValueTransformer.new(@string, @transforms, @cache).result
       end
       it 'returns original value' do
-        expect(@result[:value]).to eq(@string)
-      end
-      it 'returns missing hash describing term' do
-        expected = {
-          category: :authority,
-          type: 'conceptauthorities',
-          subtype: 'archculture',
-          value: @string
-        }
-      expect(@result[:missing]).to eq(expected)
+        expect(@result).to eq(@string)
       end
     end
   end
@@ -42,7 +33,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
     it 'returns refname urn' do
       value = 'Chinese'
       transforms = { vocabulary: 'languages' }
-      res = ValueTransformer.new(value, transforms, @cache).result[:value]
+      res = ValueTransformer.new(value, transforms, @cache).result
       ex = "urn:cspace:anthro.collectionspace.org:vocabularies:name(languages):item:name(zho)'Chinese'"
       expect(res).to eq(ex)
     end
@@ -51,7 +42,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
       it 'returns correct refname urn' do
         value = '0'
         transforms = { vocabulary: 'behrensmeyer', special: %w[behrensmeyer_translate] }
-        res = ValueTransformer.new(value, transforms, @cache).result[:value]
+        res = ValueTransformer.new(value, transforms, @cache).result
         ex = "urn:cspace:anthro.collectionspace.org:vocabularies:name(behrensmeyer):item:name(0)'0 - no cracking or flaking on bone surface'"
         expect(res).to eq(ex)
       end
@@ -66,7 +57,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
                           { find: ' - ', replace: '-', type: :plain }
                         ]
                        }
-          res = ValueTransformer.new(value, transforms, @cache).result[:value]
+          res = ValueTransformer.new(value, transforms, @cache).result
           ex = "urn:cspace:anthro.collectionspace.org:vocabularies:name(agerange):item:name(adolescent_26_75)'adolescent 26-75%'"
           expect(res).to eq(ex)
         end
@@ -83,7 +74,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
           { find: ' ', replace: '%%', type: :plain }
         ]
       }
-      res = ValueTransformer.new(value, transforms, @cache).result[:value]
+      res = ValueTransformer.new(value, transforms, @cache).result
       expect(res).to eq('rycy%%plynt')
     end
   end

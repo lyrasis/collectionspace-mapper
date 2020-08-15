@@ -16,6 +16,9 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         },
         'ageRange' => {
           special: %w[downcase_value],
+          replacements: [
+            { find: ' - ', replace: '-', type: :plain }
+          ]
         }
       },
       default_values: {
@@ -28,73 +31,11 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
     @dh = DataHandler.new(record_mapper: @rm_anthro_co, cache: anthro_cache, client: anthro_client, config: config)
     populate_anthro(@dh.cache)
-    @dm = DataMapper.new(anthro_co_1, @dh)
+    @prepper = DataPrepper.new(anthro_co_1, @dh)
+    @prepped = @dh.prep(anthro_co_1)
+    @dm = DataMapper.new(@prepped, @dh, @prepper.xphash)
   end
 
-  describe '#merge_default_values' do
-    context 'when no default_values specified in config' do
-      it 'does not fall over' do
-        config = {
-          delimiter: ';',
-          subgroup_delimiter: '^^',
-          force_defaults: false
-        }
-        dh = DataHandler.new(record_mapper: @rm_anthro_co, cache: anthro_cache, client: anthro_client, config: config)
-        dm = DataMapper.new(anthro_co_1, @dh)
-        anthro_co_1_nsfree = remove_namespaces(dm.doc)
-        anthro_co_1_nsfree.xpath('/*/*').each{ |n| n.name = n.name.sub('ns2:', '') }
-
-        path = '/document/collectionobjects_common/collection'
-        res = anthro_co_1_nsfree.xpath(path).text
-        ex = 'permanent-collection'
-        expect(res).to eq(ex)
-      end
-    end
-    context 'when default_values for a field is specified in config' do
-      before(:all) do
-        @anthro_co_1_nsfree = remove_namespaces(@dm.doc)
-      end
-      context 'and no value is given for that field in the incoming data' do
-        it 'maps the default values' do
-          path = '/document/collectionobjects_common/publishToList/publishTo'
-          res = @anthro_co_1_nsfree.xpath(path).text
-          ex = "urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(dpla)'DPLA'urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(omeka)'Omeka'"
-          expect(res).to eq(ex)
-        end
-      end
-      context 'and value is given for that field in the incoming data' do
-        context 'and :force_defaults = false' do
-          it 'maps the value in the incoming data' do
-            path = '/document/collectionobjects_common/collection'
-            res = @anthro_co_1_nsfree.xpath(path).text
-            ex = 'permanent-collection'
-            expect(res).to eq(ex)
-          end
-        end
-        context 'and :force_defaults = true' do
-          it 'maps the default value, overwriting value in the incoming data' do
-            config = {
-              delimiter: ';',
-              subgroup_delimiter: '^^',
-              default_values: {
-                'collection' => 'library-collection'
-              },
-              force_defaults: true
-            }
-            dh = DataHandler.new(record_mapper: @rm_anthro_co, cache: anthro_cache, client: anthro_client, config: config)
-            dm = DataMapper.new(anthro_co_1, dh)
-            anthro_co_1_nsfree = remove_namespaces(dm.doc)
-
-            path = '/document/collectionobjects_common/collection'
-            res = anthro_co_1_nsfree.xpath(path).text
-            ex = 'library-collection'
-            expect(res).to eq(ex)
-          end
-        end
-      end
-    end
-  end
-  
   describe '#doc' do
     it 'returns XML doc' do
       res = @dm.doc
@@ -102,9 +43,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
   end
 
-  describe '#map_result' do
-    it 'does' do
-      puts @dm.result.missing_terms.inspect
+  describe '#response' do
+    it 'returns Mapper::Response object' do
+      res = @dm.response
+      expect(res).to be_a(Mapper::Response)
+    end
+    it 'Mapper::Response.doc is XML document' do
+      res = @dm.response.doc
+      expect(res).to be_a(Nokogiri::XML::Document)
     end
   end
   

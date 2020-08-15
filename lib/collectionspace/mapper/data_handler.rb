@@ -5,26 +5,54 @@ module CollectionSpace
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
-      attr_reader :mapper, :cache, :client, :blankdoc, :defaults, :validator
+      attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator
       def initialize(record_mapper:, client:, cache:, config:)
         @mapper = record_mapper
-        @mapper[:xpath] = xpath_hash
-        Mapper.const_set('CONFIG', config)
-        @cache = cache
         @client = client
+        @cache = cache
+        @config = config
+        
+        @mapper[:xpath] = xpath_hash
         @blankdoc = build_xml
-        @defaults = Mapper::CONFIG[:default_values] ? Mapper::CONFIG[:default_values].transform_keys(&:downcase) : nil
+        @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
-        @validator = DataValidator.new(record_mapper: @mapper, cache: @cache)
+        @validator = DataValidator.new(@mapper, @cache)
       end
 
-      def validate(data_hash)
-        @validator.validate(data_hash)
+      def process(data_hash)
+        response = Response.new(data_hash)
+        response = @validator.validate(data_hash, response)
+        if response.valid?
+          prepper = DataPrepper.new(data_hash, self, response)
+          prepper.split_data
+          prepper.transform_data
+          prepper.check_data
+          prepper.combine_data_fields
+          response = prepper.response
+
+          mapper = DataMapper.new(response, self, prepper.xphash)
+          mapper.response
+        else
+          response
+        end
+      end
+      
+      def validate(data_hash, response = nil)
+        @validator.validate(data_hash, response)
       end
 
-      def map(data_hash)
-        datamapper = DataMapper.new(data_hash, self)
-        datamapper.result
+      def prep(data_hash)
+          prepper = DataPrepper.new(data_hash, self)
+          prepper.split_data
+          prepper.transform_data
+          prepper.check_data
+          prepper.combine_data_fields
+          prepper.response
+      end
+      
+      def map(response, xphash)
+        datamapper = DataMapper.new(response, self, xphash)
+        datamapper.response
       end
 
       private
@@ -33,8 +61,9 @@ module CollectionSpace
       # This method merges the config.json transforms into the RecordMapper field
       #   mappings for the appropriate fields
       def merge_config_transforms
-        return unless Mapper::CONFIG[:transforms]
-        Mapper::CONFIG[:transforms].each do |datacol, x|
+        return unless @config[:transforms]
+        @config[:transforms].transform_keys!(&:downcase)
+        @config[:transforms].each do |datacol, x|
           target = @mapper[:mappings].select{ |m| m[:datacolumn] == datacol }
           unless target.empty?
             target = target.first
@@ -85,6 +114,7 @@ module CollectionSpace
         end
         # add fieldmappings for children of each xpath
         @mapper[:mappings].each do |mapping|
+          mapping[:datacolumn] = mapping[:datacolumn].downcase
           h[mapping[:fullpath]][:mappings] << mapping
         end
         # populate other attributes

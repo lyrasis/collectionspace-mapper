@@ -44,19 +44,8 @@ module CollectionSpace
         return if @value.empty?
         type = @transforms[:authority][0]
         subtype = @transforms[:authority][1]
-
         existing = @cache.get(type, subtype, @value)
-
-        if existing
-          @value = existing
-        else
-          # @missing = {
-          #   category: :authority,
-          #   type: type,
-          #   subtype: subtype,
-          #   value: @value
-          # }
-        end
+        @value = existing if existing
       end
 
       def process_vocabulary
@@ -64,16 +53,7 @@ module CollectionSpace
         vocabulary = @transforms[:vocabulary]
         
         existing = @cache.get('vocabularies', vocabulary, @value)
-        if existing
-          @value = existing
-        else
-          # @missing =  {
-          #   category: :vocabulary,
-          #   type: 'vocabularies',
-          #   subtype: vocabulary,
-          #   value: @value
-          # }
-        end
+          @value = existing if existing
       end
 
       def process_boolean

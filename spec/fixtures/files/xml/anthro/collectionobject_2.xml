@@ -66,7 +66,10 @@
         <dateLatestMonth/>
       </objectProductionDateGroup>
     </objectProductionDateGroupList>
-    <contentConcepts/>
+    <contentConcepts>
+      <contentConcept>urn:cspace:anthro.collectionspace.org:conceptauthorities:name(concept):item:name(Birds918181)'Birds'</contentConcept>
+      <contentConcept>urn:cspace:anthro.collectionspace.org:conceptauthorities:name(material_ca):item:name(Feathers918181)'Feathers'</contentConcept>
+    </contentConcepts>
     <assocEventPlaces/>
     <assocActivityGroupList/>
     <objectProductionReasons/>
@@ -297,6 +300,94 @@
     <accessLimitationsGroupList/>
     <culturalCareNotes/>
   </ns2:collectionobjects_culturalcare>
+  <ns2:collectionobjects_naturalhistory_extension xmlns:ns2="http://collectionspace.org/services/collectionobject/domain/naturalhistory_extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <taxonomicIdentGroupList>
+      <taxonomicIdentGroup>
+        <refPage/>
+        <notes/>
+        <taxonomicIdentHybridParentGroupList/>
+        <affinityTaxon/>
+        <reference/>
+        <institution/>
+        <identBy/>
+        <identDateGroup>
+          <scalarValuesComputed>true</scalarValuesComputed>
+          <dateEarliestSingleCertainty/>
+          <dateEarliestSingleQualifierUnit/>
+          <dateDisplayDate>2019-09-30</dateDisplayDate>
+          <dateLatestScalarValue>2019-10-01T00:00:00.000Z</dateLatestScalarValue>
+          <dateEarliestSingleQualifierValue/>
+          <datePeriod/>
+          <dateLatestEra/>
+          <dateEarliestSingleDay>30</dateEarliestSingleDay>
+          <dateEarliestSingleQualifier/>
+          <dateEarliestSingleYear>2019</dateEarliestSingleYear>
+          <dateLatestCertainty/>
+          <dateAssociation/>
+          <dateLatestDay/>
+          <dateEarliestSingleMonth>9</dateEarliestSingleMonth>
+          <dateEarliestSingleEra>
+            urn:cspace:anthro.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'
+          </dateEarliestSingleEra>
+          <dateLatestYear/>
+          <dateLatestQualifierUnit/>
+          <dateNote/>
+          <dateLatestQualifierValue/>
+          <dateLatestQualifier/>
+          <dateEarliestScalarValue>2019-09-30T00:00:00.000Z</dateEarliestScalarValue>
+          <dateLatestMonth/>
+        </identDateGroup>
+        <identKind/>
+        <taxonomicIdentHybridName/>
+        <qualifier/>
+        <taxon/>
+        <computedTaxonCommonNames/>
+        <hybridFlag>false</hybridFlag>
+      </taxonomicIdentGroup>
+      <taxonomicIdentGroup>
+        <refPage/>
+        <notes/>
+        <taxonomicIdentHybridParentGroupList/>
+        <affinityTaxon/>
+        <reference/>
+        <institution/>
+        <identBy/>
+        <identDateGroup>
+          <scalarValuesComputed>true</scalarValuesComputed>
+          <dateEarliestSingleCertainty/>
+          <dateEarliestSingleQualifierUnit/>
+          <dateDisplayDate>4/5/2020</dateDisplayDate>
+          <dateLatestScalarValue>2020-04-06T00:00:00.000Z</dateLatestScalarValue>
+          <dateEarliestSingleQualifierValue/>
+          <datePeriod/>
+          <dateLatestEra/>
+          <dateEarliestSingleDay>5</dateEarliestSingleDay>
+          <dateEarliestSingleQualifier/>
+          <dateEarliestSingleYear>2020</dateEarliestSingleYear>
+          <dateLatestCertainty/>
+          <dateAssociation/>
+          <dateLatestDay/>
+          <dateEarliestSingleMonth>4</dateEarliestSingleMonth>
+          <dateEarliestSingleEra>
+            urn:cspace:anthro.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'
+          </dateEarliestSingleEra>
+          <dateLatestYear/>
+          <dateLatestQualifierUnit/>
+          <dateNote/>
+          <dateLatestQualifierValue/>
+          <dateLatestQualifier/>
+          <dateEarliestScalarValue>2020-04-05T00:00:00.000Z</dateEarliestScalarValue>
+          <dateLatestMonth/>
+        </identDateGroup>
+        <identKind/>
+        <taxonomicIdentHybridName/>
+        <qualifier/>
+        <taxon/>
+        <computedTaxonCommonNames/>
+        <hybridFlag>false</hybridFlag>
+      </taxonomicIdentGroup>
+    </taxonomicIdentGroupList>
+  </ns2:collectionobjects_naturalhistory_extension>
   <ns2:collectionobjects_annotation xmlns:ns2="http://collectionspace.org/services/collectionobject/domain/annotation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <annotationGroupList>
       <annotationGroup>
