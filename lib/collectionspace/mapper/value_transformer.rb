@@ -57,7 +57,7 @@ module CollectionSpace
       end
 
       def process_boolean
-        if @value.empty?
+        if @value.blank?
           @value = 'false'
         else
           case @value.downcase

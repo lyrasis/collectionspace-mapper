@@ -67,29 +67,4 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       expect(docdefs).to eq(urihash)
     end
   end
-
-  describe '#map' do
-    context 'anthro profile' do
-      context 'collectionobject rectype' do
-        let(:testdoc) { get_xml_fixture('anthro/collectionobject_2.xml') }
-        let(:resdoc) { remove_namespaces(@dm.doc) }
-        let!(:xpaths) { test_xpaths(testdoc) } 
-
-        it 'maps as expected' do
-          xpaths.each do |xpath|
-            is_date = xpath['Date'] ? true : false
-            if is_date
-              puts "#{xpath} - skipped"
-              next
-            else
-              puts xpath
-            end
-            testnode = standardize_value(testdoc.xpath(xpath).text)
-            resnode = standardize_value(resdoc.xpath(xpath).text)
-            expect(resnode).to eq(testnode)
-          end
-        end
-      end
-    end
-  end
 end

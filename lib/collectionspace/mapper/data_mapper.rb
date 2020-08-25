@@ -27,6 +27,7 @@ module CollectionSpace
         thesefields = xphash[:mappings].map{ |m| m[:fieldname] }
         thisdata = @data.select{ |k, v| thesefields.include?(k) }
         targetnode = @doc.xpath("//#{xpath}")[0]
+        #binding.pry if thesefields.include?('identDateGroup')
         if xphash[:is_group] == false
           simple_map(xpath, xphash, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
@@ -66,7 +67,7 @@ module CollectionSpace
             data.each do |val|
               child = Nokogiri::XML::Node.new(fn, @doc)
               if val.is_a?(Hash)
-                map_structured_date(fn, val)
+                map_structured_date(child, val)
               else
                 child.content = val
               end
@@ -94,8 +95,12 @@ module CollectionSpace
           thisdata.each do |k, v|
             if v[i]
               child = Nokogiri::XML::Node.new(k, @doc)
-              child.content = v[i]
-              parent.add_child(child)
+              if v[i].is_a?(Hash)
+                map_structured_date(child, v[i]) 
+              else v[i]
+                child.content = v[i]
+                parent.add_child(child)
+              end
             end
           end
         end
@@ -133,8 +138,9 @@ module CollectionSpace
         end
 
         # create the subgroups
-        val_ct = thisdata.values.map{ |v| v.size }.uniq.sort.reverse
+        val_ct = thisdata.values.map{ |g| g.map{ |sg| sg.size }.uniq.sort.reverse }.uniq.sort.reverse.flatten
         max_ct = val_ct[0]
+        #        binding.pry if subgroup == 'dimensionSubGroup'
         groups.each do |i, data|
           max_ct.times do
             target = @doc.xpath("//#{parent_path}/#{subgroup_path.join('/')}")
@@ -151,8 +157,12 @@ module CollectionSpace
             data.each_with_index do |val, i|
               target = subgrouplist_target[i]
               child = Nokogiri::XML::Node.new(field, @doc)
-              child.content = val
-              target.add_child(child) if target
+              if val.is_a?(Hash)
+                map_structured_date(child, val)
+              else
+                child.content = val
+                target.add_child(child) if target
+              end
             end
           end
         end

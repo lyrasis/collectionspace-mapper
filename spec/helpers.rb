@@ -1,27 +1,10 @@
 # frozen_string_literal: true
 
+require_relative './anthro_helpers'
+
 module Helpers
 
   FIXTUREDIR = 'spec/fixtures/files/xml'
-
-  def anthro_client
-    CollectionSpace::Client.new(
-      CollectionSpace::Configuration.new(
-        base_uri: 'https://anthro.dev.collectionspace.org/cspace-services',
-        username: 'admin@anthro.collectionspace.org',
-        password: 'Administrator'
-      )
-    )
-  end
-  
-  def anthro_cache
-    cache_config = {
-      domain: 'anthro.collectionspace.org',
-      search_enabled: true,
-      search_identifiers: false
-    }
-    CollectionSpace::RefCache.new(config: cache_config, client: anthro_client)
-  end
 
   def bonsai_client
     CollectionSpace::Client.new(
@@ -58,6 +41,10 @@ module Helpers
     h
   end
 
+  def get_datahash(path:)
+    JSON.parse(File.read(path))
+  end
+  
   # The way CollectionSpace uses different URIs for the same namespace prefix in the same
   #  document is irregular and makes it impossible to query a document via xpath if
   #  the namespaces are defined. For testing, remove them...
@@ -81,17 +68,25 @@ module Helpers
   end
 
   # returns array of just the most specific xpaths from cleaned fixture XML for testing
+  # removes fields not included in the RecordMapper mappings (which may be set in the XML due to weird
+  #  default stuff in the application/services layer, but don't need to be in mapped XML)
   # testdoc should be the result of calling get_xml_fixture
-  def test_xpaths(testdoc)
+  def test_xpaths(testdoc, mappings)
     xpaths = []
     testdoc.traverse { |node| xpaths <<  node.path }
     xpaths.sort!
-    keeppaths = []
+    docpaths = []
     until xpaths.empty? do
       path = xpaths.shift
-      keeppaths << path unless xpaths.any?{ |e| e.start_with?(path) }
+      docpaths << path unless xpaths.any?{ |e| e.start_with?(path) }
     end
-    keeppaths
+    mappaths = mappings.map{ |m| "/document/#{m[:fullpath]}/#{m[:fieldname]}" }
+    keeppaths = docpaths.select do |p|
+      p = p.match(/^(.*)\//)[1].gsub(/\[\d+\]/, '')
+      mappaths.include?(p)
+    end
+    reject = %w[computedCurrentLocation]
+    keeppaths.reject{ |path| reject.any?{ |r| path[r] } }
   end
 
   def standardize_value(string)
@@ -109,97 +104,6 @@ module Helpers
     end
   end
 
-  def populate_anthro(cache)
-    terms = [
-      ['personauthorities', 'person', 'Ann Analyst', "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(AnnAnalyst1594848799340)'Ann Analyst'"],
-      ['personauthorities', 'person', 'Gabriel Solares', "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(GabrielSolares1594848906847)'Gabriel Solares'"],
-['conceptauthorities', 'archculture', 'Blackfoot', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(archculture):item:name(Blackfoot1576172504869)'Blackfoot'"],
-['conceptauthorities', 'concept', 'Birds', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(concept):item:name(Birds918181)'Birds'"],
-['conceptauthorities', 'ethculture', 'Batak', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(ethculture):item:name(Batak1576172496916)'Batak'"],
-['conceptauthorities', 'material_ca', 'Feathers', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(material_ca):item:name(Feathers918181)'Feathers'"],
-['placeauthorities', 'place', 'York County, Pennsylvania', "urn:cspace:anthro.collectionspace.org:placeauthorities:name(place):item:name(YorkCountyPennsylvania)'York County, Pennsylvania'"],
-['vocabularies', 'agerange', 'adolescent 26-75%', "urn:cspace:anthro.collectionspace.org:vocabularies:name(agerange):item:name(adolescent_26_75)'adolescent 26-75%'"],
-['vocabularies', 'agerange', 'adult 0-25%', "urn:cspace:anthro.collectionspace.org:vocabularies:name(agerange):item:name(adult_0_25)'adult 0-25%'"],
-['vocabularies', 'behrensmeyer', '2 - longitudinal cracks, exfoliation on surface', "urn:cspace:anthro.collectionspace.org:vocabularies:name(behrensmeyer):item:name(2)'2 - longitudinal cracks, exfoliation on surface'"], 
-['vocabularies', 'behrensmeyer', '5 - bone crumbling in situ, large splinters', "urn:cspace:anthro.collectionspace.org:vocabularies:name(behrensmeyer):item:name(5)'5 - bone crumbling in situ, large splinters'"],
-['vocabularies', 'behrensmeyer', '1 - longitudinal and/or mosaic cracking present on surface', "urn:cspace:anthro.collectionspace.org:vocabularies:name(behrensmeyer):item:name(1)'1 - longitudinal and/or mosaic cracking present on surface'"], 
-['vocabularies', 'behrensmeyer', '3 - fibrous texture, extensive exfoliation', "urn:cspace:anthro.collectionspace.org:vocabularies:name(behrensmeyer):item:name(3)'3 - fibrous texture, extensive exfoliation'"],
-['vocabularies', 'bodyside', 'midline', "urn:cspace:anthro.collectionspace.org:vocabularies:name(bodyside):item:name(midline)'midline'"],
-['vocabularies', 'mortuarytreatment', 'burned/unburned bone mixture', "urn:cspace:anthro.collectionspace.org:vocabularies:name(mortuarytreatment):item:name(burnedunburnedbonemixture)'burned/unburned bone mixture'"],
-['vocabularies', 'mortuarytreatment', 'embalmed', "urn:cspace:anthro.collectionspace.org:vocabularies:name(mortuarytreatment):item:name(enbalmed)'enbalmed"],
-['vocabularies', 'mortuarytreatment', 'excarnated', "urn:cspace:anthro.collectionspace.org:vocabularies:name(mortuarytreatment):item:name(excarnated)'excarnated'"],
-['vocabularies', 'mortuarytreatment', 'mummified', "urn:cspace:anthro.collectionspace.org:vocabularies:name(mortuarytreatment):item:name(mummified)'mummified'"],
-['vocabularies', 'annotationtype', 'image made', "urn:cspace:anthro.collectionspace.org:vocabularies:name(annotationtype):item:name(image_made)'image made'"],
-['vocabularies', 'annotationtype', 'type', "urn:cspace:anthro.collectionspace.org:vocabularies:name(annotationtype):item:name(type)'type'"],
-['vocabularies', 'dateera', 'CE', "urn:cspace:anthro.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'"],
-['vocabularies', 'inventorystatus', 'unknown', "urn:cspace:anthro.collectionspace.org:vocabularies:name(inventorystatus):item:name(unknown)'unknown'"],
-['vocabularies', 'nagpracategory', 'not subject to NAGPRA', "urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpracategory):item:name(nonNagpra)'not subject to NAGPRA'"],
-['vocabularies', 'nagpracategory', 'subject to NAGPRA (unspec.)', "urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpracategory):item:name(subjectToNAGPRA)'subject to NAGPRA (unspec.)'"],
-['vocabularies', 'prodpeoplerole', 'designed after', "urn:cspace:anthro.collectionspace.org:vocabularies:name(prodpeoplerole):item:name(designedAfter)'designed after'"],
-['vocabularies', 'prodpeoplerole', 'traditional makers', "urn:cspace:anthro.collectionspace.org:vocabularies:name(prodpeoplerole):item:name(traditionalMakers)'traditional makers'"],
-['vocabularies', 'publishto', 'DPLA', "urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(dpla)'DPLA'"],
-['vocabularies', 'publishto', 'Omeka', "urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(omeka)'Omeka'"],
-]
-    populate(cache, terms)
-  end
 
-  def anthro_co_1
-    {
-      'ageRange'=>'Adolescent 26 - 75%;Adult 0 - 25%',
-      'annotationAuthor'=>'Ann Analyst; Gabriel Solares',
-      'annotationDate'=>'12/19/2019;12/10/2019',
-      'annotationNote'=>'Stored in coffee can; Photographed by staff',
-      'annotationType'=>'type; image made',
-      'behrensmeyerSingleLower'=>'1; 3',
-      'behrensmeyerUpper'=>'2; 5',
-      'bone'=>';fdgg',
-      'collection'=>'Permanent Collection',
-      'commingledRemainsNote'=>'crnote2;crnote2',
-      'commingledRemainsSex'=>';Possibly female',
-      'contentConceptAssociated'=>'Birds',
-      'contentConceptMaterial'=>'Feathers',
-      'count'=>';2',
-      'culturalCareNote'=>nil,
-      'dentition'=>';y',
-      'dimension'=>'height^^width^^height^^width;height^^width^^height^^width',
-      'dimensionSummary'=>'overall: 7 1/2 in x 5 1/2 in;image area: 5 1/2 in x 3 7/8 in',
-      'fieldLocCounty'=>'York',
-      'fieldLocPlace'=>'York County, Pennsylvania',
-      'fieldLocState'=>'PA',
-      'identDateGroup'=>'2019-09-30;4/5/2020',
-      'inventoryStatus'=>'unknown',
-      'limitationDetails'=>nil,
-      'limitationLevel'=>nil,
-      'limitationType'=>nil,
-      'localityNote'=>'Sample locality note 1',
-      'measurementUnit'=>'inches^^inches^^centimeters^^centimeters;inches^^inches^^centimeters^^centimeters',
-      'minIndividuals'=>'1;2',
-      'mortuaryTreatment'=>'burned/unburned bone mixture^^enbalmed;excarnated^^mummified',
-      'mortuaryTreatmentNote'=>'mtnote1^^mtnote2;mtnote3^^mtnote4',
-      'nagpraCategory'=>'subject to NAGPRA (unspec.);not subject to NAGPRA',
-      'nagpraReportFiled'=>'Y',
-      'nagpraReportFiledBy'=>'Ann Analyst',
-      'nagpraReportFiledDate'=>'1/2/2019',
-      'numberType'=>'isbn;oclc',
-      'numberValue'=>'123;456',
-      'objectNumber'=>'20CS.001.0001',
-      'objectProductionNote'=>'Production note text.',
-      'objectProductionPeopleArchculture'=>'Blackfoot',
-      'objectProductionPeopleEthculture'=>'Batak',
-      'objectProductionPeopleRole'=>'traditional makers; designed after',
-      'recordStatus'=>'new',
-      'repatriationNote'=>'Repatriation note 1; Repatriation note 2',
-      'requestDate'=>nil,
-      'requestOnBehalfOf'=>nil,
-      'requester'=>nil,
-      'sex'=>';Possibly female',
-      'side'=>';midline',
-      'title'=>'A Man;A Woman',
-      'titleLanguage'=>'English;English',
-      'titleTranslation'=>'Un Homme^^Hombre; Une Femme^^Fraulein',
-      'titleTranslationLanguage'=>'French^^Spanish;French^^German',
-      'titleType'=>'collection;generic',
-      'value'=>'7.475^^5.475^^18.9865^^13.9065;5.5^^3.875^^13.97^^9.8425',
-    }
-    end
+
 end
