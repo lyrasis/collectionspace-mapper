@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Helpers
+  extend self
+  
   def anthro_client
     CollectionSpace::Client.new(
       CollectionSpace::Configuration.new(

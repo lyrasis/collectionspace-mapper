@@ -6,6 +6,7 @@ module CollectionSpace
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
       attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator
+
       def initialize(record_mapper:, client:, cache:, config:)
         @mapper = record_mapper
         @client = client
@@ -20,21 +21,14 @@ module CollectionSpace
       end
 
       def process(data_hash)
-        response = Response.new(data_hash)
-        response = @validator.validate(data_hash, response)
-        if response.valid?
-          prepper = DataPrepper.new(data_hash, self, response)
+          prepper = DataPrepper.new(data_hash, self)
           prepper.split_data
           prepper.transform_data
           prepper.check_data
           prepper.combine_data_fields
-          response = prepper.response
 
-          mapper = DataMapper.new(response, self, prepper.xphash)
+          mapper = DataMapper.new(prepper.response, self, prepper.xphash)
           mapper.response
-        else
-          response
-        end
       end
       
       def validate(data_hash, response = nil)
@@ -159,6 +153,10 @@ module CollectionSpace
         h.keys.each{ |k| h[k][:is_subgroup] = true if subgroups.include?(k) }
         h
       end
+
+      def xpath_hash_new
+      end
+      
     end
   end
 end

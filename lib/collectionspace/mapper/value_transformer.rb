@@ -12,10 +12,10 @@ module CollectionSpace
         @transforms = transforms
         @cache = cache
         @missing = {}
-        process_replacements if @transforms.keys.include?(:replacements)
-        process_special if @transforms.keys.include?(:special)
-        process_authority if @transforms.keys.include?(:authority)
-        process_vocabulary if @transforms.keys.include?(:vocabulary)
+        process_replacements if @transforms.key?(:replacements)
+        process_special if @transforms.key?(:special)
+        process_authority if @transforms.key?(:authority)
+        process_vocabulary if @transforms.key?(:vocabulary)
         @result = @value
       end
 

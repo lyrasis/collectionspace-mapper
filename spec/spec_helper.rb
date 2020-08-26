@@ -1,5 +1,5 @@
-require "bundler/setup"
-require "collectionspace/mapper"
+require 'bundler/setup'
+require 'collectionspace/mapper'
 require_relative './helpers'
 
 RSpec.configure do |config|

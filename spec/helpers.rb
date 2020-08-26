@@ -3,7 +3,8 @@
 require_relative './anthro_helpers'
 
 module Helpers
-
+  extend self
+  
   FIXTUREDIR = 'spec/fixtures/files/xml'
 
   def bonsai_client
