@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './anthro_helpers'
+require_relative './bonsai_helpers'
 
 module Helpers
   extend self
