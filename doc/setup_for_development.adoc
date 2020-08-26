@@ -1,0 +1,31 @@
+= Setting up for development work
+
+- You will need Ruby 2.6.6 in your development environment. (I recommend using https://rvm.io/[Ruby Version Manager (rvm)] to manage your Ruby development environment.)
+- Do `bundle --version`
+- If the version of Bundler is lower than 2.1.2, do `gem update bundler`
+** Bundler should come standard with Ruby 2.6.6, but I believe it comes by default with an older version. If you get an error that you don't have Bundler installed when you try to check the version, do `gem install bundler`
+- Clone this repo
+- `cd` into this repo
+- Do `bundle install` -- this will install other dependencies
+
+That should be it!
+
+To test, do `rake spec`. This command runs all the automated RSpec tests. If everything's good, you'll see something like:
+
+..................................................
+/Users/kristina/.rvm/rubies/ruby-2.6.6/bin/ruby -I/Users/kristina/.rvm/gems/ruby-2.6.6/gems/rspec-core-3.9.2/lib:/Users/kristina/.rvm/gems/ruby-2.6.6/gems/rspec-support-3.9.3/lib /Users/kristina/.rvm/gems/ruby-2.6.6/gems/rspec-core-3.9.2/exe/rspec --pattern spec/\*\*\{,/\*/\*\*\}/\*_spec.rb
+
+CollectionSpace::Mapper::DataHandler
+  #validate
+    returns Mapper::Response object
+  #map
+    returns Mapper::Response object
+    the Mapper::Response object doc attribute is a Nokogiri XML Document
+  #merge_config_transforms
+    anthro_4_0_0 profile
+      collectionobject record type
+        collection data field
+          merges data field specific transforms
+..................................................
+
+...and it will go on for several screens.
