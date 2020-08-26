@@ -27,17 +27,34 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         let(:prepper) { DataPrepper.new(datahash, @dh) }
         let(:prepped) { prepper.prep }
         let(:dm) { DataMapper.new(prepped, @dh, prepper.xphash) }
-        let(:testdoc) { get_xml_fixture('anthro/collectionobject1.xml') }
-        let(:resdoc) { remove_namespaces(dm.doc) }
-        let!(:xpaths) { test_xpaths(testdoc, @dh.mapper[:mappings]) } 
-        
+        let(:mapped_doc) { remove_namespaces(dm.response.doc) }
+        let(:mapped_xpaths) { list_xpaths(mapped_doc) }
+        let(:fixture_doc) { get_xml_fixture('anthro/collectionobject1.xml') }
+        let(:fixture_xpaths) { test_xpaths(fixture_doc, @dh.mapper[:mappings]) }
         it 'maps as expected' do
-          xpaths.each do |xpath|
-            #puts xpath
-            testnode = standardize_value(testdoc.xpath(xpath).text)
-            resnode = standardize_value(resdoc.xpath(xpath).text)
-            expect(resnode).to eq(testnode)
+          fixture_xpaths.each do |xpath|
+            #            puts resdoc
+            #            puts xpath
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
+            expect(mapped_node).to eq(fixture_node)
           end
+        end
+
+        it 'does not map unexpected fields' do
+          puts 'RESULT XPATHS'
+          puts mapped_xpaths
+
+          puts "\n\nFIXTURE XPATHS"
+          puts fixture_xpaths
+          
+          diff = mapped_xpaths - fixture_xpaths
+          puts "\n\nDIFF"
+          puts diff
+
+#          pp(result_doc)
+
+          expect(diff).to eq([])
         end
       end
     end

@@ -4,9 +4,11 @@ require 'collectionspace/client'
 require 'collectionspace/refcache'
 require 'cspace_config_untangler'
 
+require 'benchmark'
 require 'json'
 require 'pp'
 
+require 'facets/array/before'
 require 'facets/kernel/blank'
 require 'nokogiri'
 require 'xxhash'

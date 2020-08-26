@@ -99,8 +99,8 @@ module CollectionSpace
                 map_structured_date(child, v[i]) 
               else v[i]
                 child.content = v[i]
-                parent.add_child(child)
               end
+              parent.add_child(child)
             end
           end
         end

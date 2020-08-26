@@ -7,22 +7,6 @@ module Helpers
   
   FIXTUREDIR = 'spec/fixtures/files/xml'
 
-  def bonsai_client
-    CollectionSpace::Client.new(
-      CollectionSpace::Configuration.new(
-        base_uri: 'https://bonsai.dev.collectionspace.org/cspace-services',
-        username: 'admin@bonsai.collectionspace.org',
-        password: 'Administrator'
-      )
-    )
-  end
-  
-  def bonsai_cache
-    cache_config = {
-      domain: 'bonsai.collectionspace.org'
-    }
-    CollectionSpace::RefCache.new(config: cache_config, client: bonsai_client)
-  end
 
   # returns RecordMapper hash read in from JSON file
   # path = String. Path to JSON file
@@ -58,14 +42,31 @@ module Helpers
   
   def get_xml_fixture(filename)
     doc = remove_namespaces(Nokogiri::XML(File.read("#{FIXTUREDIR}/#{filename}")){ |c| c.noblanks })
-    # CSpace saves empty structured date fields with only a scalarValuesComputed value of false
-    # we don't want to compare against these empty nodes
-    doc.traverse{ |node| node.remove if node.name['Date'] && node.text == 'false' }
-    # Drop empty nodes
-    doc.traverse{ |node| node.remove unless node.text.match?(/\S/m) }
-    # Drop sections of the document we don't write with the mapper
-    doc.traverse{ |node| node.remove if node.name == 'collectionspace_core' || node.name == 'account_permission' }
+    # fields to omit from testing across the board
+    rejectfields = %w[computedCurrentLocation].sort
+    doc.traverse do |node|
+      # CSpace saves empty structured date fields with only a scalarValuesComputed value of false
+      # we don't want to compare against these empty nodes
+      node.remove if node.name['Date'] && node.text == 'false'
+      # Drop empty nodes
+      node.remove unless node.text.match?(/\S/m)
+      # Drop sections of the document we don't write with the mapper
+      node.remove if node.name == 'collectionspace_core' || node.name == 'account_permission'
+      # Drop fields created by CS application
+      node.remove if rejectfields.bsearch{ |f| f == node.name }
+    end
     doc
+  end
+
+  def get_xpaths(doc)
+    xpaths = []
+    fixture_doc.traverse { |node| xpaths <<  node.path }
+    xpaths.sort!
+  end
+
+  # removes paths for nodes in hierarchy that do not have their own values
+  def field_value_xpaths(xpaths)
+    xpaths.reject{ |path| xpaths.after(path).start_with?(path) }
   end
 
   # returns array of just the most specific xpaths from cleaned fixture XML for testing
@@ -73,21 +74,21 @@ module Helpers
   #  default stuff in the application/services layer, but don't need to be in mapped XML)
   # testdoc should be the result of calling get_xml_fixture
   def test_xpaths(testdoc, mappings)
-    xpaths = []
-    testdoc.traverse { |node| xpaths <<  node.path }
-    xpaths.sort!
-    docpaths = []
-    until xpaths.empty? do
-      path = xpaths.shift
-      docpaths << path unless xpaths.any?{ |e| e.start_with?(path) }
-    end
     mappaths = mappings.map{ |m| "/document/#{m[:fullpath]}/#{m[:fieldname]}" }
-    keeppaths = docpaths.select do |p|
-      p = p.match(/^(.*)\//)[1].gsub(/\[\d+\]/, '')
-      mappaths.include?(p)
+
+    xpaths = list_xpaths(testdoc)
+    # only include paths for fields defined in the mapper
+    xpaths = xpaths.select do |path|
+      path = path.match(/^(.*)\//)[1].gsub(/\[\d+\]/, '')
+      mappaths.any?{ |e| path.start_with?(e) }
     end
-    reject = %w[computedCurrentLocation]
-    keeppaths.reject{ |path| reject.any?{ |r| path[r] } }
+    xpaths
+  end
+
+  def list_xpaths(doc)
+    xpaths = get_xpaths(doc)
+    xpaths = field_value_xpaths(xpaths)
+    xpaths
   end
 
   def standardize_value(string)
