@@ -61,7 +61,7 @@ module Helpers
 
   def get_xpaths(doc)
     xpaths = []
-    fixture_doc.traverse { |node| xpaths <<  node.path }
+    doc.traverse { |node| xpaths <<  node.path }
     xpaths.sort!
   end
 
