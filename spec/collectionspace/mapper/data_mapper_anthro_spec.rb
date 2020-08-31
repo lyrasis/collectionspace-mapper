@@ -17,7 +17,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'collectionobject record' do
       before(:all) do
-        @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
+        @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
         @dh = DataHandler.new(record_mapper: @rm_anthro_co, cache: anthro_cache, client: anthro_client, config: @config)
       end
       # record 1 was used for testing default value merging, transformations, etc.

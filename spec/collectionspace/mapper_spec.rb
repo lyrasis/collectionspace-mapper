@@ -15,7 +15,7 @@ RSpec.describe CollectionSpace::Mapper do
 
   context 'when reading in JSON RecordMapper file' do
     it 'returns a Hash' do
-      path = 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json'
+      path = 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json'
       h = get_json_record_mapper(path: path)
       expect(h).to be_a(Hash)
     end

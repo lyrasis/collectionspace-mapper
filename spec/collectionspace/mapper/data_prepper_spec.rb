@@ -25,7 +25,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
       force_defaults: false
     }
 
-    @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
+    @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
     @dh = DataHandler.new(record_mapper: @rm_anthro_co, cache: anthro_cache, client: anthro_client, config: config)
     populate_anthro(@dh.cache)
     @dp = DataPrepper.new(anthro_co_1, @dh)

@@ -10,6 +10,9 @@ _One piece_ of this batch data import tool is this repo. See https://github.com/
 ---
 
 
+== Getting started
+
+- https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/setup_for_development.adoc[Get set up for development]
 
 
 

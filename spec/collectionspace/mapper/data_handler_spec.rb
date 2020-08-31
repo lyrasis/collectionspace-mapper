@@ -22,12 +22,12 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       force_defaults: false
     }
 
-    @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
+    @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
     @dh = DataHandler.new(record_mapper: @rm_anthro_co, client: anthro_client, cache: anthro_cache, config: config)
     #  @anthro_co_1_doc = @dh.map(anthro_co_1)
 
-    @rm_bonsai_cons = get_json_record_mapper(path: 'spec/fixtures/files/mappers/bonsai_4_0_0-conservation.json')
-    @dm_bonsai_cons = DataHandler.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache, client: bonsai_client, config: config)
+    @rm_bonsai_cons = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/bonsai/bonsai_4_0_0-conservation.json')
+    @dh_bonsai_cons = DataHandler.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache, client: bonsai_client, config: config)
   end
 
   describe '#process' do
@@ -135,14 +135,14 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       context 'conservation record type' do
         context 'xpath ending with fertilizersToBeUsed' do
           it 'is a repeating group' do
-            h = @dm_bonsai_cons.mapper[:xpath]
+            h = @dh_bonsai_cons.mapper[:xpath]
             res = h['conservation_livingplant/fertilizationGroupList/fertilizationGroup/fertilizersToBeUsed'][:is_group]
             expect(res).to be true
           end
         end
         context 'xpath ending with conservators' do
           it 'is a repeating group' do
-            h = @dm_bonsai_cons.mapper[:xpath]
+            h = @dh_bonsai_cons.mapper[:xpath]
             res = h['conservation_common/conservators'][:is_group]
             expect(res).to be false
           end
