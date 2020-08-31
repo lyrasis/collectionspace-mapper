@@ -3,6 +3,39 @@
 == Background
 https://www.collectionspace.org/[CollectionSpace] is a collections management application for museums.
 
+We are currently in the middle of an upgrade from CollectionSpace 6.0 to 6.1. *Our work here will focus on version 6.1.*
+
+Since there are very different types of museum collections (art museum vs. local history museum vs. botanical garden), CollectionSpace offers several different data profiles, all based on the core CollectionSpace profile.
+
+|====================
+| Profile | Demo site | Dev site
+
+| Core | https://core.collectionspace.org | https://core.dev.collectionspace.org
+| Anthropology  | https://anthro.collectionspace.org | https://anthro.dev.collectionspace.org
+| Bonsai  | https://bonsai.collectionspace.org | https://bonsai.dev.collectionspace.org
+| Botanical garden  | https://botgarden.collectionspace.org | https://botgarden.dev.collectionspace.org
+| Fine & contemporary art  | https://fcart.collectionspace.org | https://fcart.dev.collectionspace.org
+| Herbarium  | https://herbarium.collectionspace.org | https://herbarium.dev.collectionspace.org
+| Local history & material culture  | https://lhmc.collectionspace.org | https://lhmc.dev.collectionspace.org
+| Materials  | https://materials.collectionspace.org | https://materials.dev.collectionspace.org
+| Public art  | https://publicart.collectionspace.org | https://publicart.dev.collectionspace.org
+|====================
+
+There are three main types of record in CollectionSpace: collectionobject, procedure, and authority. To view any record type, open CollectionSpace, click `Create New`, and choose the record type.
+
+collectionobject:: Also called "object" or "cataloging," this record describes an object in a museum's collection. This is the most complex record, with the most fields.
+procedure:: A record of this type describes some action taken on an object or group of objects, such as acquisition, conservation activities, exhibition, or movement from one location to another. A procedure record is almost always linked to one or more object records. Procedure records may also be linked to each other. For example, if an object is moved for an exhibition, the movement record and exhibition record may be linked. 
+authority:: A record of this type describes a term in a controlled vocabulary (concept, person, geographic place, storage location, etc.). Terms represented by an authority record may be used as values in fields in other records. Some fields require use of an authority term.
+
+There are also vocabulary records, which we tend to deal with only indirectly. A vocabulary is sort of a lightweight version of an authority. It is a controlled term list, but not as much information can be recorded about a term. Some fields require use of a vocabulary term. To view vocabularies and terms in them, log into CollectionSpace, click `Tools`, and click `Term Lists` if you are not already on that tab.
+
+Users with certain permission levels can add new authority and vocabulary terms in the CollectionSpace user interface.
+
+There is another type of controlled term list that must be configured in the CollectionSpace application configuration. This is the "option list." Some fields require option list terms. 
+
+An overview of the different profiles and record types is available on the https://collectionspace.atlassian.net/wiki/spaces/COL/pages/506953729/Configuration+and+Data+Maps+-+Cataloging+Procedures+and+Vocabularies[CollectionSpace wiki]. A comprehensive list of all fields in all record types in all profiles is available https://github.com/collectionspace/cspace-config-untangler/blob/master/data/fields_6_1_dates_collapsed.csv[here].
+
+
 We are building a new batch data import tool that will allow CollectionSpace users to ingest new records or update existing records in bulk, by uploading a CSV file. The working documentation and discussion of the functional design for this tool https://collectionspace.atlassian.net/wiki/spaces/COL/pages/1267236875/CSV+Import+Tool[is available] if you are interested, but *you do not need to look at it*.
 
 _One piece_ of this batch data import tool is this repo. See https://github.com/collectionspace/collectionspace-mapper/blob/master/README.md[the main repo README file] for a description of what this piece does. After you've read that
