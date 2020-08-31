@@ -1,0 +1,96 @@
+= Using the CollectionSpace API
+Full documentation for the API is https://collectionspace.atlassian.net/wiki/spaces/DOC/pages/701466577/Services+Layer+REST+API[here].
+
+The info below, plus the patterns given in the spreadsheet, should be enough for what you need to do.
+
+== Authenticating
+
+The admin login you use for the site should work here.
+
+Alternatively, you can use each profile's "reader" login:
+
+user: reader@core.collectionspace.org or reader@anthro.collectionspace.edu, etc.
+pw: reader
+
+== Base URLs
+
+Again, these follow a predictable pattern:
+
+- https://core.dev.collectionspace.org/cspace-services/
+- https://anthro.dev.collectionspace.org/cspace-services/
+- https://bonsai.dev.collectionspace.org/cspace-services/
+
+And so on, using the same subdomains as in the demo and dev application URLs.
+
+*The patterns in the spreadsheet get added to the base URL.*
+
+== CSIDs
+
+To use the API to retrieve a record, you need to know the record's CSID.
+
+https://collectionspace.atlassian.net/wiki/spaces/DOC/pages/701467309/CollectionSpace+ID+CSID[Here] is the documentation page on CSIDs.
+
+You get the CSID from the URL of the record after you have saved it. It is the part after the final slash.
+
+For example, in this URL for a Taxon authority record:
+
+`https://botgarden.dev.collectionspace.org/cspace/botgarden/record/taxon/local/acfa5f70-3c00-45b5-abbb`
+
+The CSID is:
+
+`acfa5f70-3c00-45b5-abbb`
+
+In this collectionobject record:
+
+`https://core.dev.collectionspace.org/cspace/core/record/collectionobject/0ebe4870-35b0-4468-920a`
+
+The CSID is:
+
+`0ebe4870-35b0-4468-920a`
+
+== Objects and procedures
+
+The pattern is:
+
+`base url + pattern for record type (from spreadsheet), replacing CSID`
+
+So, for the core collectionobject in the CSID section:
+
+`https://core.dev.collectionspace.org/cspace-services/collectionobjects/0ebe4870-35b0-4468-920a`
+
+For this anthro Loan Out procedure:
+
+`https://anthro.dev.collectionspace.org/cspace/anthro/record/loanout/bdc6255c-4d62-418e-b3cb`
+
+the API link would be:
+
+`https://anthro.dev.collectionspace.org/cspace-services/loansout/bdc6255c-4d62-418e-b3cb`
+
+[NOTE]
+===
+The form of the record type name in the API link is usually, *_but not always_* just the internal record type name with an `s` on the end.
+===
+
+== Authority terms
+
+There is an extra step, because you have to find the CSID for the authority vocabulary and the specific term in that authority.
+
+Let's say we need to get the XML for a local person name record in the anthro dev instance. The record's application URL is:
+
+`https://anthro.dev.collectionspace.org/cspace/anthro/record/person/local/ab4ac225-b9a0-41f0-9727`
+
+I use the pattern for the URL before `{authCSID}` in the spreadsheet:
+
+`https://anthro.dev.collectionspace.org/cspace-services/personauthorities/`
+
+This gives me XML info about the two person authorities defined for anthro: Local Persons and ULAN Persons.
+
+I get the CSID for Local Persons authority from this part:
+
+`<csid>8ca27db0-6b05-42ba-8c6b</csid>`
+
+Then I can complete the pattern:
+
+`https://anthro.dev.collectionspace.org/cspace-services/personauthorities/8ca27db0-6b05-42ba-8c6b/items/ab4ac225-b9a0-41f0-9727`
+
+Unfortunately, even though every profile has a Local Person authority, the CSID for that authority is different in each profile.

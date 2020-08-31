@@ -4,22 +4,22 @@
 
 CollectionSpace has a https://collectionspace.atlassian.net/wiki/spaces/DOC/pages/701466725/Common+Services+REST+API+documentation[services API] that can be used to create, update, or delete records in an instance by sending an https://collectionspace.atlassian.net/wiki/spaces/DOC/pages/701466725/Common+Services+REST+API+documentation#CommonServicesRESTAPIdocumentation-Payloads[XML record payload].
 
-An instance of CollectionSpace version 5.0 or greater can produce a JSON dump of its configuration, including information about the fields defined for the instance and how they are structured in a CollectionSpace XML record. (See links at https://github.com/collectionspace/cspace-config-untangler/blob/master/README.adoc#json-config-source-files[`cspace-config-untangler` README]
+An instance of CollectionSpace version 5.0 or greater can produce a JSON dump of its configuration, including information about the fields defined for the instance and how they are structured in a CollectionSpace XML record. (See links at https://github.com/collectionspace/cspace-config-untangler/blob/master/README.adoc#json-config-source-files[`cspace-config-untangler` README])
 
-https://github.com/collectionspace/cspace-config-untangler[`cspace-config-untangler`] uses an aforementioned JSON config to produce (among other things):
+https://github.com/collectionspace/cspace-config-untangler[`cspace-config-untangler`] 'untangles' a CSpace JSON config to produce (among other things):
 
 - One JSON RecordMapper per record type defined in the config. A RecordMapper records the information needed to create a CollectionSpace XML record from a hash (field name/data value pairs) of record data
 - One CSV template per record type defined in the config, which includes all possible fields for a record along with info on the allowed data types, repeatability, allowed values, and what fields are required
 
-*`cspace-mapper` takes a RecordMapper and a record data hash and creates a CollectionSpace XML record.*
+*`collectionspace-mapper` takes a RecordMapper and a record data hash and creates a CollectionSpace XML record.*
 
-`cspace-mapper` also validates the given data, ensuring any required field is present before mapping. The response returned by `cspace-mapper` also includes data quality warnings that a user may want to fix before adding the record to CollectionSpace.
+`collectionspace-mapper` also validates the given data, ensuring any required field is present before mapping. The response returned by `collectionspace-mapper` also includes data quality warnings that a user may want to fix before adding the record to CollectionSpace.
 
 The new batch import tool currently being developed will:
 
 - Import CSV file of data for a given record type. Each row in CSV corresponds to one CollectionSpace record
-- Break CSV into a batch of data hashes as required by `cspace-mapper`
-- Interact with `cspace-mapper` to handle validation, mapping, and warnings for all rows in a batch
+- Break CSV into a batch of data hashes as required by `collectionspace-mapper`
+- Interact with `collectionspace-mapper` to handle validation, mapping, and warnings for all rows in a batch
 - Interact with CollectionSpace services API to create or update successfully mapped records in a CollectionSpace instance
 
 == Documentation
