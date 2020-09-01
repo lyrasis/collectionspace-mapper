@@ -145,3 +145,26 @@ Example: https://github.com/collectionspace/collectionspace-mapper/blob/master/s
 ** commingled remains/mortuary treatment fields
 ** delimiter for repeating values in a subgroup: `^^`
 * `title` field -- example for including double quotes if necessary
+
+=== 4. Populate cache with authority and vocabulary term data from your record
+
+Do this in the `spec/{profile}_helpers.rb` file.
+
+Add all field values from your XML file that are output as https://collectionspace.atlassian.net/wiki/spaces/DOC/pages/701467319/RefName[RefNames].
+
+=== 5. Create the test
+
+(to document)
+
+=== 6. Run the test
+
+(to more fully document)
+
+Troubleshoot failing tests caused by data input/output mismatches.
+
+Flag actual mapping problems for Kristina to review.
+
+Change any failing tests to xit.
+
+Commit and make PR, assigning to Kristina for review.
+
