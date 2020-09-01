@@ -133,3 +133,6 @@ Example: `bonsai/objectexit1.json`
 * `exitQuantity` - everything's sent through as a string
 * Because I populated the `currentOwner` field with an Organization authority value (Bonsai Museum), I put that value in the `CurrentOwnerOrganization` field of my JSON datahash.
 * You do not need to include fields with null values in your JSON datahash. I have them because I like to copy all the headers of the CSV, paste special/transpose them, paste them into Emacs, and use a macro to convert each header to a JSON key with a null value. 
+* `exitMethod`
+** This is one of the "option list" populated fields mentioned above. The values you see in the record are the display messages. You must record the appropriate term from the `VALUE SOURCE` row of the CSV template in the datahash. This is why I have recorded `inperson` rather than `in person`
+** Repeated field delimiter is `;`
