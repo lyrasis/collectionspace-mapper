@@ -80,7 +80,7 @@ There are some known issues in the current code, and new tests that fail will he
 
 https://docs.google.com/spreadsheets/d/1nhJRbgGjl7ZCTNlFFI1PnrpoJe-fDML5zMrS275HS3Q/edit?usp=sharing[Google Sheets file for organizing the work]
 
-I gave Erick, Kevin, and Onesmus permission to edit the file, so the link should work for you if you log in with a Google account linked to your DDD email.
+I gave Erick, Kevin, and Kamore permission to edit the file, so the link should work for you if you log in with a Google account linked to your DDD email.
 
 CollectionSpace isn't always totally consistent, so this spreadsheet also serves as a reference for the internal/code names of different record types, how those record types are _usually_ displayed in the UI, and the pattern for using the CollectionSpace API to retrieve an XML version of a record created in the application.
 
