@@ -11,6 +11,7 @@ The admin login you use for the site should work here.
 Alternatively, you can use each profile's "reader" login:
 
 user: reader@core.collectionspace.org or reader@anthro.collectionspace.edu, etc.
+
 pw: reader
 
 == Base URLs
@@ -68,13 +69,13 @@ the API link would be:
 `https://anthro.dev.collectionspace.org/cspace-services/loansout/bdc6255c-4d62-418e-b3cb`
 
 [NOTE]
-===
+====
 The form of the record type name in the API link is usually, *_but not always_* just the internal record type name with an `s` on the end.
-===
+====
 
 == Authority terms
 
-There is an extra step, because you have to find the CSID for the authority vocabulary and the specific term in that authority.
+*There is an extra step, because you have to find the CSID for the authority vocabulary and the specific term in that authority.*
 
 Let's say we need to get the XML for a local person name record in the anthro dev instance. The record's application URL is:
 
