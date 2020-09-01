@@ -32,7 +32,7 @@
  "mortuaryTreatmentNote": "mtnote1^^mtnote2;mtnote3^^mtnote4",
  "nagpraCategory": "subject to NAGPRA (unspec.);not subject to NAGPRA",
  "nagpraReportFiled": "Y",
- "nagpraReportFiledBy": "Ann Analyst",
+ "nagpraReportFiledByPerson": "Ann Analyst",
  "nagpraReportFiledDate": "1/2/2019",
  "numberType": "lender;obsolete",
  "numberValue": "123;456",
