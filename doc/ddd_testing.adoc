@@ -127,7 +127,7 @@ This is a JSON representation of one "row" of imported data.
 
 *Some notes on datahash conventions:*
 
-Example: `bonsai/objectexit1.json`
+Example: https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/fixtures/files/datahashes/bonsai/objectexit1.json[`bonsai/objectexit1.json`]
 
 * `exitDateGroup` field is so named because all the very specific structured date fields will be provided by the mapper and nested under the `exitDateGroup` element in the XML hierarchy.
 * `exitQuantity` - everything's sent through as a string
@@ -136,3 +136,12 @@ Example: `bonsai/objectexit1.json`
 * `exitMethod`
 ** This is one of the "option list" populated fields mentioned above. The values you see in the record are the display messages. You must record the appropriate term from the `VALUE SOURCE` row of the CSV template in the datahash. This is why I have recorded `inperson` rather than `in person`
 ** Repeated field delimiter is `;`
+
+Example: https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/fixtures/files/datahashes/anthro/collectionobject2.json[`anthro/collectionobject2.json`]
+
+* Repeating field groups with repeating subgroups
+** dimension fields
+** title fields
+** commingled remains/mortuary treatment fields
+** delimiter for repeating values in a subgroup: `^^`
+* `title` field -- example for including double quotes if necessary
