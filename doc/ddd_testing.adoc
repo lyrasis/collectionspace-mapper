@@ -90,5 +90,46 @@ Put your name in the `claimed_by` column before starting work on a record type, 
 
 == Steps
 
-      . Choose a record type from the spreadsheet to work on and put your name in the `claimed_by` column.
-      . Create a new branch of this repo, starting from master
+The following steps assume I've chosen the objectexit record type from the bonsai profile.
+
+=== 1. Prepare
+
+. Choose a record type from the spreadsheet to work on and put your name in the `claimed_by` column.
+. `cd` into this repo's folder
+. `git checkout master` (if not already on master)
+. `git pull`
+. Create a new branch off master and switch to it: `git checkout -b bonsai-objectexit`
+. Log into bonsai CollectionSpace > `Create New` > `Object Exit`
+
+=== 2. Fully populate record in CollectionSpace and save XML
+
+. Fill in the record as fully as possible -- my sample record is at `https://bonsai.dev.collectionspace.org/cspace/bonsai/record/objectexit/5f12d2f9-de20-4c77-9a93`.
+.. For repeatable fields or groups of fields, enter more than one value
+.. For repeatable field groups, make sure all fields are populated in at least one of the repetitions, but leave a field or two blank, especially in the first grouping, to ensure the mapper can handle these properly. (see the `Deaccession and Disposal Information > Deaccession approval` group, where I've left the `Group` field blank in the first entry) 
+.. The values don't have to make sense.
+.. You can re-use the same authority term in multiple fields, but if fields can be populated by more than one authority vocabulary (like `Current owner` and `Depositor` can both be populated by a Person or Organization authority) make sure you are using all allowed authorities at least once in the record. Here, I used an organization term for `Current owner` and a person term for `Depositor`.
+. Save the record
+. Get the XML for the record using the API. Details https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/using_cs_api.adoc[here]. My API URL would be: `https://bonsai.dev.collectionspace.org/cspace-services/objectexit/5f12d2f9-de20-4c77-9a93`
+.. Save as XML only (browser wording may vary, but you want the raw XML file)
+.. Save to `collectionspace-mapper/spec/fixtures/files/xml/{profile}/{recordtypename}{number}.xml`
+... For me, since this is the first bonsai objectexit, I'd save `bonsai/objectexit1.xml`
+
+
+=== 3. Create the datahash for your record
+
+This is a JSON representation of one "row" of imported data.
+
+. Download the appropriate CSV template for your profile/record type from https://github.com/collectionspace/cspace-config-untangler/tree/master/data/templates/release_6_1[here]
+. The headers from this CSV will be the names in your JSON name/value pairs. These are usually the underlying XML field names, or a version of them.
+. Sometimes it is obvious which CSV column goes with which field in the UI, but sometimes it isn't. Match up with the XML output or use https://github.com/collectionspace/cspace-config-untangler/blob/master/data/fields_6_1_dates_collapsed.csv[fields_6_1_dates_collapsed.csv] to locate which field goes with which UI label.
+. Save JSON file in `collectionspace-mapper/spec/fixtures/files/datahashes/{profile}/{recordtypename}{number}.json`
+.. The number in the filename should, in most cases, match up with the number in your saved XML file
+
+*Some notes on datahash conventions:*
+
+Example: `bonsai/objectexit1.json`
+
+* `exitDateGroup` field is so named because all the very specific structured date fields will be provided by the mapper and nested under the `exitDateGroup` element in the XML hierarchy.
+* `exitQuantity` - everything's sent through as a string
+* Because I populated the `currentOwner` field with an Organization authority value (Bonsai Museum), I put that value in the `CurrentOwnerOrganization` field of my JSON datahash.
+* You do not need to include fields with null values in your JSON datahash. I have them because I like to copy all the headers of the CSV, paste special/transpose them, paste them into Emacs, and use a macro to convert each header to a JSON key with a null value. 
