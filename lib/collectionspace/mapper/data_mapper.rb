@@ -24,11 +24,9 @@ module CollectionSpace
       private
 
       def map(xpath, xphash)
-#        thesefields = xphash[:mappings].map{ |m| m[:fieldname] }
-#        thisdata = @data.select{ |k, v| thesefields.include?(k) }
         thisdata = @data[xpath]
         targetnode = @doc.xpath("//#{xpath}")[0]
-        #binding.pry if thesefields.include?('identDateGroup')
+        xphash[:mappings] = xphash[:mappings].uniq{ |m| m[:fieldname] }
         if xphash[:is_group] == false
           simple_map(xpath, xphash, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
