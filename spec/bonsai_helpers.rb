@@ -36,5 +36,4 @@ module Helpers
     ]
     populate(cache, terms)
   end
-
 end
