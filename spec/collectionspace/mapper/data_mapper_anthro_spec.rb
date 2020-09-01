@@ -48,7 +48,6 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
             expect(mapped_node).to eq(fixture_node)
           end
         end
-
       end
     end
   end
