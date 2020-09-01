@@ -135,8 +135,8 @@ module CollectionSpace
 
           if type['date']
             case type
-              when 'structured date group'
-                sourcedata[column] = structured_date_transform(data)
+            when 'structured date group'
+              sourcedata[column] = structured_date_transform(data)
             when 'date'
               sourcedata[column] = unstructured_date_transform(data)
             end
@@ -177,23 +177,21 @@ module CollectionSpace
       end
 
       def combine_data_values(xpath, xphash)
+        @response.combined_data[xpath] = {}
         fieldhash = {} # key = CSpace field names; value = array of data columns mapping to that field
         # create keys in fieldname and combined_data for all CSpace fields represented in data
         xphash[:mappings].each do |mapping|
           fieldname = mapping[:fieldname]
-          @response.combined_data[fieldname] = []
-          fieldhash[fieldname] = []
-        end
-        
-        xphash[:mappings].each do |mapping|
-          fieldname = mapping[:fieldname]
-          col = mapping[:datacolumn]
-          fieldhash[fieldname] << col
+          unless fieldhash.key?(fieldname)
+            @response.combined_data[xpath][fieldname] = []
+            fieldhash[fieldname] = []
+          end
+          fieldhash[fieldname] << mapping[:datacolumn]
         end
         
         xform = @response.transformed_data
         fieldhash.each do |field, cols|
-          cols.each{ |col| xform[col].each{ |v| @response.combined_data[field] << v } }
+          cols.each{ |col| xform[col].each{ |v| @response.combined_data[xpath][field] << v } }
         end
       end
     end

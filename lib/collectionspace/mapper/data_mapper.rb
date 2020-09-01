@@ -24,8 +24,9 @@ module CollectionSpace
       private
 
       def map(xpath, xphash)
-        thesefields = xphash[:mappings].map{ |m| m[:fieldname] }
-        thisdata = @data.select{ |k, v| thesefields.include?(k) }
+#        thesefields = xphash[:mappings].map{ |m| m[:fieldname] }
+#        thisdata = @data.select{ |k, v| thesefields.include?(k) }
+        thisdata = @data[xpath]
         targetnode = @doc.xpath("//#{xpath}")[0]
         #binding.pry if thesefields.include?('identDateGroup')
         if xphash[:is_group] == false
