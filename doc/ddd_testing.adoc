@@ -28,7 +28,7 @@ Since there are very different types of museum collections (art museum vs. local
 The user name and password for the demo and dev sites are given on the login page. The username follows a consistent pattern across the profiles, and the password for all is the same. The login for demo and dev sites for each profile is the same.
 ====
 
-====
+
 [NOTE]
 ====
 The bottom right corner of the login screen tells you the release of CollectionSpace used.
@@ -56,6 +56,7 @@ An overview of the different profiles and record types is available on the https
 
 
 == This project
+
 We are building a new batch data import tool that will allow CollectionSpace users to ingest new records or update existing records in bulk, by uploading a CSV file. The working documentation and discussion of the functional design for this tool https://collectionspace.atlassian.net/wiki/spaces/COL/pages/1267236875/CSV+Import+Tool[is available] if you are interested, but *you do not need to look at it*.
 
 This repo represents _one piece_ of this batch data import tool. See https://github.com/collectionspace/collectionspace-mapper/blob/master/README.md[the main repo README file] for a description of what this piece does and how it fits in with the rest.
