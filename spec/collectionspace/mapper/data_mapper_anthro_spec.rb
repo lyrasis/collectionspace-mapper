@@ -23,7 +23,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
       # record 1 was used for testing default value merging, transformations, etc.
       # we start with record 2 to purely test mapping functionality
-      context 'rec 2' do
+      context 'record 2' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/anthro/collectionobject2.json')
           @prepper = DataPrepper.new(@datahash, @handler)

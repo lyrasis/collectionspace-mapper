@@ -22,7 +22,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         @handler = DataHandler.new(record_mapper: @rm_bonsai_oe, cache: @cache, client: bonsai_client, config: @config)
       end
 
-      context 'rec 1' do
+      context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/bonsai/objectexit1.json')
           @prepper = DataPrepper.new(@datahash, @handler)

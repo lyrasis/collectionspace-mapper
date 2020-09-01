@@ -152,9 +152,68 @@ Do this in the `spec/{profile}_helpers.rb` file.
 
 Add all field values from your XML file that are output as https://collectionspace.atlassian.net/wiki/spaces/DOC/pages/701467319/RefName[RefNames].
 
+Follow the patterns currently found in https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/anthro_helpers.rb[anthro_helpers.rb, `populate_anthro`] and https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/bonsai_helpers.rb[bonsai_helpers.rb, `populate_bonsai`].
+
+Best practice: sort the lines in the `terms` array in alphabetical order to make it easy to check for terms in the list and avoid duplication.
+
+Populating the cache manually will cut down on (hopefully eliminate) live API calls made while running tests, and reduce test dependency on another piece of software.
+
+Reuse already set-up terms across records as possible to reduce the amount of work populating the cache.
+
+
 === 5. Create the test
 
-(to document)
+==== Organization of tests
+
+General function of the `DataMapper` class is tested in `spec/collectionspace/mapper/data_mapper_spec.rb`.
+
+Record type mapping functionality for each profile is tested in a separate file with naming convention: `spec/collectionspace/mapper/data_mapper_{profile}_spec.rb`. Currently test files exist for anthro and bonsai profiles.
+
+If you need to write a test for a record type in another profile, say core, then you could save a copy of the anthro file as `data_mapper_core_spec.rb` and replace all instances of `anthro` with `core`.
+
+===== Helper files
+
+There is one helper file per profile in the `spec` directory. These have the name pattern `{profile}_helpers.rb`. When a new helper file is created, it needs to be required at the top of `spec/helpers.rb` following the pattern already established there.
+
+==== Internal organization of profile test files
+
+Start off by looking at `spec/collectionspace/mapper/data_mapper_bonsai_spec.rb`.
+
+First we set up a `@config` variable that will be used in all the tests in this file.
+
+Next we set up a context block for `bonsai profile` that contains the rest of the tests. Here we set up the bonsai `@cache` which will be shared by all tests nested within this context block.
+
+Next we set up a context block for `objectexit record`. There should be a context block at this level for each record type. In this block, we set up the `RecordMapper` JSON config (`@rm_bonsai_oe`) for bonsai Object Exit record type. We also set up a `DataHandler` object (`@handler`) using the RecordMapper, cache, client, and config that are already set up. (The `bonsai_client` is set up in the `bonsai_helpers.rb` file.
+
+Next, we set up a context block for object exit record 1. In the `before` block here, we set up all the datahash-specific processing.
+
+- `@datahash` pulls in our JSON data
+- `@prepper` creates a `DataPrepper` object that splits repeating values, transforms authority/vocabulary term strings into RefNames, and combines datahash fields that get mapped to the same CollectionSpace XML field
+- `@mapper` uses the results of `@prepper` to map the CollectionSpace XML document
+- `@mapped_doc` gets this result and uses a helper method to remove the namespaces so we can more easily programmatically compare the documents
+- `@mapped_xpaths` uses a helper method to prepare an array of all xpaths in our result
+- `@fixture_doc` pulls in the XML we got from the API so the test can compare it to the result. The `get_xml_fixture` method also removes the namespaces and any fields created by the CollectionSpace application that we don't need to worry about in our data payloads.
+- `@fixture_xpaths` produces an array of all xpaths to non-blank XML nodes in the fixture record, and removes any associated with fields not covered by the RecordMapper instructions.
+
+
+Within the `record 1` context block, we finally get to the two tests that are run on this record. These lines follow the pattern `it 'does stuff' do`
+
+The `does not map unexpected fields` test checks that the mapper is not producing extra fields, by comparing the arrays of xpaths.
+
+The `maps as expected` test checks to make sure every field from the fixture document is present and populated as expected in our mapped document.
+
+==== Creating a test for a new record type in bonsai
+
+If I wanted to set up a test for bonsai collectionobject recordtype, I would copy the entire `objectexit record` context block and paste it in the same document. I'd change all the references to `objectexit` or `oe` to `collectionobject` or `co`.
+
+==== Creating tests for a new profile
+
+This is pretty straightforward given that they all follow a similar pattern.
+
+- Create new `spec/collectionspace/mapper/data_mapper_{profile}_spec.rb` file based on another profile
+- Create new `spec/{profile}_helpers.rb` file based on the same other profile.
+- Find/replace mentions of old profile with the new profile in the new files.
+- Create a folder for your new profile in `spec/fixtures/files/datahashes` and `spec/fixtures/files/xml`
 
 === 6. Run the test
 
