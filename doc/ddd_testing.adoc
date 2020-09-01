@@ -88,3 +88,7 @@ Priority 1 is highest priority. I will add numbers as the work proceeds.
 
 Put your name in the `claimed_by` column before starting work on a record type, so work doesn't get duplicated.
 
+== Steps
+
+      . Choose a record type from the spreadsheet to work on and put your name in the `claimed_by` column.
+      . Create a new branch of this repo, starting from master
