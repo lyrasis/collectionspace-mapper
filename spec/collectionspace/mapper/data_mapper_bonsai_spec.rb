@@ -38,15 +38,12 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
 
         it 'maps as expected' do
-          # puts @mapped_doc
           @fixture_xpaths.each do |xpath|
-            # puts xpath
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
-
       end
     end
   end

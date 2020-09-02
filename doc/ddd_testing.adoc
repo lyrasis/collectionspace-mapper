@@ -215,15 +215,156 @@ This is pretty straightforward given that they all follow a similar pattern.
 - Find/replace mentions of old profile with the new profile in the new files.
 - Create a folder for your new profile in `spec/fixtures/files/datahashes` and `spec/fixtures/files/xml`
 
-=== 6. Run the test
+=== 6. Run the test and troubleshoot what you can
 
-(to more fully document)
+The following all assumes you are using terminal/command line and are at the base level of the `collectionspace-mapper` repo.
 
-Troubleshoot failing tests caused by data input/output mismatches.
+*To run all tests for the application*, do `rake spec`.
 
-Flag actual mapping problems for Kristina to review.
+This takes a while, so I typically only do it before submitting a pull request, to make sure I haven't inadvertently broken something.
 
-Change any failing tests to xit.
+You can see how the `describe`, `context`, and `it` blocks we used to organize the tests create structured test output that describes (when we've done it well) what we expect the code to do.
+
+*To run just the bonsai profile test file*, do `rspec spec/collectionspace/mapper/data_mapper_bonsai_spec.rb`.
+
+This is a lot quicker.
+
+Even quicker, *run only the bonsai objectexit tests* by doing `rspec spec/collectionspace/mapper/data_mapper_bonsai_spec.rb:19`. (The 19 refers to the line on which I currently see `context 'objectexit record' do`.
+
+You can use the same command format, with line number on the end, to run just the tests for a particular objectexit record (`context 'record 1' do` vs. `context 'record 2' do`, if we ever have more than one test for a given record type.
+
+You can also run just one of the `it...do` tests this way, which is the quickest.
+
+Finally, once we have objectexit tests for a number of profiles, you might want to run just those. You can do that: `rspec spec/. --example 'objectexit record'`. See https://relishapp.com/rspec/rspec-core/docs/command-line[rspec command-line documentation] for more info.
+
+==== Basic troubleshooting for test failures
+
+There are two main approaches. Probably the best for getting started is using `puts` or `pp` (pretty print) commands in/around the test that is failing. This approach is usually sufficient for finding failures caused by data input errors or typos.
+
+A more ambitious approach, but one that is very helpful to know about is using `pry`. See fuller article on this https://www.honeybadger.io/blog/debugging-ruby-with-pry/[here], especially if you expect to ever do much in Ruby. The basic idea is to find the place in the actual code (`lib/collectionspace/mapper` files) that is being tested. You can put `binding.pry` anywhere in the code and run a test that calls that code. Pry will interrupt the testing, stop at the line wher you entered `binding.pry`, and let you interact with the code at that exact point from the command line.
+
+You probably don't need the pry approach for this, but I wanted to mention it because it definitely can be very helpful.
+
+[IMPORTANT]
+====
+Please remove any `puts`, `pp`, `binding.pry` or other lines added for debugging before making a pull request, *unless you think it will be helpful for me to see the same output on something you haven't been able to solve*.
+
+If you are leaving this code in for this reason, please note that in comments on your PR.
+====
+
+*If you can make the tests pass*, that is great! But don't worry about it too much, especially at the beginning. You'll pick up on some common problems as we work on these together.
+
+If you cannot make a test pass, change the `it` at the beginning of that test to `xit`. For example:
+
+`xit 'maps as expected' do`
+
+This allows you to run `rake spec` or any of the rspec commands without failing tests; it will report them as pending tests instead.
+
+===== `does not map unexpected fields` test
+
+If there are a lot of xpaths in a failing `diff` value for this test, the test output may not show you the whole list.
+
+After the line defining the `diff` variable, add:
+
+`puts diff`
+
+When you run the test again, you should see a list of the unexpected xpaths from @mapped_doc, one per line. 
+
+===== `maps as expected` test
+
+This test is kind of annoying, because if there are 8 errors, the process will be:
+
+- test fails at first error
+- you resolve the first problem (or make it skip that one) and run the test again
+- test fails at the second error
+- repeat, repeat, repeat...
+
+Rspec really doesn't want to make it easy to do this kind of test in a way that will tell you all the errors at once.
+
+Also, the output is cryptic when it fails. It will tell you what was expected (from `@fixture_doc`) and what you got (from `@mapped_doc`), but not what field/xpath the failure was in.
+
+After `@fixture_xpaths.each do |xpath|`, you can add:
+
+`puts xpath`
+
+This will generate a list of all the xpaths it processes (or tries to process). If there is a failure, the last xpath in the list was the problem.
+
+If you want to see the mapped XML document, add the following line directly after `it 'maps as expected' do`:
+
+`puts @mapped_doc`
+
+To see all of the info about how the data has been handled between the original data and the XML mapping, you can add the following line directly after `it 'maps as expected' do`:
+
+`pp(@prepper.prep)`
+
+`pp` is nicer for viewing Hashes or Ruby Objects.
+
+Anything in the `pp(@prepper.prep)` output that is a key starting with `@` can be appended as a method call to get that specific piece of data out by itself. For example, if you think the problem is in how the data was split up, you could do:
+
+`pp(@prepper.prep.split_data)`
+
+*Skipping fields/xpaths*
+
+Because one failing field means the rest of the fields will not be tested, you need to be able to skip field failures you can't fix.
+
+Two methods:
+
+_Skip individual xpaths_
+
+This is useful if there are random one-off fields to skip.
+
+[source,ruby]
+----
+it 'maps as expected' do
+  skip = [
+  '/document/objectexit_common/depositor/text()',
+  '/document/objectexit_common/deaccessionAuthorizer/text()'
+  ]
+  @fixture_xpaths.each do |xpath|
+     next if skip.any?(xpath)
+    fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
+    mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+    expect(mapped_node).to eq(fixture_node)
+  end
+end
+----
+
+_Skip xpaths matching pattern_
+
+If everything in the `deacApprovalGroupList` is failing, that's eight individual xpaths. Better to do this: 
+
+[source,ruby]
+----
+it 'maps as expected' do
+  @fixture_xpaths.each do |xpath|
+     next if xpath.start_with?('/document/objectexit_common/deacApprovalGroupList/')
+    fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
+    mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+    expect(mapped_node).to eq(fixture_node)
+  end
+end
+----
+
+You can also combine these methods:
+
+[source,ruby]
+----
+it 'maps as expected' do
+  skip = [
+  '/document/objectexit_common/depositor/text()',
+  '/document/objectexit_common/deaccessionAuthorizer/text()'
+  ]
+  @fixture_xpaths.each do |xpath|
+    next if xpath.start_with?('/document/objectexit_common/deacApprovalGroupList/')
+    next if skip.any?(xpath)
+    fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
+    mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+    expect(mapped_node).to eq(fixture_node)
+  end
+end
+----
+
+
 
 Commit and make PR, assigning to Kristina for review.
 
