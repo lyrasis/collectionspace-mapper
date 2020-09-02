@@ -135,7 +135,7 @@ This is a JSON representation of one "row" of imported data.
 
 . Download the appropriate CSV template for your profile/record type from https://github.com/collectionspace/cspace-config-untangler/tree/master/data/templates/release_6_1[here]
 . The headers from this CSV will be the names in your JSON name/value pairs. These are usually the underlying XML field names, or a version of them.
-. Sometimes it is obvious which CSV column goes with which field in the UI, but sometimes it isn't. Match up with the XML output or use https://github.com/collectionspace/cspace-config-untangler/blob/master/data/fields_6_1_dates_collapsed.csv[fields_6_1_dates_collapsed.csv] to locate which field goes with which UI label.
+. Sometimes it is obvious which CSV column goes with which field in the UI, but sometimes it isn't. Match up with the XML output or use https://github.com/collectionspace/cspace-config-untangler/blob/master/data/all_fields_6_1_dates_collapsed.csv[fields_6_1_dates_collapsed.csv] to locate which field goes with which UI label.
 . Save JSON file in `collectionspace-mapper/spec/fixtures/files/datahashes/{profile}/{recordtypename}{number}.json`
 .. The number in the filename should, in most cases, match up with the number in your saved XML file
 
