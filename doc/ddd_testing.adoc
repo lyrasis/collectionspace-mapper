@@ -1,5 +1,10 @@
 = Testing instructions for DDD
 
+:toc:
+:toc-placement!:
+
+toc::[]
+
 == Background
 https://www.collectionspace.org/[CollectionSpace] is a collections management application for museums.
 
