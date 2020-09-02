@@ -43,7 +43,7 @@ The user name and password for the demo and dev sites are given on the login pag
 ====
 
 
-[NOTE]
+[IMPORTANT]
 ====
 The bottom right corner of the login screen tells you the release of CollectionSpace used.
 
@@ -268,7 +268,7 @@ If you are leaving this code in for this reason, please note that in comments on
 
 *If you can make the tests pass*, that is great! But don't worry about it too much, especially at the beginning. You'll pick up on some common problems as we work on these together.
 
-If you cannot make a test pass, change the `it` at the beginning of that test to `xit`. For example:
+*If you cannot make a test pass*, change the `it` at the beginning of that test to `xit`. For example:
 
 `xit 'maps as expected' do`
 
@@ -380,5 +380,22 @@ end
 
 
 
-Commit and make PR, assigning to Kristina for review.
+=== 7. Commit your branch and make pull request
+
+Assign the pull request to Kristina for review.
+
+If changes need to be made to your PR, here's how I do that to facilitate best communication/learning. I will:
+
+- make a new branch based on your branch
+- make the needed changes in my new version of your branch
+- make a pull request from my branch
+- make explanatory comments in the code via the PR
+- assign my PR to you for review
+
+I think you should then be able to merge my PR into your branch to get the changes. We'll have to experiment with that part.
+
+Sometimes I may make some example changes in my branch to establish a pattern, and I'll ask you to finish those changes in your branch after merging.
+
+Once you've merged and made any remaining changes, request re-review. 
+
 
