@@ -69,20 +69,20 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         context 'when no date_format specified in config' do
           it 'defaults to M/D/Y interpretation' do
             res = CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
-            expect(res).to eq('2020-01-02 12:00:00 -0500')
+            expect(res).to start_with('2020-01-02 12:00:00')
           end
         end
         context 'when date_format in config = month day year' do
           it 'interprets as M/D/Y' do
             res = CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
-            expect(res).to eq('2020-01-02 12:00:00 -0500')
+            expect(res).to start_with('2020-01-02 12:00:00')
           end
         end
         context 'when date_format in config = day month year' do
           it 'interprets as D/M/Y' do
             config = @config.merge({ date_format: 'day month year' })
             res = CspaceDate.new(@string, @client, @cache, config).timestamp.to_s
-            expect(res).to eq('2020-02-01 12:00:00 -0500')
+            expect(res).to start_with('2020-02-01 12:00:00')
           end
         end
       end
