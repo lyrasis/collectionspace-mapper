@@ -21,8 +21,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         @rm_core_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-group.json')
         @handler = DataHandler.new(record_mapper: @rm_core_co, cache: @cache, client: core_client, config: @config)
       end
-      # record 1 was used for testing default value merging, transformations, etc.
-      # we start with record 2 to purely test mapping functionality
+
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/group1.json')
