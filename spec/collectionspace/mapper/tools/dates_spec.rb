@@ -23,7 +23,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       
       it 'populates .timestamp' do
         res = @res.timestamp.to_s
-        expect(res).to eq('2020-09-30 12:00:00 -0400')
+        expect(res).to start_with('2020-09-30 12:00:00')
       end
 
       it '.mappable dateDisplayDate = 2020-09-30' do
