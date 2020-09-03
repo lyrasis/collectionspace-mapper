@@ -8,8 +8,10 @@ Requires:
 Examples of setting up client and refcache are available in https://github.com/collectionspace/collectionspace-refcache/blob/master/doc/REFCACHE.md[the REFCACHE doc] and in https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/helpers.rb[`/spec/helpers.rb`] in this repo.
 
 - a `cspace-config-untangler` RecordMapper
-** a RecordMapper can be requested directly from `cspace-config-untangler`, if you have that set up
-** a RecordMapper JSON file written by `cspace-config-untangler` may be read in and parsed as a hash, but the keys of some parts need to be transformed back into symbols:
+
+RecordMapper JSON files for all current profile/rectype combinations can be found in: https://github.com/collectionspace/collectionspace-mapper/tree/master/spec/fixtures/files/mappers[`spec/fixtures/files/mappers`].
+
+These JSON files may be read in and parsed as a hash, but the keys of some parts need to be transformed back into symbols:
 
 [source,ruby]
 ----
@@ -24,7 +26,6 @@ rm[:mappings].each do |m|
 end
 ----
 
-RecordMapper JSON files for all current profile/rectype combinations can be found in: https://github.com/collectionspace/collectionspace-mapper/tree/master/spec/fixtures/files/mappers[`spec/fixtures/files/mappers`].
 
 == Config
 

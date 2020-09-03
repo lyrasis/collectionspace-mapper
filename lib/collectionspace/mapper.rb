@@ -2,7 +2,6 @@ require 'collectionspace/mapper/version'
 
 require 'collectionspace/client'
 require 'collectionspace/refcache'
-#require 'cspace_config_untangler'
 
 require 'benchmark'
 require 'json'
