@@ -18,6 +18,7 @@ module CollectionSpace
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = DataValidator.new(@mapper, @cache)
+        binding.pry
       end
 
       def process(data_hash)

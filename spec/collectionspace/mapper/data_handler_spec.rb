@@ -3,71 +3,67 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataHandler do
-  before(:all) do
-    config = {
-      delimiter: ';',
-      subgroup_delimiter: '^^',
-      transforms: {
-        'Collection' => {
-          special: %w[downcase_value],
-          replacements: [
-            { find: ' ', replace: '-', type: :plain }
-          ]
+  context 'anthro' do
+    context 'collectionobject record' do
+      before(:all) do
+        config = {
+          delimiter: ';',
+          subgroup_delimiter: '^^',
+          transforms: {
+            'Collection' => {
+              special: %w[downcase_value],
+              replacements: [
+                { find: ' ', replace: '-', type: :plain }
+              ]
+            }
+          },
+          default_values: {
+            'publishTo' => 'DPLA;Omeka',
+            'collection' => 'library-collection'
+          },
+          force_defaults: false
         }
-      },
-      default_values: {
-        'publishTo' => 'DPLA;Omeka',
-        'collection' => 'library-collection'
-      },
-      force_defaults: false
-    }
 
-    @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
-    @dh = DataHandler.new(record_mapper: @rm_anthro_co, client: anthro_client, cache: anthro_cache, config: config)
-    #  @anthro_co_1_doc = @dh.map(anthro_co_1)
+        @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
+        @dh = DataHandler.new(record_mapper: @rm_anthro_co, client: anthro_client, cache: anthro_cache, config: config)
+      end
 
-    @rm_bonsai_cons = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/bonsai/bonsai_4_0_0-conservation.json')
-    @dh_bonsai_cons = DataHandler.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache, client: bonsai_client, config: config)
-  end
+      describe '#process' do
+        context 'when data hash is valid' do
+          before(:all) do
+            data = { 'objectNumber' => '123' }
+            @result = @dh.process(data)
+          end
+        end
+      end
+      
+      describe '#validate' do
+        it 'returns Mapper::Response object' do
+          data = { 'objectNumber' => '123' }
+          result = @dh.validate(data)
+          expect(result).to be_a(Mapper::Response)
+        end
+      end
+      
+      describe '#map' do
+        before(:all) do
+          data = { 'objectNumber' => '123' }
+          prepper = DataPrepper.new(data, @dh)
+          prepresponse = @dh.prep(data)
+          @result = @dh.map(prepresponse, prepper.xphash)
+        end
+        
+        it 'returns Mapper::Response object' do
+          expect(@result).to be_a(Mapper::Response)
+        end
 
-  describe '#process' do
-    context 'when data hash is valid' do
-    before(:all) do
-      data = { 'objectNumber' => '123' }
-      @result = @dh.process(data)
-    end
-    end
-  end
-  
-  describe '#validate' do
-    it 'returns Mapper::Response object' do
-      data = { 'objectNumber' => '123' }
-      result = @dh.validate(data)
-      expect(result).to be_a(Mapper::Response)
-    end
-  end
-  
-  describe '#map' do
-    before(:all) do
-      data = { 'objectNumber' => '123' }
-      prepper = DataPrepper.new(data, @dh)
-      prepresponse = @dh.prep(data)
-      @result = @dh.map(prepresponse, prepper.xphash)
-    end
-    
-    it 'returns Mapper::Response object' do
-      expect(@result).to be_a(Mapper::Response)
-    end
-
-    it 'the Mapper::Response object doc attribute is a Nokogiri XML Document' do
-      expect(@result.doc).to be_a(Nokogiri::XML::Document)
-    end
-    
-  end
-  
-  describe '#merge_config_transforms' do
-    context 'anthro_4_0_0 profile' do
-      context 'collectionobject record type' do
+        it 'the Mapper::Response object doc attribute is a Nokogiri XML Document' do
+          expect(@result.doc).to be_a(Nokogiri::XML::Document)
+        end
+        
+      end
+      
+      describe '#merge_config_transforms' do
         context 'collection data field' do
           it 'merges data field specific transforms' do
             fieldmap = @dh.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
@@ -81,12 +77,8 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
           end
         end
       end
-    end
-  end
-  
-  describe '#xpath_hash' do
-    context 'anthro_4_0_0 profile' do
-      context 'collectionobject record type' do
+      
+      describe '#xpath_hash' do
         context 'xpath ending with commingledRemainsGroup' do
           let(:h) { @dh.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup'] }
           it 'is_group = true' do
@@ -133,6 +125,14 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     
     context 'bonsai_4_0_0 profile' do
       context 'conservation record type' do
+        before(:all) do
+          config = {
+            delimiter: ';',
+            subgroup_delimiter: '^^'
+          }
+          @rm_bonsai_cons = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/bonsai/bonsai_4_0_0-conservation.json')
+          @dh_bonsai_cons = DataHandler.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache, client: bonsai_client, config: config)
+        end
         context 'xpath ending with fertilizersToBeUsed' do
           it 'is a repeating group' do
             h = @dh_bonsai_cons.mapper[:xpath]
