@@ -7,8 +7,19 @@
     "object_name": "Workitem",
     "profile_basename": "materials",
     "ns_uri": {
-      "works_common": null
-    }
+      "works_common": "http://collectionspace.org/services/work"
+    },
+    "identifier_field": "shortIdentifier",
+    "authority_subtypes": [
+      {
+        "name": "Local",
+        "servicepath_name": "work"
+      },
+      {
+        "name": "Shared",
+        "servicepath_name": "work_shared"
+      }
+    ]
   },
   "docstructure": {
     "works_common": {

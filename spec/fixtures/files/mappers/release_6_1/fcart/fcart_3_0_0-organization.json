@@ -7,9 +7,20 @@
     "object_name": "Organization",
     "profile_basename": "fcart",
     "ns_uri": {
-      "organizations_common": null,
+      "organizations_common": "http://collectionspace.org/services/organization",
       "contacts_common": null
-    }
+    },
+    "identifier_field": "shortIdentifier",
+    "authority_subtypes": [
+      {
+        "name": "Local",
+        "servicepath_name": "organization"
+      },
+      {
+        "name": "ULAN",
+        "servicepath_name": "ulan_oa"
+      }
+    ]
   },
   "docstructure": {
     "organizations_common": {

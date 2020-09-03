@@ -7,9 +7,20 @@
     "object_name": "Organization",
     "profile_basename": "materials",
     "ns_uri": {
-      "organizations_common": null,
+      "organizations_common": "http://collectionspace.org/services/organization",
       "contacts_common": null
-    }
+    },
+    "identifier_field": "shortIdentifier",
+    "authority_subtypes": [
+      {
+        "name": "Local",
+        "servicepath_name": "organization"
+      },
+      {
+        "name": "Shared",
+        "servicepath_name": "organization_shared"
+      }
+    ]
   },
   "docstructure": {
     "organizations_common": {

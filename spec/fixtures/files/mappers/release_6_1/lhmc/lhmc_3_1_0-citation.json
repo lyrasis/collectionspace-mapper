@@ -7,8 +7,19 @@
     "object_name": "Citation",
     "profile_basename": "lhmc",
     "ns_uri": {
-      "citations_common": null
-    }
+      "citations_common": "http://collectionspace.org/services/citation"
+    },
+    "identifier_field": "shortIdentifier",
+    "authority_subtypes": [
+      {
+        "name": "Local",
+        "servicepath_name": "citation"
+      },
+      {
+        "name": "WorldCat",
+        "servicepath_name": "worldcat"
+      }
+    ]
   },
   "docstructure": {
     "citations_common": {
