@@ -68,7 +68,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           expect(diff).to eq([]) 
         end
 
-        it 'maps as expected' do puts pp(@prepper.prep.split_data)
+        it 'maps as expected' do puts
           @fixture_xpaths.each do |xpath| puts xpath
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
