@@ -78,7 +78,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
 
-    context 'loain record' do
+    context 'loanin record' do
       before(:all) do
         @rm_core_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-loanin.json')
         @handler = DataHandler.new(record_mapper: @rm_core_co, cache: @cache, client: core_client, config: @config)
