@@ -5,20 +5,21 @@ module CollectionSpace
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
-      attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator
+      attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
+        :is_authority
 
       def initialize(record_mapper:, client:, cache:, config:)
         @mapper = record_mapper
         @client = client
         @cache = cache
         @config = config
+        @is_authority = get_is_authority
         
         @mapper[:xpath] = xpath_hash
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = DataValidator.new(@mapper, @cache)
-        binding.pry
       end
 
       def process(data_hash)
@@ -51,6 +52,12 @@ module CollectionSpace
       end
 
       private
+
+      def get_is_authority
+        service_type = @mapper[:config][:service_type]
+        service_type == 'authority' ? true : false
+        
+      end
       
       # you can specify per-data-key transforms in your config.json
       # This method merges the config.json transforms into the RecordMapper field
@@ -120,6 +127,10 @@ module CollectionSpace
             keys = keys.select{ |k| xpath[k] }
             keys = keys.sort{ |a, b| b.length <=> a.length }
             ph[:parent] = keys[0] unless keys.empty?
+          elsif @is_authority
+            ph[:mappings] << { fieldname: 'shortIdentifier',
+                              repeats: 'n',
+                              in_repeating_group: 'n/a' }
           end
         end
 
@@ -154,10 +165,6 @@ module CollectionSpace
         h.keys.each{ |k| h[k][:is_subgroup] = true if subgroups.include?(k) }
         h
       end
-
-      def xpath_hash_new
-      end
-      
     end
   end
 end

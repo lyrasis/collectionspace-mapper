@@ -4,6 +4,23 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataHandler do
   context 'anthro' do
+    context 'place record' do
+      before(:all) do
+        config = {
+          delimiter: ';',
+          subgroup_delimiter: '^^'
+        }
+        @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
+        @handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
+      end
+
+      describe '#is_authority' do
+        it 'sets is_authority to true' do
+          expect(@handler.is_authority).to be true
+        end
+      end
+    end
+
     context 'collectionobject record' do
       before(:all) do
         config = {
@@ -24,15 +41,21 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
           force_defaults: false
         }
 
-        @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
-        @dh = DataHandler.new(record_mapper: @rm_anthro_co, client: anthro_client, cache: anthro_cache, config: config)
+        @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
+        @handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
+      end
+
+      describe '#is_authority' do
+        it 'sets is_authority to false' do
+          expect(@handler.is_authority).to be false
+        end
       end
 
       describe '#process' do
         context 'when data hash is valid' do
           before(:all) do
             data = { 'objectNumber' => '123' }
-            @result = @dh.process(data)
+            @result = @handler.process(data)
           end
         end
       end
@@ -40,7 +63,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       describe '#validate' do
         it 'returns Mapper::Response object' do
           data = { 'objectNumber' => '123' }
-          result = @dh.validate(data)
+          result = @handler.validate(data)
           expect(result).to be_a(Mapper::Response)
         end
       end
@@ -48,9 +71,9 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       describe '#map' do
         before(:all) do
           data = { 'objectNumber' => '123' }
-          prepper = DataPrepper.new(data, @dh)
-          prepresponse = @dh.prep(data)
-          @result = @dh.map(prepresponse, prepper.xphash)
+          prepper = DataPrepper.new(data, @handler)
+          prepresponse = @handler.prep(data)
+          @result = @handler.map(prepresponse, prepper.xphash)
         end
         
         it 'returns Mapper::Response object' do
@@ -66,7 +89,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       describe '#merge_config_transforms' do
         context 'collection data field' do
           it 'merges data field specific transforms' do
-            fieldmap = @dh.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
+            fieldmap = @handler.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
             xforms = {
               special: %w[downcase_value],
               replacements: [
@@ -80,7 +103,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
       
       describe '#xpath_hash' do
         context 'xpath ending with commingledRemainsGroup' do
-          let(:h) { @dh.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup'] }
+          let(:h) { @handler.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup'] }
           it 'is_group = true' do
             expect(h[:is_group]).to be true
           end
@@ -99,7 +122,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         end
 
         context 'xpath ending with mortuaryTreatmentGroup' do
-          let(:h) { @dh.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup/mortuaryTreatmentGroupList/mortuaryTreatmentGroup'] }
+          let(:h) { @handler.mapper[:xpath]['collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup/mortuaryTreatmentGroupList/mortuaryTreatmentGroup'] }
           it 'is_group = true' do
             expect(h[:is_group]).to be true
           end
@@ -115,7 +138,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         end
 
         context 'xpath ending with collectionobjects_nagpra' do
-          let(:h) { @dh.mapper[:xpath]['collectionobjects_nagpra'] }
+          let(:h) { @handler.mapper[:xpath]['collectionobjects_nagpra'] }
           it 'has 5 children' do
             expect(h[:children].size).to eq(5)
           end
@@ -130,19 +153,19 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
             delimiter: ';',
             subgroup_delimiter: '^^'
           }
-          @rm_bonsai_cons = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/bonsai/bonsai_4_0_0-conservation.json')
-          @dh_bonsai_cons = DataHandler.new(record_mapper: @rm_bonsai_cons, cache: bonsai_cache, client: bonsai_client, config: config)
+          @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/bonsai/bonsai_4_0_0-conservation.json')
+          @handler = DataHandler.new(record_mapper: @mapper, cache: bonsai_cache, client: bonsai_client, config: config)
         end
         context 'xpath ending with fertilizersToBeUsed' do
           it 'is a repeating group' do
-            h = @dh_bonsai_cons.mapper[:xpath]
+            h = @handler.mapper[:xpath]
             res = h['conservation_livingplant/fertilizationGroupList/fertilizationGroup/fertilizersToBeUsed'][:is_group]
             expect(res).to be true
           end
         end
         context 'xpath ending with conservators' do
           it 'is a repeating group' do
-            h = @dh_bonsai_cons.mapper[:xpath]
+            h = @handler.mapper[:xpath]
             res = h['conservation_common/conservators'][:is_group]
             expect(res).to be false
           end
