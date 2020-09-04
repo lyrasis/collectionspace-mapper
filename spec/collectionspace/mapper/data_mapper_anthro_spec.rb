@@ -18,8 +18,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'collectionobject record' do
       before(:all) do
-        @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
-        @handler = DataHandler.new(record_mapper: @rm_anthro_co, cache: @cache, client: anthro_client, config: @config)
+        @collectionobjectmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
+        @handler = DataHandler.new(record_mapper: @collectionobjectmapper, cache: @cache, client: anthro_client, config: @config)
       end
       # record 1 was used for testing default value merging, transformations, etc.
       # we start with record 2 to purely test mapping functionality
