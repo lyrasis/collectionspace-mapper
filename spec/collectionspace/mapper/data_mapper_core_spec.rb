@@ -18,8 +18,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'group record' do
       before(:all) do
-        @rm_core_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-group.json')
-        @handler = DataHandler.new(record_mapper: @rm_core_co, cache: @cache, client: core_client, config: @config)
+        @groupmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-group.json')
+        @handler = DataHandler.new(record_mapper: @groupmapper, cache: @cache, client: core_client, config: @config)
       end
 
       context 'record 1' do
@@ -37,8 +37,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           expect(diff).to eq([])
         end
 
-        it 'maps as expected' do puts
-          @fixture_xpaths.each do |xpath| puts xpath
+        it 'maps as expected' do
+          @fixture_xpaths.each do |xpath|
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
@@ -47,10 +47,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
 
-        context 'intake record' do
+    context 'intake record' do
       before(:all) do
-        @rm_core_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-intake.json')
-        @handler = DataHandler.new(record_mapper: @rm_core_co, cache: @cache, client: core_client, config: @config)
+        @intakemapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-intake.json')
+        @handler = DataHandler.new(record_mapper: @intakemapper, cache: @cache, client: core_client, config: @config)
       end
 
       context 'record 1' do
@@ -68,8 +68,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           expect(diff).to eq([])
         end
 
-        it 'maps as expected' do puts
-          @fixture_xpaths.each do |xpath| puts xpath
+        it 'maps as expected' do
+          @fixture_xpaths.each do |xpath|
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
@@ -80,8 +80,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'loanout record' do
       before(:all) do
-        @rm_core_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-loanout.json')
-        @handler = DataHandler.new(record_mapper: @rm_core_co, cache: @cache, client: core_client, config: @config)
+        @loanoutmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-loanout.json')
+        @handler = DataHandler.new(record_mapper: @loanoutmapper, cache: @cache, client: core_client, config: @config)
       end
 
       context 'record 1' do
@@ -99,8 +99,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           expect(diff).to eq([])
         end
 
-        it 'maps as expected' do puts
-          @fixture_xpaths.each do |xpath| puts xpath
+        it 'maps as expected' do
+          @fixture_xpaths.each do |xpath|
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
