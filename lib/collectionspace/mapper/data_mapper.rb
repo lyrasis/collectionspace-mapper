@@ -18,7 +18,6 @@ module CollectionSpace
         @xphash.each{ |xpath, hash| map(xpath, hash) }
         clean_doc
         add_short_id if @handler.is_authority
-        binding.pry
         add_namespaces
         @response.doc = @doc
       end

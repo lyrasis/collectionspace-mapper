@@ -19,11 +19,16 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: lhmc_client, config: config)
         @prepper = DataPrepper.new({'termDisplayName' => 'Xanadu', 'placeNote' => 'note'}, @handler)
         @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+        @mapped_doc = remove_namespaces(@datamapper.response.doc)
+        binding.pry
       end
 
       describe '#add_short_id' do
-        it 'adds shortIdentifier' do
-          
+        before(:all) do
+          @short_id_nodeset = @mapped_doc.xpath('//shortIdentifier')
+        end
+        it 'adds one shortIdentifier element' do
+          expect(@short_id_nodeset.length).to eq(1)
         end
       end
     end
