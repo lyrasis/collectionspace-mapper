@@ -18,8 +18,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'objectexit record' do
       before(:all) do
-        @rm_bonsai_oe = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_0-objectexit.json')
-        @handler = DataHandler.new(record_mapper: @rm_bonsai_oe, cache: @cache, client: bonsai_client, config: @config)
+        @objectexitmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_0-objectexit.json')
+        @handler = DataHandler.new(record_mapper: @objectexitmapper, cache: @cache, client: bonsai_client, config: @config)
       end
 
       context 'record 1' do
