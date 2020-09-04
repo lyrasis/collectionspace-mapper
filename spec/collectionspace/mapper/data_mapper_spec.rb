@@ -20,7 +20,6 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         @prepper = DataPrepper.new({'termDisplayName' => 'Xanadu', 'placeNote' => 'note'}, @handler)
         @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
         @mapped_doc = remove_namespaces(@datamapper.response.doc)
-        binding.pry
       end
 
       describe '#add_short_id' do
@@ -29,6 +28,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
         it 'adds one shortIdentifier element' do
           expect(@short_id_nodeset.length).to eq(1)
+        end
+        it 'adds shortIdentifier element to persons_common namespace group' do
+          node = @short_id_nodeset.first
+          expect(node.parent.name).to eq('persons_common')
+        end
+        it 'value of shortIdentifier is as expected' do
+          node = @short_id_nodeset.first
+          expect(node.text).to eq('Xanadu2760257775')
         end
       end
     end
