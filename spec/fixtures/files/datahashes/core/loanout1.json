@@ -1,0 +1,22 @@
+{
+    "loanOutNumber": "LO2020.1.70",
+    "loanPurpose": "scientificorexhibitpreparation",
+    "lendersAuthorizer": "Jamo",
+    "lendersContact": "Clemo",
+    "lendersAuthorizationDate": "2020-09-23",
+    "borrowerPerson": null,
+    "borrowerOrganization": "Broker",
+    "borrowersContact": "Trepoz",
+    "borrowersAuthorizer": "Kali",
+    "borrowersAuthorizationDate": "2020-09-25",
+    "specialConditionsOfLoan": "Collateral",
+    "loanOutNote": "Related",
+    "loanGroup": "board of trustees",
+    "loanIndividual": ";Broooks",
+    "loanStatus": "Authorized;Photography requested",
+    "loanStatusDate": "2020-09-15;2020-09-22",
+    "loanStatusNote": "Cool;Kuliendaje",
+    "loanOutDate": "2020-09-23",
+    "loanReturnDate": "2020-09-30",
+    "loanRenewalApplicationDate": "2020-10-03"
+}
