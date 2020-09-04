@@ -1,0 +1,22 @@
+{
+    "loanInNumber": "LI2020.1.13",
+    "loanPurpose": "photography",
+    "loanGroup": "collection committee;;executive committee",
+    "loanIndividual": ";John Kay;Loan",
+    "loanStatus": "Refused;Returned;Authorized",
+    "loanStatusDate": "2020-09-16;2020-09-24;2020-09-25",
+    "loanStatusNote": "Denied;Allowed;Perfect",
+    "lenderPerson": "Kimani;",
+    "lenderOrganization": ";Sidarec",
+    "lendersContact": "Henry;",
+    "lendersAuthorizer": "James;Nyauma",
+    "lendersAuthorizationDate": "2020-09-18;2020-09-25",
+    "borrowersContact": "Kimonda",
+    "borrowersAuthorizer": "Karanja",
+    "borrowersAuthorizationDate": "2020-09-26",
+    "loanInConditions": "burned",
+    "loanInNote": "always loaned",
+    "loanInDate": "2020-10-02",
+    "loanReturnDate": "2020-10-03",
+    "loanRenewalApplicationDate": "2021-10-02"
+}
