@@ -1,5 +1,5 @@
 ifdef::env-github[]
-:imagesdir: https://github.com/collectionspace/collectionspace-mapper/tree/auth_short_ids/doc/images/
+:imagesdir: https://github.com/collectionspace/collectionspace-mapper/tree/auth_short_ids/doc/images
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :important-caption: :heavy_exclamation_mark:
@@ -13,6 +13,8 @@ endif::[]
 = Data formatting
 
 This page outlines requirements and limitations for your input data.
+
+{asciidoctor-version}
 
 toc::[]
 
