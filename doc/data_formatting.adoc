@@ -24,4 +24,5 @@ toc::[]
 * `core/collectionobject/contentConcept` (Associated or Material Concept authority values)
 * `core/acquisition/acquisitionAuthorizer` (Local Person authority or Local Organization authority values)
 
-image::multiauth_taxonCitation.png[]
+image::multiauth_taxonCitation.png[taxonCitation in UI,align="center"]
+
