@@ -214,7 +214,8 @@ module CollectionSpace
 
       def combine_subgroup_values(data)
         combined = []
-        data.length.times{ combined << [] }
+        group_count = data.map(&:length).uniq.sort.last
+        group_count.times{ combined << [] }
         data.each do |field|
           field.each_with_index do |valarr, i|
             valarr.each{ |e| combined[i] << e }
