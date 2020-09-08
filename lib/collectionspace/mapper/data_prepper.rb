@@ -191,6 +191,7 @@ module CollectionSpace
         
         xform = @response.transformed_data
         fieldhash.each do |field, cols|
+          puts field
           cols.each{ |col| xform[col].each{ |v| @response.combined_data[xpath][field] << v } }
         end
       end
