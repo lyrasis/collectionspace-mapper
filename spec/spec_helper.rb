@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'pry'
 require 'collectionspace/mapper'
 require_relative './helpers'
 
