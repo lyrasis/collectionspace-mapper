@@ -68,6 +68,19 @@ module Helpers
       ['vocabularies', 'loanoutstatus', 'Photography requested', "urn:cspace:core.collectionspace.org:vocabularies:name(loanoutstatus):item:name(photographyrequested)'Photography requested'"],
       ['vocabularies', 'loanoutstatus', 'Refused', "urn:cspace:core.collectionspace.org:vocabularies:name(loanoutstatus):item:name(refused)'Refused'"],
       ['vocabularies', 'loanoutstatus', 'Returned', "urn:cspace:core.collectionspace.org:vocabularies:name(loanoutstatus):item:name(returned)'Returned'"],
+      ['vocabularies', 'currency', 'Danish Krone', "urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(DKK)'Danish Krone'"],
+      ['personauthorities', 'person', 'cxcx', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(cxcx1599551790384)'cxcx'"],
+      ['vocabularies', 'disposalmethod', 'destruction', "urn:cspace:core.collectionspace.org:vocabularies:name(disposalmethod):item:name(destruction)'destruction'"],
+      ['personauthorities', 'person', 'sasa', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(sasa1599551852678)'sasa'"],
+      ['personauthorities', 'person', 'dssd', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(dssd1599552004115)'dssd'"],
+      ['vocabularies', 'currency', 'Danish Krone', "urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(DKK)'Danish Krone'"],
+      ['vocabularies', 'deaccessionapprovalstatus', 'not approved', "urn:cspace:core.collectionspace.org:vocabularies:name(deaccessionapprovalstatus):item:name(not_approved)'not approved'"],
+      ['vocabularies', 'deaccessionapprovalgroup', 'collection committee', "urn:cspace:core.collectionspace.org:vocabularies:name(deaccessionapprovalgroup):item:name(collection_committee)'collection committee'"],
+      ['personauthorities', 'person', 'fgfgf', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(fgfgf1599551987166)'fgfgf'"],
+      ['vocabularies', 'deaccessionapprovalstatus', 'approved', "urn:cspace:core.collectionspace.org:vocabularies:name(deaccessionapprovalstatus):item:name(approved)'approved'"],
+      ['vocabularies', 'deaccessionapprovalgroup', 'executive committee', "urn:cspace:core.collectionspace.org:vocabularies:name(deaccessionapprovalgroup):item:name(executive_committee)'executive committee'"],
+      ['orgauthorities', 'organization', 'fggf', "urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(fggf1599552009173)'fggf'"],
+      ['personauthorities', 'person', 'dfdd', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(dfdd1599551799173)'dfdd'"],
     ]
     populate(cache, terms)
   end
