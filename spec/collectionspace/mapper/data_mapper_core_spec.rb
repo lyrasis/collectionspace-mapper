@@ -157,13 +157,13 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @fixture_doc = get_xml_fixture('core/media1.xml')
           @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
         end
-       xit 'does not map unexpected fields' do
+       it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
-        xit 'maps as expected' do
-          @fixture_xpaths.each do |xpath| 
+        it 'maps as expected' do
+          @fixture_xpaths.each do |xpath| puts xpath
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
