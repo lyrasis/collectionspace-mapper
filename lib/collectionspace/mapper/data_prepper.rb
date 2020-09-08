@@ -188,11 +188,39 @@ module CollectionSpace
           end
           fieldhash[fieldname] << mapping[:datacolumn]
         end
-        
+
         xform = @response.transformed_data
         fieldhash.each do |field, cols|
-          cols.each{ |col| xform[col].each{ |v| @response.combined_data[xpath][field] << v } }
+          case cols.length
+          when 0
+            next
+          when 1
+            @response.combined_data[xpath][field] = xform[cols[0]]
+          else
+            xformed = cols.map{ |col| xform[col] }
+            chk = []
+            xformed.each{ |arr| chk << arr.map{ |e| e.class } }
+            chk = chk.flatten.uniq
+            if chk == [String]
+              @response.combined_data[xpath][field] = xformed.flatten
+            elsif chk == [Array]
+              @response.combined_data[xpath][field] = combine_subgroup_values(xformed)
+            else
+              raise StandardError.new('Mixed class types in multi-authority field set')
+            end
+          end
         end
+      end
+
+      def combine_subgroup_values(data)
+        combined = []
+        data.length.times{ combined << [] }
+        data.each do |field|
+          field.each_with_index do |valarr, i|
+            valarr.each{ |e| combined[i] << e }
+          end
+        end
+        combined
       end
     end
   end

@@ -30,6 +30,7 @@ module Helpers
       ['conceptauthorities', 'concept', 'Birds', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(concept):item:name(Birds918181)'Birds'"],
       ['conceptauthorities', 'ethculture', 'Batak', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(ethculture):item:name(Batak1576172496916)'Batak'"],
       ['conceptauthorities', 'material_ca', 'Feathers', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(material_ca):item:name(Feathers918181)'Feathers'"],
+      ['orgauthorities', 'organization', 'Organization 1', "urn:cspace:anthro.collectionspace.org:orgauthorities:name(organization):item:name(Organization11587136583004)'Organization 1'"],
       ['placeauthorities', 'place', 'York County, Pennsylvania', "urn:cspace:anthro.collectionspace.org:placeauthorities:name(place):item:name(YorkCountyPennsylvania)'York County, Pennsylvania'"],
       ['vocabularies', 'agerange', 'adolescent 26-75%', "urn:cspace:anthro.collectionspace.org:vocabularies:name(agerange):item:name(adolescent_26_75)'adolescent 26-75%'"],
       ['vocabularies', 'agerange', 'adult 0-25%', "urn:cspace:anthro.collectionspace.org:vocabularies:name(agerange):item:name(adult_0_25)'adult 0-25%'"],
