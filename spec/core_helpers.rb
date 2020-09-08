@@ -68,6 +68,23 @@ module Helpers
       ['vocabularies', 'loanoutstatus', 'Photography requested', "urn:cspace:core.collectionspace.org:vocabularies:name(loanoutstatus):item:name(photographyrequested)'Photography requested'"],
       ['vocabularies', 'loanoutstatus', 'Refused', "urn:cspace:core.collectionspace.org:vocabularies:name(loanoutstatus):item:name(refused)'Refused'"],
       ['vocabularies', 'loanoutstatus', 'Returned', "urn:cspace:core.collectionspace.org:vocabularies:name(loanoutstatus):item:name(returned)'Returned'"],
+      ['vocabularies', 'conservationstatus', 'Analysis complete', "urn:cspace:core.collectionspace.org:vocabularies:name(conservationstatus):item:name(analysiscomplete)'Analysis complete'"],
+      ['vocabularies', 'conservationstatus', 'Treatment approved', "urn:cspace:core.collectionspace.org:vocabularies:name(conservationstatus):item:name(treatmentapproved)'Treatment approved'"],
+      ['vocabularies', 'conservationstatus', 'Treatment in progress', "urn:cspace:core.collectionspace.org:vocabularies:name(conservationstatus):item:name(treatmentinprogress)'Treatment in progress'"],
+      ['personauthorities', 'person', 'Shen Yeng', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(ShenYeng1599569685887)'Shen Yeng'"],
+      ['personauthorities', 'person', 'Grace', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Grace1599569599918)'Grace'"],
+      ['personauthorities', 'person', 'Cardi', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Cardi1599569468209)'Cardi'"],
+      ['orgauthorities', 'organization', 'Rock Nation', "urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(RockNation1599569481908)'Rock Nation'"],
+      ['personauthorities', 'organization', 'King Kosa', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(KingKosa1599569726990)'King Kosa'"],
+      ['vocabularies', 'treatmentpurpose', 'Exhibition', "urn:cspace:core.collectionspace.org:vocabularies:name(treatmentpurpose):item:name(exhibition)'Exhibition'"],
+      ['personauthorities', 'person', '254Glock', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(254Glock1599569494651)'254Glock'"],
+      ['vocabularies', 'otherpartyrole', 'Preparator', "urn:cspace:core.collectionspace.org:vocabularies:name(otherpartyrole):item:name(preparator)'Preparator'"],
+      ['orgauthorities', 'organization', 'MMG', "urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(MMG1599569514486)'MMG'"],
+      ['vocabularies', 'otherpartyrole', 'Technician', "urn:cspace:core.collectionspace.org:vocabularies:name(otherpartyrole):item:name(technician)'Technician'"],
+      ['personauthorities', 'person', 'Clon', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Clon1599569543362)'Clon'"],
+      ['vocabularies', 'examinationphase', 'before treatment', "urn:cspace:core.collectionspace.org:vocabularies:name(examinationphase):item:name(beforetreatment)'before treatment'"],
+      ['personauthorities', 'person', 'Meghan', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Meghan1599569567326)'Meghan'"],
+      ['vocabularies', 'examinationphase', 'during treatment', "urn:cspace:core.collectionspace.org:vocabularies:name(examinationphase):item:name(duringtreatment)'during treatment'"],
     ]
     populate(cache, terms)
   end
