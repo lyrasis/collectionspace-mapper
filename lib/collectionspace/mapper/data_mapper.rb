@@ -133,7 +133,9 @@ module CollectionSpace
         end
 
         thisdata.each do |f, v|
-          v.each_with_index{ |val, i| groups[i][:data][f] = val }
+          v.each_with_index do |val, i|
+            groups[i][:data][f] = val
+          end
         end
         
         # create grouping-only fields in the xml hierarchy for the subgroup
@@ -151,7 +153,6 @@ module CollectionSpace
         # create the subgroups
         val_ct = thisdata.values.map{ |g| g.map{ |sg| sg.size }.uniq.sort.reverse }.uniq.sort.reverse.flatten
         max_ct = val_ct[0]
-        #        binding.pry if subgroup == 'dimensionSubGroup'
         groups.each do |i, data|
           max_ct.times do
             target = @doc.xpath("//#{parent_path}/#{subgroup_path.join('/')}")
