@@ -121,7 +121,12 @@ module CollectionSpace
         end
 
         thisdata.each do |f, v|
-          v.each_with_index{ |val, i| groups[i][:data][f] = val }
+          puts "  #{f} -- #{v}"
+#          binding.pry if f == 'measuredBy'
+          v.each_with_index do |val, i|
+            puts "    #{i} -- #{val}"
+            groups[i][:data][f] = val
+          end
         end
         
         # create grouping-only fields in the xml hierarchy for the subgroup
