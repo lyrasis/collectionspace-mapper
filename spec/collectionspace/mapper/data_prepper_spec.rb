@@ -37,7 +37,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         @core_media_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-media.json')
         @handler = DataHandler.new(record_mapper: @core_media_mapper, cache: core_cache, client: core_client, config: config)
         populate_core(@handler.cache)
-        data = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1.json')
+        data = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1_1.json')
         @prepper = DataPrepper.new(data, @handler)
       end
       it 'combines values properly' do
