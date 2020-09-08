@@ -12,6 +12,7 @@ module CollectionSpace
         @xphash = xphash
         
         @data = @response.combined_data
+        binding.pry
         @doc = @handler.blankdoc.clone
         @cache = @handler.cache
         
@@ -121,6 +122,7 @@ module CollectionSpace
         end
 
         thisdata.each do |f, v|
+          puts "  #{f} -- #{v}"
           v.each_with_index{ |val, i| groups[i][:data][f] = val }
         end
         
