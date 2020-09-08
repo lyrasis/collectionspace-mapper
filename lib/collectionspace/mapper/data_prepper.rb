@@ -210,6 +210,11 @@ module CollectionSpace
             end
           end
         end
+
+        @response.combined_data[xpath].select{ |fieldname, val| val.blank? }.keys.each do |fieldname|
+          @response.combined_data[xpath].delete(fieldname)
+          @xphash[xpath][:mappings].delete_if{ |mapping| mapping[:fieldname] == fieldname }
+        end
       end
 
       def combine_subgroup_values(data)

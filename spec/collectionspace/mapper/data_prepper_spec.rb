@@ -101,14 +101,14 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
     end
   end
 
-    describe '#combine_data_values' do
+  describe '#combine_data_values' do
     context 'when multi-authority field is not part of repeating field group' do
       it 'combines values properly' do
         xpath = 'collectionobjects_common/fieldCollectors'
         result = @dp.prep.combined_data[xpath]['fieldCollector']
         expected = ["urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(AnnAnalyst1594848799340)'Ann Analyst'",
-     "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(GabrielSolares1594848906847)'Gabriel Solares'",
-     "urn:cspace:anthro.collectionspace.org:orgauthorities:name(organization):item:name(Organization11587136583004)'Organization 1'"]
+                    "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(GabrielSolares1594848906847)'Gabriel Solares'",
+                    "urn:cspace:anthro.collectionspace.org:orgauthorities:name(organization):item:name(Organization11587136583004)'Organization 1'"]
         expect(result).to eq(expected)
       end
     end
@@ -122,6 +122,26 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         ]
         expect(result).to eq(expected)
       end
+
+      context 'and one or more combined field values is blank' do
+        before(:all) do
+          @core_conservation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conservation.json')
+          @handler = DataHandler.new(record_mapper: @core_conservation_mapper, cache: core_cache, client: core_client, config: @config)
+          populate_core(@handler.cache)
+          data = get_datahash(path: 'spec/fixtures/files/datahashes/core/conservation0_1.json')
+          @prepper = DataPrepper.new(data, @handler)
+          @xpath = 'conservation_common/conservationStatusGroupList/conservationStatusGroup'
+        end
+        it 'removes empty fields from combined data response' do
+          result = @prepper.prep.combined_data[@xpath].keys
+          expect(result).to_not include('statusDate')
+        end
+        it 'removes empty fields from fieldmapping list passed on for mapping' do
+          @prepper.prep
+          result = @prepper.xphash[@xpath][:mappings]
+          expect(result.length).to eq(1)
+        end
+      end
     end
     context 'when multi-authority field is part of repeating field subgroup' do
       before(:all) do
@@ -129,6 +149,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         @handler = DataHandler.new(record_mapper: @core_media_mapper, cache: core_cache, client: core_client, config: @config)
         populate_core(@handler.cache)
       end
+      
       context 'when there is more than one group' do
         before(:all) do
           data = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1_1.json')
