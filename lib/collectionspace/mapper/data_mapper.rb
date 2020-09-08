@@ -121,10 +121,7 @@ module CollectionSpace
         end
 
         thisdata.each do |f, v|
-          puts "  #{f} -- #{v}"
-#          binding.pry if f == 'measuredBy'
           v.each_with_index do |val, i|
-            puts "    #{i} -- #{val}"
             groups[i][:data][f] = val
           end
         end
@@ -144,7 +141,6 @@ module CollectionSpace
         # create the subgroups
         val_ct = thisdata.values.map{ |g| g.map{ |sg| sg.size }.uniq.sort.reverse }.uniq.sort.reverse.flatten
         max_ct = val_ct[0]
-        #        binding.pry if subgroup == 'dimensionSubGroup'
         groups.each do |i, data|
           max_ct.times do
             target = @doc.xpath("//#{parent_path}/#{subgroup_path.join('/')}")
