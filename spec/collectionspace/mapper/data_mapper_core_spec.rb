@@ -15,6 +15,68 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       @cache = core_cache
       populate_core(@cache)
     end
+
+    context 'conservation record' do
+      before(:all) do
+        @conservationmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conservation.json')
+        @handler = DataHandler.new(record_mapper: @conservationmapper, cache: @cache, client: core_client, config: @config)
+      end
+
+      context 'record 1' do
+        before(:all) do
+          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/conservation1.json')
+          @prepper = DataPrepper.new(@datahash, @handler)
+          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @mapped_doc = remove_namespaces(@mapper.response.doc)
+          @mapped_xpaths = list_xpaths(@mapped_doc)
+          @fixture_doc = get_xml_fixture('core/conservation1.xml')
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+        end
+        it 'does not map unexpected fields' do
+          diff = @mapped_xpaths - @fixture_xpaths
+          expect(diff).to eq([])
+        end
+
+        it 'maps as expected' do
+          @fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+            expect(mapped_node).to eq(fixture_node)
+          end
+        end
+      end
+    end
+
+    context 'exhibition record' do
+      before(:all) do
+        @exhibitionmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-exhibition.json')
+        @handler = DataHandler.new(record_mapper: @exhibitionmapper, cache: @cache, client: core_client, config: @config)
+      end
+
+      context 'record 1' do
+        before(:all) do
+          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/exhibition1.json')
+          @prepper = DataPrepper.new(@datahash, @handler)
+          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @mapped_doc = remove_namespaces(@mapper.response.doc)
+          @mapped_xpaths = list_xpaths(@mapped_doc)
+          @fixture_doc = get_xml_fixture('core/exhibition1.xml')
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+        end
+        it 'does not map unexpected fields' do
+          diff = @mapped_xpaths - @fixture_xpaths
+          expect(diff).to eq([])
+        end
+
+        it 'maps as expected' do
+          @fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+            expect(mapped_node).to eq(fixture_node)
+          end
+        end
+      end
+    end
     
     context 'group record' do
       before(:all) do
@@ -99,7 +161,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           expect(diff).to eq([]) 
         end
 
-        it 'maps as expected' do puts
+        it 'maps as expected' do
           @fixture_xpaths.each do |xpath|
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
