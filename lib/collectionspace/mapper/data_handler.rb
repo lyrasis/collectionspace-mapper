@@ -9,7 +9,7 @@ module CollectionSpace
         :is_authority
 
       def initialize(record_mapper:, client:, cache:, config:)
-        @mapper = record_mapper
+        @mapper = RecordMapper.convert(record_mapper)
         @client = client
         @cache = cache
         @config = config
