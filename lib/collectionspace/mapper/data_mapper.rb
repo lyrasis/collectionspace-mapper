@@ -17,11 +17,23 @@ module CollectionSpace
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
         clean_doc
+        add_short_id if @handler.is_authority
         add_namespaces
         @response.doc = @doc
       end
 
       private
+
+      def add_short_id
+        term = @response.transformed_data['termdisplayname'][0]
+        ns = @xphash.keys.map{ |k| k.sub(/^([^\/]+).*/, '\1') }
+          .select{ |k| k.end_with?('_common') }
+          .first
+        targetnode = @doc.xpath("/document/#{ns}").first
+        child = Nokogiri::XML::Node.new('shortIdentifier', @doc)
+        child.content = Identifiers.short_identifier(term)
+        targetnode.add_child(child)
+      end
 
       def map(xpath, xphash)
         thisdata = @data[xpath]
@@ -121,7 +133,9 @@ module CollectionSpace
         end
 
         thisdata.each do |f, v|
-          v.each_with_index{ |val, i| groups[i][:data][f] = val }
+          v.each_with_index do |val, i|
+            groups[i][:data][f] = val
+          end
         end
         
         # create grouping-only fields in the xml hierarchy for the subgroup
@@ -139,7 +153,6 @@ module CollectionSpace
         # create the subgroups
         val_ct = thisdata.values.map{ |g| g.map{ |sg| sg.size }.uniq.sort.reverse }.uniq.sort.reverse.flatten
         max_ct = val_ct[0]
-        #        binding.pry if subgroup == 'dimensionSubGroup'
         groups.each do |i, data|
           max_ct.times do
             target = @doc.xpath("//#{parent_path}/#{subgroup_path.join('/')}")

@@ -2,8 +2,9 @@
 
 require_relative './anthro_helpers'
 require_relative './bonsai_helpers'
+require_relative './botgarden_helpers'
 require_relative './core_helpers'
-
+require_relative './lhmc_helpers'
 
 module Helpers
   extend self
