@@ -9,12 +9,13 @@ module CollectionSpace
         :is_authority
 
       def initialize(record_mapper:, client:, cache:,
-                     config: { delimiter: ';', subgroup_delimiter: '^^' }
+                     config: Mapper::DEFAULT_CONFIG
                     )
         @mapper = RecordMapper.convert(record_mapper)
         @client = client
         @cache = cache
-        @config = config
+        @config = get_config(config)
+        @response_mode = get_response_mode
         @is_authority = get_is_authority
         add_short_id_mapping if @is_authority
         @mapper[:xpath] = xpath_hash
@@ -56,6 +57,15 @@ module CollectionSpace
 
       private
 
+      def get_config(config)
+        config_object = Config.new(config)
+        config_object.validate
+        config_object.hash
+      end
+
+      def get_response_mode
+      end
+      
       def add_short_id_mapping
         namespaces = @mapper[:mappings].map{ |m| m[:namespace]}.uniq
         this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
@@ -74,7 +84,6 @@ module CollectionSpace
       def get_is_authority
         service_type = @mapper[:config][:service_type]
         service_type == 'authority' ? true : false
-        
       end
       
       # you can specify per-data-key transforms in your config.json

@@ -80,7 +80,6 @@ module CollectionSpace
             m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
           end
         end
-        #        binding.pry if @handler.is_authority
       end
 
       def do_splits(xpath, xphash)

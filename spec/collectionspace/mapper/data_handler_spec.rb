@@ -28,17 +28,14 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
           expect(result.length).to eq(1)
         end
         it 'uses default config' do
-          config = { delimiter: ';', subgroup_delimiter: '^^' }
-          expect(@place_handler.config).to eq(config)
+          expect(@place_handler.config).to eq(Mapper::DEFAULT_CONFIG)
         end
       end
     end
 
     context 'collectionobject record' do
       before(:all) do
-        config = {
-          delimiter: ';',
-          subgroup_delimiter: '^^',
+        config = Mapper::DEFAULT_CONFIG.merge({
           transforms: {
             'Collection' => {
               special: %w[downcase_value],
@@ -50,9 +47,8 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
           default_values: {
             'publishTo' => 'DPLA;Omeka',
             'collection' => 'library-collection'
-          },
-          force_defaults: false
-        }
+          }
+        })
 
         @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
         @handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
@@ -162,10 +158,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     context 'bonsai_4_0_0 profile' do
       context 'conservation record type' do
         before(:all) do
-          config = {
-            delimiter: ';',
-            subgroup_delimiter: '^^'
-          }
+          config = Mapper::DEFAULT_CONFIG
           @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/bonsai/bonsai_4_0_0-conservation.json')
           @handler = DataHandler.new(record_mapper: @mapper, cache: bonsai_cache, client: bonsai_client, config: config)
         end

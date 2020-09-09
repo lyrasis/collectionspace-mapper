@@ -3,6 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
+  before(:all) do
+    @config = Mapper::DEFAULT_CONFIG
+  end
   context 'lhmc profile' do
     before(:all) do
       @cache = lhmc_cache
@@ -10,13 +13,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     context 'person record' do
       before(:all) do
-        config = {
-          delimiter: ';',
-          subgroup_delimiter: '^^',
-        }
-
         @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/lhmc/lhmc_3_1_0-person.json')
-        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: lhmc_client, config: config)
+        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: lhmc_client, config: @config)
         @prepper = DataPrepper.new({'termDisplayName' => 'Xanadu', 'placeNote' => 'note'}, @handler)
         @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
         @mapped_doc = remove_namespaces(@datamapper.response.doc)
@@ -43,18 +41,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'anthro profile' do
       before(:all) do
+        @client = anthro_client
         @cache = anthro_cache
         populate_anthro(@cache)
       end
       context 'place record' do
         before(:all) do
-          config = {
-            delimiter: ';',
-            subgroup_delimiter: '^^',
-          }
-
           @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
-          @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: anthro_client, config: config)
+          @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: @client, config: @config)
           @prepper = DataPrepper.new({'termDisplayName' => 'Xanadu'}, @handler)
           @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
         end
@@ -68,9 +62,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'collectionobject record' do
       before(:all) do
-        config = {
-          delimiter: ';',
-          subgroup_delimiter: '^^',
+        config = Mapper::DEFAULT_CONFIG.merge({
           transforms: {
             'collection' => {
               special: %w[downcase_value],
@@ -89,11 +81,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
             'publishTo' => 'DPLA;Omeka',
             'collection' => 'library-collection'
           },
-          force_defaults: false
-        }
+        })
 
         @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
-        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: anthro_client, config: config)
+        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: @client, config: config)
         @prepper = DataPrepper.new(anthro_co_1, @handler)
         @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
       end
