@@ -1,0 +1,30 @@
+ifdef::env-github[]
+:imagesdir: https://github.com/collectionspace/collectionspace-mapper/tree/auth_short_ids/doc/images
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+:toc:
+:toc-placement!:
+
+= Data formatting
+
+This page outlines requirements and limitations for your input data.
+
+{asciidoctor-version}
+
+toc::[]
+
+== Multivalued fields populated by more than one authority
+
+*Example fields*:
+
+* `botgarden/taxon/taxonCitation` (Local or WorldCat Citation authority values)
+* `core/collectionobject/contentConcept` (Associated or Material Concept authority values)
+* `core/acquisition/acquisitionAuthorizer` (Local Person authority or Local Organization authority values)
+
+image::multiauth_taxonCitation.png[taxonCitation in UI,align="center"]
+

@@ -17,11 +17,23 @@ module CollectionSpace
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
         clean_doc
+        add_short_id if @handler.is_authority
         add_namespaces
         @response.doc = @doc
       end
 
       private
+
+      def add_short_id
+        term = @response.transformed_data['termdisplayname'][0]
+        ns = @xphash.keys.map{ |k| k.sub(/^([^\/]+).*/, '\1') }
+          .select{ |k| k.end_with?('_common') }
+          .first
+        targetnode = @doc.xpath("/document/#{ns}").first
+        child = Nokogiri::XML::Node.new('shortIdentifier', @doc)
+        child.content = Identifiers.short_identifier(term)
+        targetnode.add_child(child)
+      end
 
       def map(xpath, xphash)
         thisdata = @data[xpath]
