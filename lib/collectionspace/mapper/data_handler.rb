@@ -5,15 +5,19 @@ module CollectionSpace
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
-      attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator
+      attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
+        :is_authority
 
       def initialize(record_mapper:, client:, cache:, config:)
         @mapper = record_mapper
         @client = client
         @cache = cache
         @config = config
-        
+        @is_authority = get_is_authority
+        add_short_id_mapping if @is_authority
+        #binding.pry        
         @mapper[:xpath] = xpath_hash
+        
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
@@ -21,14 +25,14 @@ module CollectionSpace
       end
 
       def process(data_hash)
-          prepper = DataPrepper.new(data_hash, self)
-          prepper.split_data
-          prepper.transform_data
-          prepper.check_data
-          prepper.combine_data_fields
+        prepper = DataPrepper.new(data_hash, self)
+        prepper.split_data
+        prepper.transform_data
+        prepper.check_data
+        prepper.combine_data_fields
 
-          mapper = DataMapper.new(prepper.response, self, prepper.xphash)
-          mapper.response
+        mapper = DataMapper.new(prepper.response, self, prepper.xphash)
+        mapper.response
       end
       
       def validate(data_hash, response = nil)
@@ -36,12 +40,12 @@ module CollectionSpace
       end
 
       def prep(data_hash)
-          prepper = DataPrepper.new(data_hash, self)
-          prepper.split_data
-          prepper.transform_data
-          prepper.check_data
-          prepper.combine_data_fields
-          prepper.response
+        prepper = DataPrepper.new(data_hash, self)
+        prepper.split_data
+        prepper.transform_data
+        prepper.check_data
+        prepper.combine_data_fields
+        prepper.response
       end
       
       def map(response, xphash)
@@ -50,6 +54,27 @@ module CollectionSpace
       end
 
       private
+
+      def add_short_id_mapping
+        namespaces = @mapper[:mappings].map{ |m| m[:namespace]}.uniq
+        this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
+        @mapper[:mappings] << {
+          fieldname: 'shortIdentifier',
+          namespace: this_ns,
+          data_type: 'string',
+          xpath: [],
+          required: 'y',
+          repeats: 'n',
+          in_repeating_group: 'n/a',
+          datacolumn: 'shortIdentifier'
+        }
+      end
+
+      def get_is_authority
+        service_type = @mapper[:config][:service_type]
+        service_type == 'authority' ? true : false
+        
+      end
       
       # you can specify per-data-key transforms in your config.json
       # This method merges the config.json transforms into the RecordMapper field
@@ -103,13 +128,13 @@ module CollectionSpace
         h = {}
         # create key for each xpath containing fields, and set up structure of its value
         @mapper[:mappings].each do |mapping|
-          mapping[:fullpath] = ( [mapping[:namespace]] + mapping[:xpath] ).flatten.join('/')
-          h[mapping[:fullpath]] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
+            mapping[:fullpath] = ( [mapping[:namespace]] + mapping[:xpath] ).flatten.join('/')
+            h[mapping[:fullpath]] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
         end
         # add fieldmappings for children of each xpath
         @mapper[:mappings].each do |mapping|
-          mapping[:datacolumn] = mapping[:datacolumn].downcase
-          h[mapping[:fullpath]][:mappings] << mapping
+            mapping[:datacolumn] = mapping[:datacolumn].downcase
+            h[mapping[:fullpath]][:mappings] << mapping
         end
         # populate other attributes
         # populate parent of all non-top xpaths
@@ -153,10 +178,6 @@ module CollectionSpace
         h.keys.each{ |k| h[k][:is_subgroup] = true if subgroups.include?(k) }
         h
       end
-
-      def xpath_hash_new
-      end
-      
     end
   end
 end
