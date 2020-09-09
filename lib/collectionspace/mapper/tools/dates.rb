@@ -13,15 +13,16 @@ module CollectionSpace
 
         class CspaceDate
           ::CspaceDate = CollectionSpace::Mapper::Tools::Dates::CspaceDate
-          attr_reader :date_string, :client, :cache, :timestamp, :mappable, :stamp
+          attr_reader :date_string, :client, :cache, :config, :timestamp, :mappable, :stamp
 
-          def initialize(date_string, client, cache)
+          def initialize(date_string, client, cache, config)
             @date_string = date_string
             @client = client
             @cache = cache
+            @config = config
             @mappable = {}
 
-            if Mapper::CONFIG[:date_format] == 'day month year'
+            if @config[:date_format] == 'day month year'
               @timestamp = Chronic.parse(@date_string, endian_precedence: :little)
             else
               @timestamp = Chronic.parse(@date_string)

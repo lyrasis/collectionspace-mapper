@@ -4,12 +4,13 @@ module CollectionSpace
   module Mapper
     class DataPrepper
       ::DataPrepper = CollectionSpace::Mapper::DataPrepper
-      attr_reader :data, :handler
+      attr_reader :data, :handler, :config
       attr_accessor :response, :xphash
       def initialize(data_hash, handler, response = nil)
         @response = response.nil? ? Response.new(data_hash) : response
         @data = data_hash.transform_keys(&:downcase)
         @handler = handler
+        @config = handler.config
         @cache = @handler.cache
         @response.merged_data = merge_default_values
         process_xpaths
@@ -55,7 +56,7 @@ module CollectionSpace
       def merge_default_values
         mdata = @data.clone
         @handler.defaults.each do |f, val|
-          if Mapper::CONFIG[:force_defaults]
+          if @config[:force_defaults]
             mdata[f] = val
           else
             dataval = @data.fetch(f, nil)
@@ -79,6 +80,7 @@ module CollectionSpace
             m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
           end
         end
+        #        binding.pry if @handler.is_authority
       end
 
       def do_splits(xpath, xphash)
@@ -87,21 +89,21 @@ module CollectionSpace
             column = mapping[:datacolumn]
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = mapping[:repeats] == 'y' ? SimpleSplitter.new(data).result : [data.strip]
+            @response.split_data[column] = mapping[:repeats] == 'y' ? SimpleSplitter.new(data, @config).result : [data.strip]
           end
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
           xphash[:mappings].each do |mapping|
             column = mapping[:datacolumn]
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = SimpleSplitter.new(data).result
+            @response.split_data[column] = SimpleSplitter.new(data, @config).result
           end
         elsif xphash[:is_group] && xphash[:is_subgroup]
           xphash[:mappings].each do |mapping|
             column = mapping[:datacolumn]
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = SubgroupSplitter.new(data).result
+            @response.split_data[column] = SubgroupSplitter.new(data, @config).result
           end
         end
       end
@@ -153,9 +155,9 @@ module CollectionSpace
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CspaceDate.new(d, @handler.client, @handler.cache).mappable
+            CspaceDate.new(d, @handler.client, @handler.cache, @config).mappable
           else
-            d.map{ |v| CspaceDate.new(v, @handler.client, @handler.cache).mappable }
+            d.map{ |v| CspaceDate.new(v, @handler.client, @handler.cache, @config).mappable }
           end
         end
       end
@@ -163,9 +165,9 @@ module CollectionSpace
       def unstructured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CspaceDate.new(d, @handler.client, @handler.cache).stamp
+            CspaceDate.new(d, @handler.client, @handler.cache, @config).stamp
           else
-            d.map{ |v| CspaceDate.new(v, @handler.client, @handler.cache).stamp }
+            d.map{ |v| CspaceDate.new(v, @handler.client, @handler.cache, @config).stamp }
           end
         end
       end
