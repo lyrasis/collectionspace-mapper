@@ -8,14 +8,15 @@ module CollectionSpace
       attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
         :is_authority
 
-      def initialize(record_mapper:, client:, cache:, config:)
+      def initialize(record_mapper:, client:, cache:,
+                     config: { delimiter: ';', subgroup_delimiter: '^^' }
+                    )
         @mapper = RecordMapper.convert(record_mapper)
         @client = client
         @cache = cache
         @config = config
         @is_authority = get_is_authority
         add_short_id_mapping if @is_authority
-        #binding.pry        
         @mapper[:xpath] = xpath_hash
         
         @blankdoc = build_xml

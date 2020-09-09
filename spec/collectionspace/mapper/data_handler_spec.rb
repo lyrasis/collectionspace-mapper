@@ -4,14 +4,15 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataHandler do
   context 'anthro' do
-    context 'place record' do
+    before(:all) do
+      @client = anthro_client
+      @cache = anthro_cache
+    end
+    
+    context 'place record, with no config parameter' do
       before(:all) do
-        config = {
-          delimiter: ';',
-          subgroup_delimiter: '^^'
-        }
         @place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
-        @place_handler = DataHandler.new(record_mapper: @place_mapper, client: @client, cache: @cache, config: config)
+        @place_handler = DataHandler.new(record_mapper: @place_mapper, client: @client, cache: @cache)
       end
 
       describe '#is_authority' do
@@ -25,6 +26,10 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         it 'adds a xphash entry for shortIdentifier' do
           result = @place_handler.mapper[:xpath]['places_common'][:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
           expect(result.length).to eq(1)
+        end
+        it 'uses default config' do
+          config = { delimiter: ';', subgroup_delimiter: '^^' }
+          expect(@place_handler.config).to eq(config)
         end
       end
     end

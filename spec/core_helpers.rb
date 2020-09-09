@@ -2,6 +2,7 @@
 
 module Helpers
   extend self
+
   def core_client
     CollectionSpace::Client.new(
       CollectionSpace::Configuration.new(
