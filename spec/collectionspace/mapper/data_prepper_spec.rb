@@ -31,6 +31,28 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
     @dp = DataPrepper.new(anthro_co_1, @dh)
   end
 
+  describe '#combine_data_values' do
+    context 'when multi-authority field is part of repeating field subgroup' do
+      before(:all) do
+        @core_media_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-media.json')
+        @handler = DataHandler.new(record_mapper: @core_media_mapper, cache: core_cache, client: core_client, config: config)
+        populate_core(@handler.cache)
+        data = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1.json')
+        @prepper = DataPrepper.new(data, @handler)
+      end
+      it 'combines values properly' do
+        xpath = 'media_common/measuredPartGroupList/measuredPartGroup/dimensionSubGroupList/dimensionSubGroup'
+        result = @prepper.response.combined_data[xpath]['measuredBy']
+        expected = [[
+          "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Gomongo1599463746195)'Gomongo'",
+          "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Comodore1599463826401)'Comodore'",
+          "urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(Cuckoo1599463786824)'Cuckoo'",
+          ""]]
+      end
+    end
+    
+  end
+
   describe '#merge_default_values' do
     context 'when no default_values specified in config' do
       it 'does not fall over' do
