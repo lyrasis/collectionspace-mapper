@@ -10,13 +10,21 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
           delimiter: ';',
           subgroup_delimiter: '^^'
         }
-        @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
-        @handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
+        @place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
+        @place_handler = DataHandler.new(record_mapper: @place_mapper, client: @client, cache: @cache, config: config)
       end
 
       describe '#is_authority' do
         it 'sets is_authority to true' do
-          expect(@handler.is_authority).to be true
+          expect(@place_handler.is_authority).to be true
+        end
+        it 'adds a mapping for shortIdentifier' do
+          result = @place_handler.mapper[:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
+          expect(result.length).to eq(1)
+        end
+        it 'adds a xphash entry for shortIdentifier' do
+          result = @place_handler.mapper[:xpath]['places_common'][:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
+          expect(result.length).to eq(1)
         end
       end
     end
