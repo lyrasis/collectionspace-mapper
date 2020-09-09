@@ -28,8 +28,9 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
           expect(result.length).to eq(1)
         end
         it 'uses default config' do
-          config = { delimiter: ';', subgroup_delimiter: '^^' }
-          expect(@place_handler.config).to eq(config)
+          config = { delimiter: ';', subgroup_delimiter: '^^',
+                     response_mode: 'normal' }
+          expect(Mapper::CONFIG).to eq(config)
         end
       end
     end

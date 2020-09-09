@@ -5,17 +5,16 @@ module CollectionSpace
     class DataSplitter
       ::DataSplitter = CollectionSpace::Mapper::DataSplitter
       attr_reader :data, :result
-      def initialize(data, config)
+      def initialize(data)
         @data = data.strip
-        @config = config
-        @delim = @config[:delimiter]
-        @sgdelim = @config[:subgroup_delimiter]
+        @delim = Mapper::CONFIG[:delimiter]
+        @sgdelim = Mapper::CONFIG[:subgroup_delimiter]
       end
     end
 
     class SimpleSplitter < DataSplitter
       ::SimpleSplitter = CollectionSpace::Mapper::SimpleSplitter
-      def initialize(data, config)
+      def initialize(data)
         super
         # negative limit parameter turns off suppression of trailing empty fields
         @result = @data.split(@delim, -1).map{ |e| e.strip }
@@ -24,7 +23,7 @@ module CollectionSpace
 
     class SubgroupSplitter < DataSplitter
       ::SubgroupSplitter = CollectionSpace::Mapper::SubgroupSplitter
-      def initialize(data, config)
+      def initialize(data)
         super
         # negative limit parameter turns off suppression of trailing empty fields
         groups = @data.split(@delim, -1).map{ |e| e.strip }

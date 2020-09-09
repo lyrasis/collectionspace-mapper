@@ -5,16 +5,17 @@ module CollectionSpace
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
-      attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
+      attr_reader :mapper, :client, :cache, :blankdoc, :defaults, :validator,
         :is_authority
 
       def initialize(record_mapper:, client:, cache:,
-                     config: { delimiter: ';', subgroup_delimiter: '^^' }
+                     config: Mapper::DEFAULT_CONFIG
                     )
         @mapper = RecordMapper.convert(record_mapper)
         @client = client
         @cache = cache
-        @config = config
+        @config = get_config(config)
+        @response_mode = get_response_mode
         @is_authority = get_is_authority
         add_short_id_mapping if @is_authority
         @mapper[:xpath] = xpath_hash
@@ -56,6 +57,13 @@ module CollectionSpace
 
       private
 
+      def get_config(config)
+        config_object = Config.new(config)
+        config_object.validate
+        Mapper.const_set('CONFIG', config_object.hash)
+        Mapper::CONFIG
+      end
+      
       def add_short_id_mapping
         namespaces = @mapper[:mappings].map{ |m| m[:namespace]}.uniq
         this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
@@ -69,6 +77,10 @@ module CollectionSpace
           in_repeating_group: 'n/a',
           datacolumn: 'shortIdentifier'
         }
+      end
+
+      def get_response_mode
+        
       end
 
       def get_is_authority
