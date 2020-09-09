@@ -4,8 +4,8 @@ module CollectionSpace
   module Mapper
     class DataPrepper
       ::DataPrepper = CollectionSpace::Mapper::DataPrepper
-      attr_reader :data, :handler, :config, :xphash
-      attr_accessor :response
+      attr_reader :data, :handler, :config
+      attr_accessor :response, :xphash
       def initialize(data_hash, handler, response = nil)
         @response = response.nil? ? Response.new(data_hash) : response
         @data = data_hash.transform_keys(&:downcase)
@@ -68,13 +68,19 @@ module CollectionSpace
 
       def process_xpaths
         # keep only mappings for datacolumns present in data hash
-        mappings = @handler.mapper[:mappings].select{ |m| @response.merged_data.key?(m[:datacolumn]) }
+        mappings = @handler.mapper[:mappings].select do |m|
+          m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
+        end
         # create xpaths for remaining mappings...
         @xphash = mappings.map{ |m| m[:fullpath] }.uniq
         # hash with xpath as key and xpath info hash from DataHandler as value
         @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper[:xpath][xpath]] }.to_h
-        @xphash.each{ |xpath, hash| hash[:mappings] = hash[:mappings]
-            .select{ |m| @response.merged_data.key?(m[:datacolumn]) } }
+        @xphash.each do |xpath, hash|
+          hash[:mappings] = hash[:mappings].select do |m|
+            m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
+          end
+        end
+        #        binding.pry if @handler.is_authority
       end
 
       def do_splits(xpath, xphash)
@@ -188,11 +194,49 @@ module CollectionSpace
           end
           fieldhash[fieldname] << mapping[:datacolumn]
         end
-        
+
         xform = @response.transformed_data
         fieldhash.each do |field, cols|
-          cols.each{ |col| xform[col].each{ |v| @response.combined_data[xpath][field] << v } }
+          case cols.length
+          when 0
+            next
+          when 1
+            @response.combined_data[xpath][field] = xform[cols[0]]
+          else
+            xformed = cols.map{ |col| xform[col] }.compact
+            chk = []
+            xformed.each{ |arr| chk << arr.map{ |e| e.class } }
+            chk = chk.flatten.uniq
+            if chk == [String]
+              @response.combined_data[xpath][field] = xformed.flatten
+            elsif chk == [Array]
+              @response.combined_data[xpath][field] = combine_subgroup_values(xformed)
+            elsif chk.empty?
+              next
+            else
+              raise StandardError.new('Mixed class types in multi-authority field set')
+            end
+          end
         end
+
+        @response.combined_data[xpath].select{ |fieldname, val| val.blank? }.keys.each do |fieldname|
+          @response.combined_data[xpath].delete(fieldname)
+          unless fieldname == 'shortIdentifier'
+            @xphash[xpath][:mappings].delete_if{ |mapping| mapping[:fieldname] == fieldname }
+          end
+        end
+      end
+
+      def combine_subgroup_values(data)
+        combined = []
+        group_count = data.map(&:length).uniq.sort.last
+        group_count.times{ combined << [] }
+        data.each do |field|
+          field.each_with_index do |valarr, i|
+            valarr.each{ |e| combined[i] << e }
+          end
+        end
+        combined
       end
     end
   end

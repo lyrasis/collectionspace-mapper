@@ -3,7 +3,69 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
-  context 'anthro' do
+  context 'lhmc profile' do
+    before(:all) do
+      @cache = lhmc_cache
+      populate_lhmc(@cache)
+    end
+    context 'person record' do
+      before(:all) do
+        config = {
+          delimiter: ';',
+          subgroup_delimiter: '^^',
+        }
+
+        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/lhmc/lhmc_3_1_0-person.json')
+        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: lhmc_client, config: config)
+        @prepper = DataPrepper.new({'termDisplayName' => 'Xanadu', 'placeNote' => 'note'}, @handler)
+        @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+        @mapped_doc = remove_namespaces(@datamapper.response.doc)
+      end
+
+      describe '#add_short_id' do
+        before(:all) do
+          @short_id_nodeset = @mapped_doc.xpath('//shortIdentifier')
+        end
+        it 'adds one shortIdentifier element' do
+          expect(@short_id_nodeset.length).to eq(1)
+        end
+        it 'adds shortIdentifier element to persons_common namespace group' do
+          node = @short_id_nodeset.first
+          expect(node.parent.name).to eq('persons_common')
+        end
+        it 'value of shortIdentifier is as expected' do
+          node = @short_id_nodeset.first
+          expect(node.text).to eq('Xanadu2760257775')
+        end
+      end
+    end
+    end
+
+    context 'anthro profile' do
+      before(:all) do
+        @cache = anthro_cache
+        populate_anthro(@cache)
+      end
+      context 'place record' do
+        before(:all) do
+          config = {
+            delimiter: ';',
+            subgroup_delimiter: '^^',
+          }
+
+          @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
+          @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: anthro_client, config: config)
+          @prepper = DataPrepper.new({'termDisplayName' => 'Xanadu'}, @handler)
+          @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+        end
+
+        describe '#add_short_id' do
+          it 'adds shortIdentifier' do
+            
+          end
+        end
+      end
+
     context 'collectionobject record' do
       before(:all) do
         config = {
@@ -30,38 +92,36 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           force_defaults: false
         }
 
-        @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
-        @dh = DataHandler.new(record_mapper: @rm_anthro_co, cache: anthro_cache, client: anthro_client, config: config)
-        populate_anthro(@dh.cache)
-        @prepper = DataPrepper.new(anthro_co_1, @dh)
-        @prepped = @dh.prep(anthro_co_1)
-        @dm = DataMapper.new(@prepped, @dh, @prepper.xphash)
+        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
+        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: anthro_client, config: config)
+        @prepper = DataPrepper.new(anthro_co_1, @handler)
+        @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
       end
 
       describe '#doc' do
         it 'returns XML doc' do
-          res = @dm.doc
+          res = @datamapper.doc
           expect(res).to be_a(Nokogiri::XML::Document)
         end
       end
 
       describe '#response' do
         it 'returns Mapper::Response object' do
-          res = @dm.response
+          res = @datamapper.response
           expect(res).to be_a(Mapper::Response)
         end
         it 'Mapper::Response.doc is XML document' do
-          res = @dm.response.doc
+          res = @datamapper.response.doc
           expect(res).to be_a(Nokogiri::XML::Document)
         end
       end
       
       describe '#add_namespaces' do
         it 'adds namespace definitions' do
-          urihash = @dm.handler.mapper[:config][:ns_uri].clone
+          urihash = @datamapper.handler.mapper[:config][:ns_uri].clone
           urihash.transform_keys!{ |k| "ns2:#{k}" }
           docdefs = {}
-          @dm.doc.xpath('/*/*').each do |ns|
+          @datamapper.doc.xpath('/*/*').each do |ns|
             docdefs[ns.name] = ns.namespace_definitions.select{ |d| d.prefix == 'ns2' }.first.href
           end
           unused_keys = urihash.keys - docdefs.keys
