@@ -18,16 +18,7 @@ module Helpers
   # we can't just use the json symbolize_names option because @docstructure keys must
   #   remain strings
   def get_json_record_mapper(path:)
-    h = JSON.parse(File.read(path))
-    h = h.transform_keys{ |k| k.to_sym }
-    h[:config] = h[:config].transform_keys{ |key| key.to_sym }
-    h[:mappings].each do |m|
-      m.transform_keys!(&:to_sym)
-      unless m[:transforms].empty?
-        m[:transforms].transform_keys!(&:to_sym)
-      end
-    end
-    h
+    JSON.parse(File.read(path))
   end
 
   def get_datahash(path:)
