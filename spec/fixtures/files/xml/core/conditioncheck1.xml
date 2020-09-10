@@ -1,1 +1,144 @@
-<?xml version="1.0" encoding="UTF-8"?><document name="conditionchecks"><ns2:collectionspace_core xmlns:ns2="http://collectionspace.org/collectionspace_core/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><createdAt>2020-09-08T16:08:31.851Z</createdAt><updatedBy>admin@core.collectionspace.org</updatedBy><createdBy>admin@core.collectionspace.org</createdBy><workflowState>project</workflowState><tenantId>1</tenantId><refName>urn:cspace:core.collectionspace.org:conditionchecks:id(894dba3c-8686-4564-b088)</refName><uri>/conditionchecks/894dba3c-8686-4564-b088</uri><updatedAt>2020-09-08T16:08:31.851Z</updatedAt></ns2:collectionspace_core><ns2:conditionchecks_common xmlns:ns2="http://collectionspace.org/services/conditioncheck" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><packingRecommendations>Handling recommendation</packingRecommendations><salvagePriorityCodeGroupList><salvagePriorityCodeGroup><salvagePriorityCode>medium</salvagePriorityCode><salvagePriorityCodeDate>2020-09-25T00:00:00.000Z</salvagePriorityCodeDate></salvagePriorityCodeGroup><salvagePriorityCodeGroup><salvagePriorityCode>high</salvagePriorityCode><salvagePriorityCodeDate/></salvagePriorityCodeGroup><salvagePriorityCodeGroup><salvagePriorityCode/><salvagePriorityCodeDate>2021-10-02T00:00:00.000Z</salvagePriorityCodeDate></salvagePriorityCodeGroup></salvagePriorityCodeGroupList><conditionCheckGroupList><conditionCheckGroup><conditionNote>Props</conditionNote><condition>needsnowork</condition><conditionDate>2020-09-25T00:00:00.000Z</conditionDate></conditionCheckGroup><conditionCheckGroup><conditionNote>Jay</conditionNote><condition/><conditionDate>2020-09-30T00:00:00.000Z</conditionDate></conditionCheckGroup><conditionCheckGroup><conditionNote>Recorded</conditionNote><condition>exhibitableneedswork</condition><conditionDate>2020-10-03T00:00:00.000Z</conditionDate></conditionCheckGroup><conditionCheckGroup><conditionNote>Little</conditionNote><condition>injeopardy</condition><conditionDate/></conditionCheckGroup></conditionCheckGroupList><displayRecommendations>Display recommendation</displayRecommendations><objectAuditCategory>medium</objectAuditCategory><storageRequirements>Storage Rec</storageRequirements><handlingRecommendations>Handling recommendation</handlingRecommendations><securityRecommendations>Sec recommendation</securityRecommendations><conditionCheckMethod>xrayed</conditionCheckMethod><conditionCheckRefNumber>CC2020.5</conditionCheckRefNumber><legalReqsHeldGroupList><legalReqsHeldGroup><legalReqsHeld>Shooters</legalReqsHeld><legalReqsHeldBeginDate>2020-10-29T00:00:00.000Z</legalReqsHeldBeginDate><legalReqsHeldRenewDate>2020-10-30T00:00:00.000Z</legalReqsHeldRenewDate><legalReqsHeldEndDate>2020-10-28T00:00:00.000Z</legalReqsHeldEndDate><legalReqsHeldNumber>2585</legalReqsHeldNumber></legalReqsHeldGroup><legalReqsHeldGroup><legalReqsHeld>Troopers</legalReqsHeld><legalReqsHeldBeginDate/><legalReqsHeldRenewDate>2020-10-31T00:00:00.000Z</legalReqsHeldRenewDate><legalReqsHeldEndDate>2020-10-30T00:00:00.000Z</legalReqsHeldEndDate><legalReqsHeldNumber>6260</legalReqsHeldNumber></legalReqsHeldGroup></legalReqsHeldGroupList><conditionCheckNote>Passionately okay.</conditionCheckNote><conditionChecker>urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Glock1599580905730)'Glock'</conditionChecker><techAssessmentGroupList><techAssessmentGroup><techAssessment>Strong</techAssessment><techAssessmentDate>2020-09-25T00:00:00.000Z</techAssessmentDate></techAssessmentGroup><techAssessmentGroup><techAssessment>Hard</techAssessment><techAssessmentDate>2020-09-26T00:00:00.000Z</techAssessmentDate></techAssessmentGroup><techAssessmentGroup><techAssessment/><techAssessmentDate>2020-09-30T00:00:00.000Z</techAssessmentDate></techAssessmentGroup></techAssessmentGroupList><hazardGroupList><hazardGroup><hazard>poisonous</hazard><hazardDate>2020-09-16T00:00:00.000Z</hazardDate><hazardNote>Executive</hazardNote></hazardGroup><hazardGroup><hazard>radioactive</hazard><hazardDate>2020-09-23T00:00:00.000Z</hazardDate><hazardNote>Secure</hazardNote></hazardGroup></hazardGroupList><completenessGroupList><completenessGroup><completenessDate>2020-09-23T00:00:00.000Z</completenessDate><completeness>complete</completeness><completenessNote>Box full</completenessNote></completenessGroup><completenessGroup><completenessDate/><completeness>fragmented</completeness><completenessNote>Clean</completenessNote></completenessGroup><completenessGroup><completenessDate>2020-09-25T00:00:00.000Z</completenessDate><completeness/><completenessNote>Reality</completenessNote></completenessGroup></completenessGroupList><conditionCheckReason>damagedintransit</conditionCheckReason><conditionCheckAssessmentDate>2020-09-22T00:00:00.000Z</conditionCheckAssessmentDate><envConditionNoteGroupList><envConditionNoteGroup><envConditionNoteDate>2020-10-16T00:00:00.000Z</envConditionNoteDate><envConditionNote>Came in the door</envConditionNote></envConditionNoteGroup><envConditionNoteGroup><envConditionNoteDate>2020-10-15T00:00:00.000Z</envConditionNoteDate><envConditionNote>Dresser</envConditionNote></envConditionNoteGroup></envConditionNoteGroupList><conservationTreatmentPriority>high</conservationTreatmentPriority><nextConditionCheckDate>2020-09-24T00:00:00.000Z</nextConditionCheckDate><specialRequirements>Spec requirement</specialRequirements><envRecommendations>Environmental recommendation</envRecommendations></ns2:conditionchecks_common><ns2:account_permission xmlns:ns2="http://collectionspace.org/services/authorization"><account><accountId>d884e854-a10b-49c8-87e7-e7a900ffdc52</accountId><screenName>Administrator</screenName><userId>admin@core.collectionspace.org</userId><tenantId>1</tenantId></account></ns2:account_permission></document>
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="conditionchecks">
+  <ns2:collectionspace_core xmlns:ns2="http://collectionspace.org/collectionspace_core/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <createdAt>2020-09-08T16:08:31.851Z</createdAt>
+    <updatedBy>admin@core.collectionspace.org</updatedBy>
+    <createdBy>admin@core.collectionspace.org</createdBy>
+    <workflowState>project</workflowState>
+    <tenantId>1</tenantId>
+    <refName>urn:cspace:core.collectionspace.org:conditionchecks:id(894dba3c-8686-4564-b088)</refName>
+    <uri>/conditionchecks/894dba3c-8686-4564-b088</uri>
+    <updatedAt>2020-09-08T16:08:31.851Z</updatedAt>
+  </ns2:collectionspace_core>
+  <ns2:conditionchecks_common xmlns:ns2="http://collectionspace.org/services/conditioncheck" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <packingRecommendations>Handling recommendation</packingRecommendations>
+    <salvagePriorityCodeGroupList>
+      <salvagePriorityCodeGroup>
+        <salvagePriorityCode>medium</salvagePriorityCode>
+        <salvagePriorityCodeDate>2020-09-25T00:00:00.000Z</salvagePriorityCodeDate>
+      </salvagePriorityCodeGroup>
+      <salvagePriorityCodeGroup>
+        <salvagePriorityCode>high</salvagePriorityCode>
+        <salvagePriorityCodeDate/>
+      </salvagePriorityCodeGroup>
+      <salvagePriorityCodeGroup>
+        <salvagePriorityCode/>
+        <salvagePriorityCodeDate>2021-10-02T00:00:00.000Z</salvagePriorityCodeDate>
+      </salvagePriorityCodeGroup>
+    </salvagePriorityCodeGroupList>
+    <conditionCheckGroupList>
+      <conditionCheckGroup>
+        <conditionNote>Props</conditionNote>
+        <condition>needsnowork</condition>
+        <conditionDate>2020-09-25T00:00:00.000Z</conditionDate>
+      </conditionCheckGroup>
+      <conditionCheckGroup>
+        <conditionNote>Jay</conditionNote>
+        <condition/>
+        <conditionDate>2020-09-30T00:00:00.000Z</conditionDate>
+      </conditionCheckGroup>
+      <conditionCheckGroup>
+        <conditionNote>Recorded</conditionNote>
+        <condition>exhibitableneedswork</condition>
+        <conditionDate>2020-10-03T00:00:00.000Z</conditionDate>
+      </conditionCheckGroup>
+      <conditionCheckGroup>
+        <conditionNote>Little</conditionNote>
+        <condition>injeopardy</condition>
+        <conditionDate/>
+      </conditionCheckGroup>
+    </conditionCheckGroupList>
+    <displayRecommendations>Display recommendation</displayRecommendations>
+    <objectAuditCategory>medium</objectAuditCategory>
+    <storageRequirements>Storage Rec</storageRequirements>
+    <handlingRecommendations>Handling recommendation</handlingRecommendations>
+    <securityRecommendations>Sec recommendation</securityRecommendations>
+    <conditionCheckMethod>xrayed</conditionCheckMethod>
+    <conditionCheckRefNumber>CC2020.5</conditionCheckRefNumber>
+    <legalReqsHeldGroupList>
+      <legalReqsHeldGroup>
+        <legalReqsHeld>Shooters</legalReqsHeld>
+        <legalReqsHeldBeginDate>2020-10-29T00:00:00.000Z</legalReqsHeldBeginDate>
+        <legalReqsHeldRenewDate>2020-10-30T00:00:00.000Z</legalReqsHeldRenewDate>
+        <legalReqsHeldEndDate>2020-10-28T00:00:00.000Z</legalReqsHeldEndDate>
+        <legalReqsHeldNumber>2585</legalReqsHeldNumber>
+      </legalReqsHeldGroup>
+      <legalReqsHeldGroup>
+        <legalReqsHeld>Troopers</legalReqsHeld>
+        <legalReqsHeldBeginDate/>
+        <legalReqsHeldRenewDate>2020-10-31T00:00:00.000Z</legalReqsHeldRenewDate>
+        <legalReqsHeldEndDate>2020-10-30T00:00:00.000Z</legalReqsHeldEndDate>
+        <legalReqsHeldNumber>6260</legalReqsHeldNumber>
+      </legalReqsHeldGroup>
+    </legalReqsHeldGroupList>
+    <conditionCheckNote>Passionately okay.</conditionCheckNote>
+    <conditionChecker>urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Glock1599580905730)'Glock'</conditionChecker>
+    <techAssessmentGroupList>
+      <techAssessmentGroup>
+        <techAssessment>Strong</techAssessment>
+        <techAssessmentDate>2020-09-25T00:00:00.000Z</techAssessmentDate>
+      </techAssessmentGroup>
+      <techAssessmentGroup>
+        <techAssessment>Hard</techAssessment>
+        <techAssessmentDate>2020-09-26T00:00:00.000Z</techAssessmentDate>
+      </techAssessmentGroup>
+      <techAssessmentGroup>
+        <techAssessment/>
+        <techAssessmentDate>2020-09-30T00:00:00.000Z</techAssessmentDate>
+      </techAssessmentGroup>
+    </techAssessmentGroupList>
+    <hazardGroupList>
+      <hazardGroup>
+        <hazard>poisonous</hazard>
+        <hazardDate>2020-09-16T00:00:00.000Z</hazardDate>
+        <hazardNote>Executive</hazardNote>
+      </hazardGroup>
+      <hazardGroup>
+        <hazard>radioactive</hazard>
+        <hazardDate>2020-09-23T00:00:00.000Z</hazardDate>
+        <hazardNote>Secure</hazardNote>
+      </hazardGroup>
+    </hazardGroupList>
+    <completenessGroupList>
+      <completenessGroup>
+        <completenessDate>2020-09-23T00:00:00.000Z</completenessDate>
+        <completeness>complete</completeness>
+        <completenessNote>Box full</completenessNote>
+      </completenessGroup>
+      <completenessGroup>
+        <completenessDate/>
+        <completeness>fragmented</completeness>
+        <completenessNote>Clean</completenessNote>
+      </completenessGroup>
+      <completenessGroup>
+        <completenessDate>2020-09-25T00:00:00.000Z</completenessDate>
+        <completeness/>
+        <completenessNote>Reality</completenessNote>
+      </completenessGroup>
+    </completenessGroupList>
+    <conditionCheckReason>damagedintransit</conditionCheckReason>
+    <conditionCheckAssessmentDate>2020-09-22T00:00:00.000Z</conditionCheckAssessmentDate>
+    <envConditionNoteGroupList>
+      <envConditionNoteGroup>
+        <envConditionNoteDate>2020-10-16T00:00:00.000Z</envConditionNoteDate>
+        <envConditionNote>Came in the door</envConditionNote>
+      </envConditionNoteGroup>
+      <envConditionNoteGroup>
+        <envConditionNoteDate>2020-10-15T00:00:00.000Z</envConditionNoteDate>
+        <envConditionNote>Dresser</envConditionNote>
+      </envConditionNoteGroup>
+    </envConditionNoteGroupList>
+    <conservationTreatmentPriority>high</conservationTreatmentPriority>
+    <nextConditionCheckDate>2020-09-24T00:00:00.000Z</nextConditionCheckDate>
+    <specialRequirements>Spec requirement</specialRequirements>
+    <envRecommendations>Environmental recommendation</envRecommendations>
+  </ns2:conditionchecks_common>
+  <ns2:account_permission xmlns:ns2="http://collectionspace.org/services/authorization">
+    <account>
+      <accountId>d884e854-a10b-49c8-87e7-e7a900ffdc52</accountId>
+      <screenName>Administrator</screenName>
+      <userId>admin@core.collectionspace.org</userId>
+      <tenantId>1</tenantId>
+    </account>
+  </ns2:account_permission>
+</document>
