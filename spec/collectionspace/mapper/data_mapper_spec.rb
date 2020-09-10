@@ -131,4 +131,21 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
   end
+
+    describe '#add_namespaces' do
+      it 'adds botgarden propagation namespace' do
+        client = botgarden_client
+        cache = botgarden_cache
+        populate_botgarden(cache)
+        config = {
+          delimiter: ';',
+          subgroup_delimiter: '^^',
+        }
+        prop_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-propagation.json')
+        prop_handler = DataHandler.new(record_mapper: prop_mapper, cache: cache, client: client, config: config)
+        datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/propagation1.json')
+        prepper = DataPrepper.new(datahash, prop_handler)
+        mapper = DataMapper.new(prepper.prep, prop_handler, prepper.xphash)
+      end
+    end
 end
