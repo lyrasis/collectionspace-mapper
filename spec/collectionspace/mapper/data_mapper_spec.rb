@@ -8,13 +8,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
   end
   context 'lhmc profile' do
     before(:all) do
+      @client = lhmc_client
       @cache = lhmc_cache
       populate_lhmc(@cache)
     end
     context 'person record' do
       before(:all) do
         @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/lhmc/lhmc_3_1_0-person.json')
-        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: lhmc_client, config: @config)
+        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: @client, config: @config)
         @prepper = DataPrepper.new({'termDisplayName' => 'Xanadu', 'placeNote' => 'note'}, @handler)
         @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
         @mapped_doc = remove_namespaces(@datamapper.response.doc)
@@ -34,6 +35,36 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         it 'value of shortIdentifier is as expected' do
           node = @short_id_nodeset.first
           expect(node.text).to eq('Xanadu2760257775')
+        end
+      end
+
+      describe '#set_response_identifier' do
+        before(:all){ @response = @datamapper.response }
+        it 'adds record identifier to response' do
+          expect(@response.identifier).to eq('Xanadu2760257775')
+        end
+      end
+    end
+    end
+
+    context 'botgarden profile' do
+    before(:all) do
+      @client = botgarden_client
+      @cache = botgarden_cache
+      populate_botgarden(@cache)
+    end
+    context 'loanout record' do
+      before(:all) do
+        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-loanout.json')
+        @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: @client, config: @config)
+        @prepper = DataPrepper.new({'loanOutNumber' => '123', 'sterile' => 'n'}, @handler)
+        @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+      end
+
+      describe '#set_response_identifier' do
+        before(:all){ @response = @datamapper.response }
+        it 'adds record identifier to response' do
+          expect(@response.identifier).to eq('123')
         end
       end
     end

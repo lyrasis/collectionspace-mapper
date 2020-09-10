@@ -16,7 +16,7 @@ module Helpers
   def anthro_cache
     cache_config = {
       domain: 'anthro.collectionspace.org',
-      search_enabled: true,
+      search_enabled: false,
       search_identifiers: false
     }
     CollectionSpace::RefCache.new(config: cache_config, client: anthro_client)
