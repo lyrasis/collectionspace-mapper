@@ -42,7 +42,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
       it 'returns Mapper::Response with populated warnings' do
         expect(@response.warnings).not_to be_empty
       end
-      xit 'returns Mapper::Response with populated identifier' do
+      it 'returns Mapper::Response with populated identifier' do
         expect(@response.identifier).not_to be_empty
       end
       it 'returns Mapper::Response with unpopulated orig_data' do
@@ -59,37 +59,6 @@ RSpec.describe CollectionSpace::Mapper::Response do
       end
       it 'returns Mapper::Response with unpopulated combined_data' do
         expect(@response.combined_data).to be_empty
-      end
-    end
-  end
-  
-  context 'botgarden profile' do
-    context 'taxon record' do
-      before(:all) do
-      end
-
-      context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/taxon1.json')
-          @prepper = DataPrepper.new(@datahash, @taxon_handler)
-          @mapper = DataMapper.new(@prepper.prep, @taxon_handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('botgarden/taxon1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @taxon_handler.mapper[:mappings])
-        end
-        it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
-          expect(diff).to eq([])
-        end
-
-        it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
-            expect(mapped_node).to eq(fixture_node)
-          end
-        end
       end
     end
   end
