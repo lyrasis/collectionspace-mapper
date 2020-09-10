@@ -34,6 +34,8 @@ module Helpers
       ['vocabularies', 'languages', 'Latin', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(languages):item:name(lat)'Latin'"],
       ['vocabularies', 'taxontermflag', 'valid', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(taxontermflag):item:name(valid)'valid'"],
       ['vocabularies', 'taxontermflag', 'invalid', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(taxontermflag):item:name(invalid)'invalid'"],
+      ['taxonomyauthority', 'taxon', 'Tropez', "urn:cspace:botgarden.collectionspace.org:taxonomyauthority:name(taxon):item:name(Tropez1599750195530)'Tropez'"],
+      ['taxonomyauthority', 'taxon', 'Domestic', "urn:cspace:botgarden.collectionspace.org:taxonomyauthority:name(taxon):item:name(Domestic1599750187683)'Domestic'"],
     ]
     populate(cache, terms)
   end
