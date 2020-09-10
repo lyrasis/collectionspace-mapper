@@ -34,6 +34,23 @@ module Helpers
       ['vocabularies', 'languages', 'Latin', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(languages):item:name(lat)'Latin'"],
       ['vocabularies', 'taxontermflag', 'valid', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(taxontermflag):item:name(valid)'valid'"],
       ['vocabularies', 'taxontermflag', 'invalid', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(taxontermflag):item:name(invalid)'invalid'"],
+      ['vocabularies', 'propreason', 'conservation', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(propreason):item:name(conservation)'conservation'"],
+      ['vocabularies', 'cuttingtype', 'hardwood', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(cuttingtype):item:name(hardwood)'hardwood'"],
+      ['vocabularies', 'propChemicals', 'benlate and physan', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(propChemicals):item:name(benlateAndPhysan)'benlate and physan'"],
+      ['vocabularies', 'dateera', 'CE', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'"],
+      ['vocabularies', 'potsize', '1 gal. pot', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(potsize):item:name(OneGalPot)'1 gal. pot'"],
+      ['vocabularies', 'propActivityType', 'benlate and captan', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(propActivityType):item:name(benlateAndCaptan)'benlate and captan'"],
+      ['vocabularies', 'propConditions', 'glass cover', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(propConditions):item:name(glassCover)'glass cover'"],
+      ['vocabularies', 'propPlantType', 'bulbs', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(propPlantType):item:name(bulbs)'bulbs'"],
+      ['vocabularies', 'propHormones', 'hormone', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(propHormones):item:name(hormone)'hormone'"],
+      ['vocabularies', 'dateera', 'CE', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'"],
+      ['vocabularies', 'durationunit', 'Hours', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(durationunit):item:name(hours)'Hours'"],
+      ['vocabularies', 'scarstrat', 'cold strat', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(scarstrat):item:name(coldstrat)'cold strat'"],
+      ['vocabularies', 'durationunit', 'Days', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(durationunit):item:name(days)'Days'"],
+      ['vocabularies', 'scarstrat', 'boiling water', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(scarstrat):item:name(boilingwater)'boiling water'"],
+      ['vocabularies', 'proptype', 'Division', "urn:cspace:botgarden.collectionspace.org:vocabularies:name(proptype):item:name(division)'Division'"],
+      ['locationauthorities', 'location', 'Corner', "urn:cspace:botgarden.collectionspace.org:locationauthorities:name(location):item:name(Corner1599737289184)'Corner'"],
+      ['conceptauthorities', 'concept', 'Official', "urn:cspace:botgarden.collectionspace.org:conceptauthorities:name(concept):item:name(Official1599737276242)'Official'"],
     ]
     populate(cache, terms)
   end
