@@ -262,30 +262,6 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           end
         end
       end
-
-      context 'uoc record' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/uoc1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/movement1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
-        end
-        it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
-          expect(diff).to eq([])
-        end
-
-        it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
-            expect(mapped_node).to eq(fixture_node)
-          end
-        end
-      end
     end
 
     context 'uoc record' do
