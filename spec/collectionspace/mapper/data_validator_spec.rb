@@ -4,8 +4,8 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataValidator do
   before(:all) do
-    @rm_anthro_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
-    @dv = DataValidator.new(@rm_anthro_co, anthro_cache)
+    @object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
+    @dv = DataValidator.new(RecordMapper.convert(@object_mapper), anthro_cache)
   end
   
   it 'gets downcased list of required fields' do
