@@ -95,7 +95,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         end
         it 'can be called with response from validation' do
           vresult = @handler.validate(@data)
-          result = @handler.process(@data, vresult)
+          result = @handler.process(vresult)
           expect(result).to be_a(CollectionSpace::Mapper::Response)
         end
         it 'can be called with just data' do
