@@ -2,10 +2,6 @@
 
 module CollectionSpace
   module Mapper
-        module Errors
-      ::Errors = CollectionSpace::Mapper::Errors
-      class UnprocessableDataError < StandardError; end
-    end
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
@@ -32,7 +28,7 @@ module CollectionSpace
       end
 
       def process(data)
-        response = setup_data(data)
+        response = Mapper::setup_data(data)
         prepper = DataPrepper.new(response.orig_data, self, response)
         prepper.prep
         mapper = DataMapper.new(prepper.response, self, prepper.xphash)
@@ -59,16 +55,6 @@ module CollectionSpace
       end
 
       private
-
-      def setup_data(data)
-        if data.is_a?(Hash)
-          Response.new(data)
-        elsif data.is_a?(CollectionSpace::Mapper::Response)
-          data
-        else
-          raise UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response")
-        end
-      end
 
       def get_config(config)
         config_object = Config.new(config)
