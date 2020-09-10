@@ -10,7 +10,7 @@ module CollectionSpace
         @response = response.nil? ? Response.new(data_hash) : response
         @data = data_hash.transform_keys(&:downcase)
         @handler = handler
-        @config = handler.config
+        @config = @handler.config
         @cache = @handler.cache
         @response.merged_data = merge_default_values
         process_xpaths
