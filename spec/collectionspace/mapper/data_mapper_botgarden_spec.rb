@@ -15,22 +15,22 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       @cache = botgarden_cache
       populate_botgarden(@cache)
     end
-    
-    context 'taxon record' do
+
+    context 'pottag record' do
       before(:all) do
-        @taxon_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-taxon.json')
-        @taxon_handler = DataHandler.new(record_mapper: @taxon_mapper, cache: @cache, client: botgarden_client, config: @config)
+        @pottag_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-pottag.json')
+        @pottag_handler = DataHandler.new(record_mapper: @pottag_mapper, cache: @cache, client: botgarden_client, config: @config)
       end
 
       context 'record 1' do
         before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/taxon1.json')
-          @prepper = DataPrepper.new(@datahash, @taxon_handler)
-          @mapper = DataMapper.new(@prepper.prep, @taxon_handler, @prepper.xphash)
+          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/pottag1.json')
+          @prepper = DataPrepper.new(@datahash, @pottag_handler)
+          @mapper = DataMapper.new(@prepper.prep, @pottag_handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('botgarden/taxon1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @taxon_handler.mapper[:mappings])
+          @fixture_doc = get_xml_fixture('botgarden/pottag1.xml')
+          @fixture_xpaths = test_xpaths(@fixture_doc, @pottag_handler.mapper[:mappings])
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -47,20 +47,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
     
-    context 'pottag record' do
+    context 'taxon record' do
       before(:all) do
-        @taxon_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-pottag.json')
+        @taxon_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-taxon.json')
         @taxon_handler = DataHandler.new(record_mapper: @taxon_mapper, cache: @cache, client: botgarden_client, config: @config)
       end
 
       context 'record 1' do
         before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/pottag1.json')
+          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/taxon1.json')
           @prepper = DataPrepper.new(@datahash, @taxon_handler)
           @mapper = DataMapper.new(@prepper.prep, @taxon_handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('botgarden/pottag1.xml')
+          @fixture_doc = get_xml_fixture('botgarden/taxon1.xml')
           @fixture_xpaths = test_xpaths(@fixture_doc, @taxon_handler.mapper[:mappings])
         end
         it 'does not map unexpected fields' do
