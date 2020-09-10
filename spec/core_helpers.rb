@@ -128,7 +128,38 @@ module Helpers
       ['vocabularies', 'publishto', 'Culture Object', "urn:cspace:core.collectionspace.org:vocabularies:name(publishto):item:name(cultureobject)'Culture Object'"],
       ['vocabularies', 'publishto', 'Omeka', "urn:cspace:core.collectionspace.org:vocabularies:name(publishto):item:name(omeka)'Omeka'"],
       ['vocabularies', 'treatmentpurpose', 'Exhibition', "urn:cspace:core.collectionspace.org:vocabularies:name(treatmentpurpose):item:name(exhibition)'Exhibition'"],
+      ['vocabularies', 'uocstaffroles', 'greeter', "urn:cspace:core.collectionspace.org:vocabularies:name(uocstaffroles):item:name(greeter)'greeter'"],
+      ['personauthorities', 'person', 'Soi', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Soi1599734190999)'Soi'"],
+      ['vocabularies', 'uocmaterialtypes', 'bulb', "urn:cspace:core.collectionspace.org:vocabularies:name(uocmaterialtypes):item:name(bulb)'bulb'"],
+      ['vocabularies', 'uocsubcollections', 'Asia', "urn:cspace:core.collectionspace.org:vocabularies:name(uocsubcollections):item:name(uocsubcollection02)'Asia'"],
+      ['locationauthorities', 'location', 'Kalif', "urn:cspace:core.collectionspace.org:locationauthorities:name(location):item:name(Kalif1599734233745)'Kalif'"],
+      ['vocabularies', 'currency', 'Euro', "urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(EUR)'Euro'"],
+      ['personauthorities', 'person', 'Erick', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Erick1599734121151)'Erick'"],
+      ['vocabularies', 'uocauthorizationstatuses', 'Approved', "urn:cspace:core.collectionspace.org:vocabularies:name(uocauthorizationstatuses):item:name(approved)'Approved'"],
+      ['orgauthorities', 'organization', 'Tasia', "urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(Tasia1599734050597)'Tasia'"],
+      ['vocabularies', 'uocusertypes', 'lecturer', "urn:cspace:core.collectionspace.org:vocabularies:name(uocusertypes):item:name(lecturer)'lecturer'"],
+      ['vocabularies', 'uocuserroles', 'faculty', "urn:cspace:core.collectionspace.org:vocabularies:name(uocuserroles):item:name(faculty)'faculty'"],
+      ['personauthorities', 'person', 'Kinuthia', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Kinuthia1599734017515)'Kinuthia'"],
+      ['conceptauthorities', 'occasion', 'Computer', "urn:cspace:core.collectionspace.org:conceptauthorities:name(occasion):item:name(Computer1599734104251)'Computer'"],
+      ['vocabularies', 'uocmethods', 'class', "urn:cspace:core.collectionspace.org:vocabularies:name(uocmethods):item:name(class)'class'"],
+      ['vocabularies', 'uoccollectiontypes', 'archeology', "urn:cspace:core.collectionspace.org:vocabularies:name(uoccollectiontypes):item:name(uocarcheology)'archeology'"]
     ]
     populate(cache, terms)
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
