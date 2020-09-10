@@ -114,7 +114,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           },
         })
 
-        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
+        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
         @handler = DataHandler.new(record_mapper: @recmapper, cache: @cache, client: @client, config: config)
         @prepper = DataPrepper.new(anthro_co_1, @handler)
         @datamapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
@@ -159,12 +159,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         client = botgarden_client
         cache = botgarden_cache
         populate_botgarden(cache)
-        config = {
-          delimiter: ';',
-          subgroup_delimiter: '^^',
-        }
         prop_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-propagation.json')
-        prop_handler = DataHandler.new(record_mapper: prop_mapper, cache: cache, client: client, config: config)
+        prop_handler = DataHandler.new(record_mapper: prop_mapper, cache: cache, client: client, config: Mapper::DEFAULT_CONFIG)
         datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/propagation1.json')
         prepper = DataPrepper.new(datahash, prop_handler)
         mapper = DataMapper.new(prepper.prep, prop_handler, prepper.xphash)
