@@ -10,7 +10,7 @@ module CollectionSpace
         @response = response.nil? ? Response.new(data_hash) : response
         @data = data_hash.transform_keys(&:downcase)
         @handler = handler
-        @config = handler.config
+        @config = @handler.config
         @cache = @handler.cache
         @response.merged_data = merge_default_values
         process_xpaths
@@ -80,7 +80,6 @@ module CollectionSpace
             m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
           end
         end
-        #        binding.pry if @handler.is_authority
       end
 
       def do_splits(xpath, xphash)

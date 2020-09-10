@@ -4,10 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = {
-      delimiter: ';',
-      subgroup_delimiter: '^^'
-    }
+    @config = Mapper::DEFAULT_CONFIG
   end
 
   context 'botgarden profile' do

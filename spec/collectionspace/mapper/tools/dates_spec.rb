@@ -3,16 +3,10 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::Tools::Dates do
-  let(:usa_date) { '11/02/1980' }
-  let(:short_month_or_day_date) { '2010/1/1' }
-
   before(:all) do
     @client = anthro_client
     @cache = anthro_cache
-    @config = {
-      delimiter: ';',
-      subgroup_delimiter: '^^',
-    }
+    @config = Mapper::DEFAULT_CONFIG
   end
 
   describe Dates::CspaceDate do

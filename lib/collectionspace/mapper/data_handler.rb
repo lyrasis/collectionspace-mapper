@@ -9,12 +9,13 @@ module CollectionSpace
         :is_authority
 
       def initialize(record_mapper:, client:, cache:,
-                     config: { delimiter: ';', subgroup_delimiter: '^^' }
+                     config: Mapper::DEFAULT_CONFIG
                     )
         @mapper = RecordMapper.convert(record_mapper)
         @client = client
         @cache = cache
-        @config = config
+        @config = get_config(config)
+        @response_mode = @config[:response_mode]
         @is_authority = get_is_authority
         add_short_id_mapping if @is_authority
         @mapper[:xpath] = xpath_hash
@@ -25,23 +26,21 @@ module CollectionSpace
         @validator = DataValidator.new(@mapper, @cache)
       end
 
-      def process(data_hash)
-        prepper = DataPrepper.new(data_hash, self)
-        prepper.split_data
-        prepper.transform_data
-        prepper.check_data
-        prepper.combine_data_fields
-
+      def process(data_hash, response = nil)
+        response = Response.new(data_hash) if response.nil?
+        prepper = DataPrepper.new(data_hash, self, response)
+        prepper.prep
         mapper = DataMapper.new(prepper.response, self, prepper.xphash)
-        mapper.response
+        @response_mode == 'normal' ? mapper.response.normal : mapper.response
       end
       
       def validate(data_hash, response = nil)
         @validator.validate(data_hash, response)
       end
 
-      def prep(data_hash)
-        prepper = DataPrepper.new(data_hash, self)
+      def prep(data_hash, response = nil)
+        response = Response.new(data_hash) if response.nil?
+        prepper = DataPrepper.new(data_hash, self, response)
         prepper.split_data
         prepper.transform_data
         prepper.check_data
@@ -50,12 +49,17 @@ module CollectionSpace
       end
       
       def map(response, xphash)
-        datamapper = DataMapper.new(response, self, xphash)
-        datamapper.response
+        mapper = DataMapper.new(response, self, xphash)
+        @response_mode == 'normal' ? mapper.response.normal : mapper.response
       end
 
       private
 
+      def get_config(config)
+        config_object = Config.new(config)
+        config_object.hash
+      end
+      
       def add_short_id_mapping
         namespaces = @mapper[:mappings].map{ |m| m[:namespace]}.uniq
         this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
@@ -64,7 +68,7 @@ module CollectionSpace
           namespace: this_ns,
           data_type: 'string',
           xpath: [],
-          required: 'y',
+          required: 'not in input data',
           repeats: 'n',
           in_repeating_group: 'n/a',
           datacolumn: 'shortIdentifier'
@@ -74,7 +78,6 @@ module CollectionSpace
       def get_is_authority
         service_type = @mapper[:config][:service_type]
         service_type == 'authority' ? true : false
-        
       end
       
       # you can specify per-data-key transforms in your config.json

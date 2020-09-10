@@ -51,9 +51,8 @@ module CollectionSpace
       def process_vocabulary
         return if @value.empty?
         vocabulary = @transforms[:vocabulary]
-        
         existing = @cache.get('vocabularies', vocabulary, @value)
-          @value = existing if existing
+        @value = existing if existing
       end
 
       def process_boolean
