@@ -28,11 +28,11 @@
     "approvalNote": "Hands;;Loving",
     "acquisitionNote": "Going home",
     "acquisitionProvisos": "Pictures on the wall",
-    "acquisitionFundingCurrency": "Danish Krone;;Euro",
-    "acquisitionFundingValue": "250;85;",
-    "acquisitionFundingSourcePerson": "Disturb;",
+    "acquisitionFundingCurrency": ";Euro;Danish Krone",
+    "acquisitionFundingValue": "85;;250",
+    "acquisitionFundingSourcePerson": ";Disturb",
     "acquisitionFundingSourceOrganization": "But Ohh",
-    "acquisitionFundingSourceProvisos": "Krone;Clone;",
+    "acquisitionFundingSourceProvisos": "Clone;;Krone",
     "creditLine": "Help line",
     "fieldCollectionEventName": "collection event name;Music;Ragga Muffin"
 }
