@@ -1,5 +1,5 @@
 {
-    "acquisitionReferenceNumber": "363636",
+    "acquisitionReferenceNumber": " 363636",
     "accessionDateGroup": "2020-12-30",
     "acquisitionAuthorizer": "Comrade",
     "acquisitionAuthorizerDate": "2020-09-16",
@@ -24,15 +24,15 @@
     "approvalGroup": ";collection committee;executive committee",
     "approvalIndividual": "malik;;rudelyt",
     "approvalStatus": "not approved;not required;approved",
-    "approvalDate": "approvalDate;2020-09-25;",
+    "approvalDate": "2020-09-23;2020-09-25;",
     "approvalNote": "Hands;;Loving",
     "acquisitionNote": "Going home",
     "acquisitionProvisos": "Pictures on the wall",
-    "acquisitionFundingCurrency": "Danish Krone;;Euro",
-    "acquisitionFundingValue": "250;85;",
-    "acquisitionFundingSourcePerson": "Disturb;",
-    "acquisitionFundingSourceOrganization": "But Ohh;",
-    "acquisitionFundingSourceProvisos": "Krone;Clone;",
+    "acquisitionFundingCurrency": ";Euro;Danish Krone",
+    "acquisitionFundingValue": "85;;250",
+    "acquisitionFundingSourcePerson": ";Disturb",
+    "acquisitionFundingSourceOrganization": "But Ohh",
+    "acquisitionFundingSourceProvisos": "Clone;;Krone",
     "creditLine": "Help line",
     "fieldCollectionEventName": "collection event name;Music;Ragga Muffin"
 }
