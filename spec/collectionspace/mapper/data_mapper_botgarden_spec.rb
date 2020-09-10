@@ -34,6 +34,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
+          puts diff
           expect(diff).to eq([])
         end
 
