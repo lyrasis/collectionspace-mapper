@@ -7,7 +7,7 @@
     "object_name": "Propagation",
     "profile_basename": "botgarden",
     "ns_uri": {
-      "propagations_common": null
+      "propagation_common": "http://collectionspace.org/services/propagation"
     },
     "identifier_field": "propNumber"
   },
