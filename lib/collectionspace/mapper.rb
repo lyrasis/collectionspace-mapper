@@ -27,8 +27,9 @@ module CollectionSpace
     require 'collectionspace/mapper/value_transformer'
 
     require 'collectionspace/mapper/tools/authorities'
-    require 'collectionspace/mapper/tools/identifiers'
     require 'collectionspace/mapper/tools/dates'
+    require 'collectionspace/mapper/tools/identifiers'
+    require 'collectionspace/mapper/tools/record_mapper'
     require 'collectionspace/mapper/tools/vocabularies'
   end    
 end
