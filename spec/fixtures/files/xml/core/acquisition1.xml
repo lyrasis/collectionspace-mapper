@@ -8,12 +8,12 @@
     <tenantId>1</tenantId>
     <refName>urn:cspace:core.collectionspace.org:acquisitions:id(4a5f3216-1fa3-4b3f-9b2c)</refName>
     <uri>/acquisitions/4a5f3216-1fa3-4b3f-9b2c</uri>
-    <updatedAt>2020-09-09T15:25:01.763Z</updatedAt>
+    <updatedAt>2020-09-10T13:46:18.382Z</updatedAt>
   </ns2:collectionspace_core>
   <ns2:acquisitions_common xmlns:ns2="http://collectionspace.org/services/acquisition" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <acquisitionNote>Going home</acquisitionNote>
     <objectPurchaseOfferPriceCurrency>urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(EUR)'Euro'</objectPurchaseOfferPriceCurrency>
-    <acquisitionReferenceNumber> 363636</acquisitionReferenceNumber>
+    <acquisitionReferenceNumber>363636</acquisitionReferenceNumber>
     <owners>
       <owner>urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(tint1599664800144)'tint'</owner>
       <owner>urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(tent1599664807586)'tent'</owner>
@@ -83,12 +83,6 @@
     <acquisitionProvisos>Pictures on the wall</acquisitionProvisos>
     <acquisitionFundingList>
       <acquisitionFunding>
-        <acquisitionFundingSourceProvisos>Krone</acquisitionFundingSourceProvisos>
-        <acquisitionFundingCurrency>urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(DKK)'Danish Krone'</acquisitionFundingCurrency>
-        <acquisitionFundingValue>250</acquisitionFundingValue>
-        <acquisitionFundingSource>urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(ButOhh1599665031368)'But Ohh'</acquisitionFundingSource>
-      </acquisitionFunding>
-      <acquisitionFunding>
         <acquisitionFundingSourceProvisos>Clone</acquisitionFundingSourceProvisos>
         <acquisitionFundingCurrency/>
         <acquisitionFundingValue>85</acquisitionFundingValue>
@@ -99,6 +93,12 @@
         <acquisitionFundingCurrency>urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(EUR)'Euro'</acquisitionFundingCurrency>
         <acquisitionFundingValue/>
         <acquisitionFundingSource>urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(Disturb1599665062738)'Disturb'</acquisitionFundingSource>
+      </acquisitionFunding>
+      <acquisitionFunding>
+        <acquisitionFundingSourceProvisos>Krone</acquisitionFundingSourceProvisos>
+        <acquisitionFundingCurrency>urn:cspace:core.collectionspace.org:vocabularies:name(currency):item:name(DKK)'Danish Krone'</acquisitionFundingCurrency>
+        <acquisitionFundingValue>250</acquisitionFundingValue>
+        <acquisitionFundingSource>urn:cspace:core.collectionspace.org:orgauthorities:name(organization):item:name(ButOhh1599665031368)'But Ohh'</acquisitionFundingSource>
       </acquisitionFunding>
     </acquisitionFundingList>
     <fieldCollectionEventNames>
