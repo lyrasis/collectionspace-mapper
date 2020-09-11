@@ -30,10 +30,10 @@ module CollectionSpace
       def process(data)
         response = Mapper::setup_data(data)
         if response.valid?
-        prepper = DataPrepper.new(response.orig_data, self, response)
-        prepper.prep
-        mapper = DataMapper.new(prepper.response, self, prepper.xphash)
-        @response_mode == 'normal' ? mapper.response.normal : mapper.response
+          prepper = DataPrepper.new(response.orig_data, self, response)
+          prepper.prep
+          mapper = DataMapper.new(prepper.response, self, prepper.xphash)
+          @response_mode == 'normal' ? mapper.response.normal : mapper.response
         else
           response
         end
