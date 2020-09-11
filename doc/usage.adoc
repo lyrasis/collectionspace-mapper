@@ -1,3 +1,18 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+:toc:
+:toc-placement!:
+
+= Using `collectionspace-mapper`
+
+toc::[]
+
 == Setup
 
 Requires:
@@ -28,7 +43,7 @@ client = CollectionSpace::Client.new(
 cache_config = { domain: 'core.collectionspace.org' }
 cache = CollectionSpace::RefCache.new(config: cache_config, client: client)
 
-record_mapper = JSON.parse(File.read(path_to_core_collectionobject_json_mapper_file))
+record_mapper = JSON.parse(File.read('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json'))
 ----
 
 == Create DataHandler for batch
@@ -48,9 +63,11 @@ If no config parameter is passed in, the following minimum required default conf
 .Default config
 [source,ruby]
 ----
-{
-  delimiter: ';',
+{ delimiter: ';',
   subgroup_delimiter: '^^',
+  response_mode: 'normal',
+  force_defaults: false,
+  date_format: 'month day year'
 }
 ----
 
@@ -104,20 +121,24 @@ Currently validation only checks for the presence of required field(s) and value
 .Valid record
 ----
 data = { 'objectNumber' => '123', 'recordStatus' => 'test' }
-result = handler.validate(data) # <1>
-errors = result.errors # <2>
+validated = handler.validate(data) # <1>
+errors = validated.errors # <2>
+valid = validated.valid? # <3>
 ----
 <1> Returns a CollectionSpace::Mapper::Response object
-<2> Will return an empty array
+<2> Returns empty Array
+<3> Returns Boolean true
 
 [source,ruby]
 .Invalid record - required field missing
 ----
 data = { 'objectId' => '123', 'recordStatus' => 'test' }
-result = handler.validate(data)
-errors = result.errors # <1>
+validated = handler.validate(data)
+errors = validated.errors # <1>
+valid = validated.valid? # <2>
 ----
-<1> Returns array containing one error (shown below)
+<1> Returns Array containing one error Hash (shown below)
+<2> Returns Boolean false
 
 [source,ruby]
 .errors[0] - error hash example for missing field
@@ -133,10 +154,12 @@ errors = result.errors # <1>
 .Invalid record - required field present but empty
 ----
 data = { 'objectNumber' => '', 'recordStatus' => 'test' }
-result = handler.validate(data)
-errors = result.errors # <1>
+validated = handler.validate(data)
+errors = validated.errors # <1>
+valid = validated.valid? # <2>
 ----
-<1> Returns array containing one error (shown below)
+<1> Returns Array containing one error Hash (shown below)
+<2> Returns Boolean false
 
 [source,ruby]
 .errors[0] - error hash example for empty field
@@ -148,7 +171,102 @@ errors = result.errors # <1>
 }
 ----
 
+=== Processing a record
 
+[CAUTION]
+====
+Processing an invalid record will have unpredictable results and may completely blow up.
+
+Failure is not graceful yet.
+====
+
+Processing a record causes the following to happen:
+
+- All values become Arrays, with the values of multivalued fields as separate array elements. Single value fields become Arrays with length == 1.
+- Values are transformed according to instructions hardcoded in the RecordMapper, and any optional batch-specific transformed sent in as part of the `Mapper::DataHandler`'s `config` parameter.
+- Data quality checks are performed. Warnings may be included in the response.
+- Data Hash values which map to the same CollectionSpace XML field (i.e. separate CSV columns for field values from different authorities) are combined into one field.
+- CollectionSpace XML document is produced
+
+[source,ruby]
+.Validating and processing a record (Option 1)
+----
+data = { 'objectNumber' => '123', 'recordStatus' => 'test' }
+validated = handler.validate(data)
+valid = validated.valid?
+ => true
+processed = handler.process(data) # <1>
+----
+<1> We pass in the same data hash we validated. This returns a CollectionSpace::Mapper::Response object
+
+[NOTE]
+====
+Given what the `DataHandler.validate` method's current behavior, this will work. However, if any functionality is ever built into that method such that it might be desirable to keep data from the `validate` response with the processed data, then it's probably safer to use Option 2.
+====
+
+[source,ruby]
+.Validating and processing a record (Option 2)
+----
+data = { 'objectNumber' => '123', 'recordStatus' => 'test' }
+validated = handler.validate(data)
+valid = validated.valid?
+ => true
+processed = handler.process(validated) # <1>
+----
+<1> We pass in the Mapper::Reponse returned by validation. This returns a CollectionSpace::Mapper::Response object
+
+=== Working with `Mapper::Response`
+
+`handler.process(data)` will return a `Mapper::Response` that looks something like the following.
+
+If your `config[:response_mode]` was set to `verbose`, you will also receive the full data hashes from each stage of processing (`@orig_data`, `@combined_data`, etc.).
+
+`processed.doc`:: Returns the mapped CollectionSpace XML as a `Nokogiri::XML::Document`. If `nil`, check for errors.
+`processed.identifier`:: Returns the value of the field specified as the record identifier
+`processed.errors`:: Returns Array of errors. Since you should not process invalid data, any errors in a response from processing will indicate problems in the mapping.
+`processed.warnings`:: Returns Array of data quality warnings
+[source,ruby]
+.Anatomy of a `Mapper::Response` when `config[:response_mode]` = `normal`
+----
+pp(processed)
+  =>
+  #<CollectionSpace::Mapper::Response:0x00007ff8ab308120
+     @combined_data={},
+     @doc=
+      #(Document:0x3ffc5598c268 {
+        name = "document",
+        children = [
+          #(Element:0x3ffc5598c18c {
+            name = "document",
+            children = [
+              #(Element:0x3ffc5598c0ec {
+                name = "ns2:collectionobjects_common",
+                children = [
+                  #(Element:0x3ffc5598c09c {
+                    name = "objectNumber",
+                    children = [ #(Text "123")]
+                    }),
+                  #(Element:0x3ffc5598c024 {
+                    name = "recordStatus",
+                    children = [ #(Text "test")]
+                    })]
+                })]
+            })]
+        }),
+     @errors=[],
+     @identifier="123",
+     @merged_data={},
+     @orig_data={},
+     @split_data={},
+     @transformed_data={},
+     @warnings=
+      [{:category=>:unknown_option_list_value,
+        :field=>"recordstatus",
+        :type=>"option list value",
+        :subtype=>"",
+        :value=>"test",
+        :message=>"Unknown value in option list `recordstatus` column"}]>
+----
 
 == Config options
 
