@@ -42,8 +42,14 @@ module CollectionSpace
     require 'collectionspace/mapper/tools/vocabularies'
 
     module Errors
-      ::Errors = CollectionSpace::Mapper::Errors
-      class UnprocessableDataError < StandardError; end
+        class UnprocessableDataError < StandardError
+          UnprocessableDataError = CollectionSpace::Mapper::Errors::UnprocessableDataError
+        attr_reader :input
+        def initialize(message, input)
+          super(message)
+          @input = input
+        end
+      end
     end
 
     def self.setup_data(data)
@@ -52,7 +58,15 @@ module CollectionSpace
       elsif data.is_a?(CollectionSpace::Mapper::Response)
         data
       else
-        raise UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response")
+        begin
+          raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
+        rescue Errors::UnprocessableDataError => error
+          error.set_backtrace([])
+          Mapper::LOGGER.error(error)
+          err_resp = Response.new(data)
+          err_resp.errors << error
+          err_resp
+        end
       end
     end
 
