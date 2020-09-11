@@ -51,8 +51,8 @@ RSpec.describe CollectionSpace::Mapper do
       it 'sets data passed as Response.orig_data' do
         expect(@response.orig_data).to eq(@data)
       end
-      it 'writes error to Response.errors' do
-        expect(@response.errors.length).to eq(1)
+      it 'response is invalid' do
+        expect(@response.valid?).to be false
       end
     end
   end
