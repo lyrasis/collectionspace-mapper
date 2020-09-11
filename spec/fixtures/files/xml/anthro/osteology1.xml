@@ -20,8 +20,7 @@
       <cranialDeformationCategory>urn:cspace:anthro.collectionspace.org:vocabularies:name(cranialdeformationcategory):item:name(tabular)'tabular'</cranialDeformationCategory>
       <cranialDeformationCategory>urn:cspace:anthro.collectionspace.org:vocabularies:name(cranialdeformationcategory):item:name(circumferential)'circumferential'</cranialDeformationCategory>
     </cranialDeformationCategories>
-    <Notes_NHTaphonomicAlterations>taphonomic alteration
-</Notes_NHTaphonomicAlterations>
+    <Notes_NHTaphonomicAlterations>taphonomic alteration</Notes_NHTaphonomicAlterations>
     <Notes_CulturalModifications>modification</Notes_CulturalModifications>
     <Notes_CuratorialSuffixing>suffixing note</Notes_CuratorialSuffixing>
     <Notes_PostcranialPathology>bony pathology</Notes_PostcranialPathology>
