@@ -194,7 +194,7 @@ processed = handler.process(data) # <1>
 
 [NOTE]
 ====
-Given what the `DataHandler.validate` method's current behavior, this will work. However, if any functionality is ever built into that method such that it might be desirable to keep data from the `validate` response with the processed data, then it's probably safer to use Option 2.
+Given `DataHandler.validate`'s current behavior, the above will work. However, if any functionality is ever built into that method such that it might be desirable to keep data from the `validate` response with the processed data, then it's probably safer to use Option 2:
 ====
 
 [source,ruby]
@@ -212,7 +212,7 @@ processed = handler.process(validated) # <1>
 
 `handler.process(data)` will return a `Mapper::Response` that looks something like the following.
 
-If your `config[:response_mode]` was set to `verbose`, you will also receive the full data hashes from each stage of processing (`@orig_data`, `@combined_data`, etc.).
+If your `config[:response_mode]` is set to `verbose`, you will also receive the full data hashes from each stage of processing (`@orig_data`, `@combined_data`, etc.).
 
 `processed.doc`:: Returns the mapped CollectionSpace XML as a `Nokogiri::XML::Document`. If `nil`, check for errors.
 `processed.identifier`:: Returns the value of the field specified as the record identifier
