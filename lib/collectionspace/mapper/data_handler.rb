@@ -30,7 +30,7 @@ module CollectionSpace
       def process(data)
         response = Mapper::setup_data(data)
         if response.valid?
-          prepper = DataPrepper.new(response.orig_data, self, response)
+          prepper = DataPrepper.new(response, self)
           prepper.prep
           mapper = DataMapper.new(prepper.response, self, prepper.xphash)
           @response_mode == 'normal' ? mapper.response.normal : mapper.response
@@ -43,14 +43,18 @@ module CollectionSpace
         @validator.validate(data_hash, response)
       end
 
-      def prep(data_hash, response = nil)
-        response = Response.new(data_hash) if response.nil?
-        prepper = DataPrepper.new(data_hash, self, response)
-        prepper.split_data
-        prepper.transform_data
-        prepper.check_data
-        prepper.combine_data_fields
-        prepper.response
+      def prep(data)
+        response = Mapper::setup_data(data)
+        if response.valid?
+          prepper = DataPrepper.new(response, self)
+          prepper.split_data
+          prepper.transform_data
+          prepper.check_data
+          prepper.combine_data_fields
+          prepper.response
+        else
+          response
+        end
       end
       
       def map(response, xphash)
