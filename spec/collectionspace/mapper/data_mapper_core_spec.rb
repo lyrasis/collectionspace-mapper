@@ -354,6 +354,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
       end
     end
+
     context 'collectionobject record' do
       before(:all) do
         @loanoutmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
