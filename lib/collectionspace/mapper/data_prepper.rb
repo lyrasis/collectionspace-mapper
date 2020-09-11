@@ -6,14 +6,16 @@ module CollectionSpace
       ::DataPrepper = CollectionSpace::Mapper::DataPrepper
       attr_reader :data, :handler, :config
       attr_accessor :response, :xphash
-      def initialize(data_hash, handler, response = nil)
-        @response = response.nil? ? Response.new(data_hash) : response
-        @data = data_hash.transform_keys(&:downcase)
+      def initialize(data, handler)
         @handler = handler
         @config = @handler.config
         @cache = @handler.cache
-        @response.merged_data = merge_default_values
-        process_xpaths
+        @response = Mapper::setup_data(data)
+        if @response.valid?
+          @data = @response.orig_data.transform_keys(&:downcase)
+          @response.merged_data = merge_default_values
+          process_xpaths
+        end
       end
 
       def prep
