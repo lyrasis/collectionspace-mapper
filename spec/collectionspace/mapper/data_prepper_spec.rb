@@ -3,18 +3,16 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataPrepper do
+  before(:all) do
+    @config = Mapper::DEFAULT_CONFIG
+  end
+  
   context 'anthro profile' do
     before(:all) do
       @client = anthro_client
       @cache = anthro_cache
       populate_anthro(@cache)
-      @config = {
-        delimiter: ';',
-        subgroup_delimiter: '^^'
-      }
-      @collectionobject_config = {
-        delimiter: ';',
-        subgroup_delimiter: '^^',
+      @collectionobject_config = @config.merge({
         transforms: {
           'collection' => {
             special: %w[downcase_value],
@@ -31,9 +29,9 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
           'collection' => 'library-collection'
         },
         force_defaults: false
-      }
+      })
 
-      @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_0/anthro/anthro_4_0_0-collectionobject.json')
+      @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
       @handler = DataHandler.new(record_mapper: @collectionobject_mapper, cache: @cache, client: @client, config: @collectionobject_config)
       @prepper = DataPrepper.new(anthro_co_1, @handler)
     end
@@ -41,12 +39,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
     describe '#merge_default_values' do
       context 'when no default_values specified in config' do
         it 'does not fall over' do
-          config = {
-            delimiter: ';',
-            subgroup_delimiter: '^^',
-            force_defaults: false
-          }
-          dh = DataHandler.new(record_mapper: @collectionobject_mapper, cache: anthro_cache, client: anthro_client, config: config)
+          dh = DataHandler.new(record_mapper: @collectionobject_mapper, cache: anthro_cache, client: anthro_client, config: @config)
           populate_anthro(dh.cache)
           dp = DataPrepper.new(anthro_co_1, @handler)
           res = dp.prep.merged_data['collection']
@@ -72,14 +65,12 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
           end
           context 'and :force_defaults = true' do
             it 'maps the default value, overwriting value in the incoming data' do
-              config = {
-                delimiter: ';',
-                subgroup_delimiter: '^^',
+              config = Mapper::DEFAULT_CONFIG.merge({
                 default_values: {
                   'collection' => 'library-collection'
                 },
-                force_defaults: true
-              }
+                force_defaults: true,
+              })
               dh = DataHandler.new(record_mapper: @collectionobject_mapper, cache: @cache, client: @client, config: config)
               dp = DataPrepper.new(anthro_co_1, dh)
               res = dp.prep.merged_data['collection']
@@ -109,8 +100,6 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
       end
     end
 
-
-    
     describe '#transform_date_fields' do
       context 'when field is a structured date' do
         it 'results in mappable structured date hashes' do

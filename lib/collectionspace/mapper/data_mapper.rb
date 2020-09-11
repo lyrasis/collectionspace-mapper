@@ -18,12 +18,20 @@ module CollectionSpace
         @xphash.each{ |xpath, hash| map(xpath, hash) }
         clean_doc
         add_short_id if @handler.is_authority
+        set_response_identifier
         add_namespaces
         @response.doc = @doc
       end
 
       private
 
+      def set_response_identifier
+        id_field = @handler.mapper[:config][:identifier_field]
+        mapping = @handler.mapper[:mappings].select{ |m| m[:fieldname] == id_field }.first
+        value = @doc.xpath("//#{mapping[:namespace]}/#{mapping[:fieldname]}").first.text
+        @response.identifier = value
+      end
+      
       def add_short_id
         term = @response.transformed_data['termdisplayname'][0]
         ns = @xphash.keys.map{ |k| k.sub(/^([^\/]+).*/, '\1') }
