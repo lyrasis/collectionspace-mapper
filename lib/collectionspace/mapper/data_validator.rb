@@ -13,14 +13,18 @@ module CollectionSpace
         @id_field = @mapper[:config][:identifier_field].downcase
       end
 
-      def validate(data_hash, response = nil)
-        response = response.nil? ? Response.new(data_hash) : response
-        data = data_hash.transform_keys(&:downcase)
-        res = check_required_fields(data) unless @required_fields.empty?
-        res = check_id_field(data) if @required_fields.empty?
-        response.errors << res
-        response.errors = response.errors.flatten.compact
-        response
+      def validate(data)
+        response = Mapper::setup_data(data)
+        if response.valid?
+          data = data.transform_keys(&:downcase)
+          res = check_required_fields(data) unless @required_fields.empty?
+          res = check_id_field(data) if @required_fields.empty?
+          response.errors << res
+          response.errors = response.errors.flatten.compact
+          response
+        else
+          response
+        end
       end
       
       private

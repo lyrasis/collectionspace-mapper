@@ -2,6 +2,7 @@
 
 module CollectionSpace
   module Mapper
+
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
@@ -19,33 +20,40 @@ module CollectionSpace
         @is_authority = get_is_authority
         add_short_id_mapping if @is_authority
         @mapper[:xpath] = xpath_hash
-        
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = DataValidator.new(@mapper, @cache)
       end
 
-      def process(data_hash, response = nil)
-        response = Response.new(data_hash) if response.nil?
-        prepper = DataPrepper.new(data_hash, self, response)
-        prepper.prep
-        mapper = DataMapper.new(prepper.response, self, prepper.xphash)
-        @response_mode == 'normal' ? mapper.response.normal : mapper.response
+      def process(data)
+        response = Mapper::setup_data(data)
+        if response.valid?
+          prepper = DataPrepper.new(response, self)
+          prepper.prep
+          mapper = DataMapper.new(prepper.response, self, prepper.xphash)
+          @response_mode == 'normal' ? mapper.response.normal : mapper.response
+        else
+          response
+        end
       end
       
-      def validate(data_hash, response = nil)
-        @validator.validate(data_hash, response)
+      def validate(data)
+        @validator.validate(data)
       end
 
-      def prep(data_hash, response = nil)
-        response = Response.new(data_hash) if response.nil?
-        prepper = DataPrepper.new(data_hash, self, response)
-        prepper.split_data
-        prepper.transform_data
-        prepper.check_data
-        prepper.combine_data_fields
-        prepper.response
+      def prep(data)
+        response = Mapper::setup_data(data)
+        if response.valid?
+          prepper = DataPrepper.new(response, self)
+          prepper.split_data
+          prepper.transform_data
+          prepper.check_data
+          prepper.combine_data_fields
+          prepper.response
+        else
+          response
+        end
       end
       
       def map(response, xphash)

@@ -34,7 +34,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
       before(:all) do
         data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
         vresponse = @handler.validate(data)
-        @response = @handler.process(data, vresponse)
+        @response = @handler.process(vresponse)
       end
       it 'returns Mapper::Response with populated doc' do
         expect(@response.doc).to be_a(Nokogiri::XML::Document)
