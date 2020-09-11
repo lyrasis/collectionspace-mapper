@@ -20,7 +20,6 @@ module CollectionSpace
         @is_authority = get_is_authority
         add_short_id_mapping if @is_authority
         @mapper[:xpath] = xpath_hash
-        
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
@@ -39,8 +38,8 @@ module CollectionSpace
         end
       end
       
-      def validate(data_hash, response = nil)
-        @validator.validate(data_hash, response)
+      def validate(data)
+        @validator.validate(data)
       end
 
       def prep(data)
