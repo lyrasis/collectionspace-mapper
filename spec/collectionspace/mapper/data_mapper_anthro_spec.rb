@@ -51,7 +51,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         @osteologymapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-osteology.json')
         @handler = DataHandler.new(record_mapper: @osteologymapper, cache: @cache, client: @client, config: @config)
       end
-      context 'record 2' do
+      context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/anthro/osteology1.json')
           @prepper = DataPrepper.new(@datahash, @handler)
