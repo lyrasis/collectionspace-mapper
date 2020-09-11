@@ -16,13 +16,13 @@
       <dateEarliestSingleCertainty/>
       <dateEarliestSingleQualifierUnit/>
       <dateDisplayDate>8-11-09</dateDisplayDate>
-      <dateLatestScalarValue>0009-08-12T00:00:00.000Z</dateLatestScalarValue>
+      <dateLatestScalarValue>2009-08-12T00:00:00.000Z</dateLatestScalarValue>
       <dateEarliestSingleQualifierValue/>
       <datePeriod/>
       <dateLatestEra/>
       <dateEarliestSingleDay>11</dateEarliestSingleDay>
       <dateEarliestSingleQualifier/>
-      <dateEarliestSingleYear>9</dateEarliestSingleYear>
+      <dateEarliestSingleYear>2009</dateEarliestSingleYear>
       <dateLatestCertainty/>
       <dateAssociation/>
       <dateLatestDay/>
@@ -33,7 +33,7 @@
       <dateNote/>
       <dateLatestQualifierValue/>
       <dateLatestQualifier/>
-      <dateEarliestScalarValue>0009-08-11T00:00:00.000Z</dateEarliestScalarValue>
+      <dateEarliestScalarValue>2009-08-11T00:00:00.000Z</dateEarliestScalarValue>
       <dateLatestMonth/>
     </fieldCollectionDateGroup>
     <owners>
@@ -55,13 +55,13 @@
         <dateEarliestSingleCertainty/>
         <dateEarliestSingleQualifierUnit/>
         <dateDisplayDate>21-5-20</dateDisplayDate>
-        <dateLatestScalarValue>0021-05-19T00:00:00.000Z</dateLatestScalarValue>
+        <dateLatestScalarValue>2020-05-22T00:00:00.000Z</dateLatestScalarValue>
         <dateEarliestSingleQualifierValue/>
         <datePeriod/>
         <dateLatestEra/>
-        <dateEarliestSingleDay>20</dateEarliestSingleDay>
+        <dateEarliestSingleDay>21</dateEarliestSingleDay>
         <dateEarliestSingleQualifier/>
-        <dateEarliestSingleYear>21</dateEarliestSingleYear>
+        <dateEarliestSingleYear>2020</dateEarliestSingleYear>
         <dateLatestCertainty/>
         <dateAssociation/>
         <dateLatestDay/>
@@ -72,7 +72,7 @@
         <dateNote/>
         <dateLatestQualifierValue/>
         <dateLatestQualifier/>
-        <dateEarliestScalarValue>0021-05-20T00:00:00.000Z</dateEarliestScalarValue>
+        <dateEarliestScalarValue>2020-05-21T00:00:00.000Z</dateEarliestScalarValue>
         <dateLatestMonth/>
       </objectProductionDateGroup>
     </objectProductionDateGroupList>
@@ -169,13 +169,13 @@
           <dateEarliestSingleCertainty/>
           <dateEarliestSingleQualifierUnit/>
           <dateDisplayDate>05-10-20</dateDisplayDate>
-          <dateLatestScalarValue>0020-05-11T00:00:00.000Z</dateLatestScalarValue>
+          <dateLatestScalarValue>2020-05-11T00:00:00.000Z</dateLatestScalarValue>
           <dateEarliestSingleQualifierValue/>
           <datePeriod/>
           <dateLatestEra/>
           <dateEarliestSingleDay>10</dateEarliestSingleDay>
           <dateEarliestSingleQualifier/>
-          <dateEarliestSingleYear>20</dateEarliestSingleYear>
+          <dateEarliestSingleYear>2020</dateEarliestSingleYear>
           <dateLatestCertainty/>
           <dateAssociation/>
           <dateLatestDay/>
@@ -186,7 +186,7 @@
           <dateNote/>
           <dateLatestQualifierValue/>
           <dateLatestQualifier/>
-          <dateEarliestScalarValue>0020-05-10T00:00:00.000Z</dateEarliestScalarValue>
+          <dateEarliestScalarValue>2020-05-10T00:00:00.000Z</dateEarliestScalarValue>
           <dateLatestMonth/>
         </inscriptionContentDateGroup>
         <inscriptionContent>content</inscriptionContent>
@@ -222,12 +222,12 @@
     </objectProductionPlaceGroupList>
     <referenceGroupList>
       <referenceGroup>
-        <reference>urn:cspace:core.collectionspace.org:citationauthorities:name(worldcat):item:name(Chelse1599645525740)'Chelse'</reference>
-        <referenceNote>risasi</referenceNote>
-      </referenceGroup>
-      <referenceGroup>
         <reference>urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(makasi1599645537547)'makasi'</reference>
         <referenceNote>bad man</referenceNote>
+      </referenceGroup>
+      <referenceGroup>
+        <reference>urn:cspace:core.collectionspace.org:citationauthorities:name(worldcat):item:name(Chelse1599645525740)'Chelse'</reference>
+        <referenceNote>risasi</referenceNote>
       </referenceGroup>
     </referenceGroupList>
     <assocDateGroupList>
@@ -306,7 +306,7 @@
       <assocConceptGroup>
         <assocConcept>urn:cspace:core.collectionspace.org:conceptauthorities:name(concept):item:name(Test1599650854716)'Test'</assocConcept>
         <assocConceptNote>men</assocConceptNote>
-        <assocConceptType>Great </assocConceptType>
+        <assocConceptType>Great</assocConceptType>
       </assocConceptGroup>
     </assocConceptGroupList>
     <usageGroupList>
@@ -389,13 +389,13 @@
         <dateEarliestSingleCertainty/>
         <dateEarliestSingleQualifierUnit/>
         <dateDisplayDate>5-12-20</dateDisplayDate>
-        <dateLatestScalarValue>0020-05-13T00:00:00.000Z</dateLatestScalarValue>
+        <dateLatestScalarValue>2020-05-13T00:00:00.000Z</dateLatestScalarValue>
         <dateEarliestSingleQualifierValue/>
         <datePeriod/>
         <dateLatestEra/>
         <dateEarliestSingleDay>12</dateEarliestSingleDay>
         <dateEarliestSingleQualifier/>
-        <dateEarliestSingleYear>20</dateEarliestSingleYear>
+        <dateEarliestSingleYear>2020</dateEarliestSingleYear>
         <dateLatestCertainty/>
         <dateAssociation/>
         <dateLatestDay/>
@@ -406,7 +406,7 @@
         <dateNote/>
         <dateLatestQualifierValue/>
         <dateLatestQualifier/>
-        <dateEarliestScalarValue>0020-05-12T00:00:00.000Z</dateEarliestScalarValue>
+        <dateEarliestScalarValue>2020-05-12T00:00:00.000Z</dateEarliestScalarValue>
         <dateLatestMonth/>
       </ownershipDateGroup>
     </ownershipDateGroupList>
@@ -499,7 +499,7 @@
     </objectProductionOrganizationGroupList>
     <computedCurrentLocation>urn:cspace:indeterminate:locationauthorities:name(indeterminate):item:name(indeterminate)'~Indeterminate Location~'</computedCurrentLocation>
     <viewersContributionNote>Viewer's contribution note
-</viewersContributionNote>
+Next line</viewersContributionNote>
     <publishToList>
       <publishTo>urn:cspace:core.collectionspace.org:vocabularies:name(publishto):item:name(none)'None'</publishTo>
       <publishTo>urn:cspace:core.collectionspace.org:vocabularies:name(publishto):item:name(cultureobject)'Culture Object'</publishTo>
