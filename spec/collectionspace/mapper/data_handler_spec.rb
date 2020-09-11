@@ -12,7 +12,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     context 'place record, with no config parameter' do
       before(:all) do
         @place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
-        @place_handler = DataHandler.new(record_mapper: @place_mapper, client: @client, cache: @cache)
+        @place_handler = DataHandler.new(@place_mapper, @client, @cache)
       end
 
       describe '#is_authority' do
@@ -51,7 +51,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         })
 
         @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
-        @handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
+        @handler = DataHandler.new(@mapper, anthro_client, anthro_cache, config)
       end
 
       describe '#is_authority' do
@@ -82,7 +82,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         context 'when response_mode = verbose' do
           it 'returned response includes detailed data transformation info' do
             config = Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
-            handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
+            handler = DataHandler.new(@mapper, anthro_client, anthro_cache, config: config)
             result = handler.prep(@data)
             expect(result.transformed_data).not_to be_empty
           end
@@ -111,7 +111,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         context 'when response_mode = verbose' do
           it 'returned response includes detailed data transformation info' do
             config = Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
-            handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
+            handler = DataHandler.new(@mapper, anthro_client, anthro_cache, config)
             result = handler.process(@data)
             expect(result.transformed_data).not_to be_empty
           end
@@ -149,7 +149,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         context 'when response_mode = verbose' do
           it 'returned response includes detailed data transformation info' do
             config = Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
-            handler = DataHandler.new(record_mapper: @mapper, client: anthro_client, cache: anthro_cache, config: config)
+            handler = DataHandler.new(@mapper, anthro_client, anthro_cache, config)
             prepper = DataPrepper.new(@data, handler)
             result = handler.map(handler.prep(@data), prepper.xphash)
             expect(result.transformed_data).not_to be_empty
@@ -222,7 +222,7 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
         before(:all) do
           config = Mapper::DEFAULT_CONFIG
           @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_0-conservation.json')
-          @handler = DataHandler.new(record_mapper: @mapper, cache: bonsai_cache, client: bonsai_client, config: config)
+          @handler = DataHandler.new(@mapper, bonsai_cache, bonsai_client, config)
         end
         context 'xpath ending with fertilizersToBeUsed' do
           it 'is a repeating group' do
