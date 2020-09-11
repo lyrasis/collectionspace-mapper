@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="propagations">
+  <ns2:collectionspace_core xmlns:ns2="http://collectionspace.org/collectionspace_core/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <createdAt>2020-09-10T11:28:45.887Z</createdAt>
+    <updatedBy>admin@botgarden.collectionspace.org</updatedBy>
+    <createdBy>admin@botgarden.collectionspace.org</createdBy>
+    <workflowState>project</workflowState>
+    <tenantId>3500</tenantId>
+    <refName>urn:cspace:botgarden.collectionspace.org:propagations:id(052bbe69-9cf0-42b7-86b1)</refName>
+    <uri>/propagations/052bbe69-9cf0-42b7-86b1</uri>
+    <updatedAt>2020-09-10T11:28:45.887Z</updatedAt>
+  </ns2:collectionspace_core>
+  <ns2:propagations_common xmlns:ns2="http://collectionspace.org/services/propagation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <wounded>true</wounded>
+    <numStarted>56</numStarted>
+    <successRate>Sweat</successRate>
+    <propReason>urn:cspace:botgarden.collectionspace.org:vocabularies:name(propreason):item:name(conservation)'conservation'</propReason>
+    <cuttingType>urn:cspace:botgarden.collectionspace.org:vocabularies:name(cuttingtype):item:name(hardwood)'hardwood'</cuttingType>
+    <concentration>Worry</concentration>
+    <propActivityGroupList>
+      <propActivityGroup>
+        <propCount>79</propCount>
+        <chemicalApplied>urn:cspace:botgarden.collectionspace.org:vocabularies:name(propChemicals):item:name(benlateAndPhysan)'benlate and physan'</chemicalApplied>
+        <activityConcentration>deeper</activityConcentration>
+        <activityDate>
+          <scalarValuesComputed>true</scalarValuesComputed>
+          <dateEarliestSingleCertainty/>
+          <dateEarliestSingleQualifierUnit/>
+          <dateDisplayDate>2020-09-25</dateDisplayDate>
+          <dateLatestScalarValue>2020-09-26T00:00:00.000Z</dateLatestScalarValue>
+          <dateEarliestSingleQualifierValue/>
+          <datePeriod/>
+          <dateLatestEra/>
+          <dateEarliestSingleDay>25</dateEarliestSingleDay>
+          <dateEarliestSingleQualifier/>
+          <dateEarliestSingleYear>2020</dateEarliestSingleYear>
+          <dateLatestCertainty/>
+          <dateAssociation/>
+          <dateLatestDay/>
+          <dateEarliestSingleMonth>9</dateEarliestSingleMonth>
+          <dateEarliestSingleEra>urn:cspace:botgarden.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'</dateEarliestSingleEra>
+          <dateLatestYear/>
+          <dateLatestQualifierUnit/>
+          <dateNote/>
+          <dateLatestQualifierValue/>
+          <dateLatestQualifier/>
+          <dateEarliestScalarValue>2020-09-25T00:00:00.000Z</dateEarliestScalarValue>
+          <dateLatestMonth/>
+        </activityDate>
+        <nurseryLocation>urn:cspace:botgarden.collectionspace.org:locationauthorities:name(location):item:name(Corner1599737289184)'Corner'</nurseryLocation>
+        <medium>urn:cspace:botgarden.collectionspace.org:conceptauthorities:name(concept):item:name(Official1599737276242)'Official'</medium>
+        <potSize>urn:cspace:botgarden.collectionspace.org:vocabularies:name(potsize):item:name(OneGalPot)'1 gal. pot'</potSize>
+        <activityType>urn:cspace:botgarden.collectionspace.org:vocabularies:name(propActivityType):item:name(benlateAndCaptan)'benlate and captan'</activityType>
+        <conditions>urn:cspace:botgarden.collectionspace.org:vocabularies:name(propConditions):item:name(glassCover)'glass cover'</conditions>
+        <activityComments>Chucks</activityComments>
+        <order/>
+      </propActivityGroup>
+    </propActivityGroupList>
+    <plantType>urn:cspace:botgarden.collectionspace.org:vocabularies:name(propPlantType):item:name(bulbs)'bulbs'</plantType>
+    <hormone>urn:cspace:botgarden.collectionspace.org:vocabularies:name(propHormones):item:name(hormone)'hormone'</hormone>
+    <propDate>
+      <scalarValuesComputed>true</scalarValuesComputed>
+      <dateEarliestSingleCertainty/>
+      <dateEarliestSingleQualifierUnit/>
+      <dateDisplayDate>2020-11-09</dateDisplayDate>
+      <dateLatestScalarValue>2020-11-10T00:00:00.000Z</dateLatestScalarValue>
+      <dateEarliestSingleQualifierValue/>
+      <datePeriod/>
+      <dateLatestEra/>
+      <dateEarliestSingleDay>9</dateEarliestSingleDay>
+      <dateEarliestSingleQualifier/>
+      <dateEarliestSingleYear>2020</dateEarliestSingleYear>
+      <dateLatestCertainty/>
+      <dateAssociation/>
+      <dateLatestDay/>
+      <dateEarliestSingleMonth>11</dateEarliestSingleMonth>
+      <dateEarliestSingleEra>urn:cspace:botgarden.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'</dateEarliestSingleEra>
+      <dateLatestYear/>
+      <dateLatestQualifierUnit/>
+      <dateNote/>
+      <dateLatestQualifierValue/>
+      <dateLatestQualifier/>
+      <dateEarliestScalarValue>2020-11-09T00:00:00.000Z</dateEarliestScalarValue>
+      <dateLatestMonth/>
+    </propDate>
+    <extraSeeds>true</extraSeeds>
+    <spores>true</spores>
+    <scarStratGroupList>
+      <scarStratGroup>
+        <duration>25</duration>
+        <durationUnit>urn:cspace:botgarden.collectionspace.org:vocabularies:name(durationunit):item:name(hours)'Hours'</durationUnit>
+        <scarStrat>urn:cspace:botgarden.collectionspace.org:vocabularies:name(scarstrat):item:name(coldstrat)'cold strat'</scarStrat>
+      </scarStratGroup>
+      <scarStratGroup>
+        <duration/>
+        <durationUnit>urn:cspace:botgarden.collectionspace.org:vocabularies:name(durationunit):item:name(days)'Days'</durationUnit>
+        <scarStrat>urn:cspace:botgarden.collectionspace.org:vocabularies:name(scarstrat):item:name(boilingwater)'boiling water'</scarStrat>
+      </scarStratGroup>
+      <scarStratGroup>
+        <duration>10</duration>
+        <durationUnit/>
+        <scarStrat/>
+      </scarStratGroup>
+    </scarStratGroupList>
+    <germinationDate>2020-09-24T00:00:00.000Z</germinationDate>
+    <propNumber>6589</propNumber>
+    <propType>urn:cspace:botgarden.collectionspace.org:vocabularies:name(proptype):item:name(division)'Division'</propType>
+    <propComments>Be happy</propComments>
+  </ns2:propagations_common>
+  <ns2:account_permission xmlns:ns2="http://collectionspace.org/services/authorization">
+    <account>
+      <accountId>d5a179ba-477f-40ad-ac9f-edaeb0d33ef6</accountId>
+      <screenName>Administrator</screenName>
+      <userId>admin@botgarden.collectionspace.org</userId>
+      <tenantId>3500</tenantId>
+    </account>
+  </ns2:account_permission>
+</document>
