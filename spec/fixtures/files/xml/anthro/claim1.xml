@@ -27,8 +27,7 @@
     <dateArrangedForTransferNote>pickup/transfer</dateArrangedForTransferNote>
     <objectsMarkedAsDeaccessionedNote>marked as deaccessioned</objectsMarkedAsDeaccessionedNote>
     <workingTeamNotifiedNote>NAGPRA team notified
-￼
-</workingTeamNotifiedNote>
+￼</workingTeamNotifiedNote>
     <accessionFileResearchCompleted>true</accessionFileResearchCompleted>
     <registrationDocumentsDrafted>true</registrationDocumentsDrafted>
     <objectsConsolidated>false</objectsConsolidated>
@@ -100,8 +99,7 @@
       <nagpraClaimType>urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpraclaimtype):item:name(objectOfCulturalPatrimony)'object of cultural patrimony'</nagpraClaimType>
       <nagpraClaimType>urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpraclaimtype):item:name(ufo)'unassociated funerary object (UFO)'</nagpraClaimType>
     </nagpraClaimTypes>
-    <surroundingTribesContactedNote>tribes contacted
-</surroundingTribesContactedNote>
+    <surroundingTribesContactedNote>tribes contacted</surroundingTribesContactedNote>
     <nagpraClaimNatlRespGroupList>
       <nagpraClaimNatlRespGroup>
         <nagpraClaimNatlRespNote>from National NAGPRA</nagpraClaimNatlRespNote>
@@ -119,13 +117,11 @@
       </nagpraClaimGroupGroup>
     </nagpraClaimGroupGroupList>
     <objectsConsolidatedNote>Objects consolidated</objectsConsolidatedNote>
-    <objectsPhotographedNote>photographed
-</objectsPhotographedNote>
+    <objectsPhotographedNote>photographed</objectsPhotographedNote>
     <nagpraClaimNotes>
       <nagpraClaimNote>Rooms note</nagpraClaimNote>
     </nagpraClaimNotes>
-    <siteFileResearchCompletedNote>research completed
-</siteFileResearchCompletedNote>
+    <siteFileResearchCompletedNote>research completed</siteFileResearchCompletedNote>
     <nagpraClaimInitialResponseGroupList>
       <nagpraClaimInitialResponseGroup>
         <nagpraClaimInitialResponseDate>2020-09-14T00:00:00.000Z</nagpraClaimInitialResponseDate>
