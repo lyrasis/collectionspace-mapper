@@ -4,14 +4,12 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = {
-      delimiter: ';',
-      subgroup_delimiter: '^^'
-    }
+    @config = Mapper::DEFAULT_CONFIG
   end
 
   context 'anthro profile' do
     before(:all) do
+      @client = anthro_client
       @cache = anthro_cache
       populate_anthro(@cache)
     end
@@ -19,7 +17,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'collectionobject record' do
       before(:all) do
         @collectionobjectmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
-        @handler = DataHandler.new(record_mapper: @collectionobjectmapper, cache: @cache, client: anthro_client, config: @config)
+        @handler = DataHandler.new(record_mapper: @collectionobjectmapper, cache: @cache, client: @client, config: @config)
       end
       # record 1 was used for testing default value merging, transformations, etc.
       # we start with record 2 to purely test mapping functionality

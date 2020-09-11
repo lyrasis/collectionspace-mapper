@@ -9,7 +9,7 @@
     "ns_uri": {
       "movements_common": "http://collectionspace.org/services/movement"
     },
-    "identifier_field": null
+    "identifier_field": "movementReferenceNumber"
   },
   "docstructure": {
     "movements_common": {
@@ -30,7 +30,7 @@
 
       ],
       "data_type": "string",
-      "required": "n",
+      "required": "id",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [

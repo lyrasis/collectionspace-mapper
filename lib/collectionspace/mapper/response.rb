@@ -21,6 +21,15 @@ module CollectionSpace
       def valid?
         @errors.empty? ? true : false
       end
+
+      def normal
+        @orig_data = {}
+        @merged_data = {}
+         @split_data = {}
+         @transformed_data = {}
+         @combined_data = {}
+        self
+      end
     end
   end
 end

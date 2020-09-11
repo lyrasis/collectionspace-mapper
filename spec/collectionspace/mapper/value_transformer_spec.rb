@@ -5,6 +5,7 @@ require 'spec_helper'
 RSpec.describe CollectionSpace::Mapper::ValueTransformer do
   before(:all) do
     @cache = anthro_cache
+    populate_anthro(@cache)
   end
 
   context 'when authority' do

@@ -4,14 +4,12 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = {
-      delimiter: ';',
-      subgroup_delimiter: '^^'
-    }
+    @config = Mapper::DEFAULT_CONFIG
   end
 
   context 'bonsai profile' do
     before(:all) do
+      @client = bonsai_client
       @cache = bonsai_cache
       populate_bonsai(@cache)
     end
@@ -19,7 +17,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'objectexit record' do
       before(:all) do
         @objectexitmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_0-objectexit.json')
-        @handler = DataHandler.new(record_mapper: @objectexitmapper, cache: @cache, client: bonsai_client, config: @config)
+        @handler = DataHandler.new(record_mapper: @objectexitmapper, cache: @cache, client: @client, config: @config)
       end
 
       context 'record 1' do

@@ -1,3 +1,18 @@
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+:toc:
+:toc-placement!:
+
+= Using `collectionspace-mapper`
+
+toc::[]
+
 == Setup
 
 Requires:
@@ -7,29 +22,259 @@ Requires:
 
 Examples of setting up client and refcache are available in https://github.com/collectionspace/collectionspace-refcache/blob/master/doc/REFCACHE.md[the REFCACHE doc] and in https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/helpers.rb[`/spec/helpers.rb`] in this repo.
 
-- a `cspace-config-untangler` RecordMapper
+- a `cspace-config-untangler` RecordMapper, parsed
 
 RecordMapper JSON files for all current profile/rectype combinations can be found in: https://github.com/collectionspace/collectionspace-mapper/tree/master/spec/fixtures/files/mappers[`spec/fixtures/files/mappers`].
 
-These JSON files may be read in and parsed as a hash, but the keys of some parts need to be transformed back into symbols:
+These JSON files should be parsed before passing to this application.
+
+Sample simple setup could look like: 
 
 [source,ruby]
 ----
-rm = JSON.parse(File.read(path))
-rm.transform_keys!(&:to_sym)
-rm[:config].transform_keys!(&:to_sym)
-rm[:mappings].each do |m|
-  m.transform_keys!(&:to_sym)
-  unless m[:transforms].empty?
-    m[:transforms].transform_keys!(&:to_sym)
-  end
-end
+client = CollectionSpace::Client.new(
+  CollectionSpace::Configuration.new(
+    base_uri: 'https://core.dev.collectionspace.org/cspace-services',
+    username: 'admin@core.collectionspace.org',
+    password: 'Administrator'
+  )
+)
+
+cache_config = { domain: 'core.collectionspace.org' }
+cache = CollectionSpace::RefCache.new(config: cache_config, client: client)
+
+record_mapper = JSON.parse(File.read('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json'))
+----
+
+== Create DataHandler for batch
+
+The DataHandler object sets up all the stuff that only needs to be done once per batch, regardless of how many records are in the batch.
+
+You also send each row/record through DataHandler methods for processing.
+
+=== DataHandler config parameter
+
+A dataset-specific configuration hash may be passed in when creating a new DataHandler. This hash contains settings that control how the Mapper will parsed and transform the data.
+
+Details on available config options and how to format them are in the **Config options** section below.
+
+If no config parameter is passed in, the following minimum required default configuration will be applied:
+
+.Default config
+[source,ruby]
+----
+{ delimiter: ';',
+  subgroup_delimiter: '^^',
+  response_mode: 'normal',
+  force_defaults: false,
+  date_format: 'month day year'
+}
+----
+
+[NOTE]
+====
+Default delimiter `;` will be replaced with `|` after DDD are finished contributing to test coverage.
+====
+
+[source,ruby]
+.Creating a DataHandler with default config
+----
+handler = DataHandler.new(record_mapper: record_mapper,
+                          cache: cache,
+                          client: client
+                          )
+----
+
+[source,ruby]
+.Creating a DataHandler with custom batch config
+----
+config = {
+  delimiter: '%',
+  subgroup_delimiter: '~'
+}
+
+handler = DataHandler.new(record_mapper: record_mapper,
+                          cache: cache,
+                          client: client,
+                          config: config
+                          )
 ----
 
 
-== Config
+== Row/record data
 
-A dataset-specific configuration hash must be passed in when creating a new DataHandler.
+=== Format
+
+Each row or record of data to be mapped should be passed in as a Hash.
+
+Hash keys are Strings and should match headers from the CSV templates output by `cspace-config-untangler`. Keys that do not match CSV headers will not be mapped. 
+
+Hash values are Strings. You can also pass through null Hash values.
+
+Example data Hashes used for testing can be found https://github.com/collectionspace/collectionspace-mapper/tree/master/spec/fixtures/files/datahashes[here].
+
+=== Validating a record
+
+Currently validation only checks for the presence of required field(s) and values in required field(s).
+
+[source,ruby]
+.Valid record
+----
+data = { 'objectNumber' => '123', 'recordStatus' => 'test' }
+validated = handler.validate(data) # <1>
+errors = validated.errors # <2>
+valid = validated.valid? # <3>
+----
+<1> Returns a CollectionSpace::Mapper::Response object
+<2> Returns empty Array
+<3> Returns Boolean true
+
+[source,ruby]
+.Invalid record - required field missing
+----
+data = { 'objectId' => '123', 'recordStatus' => 'test' }
+validated = handler.validate(data)
+errors = validated.errors # <1>
+valid = validated.valid? # <2>
+----
+<1> Returns Array containing one error Hash (shown below)
+<2> Returns Boolean false
+
+[source,ruby]
+.errors[0] - error hash example for missing field
+----
+{ :level=>:error,
+   :field=>"objectnumber",
+   :type=>"required field missing",
+   :message=>"required field objectnumber is missing"
+}
+----
+
+[source,ruby]
+.Invalid record - required field present but empty
+----
+data = { 'objectNumber' => '', 'recordStatus' => 'test' }
+validated = handler.validate(data)
+errors = validated.errors # <1>
+valid = validated.valid? # <2>
+----
+<1> Returns Array containing one error Hash (shown below)
+<2> Returns Boolean false
+
+[source,ruby]
+.errors[0] - error hash example for empty field
+----
+{ :level=>:error,
+   :field=>"objectnumber",
+   :type=>"required field empty",
+   :message=>"required field objectnumber is empty"
+}
+----
+
+=== Processing a record
+
+[CAUTION]
+====
+Processing an invalid record will have unpredictable results and may completely blow up.
+
+Failure is not graceful yet.
+====
+
+Processing a record causes the following to happen:
+
+- All values become Arrays, with the values of multivalued fields as separate array elements. Single value fields become Arrays with length == 1.
+- Values are transformed according to instructions hardcoded in the RecordMapper, and any optional batch-specific transformed sent in as part of the `Mapper::DataHandler`'s `config` parameter.
+- Data quality checks are performed. Warnings may be included in the response.
+- Data Hash values which map to the same CollectionSpace XML field (i.e. separate CSV columns for field values from different authorities) are combined into one field.
+- CollectionSpace XML document is produced
+
+[source,ruby]
+.Validating and processing a record (Option 1)
+----
+data = { 'objectNumber' => '123', 'recordStatus' => 'test' }
+validated = handler.validate(data)
+valid = validated.valid?
+ => true
+processed = handler.process(data) # <1>
+----
+<1> We pass in the same data hash we validated. This returns a CollectionSpace::Mapper::Response object
+
+[NOTE]
+====
+Given what the `DataHandler.validate` method's current behavior, this will work. However, if any functionality is ever built into that method such that it might be desirable to keep data from the `validate` response with the processed data, then it's probably safer to use Option 2.
+====
+
+[source,ruby]
+.Validating and processing a record (Option 2)
+----
+data = { 'objectNumber' => '123', 'recordStatus' => 'test' }
+validated = handler.validate(data)
+valid = validated.valid?
+ => true
+processed = handler.process(validated) # <1>
+----
+<1> We pass in the Mapper::Reponse returned by validation. This returns a CollectionSpace::Mapper::Response object
+
+=== Working with `Mapper::Response`
+
+`handler.process(data)` will return a `Mapper::Response` that looks something like the following.
+
+If your `config[:response_mode]` was set to `verbose`, you will also receive the full data hashes from each stage of processing (`@orig_data`, `@combined_data`, etc.).
+
+`processed.doc`:: Returns the mapped CollectionSpace XML as a `Nokogiri::XML::Document`. If `nil`, check for errors.
+`processed.identifier`:: Returns the value of the field specified as the record identifier
+`processed.errors`:: Returns Array of errors. Since you should not process invalid data, any errors in a response from processing will indicate problems in the mapping.
+`processed.warnings`:: Returns Array of data quality warnings
+[source,ruby]
+.Anatomy of a `Mapper::Response` when `config[:response_mode]` = `normal`
+----
+pp(processed)
+  =>
+  #<CollectionSpace::Mapper::Response:0x00007ff8ab308120
+     @combined_data={},
+     @doc=
+      #(Document:0x3ffc5598c268 {
+        name = "document",
+        children = [
+          #(Element:0x3ffc5598c18c {
+            name = "document",
+            children = [
+              #(Element:0x3ffc5598c0ec {
+                name = "ns2:collectionobjects_common",
+                children = [
+                  #(Element:0x3ffc5598c09c {
+                    name = "objectNumber",
+                    children = [ #(Text "123")]
+                    }),
+                  #(Element:0x3ffc5598c024 {
+                    name = "recordStatus",
+                    children = [ #(Text "test")]
+                    })]
+                })]
+            })]
+        }),
+     @errors=[],
+     @identifier="123",
+     @merged_data={},
+     @orig_data={},
+     @split_data={},
+     @transformed_data={},
+     @warnings=
+      [{:category=>:unknown_option_list_value,
+        :field=>"recordstatus",
+        :type=>"option list value",
+        :subtype=>"",
+        :value=>"test",
+        :message=>"Unknown value in option list `recordstatus` column"}]>
+----
+
+== Config options
+
+[WARN]
+====
+Nothing here is *wrong*, but this needs to be updated.
+====
+
 
 .Example config hash
 [source,ruby]
@@ -60,91 +305,10 @@ A dataset-specific configuration hash must be passed in when creating a new Data
 - `:default_values` - optional - Hash - Key (String) is the data hash field that should be populated. Value (String) is the default value for the field.
 - `:force_defaults` - optional - Boolean - Defaults to false - If false, default values will not replace or be added to values passed in via the data hash; default value will be inserted if field is missing or empty in data hash. If true, default value will replace any data hash values.
 
-== Usage
 
-Once client, cache, config, and record mapper are set up, create a new DataHandler:
+== Other stuff, may be out of date
 
-[source, ruby]
-----
-dh = DataHandler.new(record_mapper: rm, cache: anthro_cache, config: config)
-----
-
-The DataHandler processes the record mapper to generate a blank XML document template, and creates a list of xpaths to be mapped with information about how to map the children of each xpath (e.g. as stand-alone fields? as members of a repeating field group?).
-
-Once the DataHandler is set up, you send it data hashes for initial validation and mapping.
-
-.Example data hash
-[source,ruby]
-----
-data = {
-        'objectNumber'=>'20CS.001.0001',
-        'numberValue'=>'123;456',
-        'numberType'=>'isbn;oclc'
-       }
-----
-
-[NOTE]
-====
-The keys of a data hash are downcased for processing.
-====
-
-=== Initial validation
-
-To validate a data hash: 
-
-[source,ruby]
-----
-validation_result = dh.validate(data)
-----
-
-`validation_result` will be an array. If empty, the data meets the minimum criteria to be mapped. Currently this means:
-
-- data hash includes all required fields
-- required fields in the data hash are _not_ empty
-
-
-If not empty, `validation_result` will contain one or more error hashes. *Presence of these errors indicates the data hash should _not_ be mapped.* The structure of the error hash is:
-
-[source,ruby]
-----
-{
-  level: :error,
-  field: 'fieldname',
-  type: 'error type/category',
-  message: 'specific error message/description'
-}
-----
-
-[NOTE]
-====
-Application calling `collectionspace-mapper` should keep track of which row (or other unit of data) is being sent as a data hash, so errors and warnings can be informative.
-====
-
-Currently, the only `:type` being created is 'required fields'.
-
-The `:message` may be "required field missing" or "required field is empty".
-
-[NOTE]
-====
-If application calling `collectionspace-mapper` is generating a hash from each row of a CSV without pre-processing, then receipt of "required field missing" error on the first data hash sent probably indicates the CSV is missing a required column entirely. In this case the best design may be to stop after validation of the first data row instead of sending all data to be validated/mapped.
-====
-
-=== Mapping
-
-If a data hash validates, the next step is to map it:
-
-[source,ruby]
-----
-map_result = dh.map(data)
-----
-
-`map_result` will be a `CollectionSpace::Mapper::MapResult` object that packages the following:
-
-- `doc` - `Nokogiri::XML::Document` - the main XML document for the record type you are processing
-- `warnings` - Array - Elements are warning hashes having the same structure as the error hash described above, but `:level` will be `:warning` instead of `:error` - These warnings are about things that will not prevent transfer or update of records in CollectionSpace, but that might indicate data problems that should be fixed before you continue. Some of these warnings depend on steps in the mapping process to have aleady occurred before the result is examined.
-- `:missing_terms` - Array - Elements are hashes of info about authority and vocabulary terms in the mapped data that were not found in the cache or a search of the instance.
-
-.Structure of a not-found authority term
+.Structure of a not-found authority term warning
 [source,ruby]
 ----
 {
@@ -155,7 +319,7 @@ map_result = dh.map(data)
 }
 ----
 
-.Structure of a not-found vocabulary term
+.Structure of a not-found vocabulary term warning
 [source,ruby]
 ----
 {

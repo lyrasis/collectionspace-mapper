@@ -4,10 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = {
-      delimiter: ';',
-      subgroup_delimiter: '^^'
-    }
+    @config = Mapper::DEFAULT_CONFIG
   end
 
   context 'botgarden profile' do
@@ -39,7 +36,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath| puts xpath
+          @fixture_xpaths.each do |xpath|
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
