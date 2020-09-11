@@ -79,10 +79,7 @@ Default delimiter `;` will be replaced with `|` after DDD are finished contribut
 [source,ruby]
 .Creating a DataHandler with default config
 ----
-handler = DataHandler.new(record_mapper: record_mapper,
-                          cache: cache,
-                          client: client
-                          )
+handler = DataHandler.new(record_mapper, client, cache)
 ----
 
 [source,ruby]
@@ -93,11 +90,7 @@ config = {
   subgroup_delimiter: '~'
 }
 
-handler = DataHandler.new(record_mapper: record_mapper,
-                          cache: cache,
-                          client: client,
-                          config: config
-                          )
+handler = DataHandler.new(record_mapper, client, cache, config)
 ----
 
 

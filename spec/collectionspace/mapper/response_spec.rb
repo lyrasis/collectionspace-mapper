@@ -4,12 +4,11 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::Response do
   before(:all) do
-    @config = Mapper::DEFAULT_CONFIG
     @client = botgarden_client
     @cache = botgarden_cache
     populate_botgarden(@cache)
     @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-taxon.json')
-    @handler = DataHandler.new(record_mapper: @mapper, cache: @cache, client: @client, config: @config)
+    @handler = DataHandler.new(@mapper, @cache, @client, Mapper::DEFAULT_CONFIG)
   end
 
   describe '#valid?' do

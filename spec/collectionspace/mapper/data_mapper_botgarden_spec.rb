@@ -9,6 +9,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
   context 'botgarden profile' do
     before(:all) do
+      @client = botgarden_client
       @cache = botgarden_cache
       populate_botgarden(@cache)
     end
@@ -16,7 +17,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'pottag record' do
       before(:all) do
         @pottag_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-pottag.json')
-        @pottag_handler = DataHandler.new(record_mapper: @pottag_mapper, cache: @cache, client: botgarden_client, config: @config)
+        @pottag_handler = DataHandler.new(@pottag_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
@@ -47,7 +48,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'propagation record' do
       before(:all) do
         @propagation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-propagation.json')
-        @propagation_handler = DataHandler.new(record_mapper: @propagation_mapper, cache: @cache, client: botgarden_client, config: @config)
+        @propagation_handler = DataHandler.new(@propagation_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
@@ -79,7 +80,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'taxon record' do
       before(:all) do
         @taxon_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-taxon.json')
-        @taxon_handler = DataHandler.new(record_mapper: @taxon_mapper, cache: @cache, client: botgarden_client, config: @config)
+        @taxon_handler = DataHandler.new(@taxon_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
