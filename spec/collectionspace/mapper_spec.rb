@@ -55,9 +55,5 @@ RSpec.describe CollectionSpace::Mapper do
         expect(@response.errors.length).to eq(1)
       end
     end
-    it 'testy' do
-      binding.pry
-#      expect(Mapper::setup_data('data').valid?).to be false
-    end
   end
 end
