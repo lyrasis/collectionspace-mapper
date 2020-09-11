@@ -199,6 +199,74 @@ processed = handler.process(data) # <1>
 ----
 <1> We pass in the same data hash we validated. This returns a CollectionSpace::Mapper::Response object
 
+[NOTE]
+====
+Given what the `DataHandler.validate` method's current behavior, this will work. However, if any functionality is ever built into that method such that it might be desirable to keep data from the `validate` response with the processed data, then it's probably safer to use Option 2.
+====
+
+[source,ruby]
+.Validating and processing a record (Option 2)
+----
+data = { 'objectNumber' => '123', 'recordStatus' => 'test' }
+validated = handler.validate(data)
+valid = validated.valid?
+ => true
+processed = handler.process(validated) # <1>
+----
+<1> We pass in the Mapper::Reponse returned by validation. This returns a CollectionSpace::Mapper::Response object
+
+=== Working with `Mapper::Response`
+
+`handler.process(data)` will return a `Mapper::Response` that looks something like the following.
+
+If your `config[:response_mode]` was set to `verbose`, you will also receive the full data hashes from each stage of processing (`@orig_data`, `@combined_data`, etc.).
+
+`processed.doc`:: Returns the mapped CollectionSpace XML as a `Nokogiri::XML::Document`. If `nil`, check for errors.
+`processed.identifier`:: Returns the value of the field specified as the record identifier
+`processed.errors`:: Returns Array of errors. Since you should not process invalid data, any errors in a response from processing will indicate problems in the mapping.
+`processed.warnings`:: Returns Array of data quality warnings
+[source,ruby]
+.Anatomy of a `Mapper::Response` when `config[:response_mode]` = `normal`
+----
+pp(processed)
+  =>
+  #<CollectionSpace::Mapper::Response:0x00007ff8ab308120
+     @combined_data={},
+     @doc=
+      #(Document:0x3ffc5598c268 {
+        name = "document",
+        children = [
+          #(Element:0x3ffc5598c18c {
+            name = "document",
+            children = [
+              #(Element:0x3ffc5598c0ec {
+                name = "ns2:collectionobjects_common",
+                children = [
+                  #(Element:0x3ffc5598c09c {
+                    name = "objectNumber",
+                    children = [ #(Text "123")]
+                    }),
+                  #(Element:0x3ffc5598c024 {
+                    name = "recordStatus",
+                    children = [ #(Text "test")]
+                    })]
+                })]
+            })]
+        }),
+     @errors=[],
+     @identifier="123",
+     @merged_data={},
+     @orig_data={},
+     @split_data={},
+     @transformed_data={},
+     @warnings=
+      [{:category=>:unknown_option_list_value,
+        :field=>"recordstatus",
+        :type=>"option list value",
+        :subtype=>"",
+        :value=>"test",
+        :message=>"Unknown value in option list `recordstatus` column"}]>
+----
 
 == Config options
 
