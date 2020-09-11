@@ -64,6 +64,20 @@ module Helpers
       ['vocabularies', 'prodpeoplerole', 'traditional makers', "urn:cspace:anthro.collectionspace.org:vocabularies:name(prodpeoplerole):item:name(traditionalMakers)'traditional makers'"],
       ['vocabularies', 'publishto', 'DPLA', "urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(dpla)'DPLA'"],
       ['vocabularies', 'publishto', 'Omeka', "urn:cspace:anthro.collectionspace.org:vocabularies:name(publishto):item:name(omeka)'Omeka'"],
+      ['placeauthorities', 'place', 'Local', "urn:cspace:anthro.collectionspace.org:placeauthorities:name(place):item:name(Local1599824385298)'Local'"],
+      ['placeauthorities', 'place', 'Early', "urn:cspace:anthro.collectionspace.org:placeauthorities:name(place):item:name(Early1599824413345)'Early'"],
+      ['vocabularies', 'nagpraclaimtype', 'affiliated human skeletal remains (HSR)', "urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpraclaimtype):item:name(affiliatedHsr)'affiliated human skeletal remains (HSR)'"],
+      ['vocabularies', 'nagpraclaimtype', 'needs further research', "urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpraclaimtype):item:name(needsFurtherResearch)'needs further research'"],
+      ['vocabularies', 'nagpraclaimtype', 'not subject to NAGPRA', "urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpraclaimtype):item:name(nonNagpra)'not subject to NAGPRA'"],
+      ['vocabularies', 'nagpraclaimtype', 'object of cultural patrimony', "urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpraclaimtype):item:name(objectOfCulturalPatrimony)'object of cultural patrimony'"],
+      ['vocabularies', 'nagpraclaimtype', 'unassociated funerary object (UFO)', "urn:cspace:anthro.collectionspace.org:vocabularies:name(nagpraclaimtype):item:name(ufo)'unassociated funerary object (UFO)'"],
+      ['conceptauthorities', 'ethculture', 'Hero', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(ethculture):item:name(Hero1599824418804)'Hero'"],
+      ['conceptauthorities', 'ethculture', 'Got', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(ethculture):item:name(Got1599824429903)'Got'"],
+      ['vocabularies', 'dateera', 'CE', "urn:cspace:anthro.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'"],
+      ['orgauthorities', 'organization', 'Hola', "urn:cspace:anthro.collectionspace.org:orgauthorities:name(organization):item:name(Hola1599824351945)'Hola'"],
+      ['orgauthorities', 'organization', 'chores', "urn:cspace:anthro.collectionspace.org:orgauthorities:name(organization):item:name(chores1599824370125)'chores'"],
+      ['personauthorities', 'person', 'Tegla', "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(Tegla1599824325923)'Tegla'"],
+      ['personauthorities', 'person', 'Tom', "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(Tom1599824331955)'Tom'"],
     ]
     populate(cache, terms)
   end
