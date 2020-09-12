@@ -7,7 +7,7 @@ module CollectionSpace
     class DataHandler
       ::DataHandler = CollectionSpace::Mapper::DataHandler
       attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
-        :is_authority
+        :is_authority, :known_fields
 
       def initialize(record_mapper, client, cache,
                      config = Mapper::DEFAULT_CONFIG
@@ -19,6 +19,7 @@ module CollectionSpace
         @response_mode = @config[:response_mode]
         @is_authority = get_is_authority
         add_short_id_mapping if @is_authority
+        @known_fields = @mapper[:mappings].map{ |m| m[:datacolumn] }.map(&:downcase)
         @mapper[:xpath] = xpath_hash
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
@@ -36,6 +37,13 @@ module CollectionSpace
         else
           response
         end
+      end
+
+      def check_fields(data)
+        data_fields = data.keys.map(&:downcase)
+        unknown = data_fields - known_fields
+        known = data_fields - unknown
+        { known_fields: known, unknown_fields: unknown }
       end
       
       def validate(data)
@@ -87,7 +95,7 @@ module CollectionSpace
         service_type = @mapper[:config][:service_type]
         service_type == 'authority' ? true : false
       end
-      
+
       # you can specify per-data-key transforms in your config.json
       # This method merges the config.json transforms into the RecordMapper field
       #   mappings for the appropriate fields
