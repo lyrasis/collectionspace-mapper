@@ -106,6 +106,21 @@ Hash values are Strings. You can also pass through null Hash values.
 
 Example data Hashes used for testing can be found https://github.com/collectionspace/collectionspace-mapper/tree/master/spec/fixtures/files/datahashes[here].
 
+=== Checking CSV headers/fields
+
+Send one record through the following before beginning other validation. The results of this check belong more with the row/column count of the CSV file than any information about individual records.
+
+[source,ruby]
+----
+handler.check_fields(data)
+ => {
+        :known_fields=>['conservationnumber', 'status'],
+        :unknown_fields=>['conservator']
+     }
+----
+
+A warning about the unknown `conservator` field will be very valuable to a user who doesn't realize they must use `conservatorperson` or `conservatororganization` as their CSV headers. 
+
 === Validating a record
 
 Currently validation only checks for the presence of required field(s) and values in required field(s).
