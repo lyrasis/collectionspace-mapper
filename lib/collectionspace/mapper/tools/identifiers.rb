@@ -6,9 +6,9 @@ module CollectionSpace
       module Identifiers
         ::Identifiers = CollectionSpace::Mapper::Tools::Identifiers
         extend self
-        def short_identifier(name)
+        def short_identifier(name, source_type)
           v = name.gsub(/\W/, '')
-          "#{v}#{XXhash.xxh32(v)}"
+          source_type == :authority ? "#{v}#{XXhash.xxh32(v)}" : v
         end
       end
     end
