@@ -32,6 +32,7 @@ module CollectionSpace
     require 'collectionspace/mapper/data_splitter'
     require 'collectionspace/mapper/data_validator'
     require 'collectionspace/mapper/response'
+    require 'collectionspace/mapper/term_handler'
     require 'collectionspace/mapper/value_transformer'
 
     require 'collectionspace/mapper/tools/config'

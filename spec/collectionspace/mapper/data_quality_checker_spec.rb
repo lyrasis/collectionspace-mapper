@@ -3,65 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
-  context 'when source_type = authority' do
-    mapping = {
-      fieldname: 'annotationAuthor',
-      datacolumn: 'annotationAuthor',
-      transforms: {
-        authority: [
-          'personauthorities',
-          'person'
-          ]
-      },
-      source_type: 'authority',
-    }
-    context 'and value does not start with URN' do
-      it 'returns warnings' do
-        data = ['Ann Analyst', 'Gabriel Solares']
-        res = DataQualityChecker.new(mapping, data).warnings
-        expect(res.size).to eq(2)
-      end
-    end
-    context 'and value starts with URN' do
-      it 'does not return warnings' do
-        data = [
-          "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(AnnAnalyst1574450792195)'Ann Analyst'",
-          "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(GabrielSolares1574683843262)'Gabriel Solares'"
-        ]
-        res = DataQualityChecker.new(mapping, data).warnings
-        expect(res).to be_empty
-      end
-    end
-  end
-
-    context 'when source_type = vocabulary' do
-    mapping = {
-      fieldname: 'inventoryStatus',
-      datacolumn: 'inventoryStatus',
-      transforms: {
-        vocabulary: 'inventorystatus'
-      },
-      source_type: 'vocabulary',
-    }
-    context 'and value does not start with URN' do
-      it 'returns warnings' do
-        data = [['newterm'], ['anothernewterm']]
-        res = DataQualityChecker.new(mapping, data).warnings
-        expect(res.size).to eq(2)
-      end
-    end
-    context 'and value starts with URN' do
-      it 'does not return warnings' do
-        data = [
-          ["urn:cspace:anthro.collectionspace.org:vocabularies:name(inventorystatus):item:name(unknown)'newterm'"],
-          ["urn:cspace:anthro.collectionspace.org:vocabularies:name(inventorystatus):item:name(unknown)'anothernewterm'"]
-        ]
-        res = DataQualityChecker.new(mapping, data).warnings
-        expect(res).to be_empty
-      end
-    end
-    end
-
     context 'when source_type = optionlist' do
       mapping = {
         fieldname: 'collection',

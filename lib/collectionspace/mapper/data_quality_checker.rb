@@ -4,13 +4,14 @@ module CollectionSpace
   module Mapper
     class DataQualityChecker
       ::DataQualityChecker = CollectionSpace::Mapper::DataQualityChecker
-      attr_reader :mapping, :data, :warnings
+      attr_reader :mapping, :data, :warnings, :terms
       def initialize(mapping, data)
         @mapping = mapping
         @column = mapping[:datacolumn]
         @field = mapping[:fieldname]
         @data = data
         @warnings = []
+        @terms = []
         @source_type = @mapping[:source_type]
 
         case @source_type
@@ -39,15 +40,18 @@ module CollectionSpace
       end
 
       def check_term(val)
-        return if val.start_with?('urn:cspace')
-        @warnings << {
-          category: :missing_term,
+        term_report = {
+          category: @source_type.to_sym,
           field: @column,
           type: @type,
           subtype: @subtype,
-          value: val,
-          message: "Unknown term for #{@type}/#{@subtype} in `#{@column}` column: `#{val}`"
-        }
+          value: val
+          }
+        if val.start_with?('urn:cspace')
+          @terms << term_report.merge({ found: true })
+        else
+          @terms << term_report.merge({ found: false })
+        end
       end
 
       def check_opt_list_vals

@@ -15,7 +15,9 @@ module Helpers
     
   def core_cache
     cache_config = {
-      domain: 'core.collectionspace.org'
+      domain: 'core.collectionspace.org',
+      search_enabled: false,
+      search_identifiers: false
     }
     CollectionSpace::RefCache.new(config: cache_config, client: core_client)
   end
@@ -173,7 +175,6 @@ module Helpers
       ['citationauthorities', 'citation', 'makasi', "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(makasi1599645537547)'makasi'"],
       ['vocabularies', 'languages', 'Ancient Greek', "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(grc)'Ancient Greek'"],
       ['vocabularies', 'languages', 'Spanish', "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(spa)'Spanish'"],
-      ['vocabularies', 'languages', 'Swahili', "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(swa)'Swahili'"],
       ['vocabularies', 'languages', 'Swahili', "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(swa)'Swahili'"],
       ['personauthorities', 'person', 'marcus', "urn:cspace:core.collectionspace.org:personauthorities:name(person):item:name(marcus1599650918612)'marcus'"],
       ['conceptauthorities', 'concept', 'Test', "urn:cspace:core.collectionspace.org:conceptauthorities:name(concept):item:name(Test1599650854716)'Test'"],
