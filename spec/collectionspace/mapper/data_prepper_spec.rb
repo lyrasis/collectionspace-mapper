@@ -30,6 +30,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         },
         force_defaults: false
       })
+    
       @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
       @handler = DataHandler.new(@collectionobject_mapper, @client, @cache, @collectionobject_config)
       @prepper = DataPrepper.new(anthro_co_1, @handler)
@@ -100,6 +101,25 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
             end
             expect(result.length).to eq(1)
           end
+        end
+      end
+
+      describe '#handle_term_fields' do
+        before(:all) do
+          @prepper = DataPrepper.new(anthro_co_1, @handler)
+          @prepped = @prepper.prep
+        end
+        it 'returns expected result for mapping' do
+          res = @prepped.transformed_data['titletranslationlanguage']
+          expected = [["urn:cspace:anthro.collectionspace.org:vocabularies:name(languages):item:name(fra)'French'",
+                       "urn:cspace:anthro.collectionspace.org:vocabularies:name(languages):item:name(spa)'Spanish'"],
+                      ["urn:cspace:anthro.collectionspace.org:vocabularies:name(languages):item:name(fra)'French'",
+                       "urn:cspace:anthro.collectionspace.org:vocabularies:name(languages):item:name(deu)'German'"]]
+          expect(res).to eq(expected)
+        end
+        it 'adds expected term Hashes to response.terms' do
+          chk = @prepped.terms.select{ |t| t[:field] == 'titletranslationlanguage' }
+          expect(chk.length).to eq(4)
         end
       end
 

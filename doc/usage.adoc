@@ -233,6 +233,8 @@ If your `config[:response_mode]` is set to `verbose`, you will also receive the 
 `processed.identifier`:: Returns the value of the field specified as the record identifier
 `processed.errors`:: Returns Array of errors. Since you should not process invalid data, any errors in a response from processing will indicate problems in the mapping.
 `processed.warnings`:: Returns Array of data quality warnings
+`processed.terms`:: Returns Array of Hashes, each containing information about one authority or vocabulary term in the record.
+
 [source,ruby]
 .Anatomy of a `Mapper::Response` when `config[:response_mode]` = `normal`
 ----
@@ -267,6 +269,31 @@ pp(processed)
      @orig_data={},
      @split_data={},
      @transformed_data={},
+     @terms=
+      [{:category=>:vocabulary,
+         :field=>"titletranslationlanguage",
+         :type=>"vocabularies",
+         :subtype=>"languages",
+         :value=>"Ancient Greek",
+         :found=>true},
+        {:category=>:vocabulary,
+         :field=>"titletranslationlanguage",
+         :type=>"vocabularies",
+         :subtype=>"languages",
+         :value=>"Swahili",
+         :found=>true},
+        {:category=>:vocabulary,
+         :field=>"titletranslationlanguage",
+         :type=>"vocabularies",
+         :subtype=>"languages",
+         :value=>"Klingon",
+         :found=>false},
+        {:category=>:vocabulary,
+         :field=>"titletranslationlanguage",
+         :type=>"vocabularies",
+         :subtype=>"languages",
+         :value=>"Spanish",
+         :found=>true}],
      @warnings=
       [{:category=>:unknown_option_list_value,
         :field=>"recordstatus",
@@ -312,30 +339,4 @@ Nothing here is *wrong*, but this needs to be updated.
 - `:transforms` - optional - Hash - Key (String) is the data hash field to which the transforms should be applied. Value (Hash) is structured transformation instructions.
 - `:default_values` - optional - Hash - Key (String) is the data hash field that should be populated. Value (String) is the default value for the field.
 - `:force_defaults` - optional - Boolean - Defaults to false - If false, default values will not replace or be added to values passed in via the data hash; default value will be inserted if field is missing or empty in data hash. If true, default value will replace any data hash values.
-
-
-== Other stuff, may be out of date
-
-.Structure of a not-found authority term warning
-[source,ruby]
-----
-{
-  category: :authority,
-  type: 'conceptauthorities',
-  subtype: 'archculture',
-  value: 'term string'
-}
-----
-
-.Structure of a not-found vocabulary term warning
-[source,ruby]
-----
-{
-  category: :vocabulary,
-  type: 'vocabularies',
-  subtype: 'agerange',
-  value: 'middle aged'
-}
-----
-
 

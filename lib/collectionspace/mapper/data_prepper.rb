@@ -22,6 +22,8 @@ module CollectionSpace
         split_data
         transform_data
         transform_date_fields
+        handle_term_fields
+        @response.terms.flatten!
         check_data
         combine_data_fields
         @response
@@ -39,6 +41,11 @@ module CollectionSpace
 
       def transform_date_fields
         @xphash.each{ |xpath, hash| do_date_transforms(xpath, hash) }
+        @response.transformed_data
+      end
+
+      def handle_term_fields
+        @xphash.each{ |xpath, hash| do_term_handling(xpath, hash) }
         @response.transformed_data
       end
       
@@ -153,6 +160,33 @@ module CollectionSpace
         end
       end
 
+      def do_term_handling(xpath, xphash)
+        sourcedata = @response.transformed_data
+        xphash[:mappings].each do |mapping|
+          source_type = get_source_type(mapping[:source_type])
+          next if source_type.nil?
+          
+          column = mapping[:datacolumn]
+          data = sourcedata.fetch(column, nil)
+          next if data.blank?
+
+          th = TermHandler.new(mapping, data, @cache)
+          @response.transformed_data[column] = th.result
+          @response.terms << th.terms
+        end
+      end
+
+      def get_source_type(source_type_string)
+        case source_type_string
+        when 'authority'
+          source_type_string.to_sym
+        when 'vocabulary'
+          source_type_string.to_sym
+        else
+          nil
+        end
+      end
+      
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)

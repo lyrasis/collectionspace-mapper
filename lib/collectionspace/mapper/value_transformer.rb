@@ -14,8 +14,6 @@ module CollectionSpace
         @missing = {}
         process_replacements if @transforms.key?(:replacements)
         process_special if @transforms.key?(:special)
-        process_authority if @transforms.key?(:authority)
-        process_vocabulary if @transforms.key?(:vocabulary)
         @result = @value
       end
 
@@ -40,21 +38,6 @@ module CollectionSpace
         end
       end
       
-      def process_authority
-        return if @value.empty?
-        type = @transforms[:authority][0]
-        subtype = @transforms[:authority][1]
-        existing = @cache.get(type, subtype, @value)
-        @value = existing if existing
-      end
-
-      def process_vocabulary
-        return if @value.empty?
-        vocabulary = @transforms[:vocabulary]
-        existing = @cache.get('vocabularies', vocabulary, @value)
-        @value = existing if existing
-      end
-
       def process_boolean
         if @value.blank?
           @value = 'false'
