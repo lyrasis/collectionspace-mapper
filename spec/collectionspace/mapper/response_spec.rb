@@ -31,8 +31,8 @@ RSpec.describe CollectionSpace::Mapper::Response do
   describe '#normal' do
     context 'when response_mode = normal in config' do
       before(:all) do
-        data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
-        vresponse = @handler.validate(data)
+        @data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
+        vresponse = @handler.validate(@data)
         @response = @handler.process(vresponse)
       end
       it 'returns Mapper::Response with populated doc' do
@@ -44,8 +44,8 @@ RSpec.describe CollectionSpace::Mapper::Response do
       it 'returns Mapper::Response with populated identifier' do
         expect(@response.identifier).not_to be_empty
       end
-      it 'returns Mapper::Response with unpopulated orig_data' do
-        expect(@response.orig_data).to be_empty
+      it 'returns Mapper::Response with Hash of orig_data' do
+        expect(@response.orig_data).to be_a(Hash)
       end
       it 'returns Mapper::Response with unpopulated merged_data' do
         expect(@response.merged_data).to be_empty

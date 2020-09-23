@@ -24,7 +24,6 @@ module CollectionSpace
       end
 
       def normal
-        @orig_data = {}
         @merged_data = {}
          @split_data = {}
          @transformed_data = {}
