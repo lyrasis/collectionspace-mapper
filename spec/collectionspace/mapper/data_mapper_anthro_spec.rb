@@ -21,13 +21,13 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       # Problem in claimantGroupList
       before(:all) do
         @claimmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-claim.json')
-        @handler = DataHandler.new(@claimmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@claimmapper, @client, @cache, @config)
       end
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/anthro/claim1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('anthro/claim1.xml')
@@ -52,15 +52,15 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'collectionobject record' do
       before(:all) do
         @collectionobjectmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
-        @handler = DataHandler.new(@collectionobjectmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@collectionobjectmapper, @client, @cache, @config)
       end
       # record 1 was used for testing default value merging, transformations, etc.
       # we start with record 2 to purely test mapping functionality
       context 'record 2' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/anthro/collectionobject2.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('anthro/collectionobject1.xml')
@@ -84,13 +84,13 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'osteology record' do
       before(:all) do
         @osteologymapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-osteology.json')
-        @handler = DataHandler.new(@osteologymapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@osteologymapper, @client, @cache, @config)
       end
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/anthro/osteology1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('anthro/osteology1.xml')

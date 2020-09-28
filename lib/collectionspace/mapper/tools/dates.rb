@@ -8,11 +8,9 @@ module CollectionSpace
   module Mapper
     module Tools
       module Dates
-        ::Dates = CollectionSpace::Mapper::Tools::Dates
         extend self
 
         class CspaceDate
-          ::CspaceDate = CollectionSpace::Mapper::Tools::Dates::CspaceDate
           attr_reader :date_string, :client, :cache, :config, :timestamp, :mappable, :stamp
 
           def initialize(date_string, client, cache, config)
@@ -65,7 +63,6 @@ module CollectionSpace
           def map(doc, parentnode, groupname)
             @parser_result.each do |datefield, value|
               value = DateTime.parse(value).iso8601(3).sub('+00:00', "Z") if datefield['ScalarValue']
-              
             end
           end
         end

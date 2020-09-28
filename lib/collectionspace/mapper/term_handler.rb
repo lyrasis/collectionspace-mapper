@@ -3,7 +3,6 @@
 module CollectionSpace
   module Mapper
     class TermHandler
-      ::TermHandler = CollectionSpace::Mapper::TermHandler
       attr_reader :result, :terms
       def initialize(mapping, data, cache)
         @mapping = mapping
@@ -52,7 +51,7 @@ module CollectionSpace
           refname
         else
           @terms << term_report.merge({ found: false })
-          RefName.build(@source_type, @type, @subtype, val, @cache)
+          CollectionSpace::Mapper::Tools::RefName.build(@source_type, @type, @subtype, val, @cache)
         end
       end
     end

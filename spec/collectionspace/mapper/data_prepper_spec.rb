@@ -32,14 +32,14 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
       })
     
       @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
-      @handler = DataHandler.new(@collectionobject_mapper, @client, @cache, @collectionobject_config)
-      @prepper = DataPrepper.new(anthro_co_1, @handler)
+      @handler = CollectionSpace::Mapper::DataHandler.new(@collectionobject_mapper, @client, @cache, @collectionobject_config)
+      @prepper = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, @handler)
     end
 
     describe '#merge_default_values' do
       context 'when no default_values specified in config' do
         it 'does not fall over' do
-          dp = DataPrepper.new(anthro_co_1, @handler)
+          dp = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, @handler)
           res = dp.prep.merged_data['collection']
           ex = 'Permanent Collection'
           expect(res).to eq(ex)
@@ -69,8 +69,8 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
                 },
                 force_defaults: true,
               })
-              dh = DataHandler.new(@collectionobject_mapper, @client, @cache, config)
-              dp = DataPrepper.new(anthro_co_1, dh)
+              dh = CollectionSpace::Mapper::DataHandler.new(@collectionobject_mapper, @client, @cache, config)
+              dp = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, dh)
               res = dp.prep.merged_data['collection']
               ex = 'library-collection'
               expect(res).to eq(ex)
@@ -90,9 +90,9 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         context 'when authority record' do
           before(:all) do
             @place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-place.json')
-            @place_handler = DataHandler.new(@place_mapper, @cache, @client, @config)
+            @place_handler = CollectionSpace::Mapper::DataHandler.new(@place_mapper, @cache, @client, @config)
             data = get_datahash(path: 'spec/fixtures/files/datahashes/core/place001.json')
-            @place_prepper = DataPrepper.new(data, @place_handler)
+            @place_prepper = CollectionSpace::Mapper::DataPrepper.new(data, @place_handler)
           end
           it 'keeps mapping for shortIdentifier in xphash' do
             @place_prepper.prep
@@ -106,7 +106,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
 
       describe '#handle_term_fields' do
         before(:all) do
-          @prepper = DataPrepper.new(anthro_co_1, @handler)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, @handler)
           @prepped = @prepper.prep
         end
         it 'returns expected result for mapping' do
@@ -165,9 +165,9 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
           context 'and one or more combined field values is blank' do
             before(:all) do
               @core_conservation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conservation.json')
-              @handler = DataHandler.new(@core_conservation_mapper, @client, @cache, @config)
+              @handler = CollectionSpace::Mapper::DataHandler.new(@core_conservation_mapper, @client, @cache, @config)
               data = get_datahash(path: 'spec/fixtures/files/datahashes/core/conservation0_1.json')
-              @prepper = DataPrepper.new(data, @handler)
+              @prepper = CollectionSpace::Mapper::DataPrepper.new(data, @handler)
               @xpath = 'conservation_common/conservationStatusGroupList/conservationStatusGroup'
             end
             it 'removes empty fields from combined data response' do
@@ -184,13 +184,13 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         context 'when multi-authority field is part of repeating field subgroup' do
           before(:all) do
             @core_media_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-media.json')
-            @handler = DataHandler.new(@core_media_mapper, @client, @cache, @config)
+            @handler = CollectionSpace::Mapper::DataHandler.new(@core_media_mapper, @client, @cache, @config)
           end
           
           context 'when there is more than one group' do
             before(:all) do
               data = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1_1.json')
-              @prepper = DataPrepper.new(data, @handler)
+              @prepper = CollectionSpace::Mapper::DataPrepper.new(data, @handler)
             end
             it 'combines values properly' do
               xpath = 'media_common/measuredPartGroupList/measuredPartGroup/dimensionSubGroupList/dimensionSubGroup'
@@ -212,7 +212,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
           context 'when there is only one group' do
             before(:all) do
               data = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1_2.json')
-              @prepper = DataPrepper.new(data, @handler)
+              @prepper = CollectionSpace::Mapper::DataPrepper.new(data, @handler)
             end
             it 'combines values properly' do
               xpath = 'media_common/measuredPartGroupList/measuredPartGroup/dimensionSubGroupList/dimensionSubGroup'

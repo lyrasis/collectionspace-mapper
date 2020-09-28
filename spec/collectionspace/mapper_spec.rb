@@ -24,7 +24,7 @@ RSpec.describe CollectionSpace::Mapper do
   describe '#setup_data' do
     context 'when passed a CollectionSpace::Mapper::Response' do
       it 'returns that Response' do
-        response = Response.new({ 'objectNumber'=>'123' })
+        response = CollectionSpace::Mapper::Response.new({ 'objectNumber'=>'123' })
         expect(CollectionSpace::Mapper::setup_data(response)).to eq(response)
       end
     end

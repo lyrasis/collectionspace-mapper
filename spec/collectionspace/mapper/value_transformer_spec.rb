@@ -13,7 +13,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
       it 'returns transformed value for retrieving refname' do
         value = '0'
         transforms = { vocabulary: 'behrensmeyer', special: %w[behrensmeyer_translate] }
-        res = ValueTransformer.new(value, transforms, @cache).result
+        res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @cache).result
         ex = '0 - no cracking or flaking on bone surface'
         expect(res).to eq(ex)
       end
@@ -28,7 +28,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
                           { find: ' - ', replace: '-', type: :plain }
                         ]
                        }
-          res = ValueTransformer.new(value, transforms, @cache).result
+          res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @cache).result
           ex = 'adolescent 26-75%'
           expect(res).to eq(ex)
         end
@@ -46,7 +46,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
           { find: '(\w)%%(\w)', replace: '\1 \2', type: :regexp }
         ]
       }
-      res = ValueTransformer.new(value, transforms, @cache).result
+      res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @cache).result
       expect(res).to eq('rycy plynt')
     end
   end

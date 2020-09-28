@@ -9,7 +9,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     @cache = core_cache
     populate_core(@cache)
     @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
-    @handler = DataHandler.new(@mapper, @client, @cache)
+    @handler = CollectionSpace::Mapper::DataHandler.new(@mapper, @client, @cache)
 
   end
 
@@ -34,7 +34,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
                      :fullpath=>
                      "collectionobjects_common/titleGroupList/titleGroup/titleTranslationSubGroupList/titleTranslationSubGroup"}
         data = [['Ancient Greek', 'Swahili'], ['Klingon', 'Spanish']]
-        @th = TermHandler.new(@mapping, data, @cache)
+        @th = CollectionSpace::Mapper::TermHandler.new(@mapping, data, @cache)
       end
       it 'result is the transformed value for mapping' do
       expected = [["urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(grc)'Ancient Greek'",
@@ -63,7 +63,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
                     :datacolumn=>"referencelocal",
                     :fullpath=>"collectionobjects_common/referenceGroupList/referenceGroup"}
         data = ['Reference 1', 'Reference 2']
-      @th = TermHandler.new(@mapping, data, @cache)
+      @th = CollectionSpace::Mapper::TermHandler.new(@mapping, data, @cache)
       end
       it 'result is the transformed value for mapping' do
         expected = [
@@ -100,7 +100,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
                      :fullpath=>
                      "collectionobjects_common/titleGroupList/titleGroup/titleTranslationSubGroupList/titleTranslationSubGroup"}
         data = [['Ancient Greek', 'Swahili'], ['Klingon', 'Spanish']]
-        @th = TermHandler.new(@mapping, data, @cache)
+        @th = CollectionSpace::Mapper::TermHandler.new(@mapping, data, @cache)
       end
       it 'contains a term Hash for each value' do
         expect(@th.terms.length).to eq(4)
@@ -130,7 +130,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
                     :datacolumn=>"referencelocal",
                     :fullpath=>"collectionobjects_common/referenceGroupList/referenceGroup"}
         data = ['Reference 1', 'Reference 2']
-        @th = TermHandler.new(@mapping, data, @cache)
+        @th = CollectionSpace::Mapper::TermHandler.new(@mapping, data, @cache)
       end
       it 'contains a term Hash for each value' do
         expect(@th.terms.length).to eq(2)

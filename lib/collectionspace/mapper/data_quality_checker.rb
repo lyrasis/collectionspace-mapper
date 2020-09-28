@@ -3,7 +3,6 @@
 module CollectionSpace
   module Mapper
     class DataQualityChecker
-      ::DataQualityChecker = CollectionSpace::Mapper::DataQualityChecker
       attr_reader :mapping, :data, :warnings, :terms
       def initialize(mapping, data)
         @mapping = mapping

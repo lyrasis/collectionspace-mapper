@@ -9,10 +9,10 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
     @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
 
-  describe Dates::CspaceDate do
+  describe CollectionSpace::Mapper::Tools::Dates::CspaceDate do
     context 'when date string is Chronic parseable (e.g. 2020-08-14)' do
       before(:all) do
-        @res = CspaceDate.new('2020-09-30', @client, @cache, @config)
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new('2020-09-30', @client, @cache, @config)
       end
       
       it 'populates .timestamp' do
@@ -62,20 +62,20 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
 
         context 'when no date_format specified in config' do
           it 'defaults to M/D/Y interpretation' do
-            res = CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
+            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
             expect(res).to start_with('2020-01-02 12:00:00')
           end
         end
         context 'when date_format in config = month day year' do
           it 'interprets as M/D/Y' do
-            res = CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
+            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
             expect(res).to start_with('2020-01-02 12:00:00')
           end
         end
         context 'when date_format in config = day month year' do
           it 'interprets as D/M/Y' do
             config = @config.merge({ date_format: 'day month year' })
-            res = CspaceDate.new(@string, @client, @cache, config).timestamp.to_s
+            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config).timestamp.to_s
             expect(res).to start_with('2020-02-01 12:00:00')
           end
         end
@@ -85,7 +85,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
     context 'when date string is not Chronic parseable (e.g. 1/2/2000 - 12/21/2001)' do
       before(:all) do
         @string = '1/2/2000 - 12/21/2001'
-        @res = CspaceDate.new(@string, @client, @cache, @config)
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
       end
 
       it '.timestamp will be nil' do
@@ -106,7 +106,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
     context 'when date string is not Chronic or services parseable (e.g. VIII.XIV.MMXX)' do
       before(:all) do
         @string = 'VIII.XIV.MMXX'
-        @res = CspaceDate.new(@string, @client, @cache, @config)
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
       end
 
       it '.timestamp will be nil' do

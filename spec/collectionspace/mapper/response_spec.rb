@@ -8,7 +8,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
     @cache = botgarden_cache
     populate_botgarden(@cache)
     @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-taxon.json')
-    @handler = DataHandler.new(@mapper, @cache, @client, CollectionSpace::Mapper::DEFAULT_CONFIG)
+    @handler = CollectionSpace::Mapper::DataHandler.new(@mapper, @cache, @client, CollectionSpace::Mapper::DEFAULT_CONFIG)
   end
 
   describe '#valid?' do

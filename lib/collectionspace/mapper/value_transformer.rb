@@ -3,7 +3,6 @@
 module CollectionSpace
   module Mapper
     class ValueTransformer
-      ::ValueTransformer = CollectionSpace::Mapper::ValueTransformer
       attr_reader :orig, :result
       def initialize(value, transforms, cache)
         @value = value

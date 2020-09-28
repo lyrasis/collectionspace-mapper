@@ -4,7 +4,6 @@ module CollectionSpace
   module Mapper
     module Tools
       module RecordMapper
-        ::RecordMapper = CollectionSpace::Mapper::Tools::RecordMapper
         extend self
 
         def convert(json)
