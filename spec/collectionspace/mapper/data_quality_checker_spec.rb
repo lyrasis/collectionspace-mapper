@@ -19,14 +19,14 @@ RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
       context 'and value is not in option list' do
         it 'returns warning' do
           data = ['Permanent Collection']
-          res = DataQualityChecker.new(mapping, data).warnings
+          res = CollectionSpace::Mapper::DataQualityChecker.new(mapping, data).warnings
           expect(res.size).to eq(1)
         end
       end
       context 'and value is in option list' do
         it 'does not return warning' do
           data = ['permanent-collection']
-          res = DataQualityChecker.new(mapping, data).warnings
+          res = CollectionSpace::Mapper::DataQualityChecker.new(mapping, data).warnings
           expect(res).to be_empty
         end
       end

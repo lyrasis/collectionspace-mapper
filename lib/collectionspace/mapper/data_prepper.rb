@@ -3,14 +3,13 @@
 module CollectionSpace
   module Mapper
     class DataPrepper
-      ::DataPrepper = CollectionSpace::Mapper::DataPrepper
       attr_reader :data, :handler, :config
       attr_accessor :response, :xphash
       def initialize(data, handler)
         @handler = handler
         @config = @handler.config
         @cache = @handler.cache
-        @response = Mapper::setup_data(data)
+        @response = CollectionSpace::Mapper::setup_data(data)
         if @response.valid?
           @data = @response.orig_data.transform_keys(&:downcase)
           @response.merged_data = merge_default_values
@@ -97,21 +96,21 @@ module CollectionSpace
             column = mapping[:datacolumn]
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = mapping[:repeats] == 'y' ? SimpleSplitter.new(data, @config).result : [data.strip]
+            @response.split_data[column] = mapping[:repeats] == 'y' ? CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result : [data.strip]
           end
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
           xphash[:mappings].each do |mapping|
             column = mapping[:datacolumn]
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = SimpleSplitter.new(data, @config).result
+            @response.split_data[column] = CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result
           end
         elsif xphash[:is_group] && xphash[:is_subgroup]
           xphash[:mappings].each do |mapping|
             column = mapping[:datacolumn]
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = SubgroupSplitter.new(data, @config).result
+            @response.split_data[column] = CollectionSpace::Mapper::SubgroupSplitter.new(data, @config).result
           end
         end
       end
@@ -128,9 +127,9 @@ module CollectionSpace
           else
             targetdata[column] = data.map do |d|
               if d.is_a?(String)
-                ValueTransformer.new(d, mapping[:transforms], @cache).result
+                CollectionSpace::Mapper::ValueTransformer.new(d, mapping[:transforms], @cache).result
               else
-                d.map{ |val| ValueTransformer.new(val, mapping[:transforms], @cache).result}
+                d.map{ |val| CollectionSpace::Mapper::ValueTransformer.new(val, mapping[:transforms], @cache).result}
               end
             end
           end
@@ -170,7 +169,7 @@ module CollectionSpace
           data = sourcedata.fetch(column, nil)
           next if data.blank?
 
-          th = TermHandler.new(mapping, data, @cache)
+          th = CollectionSpace::Mapper::TermHandler.new(mapping, data, @cache)
           @response.transformed_data[column] = th.result
           @response.terms << th.terms
         end
@@ -190,9 +189,9 @@ module CollectionSpace
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CspaceDate.new(d, @handler.client, @handler.cache, @config).mappable
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).mappable
           else
-            d.map{ |v| CspaceDate.new(v, @handler.client, @handler.cache, @config).mappable }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).mappable }
           end
         end
       end
@@ -200,9 +199,9 @@ module CollectionSpace
       def unstructured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CspaceDate.new(d, @handler.client, @handler.cache, @config).stamp
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).stamp
           else
-            d.map{ |v| CspaceDate.new(v, @handler.client, @handler.cache, @config).stamp }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).stamp }
           end
         end
       end
@@ -212,7 +211,7 @@ module CollectionSpace
         xphash[:mappings].each do |mapping|
           data = xformdata[mapping[:datacolumn]]
           next if data.blank?
-          qc = DataQualityChecker.new(mapping, data)
+          qc = CollectionSpace::Mapper::DataQualityChecker.new(mapping, data)
           @response.warnings << qc.warnings unless qc.warnings.empty?
         end
       end

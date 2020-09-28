@@ -11,7 +11,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Identifiers do
       }
 
       authorities.each do |term, id|
-        expect(Identifiers.short_identifier(term, :authority)).to eq(id)
+        expect(CollectionSpace::Mapper::Tools::Identifiers.short_identifier(term, :authority)).to eq(id)
       end
     end
     it 'generates non-hashed short identifiers for vocabularies' do
@@ -21,7 +21,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Identifiers do
       }
 
       authorities.each do |term, id|
-        expect(Identifiers.short_identifier(term, :vocabulary)).to eq(id)
+        expect(CollectionSpace::Mapper::Tools::Identifiers.short_identifier(term, :vocabulary)).to eq(id)
       end
     end
   end

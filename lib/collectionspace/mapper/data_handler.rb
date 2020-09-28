@@ -5,14 +5,13 @@ module CollectionSpace
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      ::DataHandler = CollectionSpace::Mapper::DataHandler
       attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
         :is_authority, :known_fields
 
       def initialize(record_mapper, client, cache,
-                     config = Mapper::DEFAULT_CONFIG
+                     config = CollectionSpace::Mapper::DEFAULT_CONFIG
                     )
-        @mapper = RecordMapper.convert(record_mapper)
+        @mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(record_mapper)
         @client = client
         @cache = cache
         @config = get_config(config)
@@ -24,15 +23,15 @@ module CollectionSpace
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
-        @validator = DataValidator.new(@mapper, @cache)
+        @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
       end
 
       def process(data)
-        response = Mapper::setup_data(data)
+        response = CollectionSpace::Mapper::setup_data(data)
         if response.valid?
-          prepper = DataPrepper.new(response, self)
+          prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
           prepper.prep
-          mapper = DataMapper.new(prepper.response, self, prepper.xphash)
+          mapper = CollectionSpace::Mapper::DataMapper.new(prepper.response, self, prepper.xphash)
           @response_mode == 'normal' ? mapper.response.normal : mapper.response
         else
           response
@@ -51,9 +50,9 @@ module CollectionSpace
       end
 
       def prep(data)
-        response = Mapper::setup_data(data)
+        response = CollectionSpace::Mapper::setup_data(data)
         if response.valid?
-          prepper = DataPrepper.new(response, self)
+          prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
           prepper.split_data
           prepper.transform_data
           prepper.check_data
@@ -65,14 +64,14 @@ module CollectionSpace
       end
       
       def map(response, xphash)
-        mapper = DataMapper.new(response, self, xphash)
+        mapper = CollectionSpace::Mapper::DataMapper.new(response, self, xphash)
         @response_mode == 'normal' ? mapper.response.normal : mapper.response
       end
 
       private
 
       def get_config(config)
-        config_object = Config.new(config)
+        config_object = CollectionSpace::Mapper::Tools::Config.new(config)
         config_object.hash
       end
       
@@ -97,7 +96,7 @@ module CollectionSpace
       end
 
       # you can specify per-data-key transforms in your config.json
-      # This method merges the config.json transforms into the RecordMapper field
+      # This method merges the config.json transforms into the CollectionSpace::Mapper::RecordMapper field
       #   mappings for the appropriate fields
       def merge_config_transforms
         return unless @config[:transforms]

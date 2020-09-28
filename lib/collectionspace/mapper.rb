@@ -14,8 +14,7 @@ require 'xxhash'
 
 module CollectionSpace
   module Mapper
-    ::Mapper = CollectionSpace::Mapper
-
+    extend self
     LOGGER = Logger.new(STDERR)
     DEFAULT_CONFIG = { delimiter: ';',
                        subgroup_delimiter: '^^',
@@ -51,7 +50,7 @@ module CollectionSpace
       end
     end
 
-    def self.setup_data(data)
+    def setup_data(data)
       if data.is_a?(Hash)
         Response.new(data)
       elsif data.is_a?(CollectionSpace::Mapper::Response)
@@ -61,7 +60,7 @@ module CollectionSpace
           raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
         rescue Errors::UnprocessableDataError => error
           error.set_backtrace([])
-          Mapper::LOGGER.error(error)
+          CollectionSpace::Mapper::LOGGER.error(error)
           err_resp = Response.new(data)
           err_resp.errors << error
           err_resp

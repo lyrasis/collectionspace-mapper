@@ -3,7 +3,6 @@
 module CollectionSpace
   module Mapper
     class Response
-      ::Response = CollectionSpace::Mapper::Response
       attr_reader :orig_data
       attr_accessor :split_data, :merged_data, :transformed_data, :combined_data, :doc, :errors, :warnings, :identifier, :terms
       def initialize(data_hash)

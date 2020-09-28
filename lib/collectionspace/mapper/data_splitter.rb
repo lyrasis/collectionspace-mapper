@@ -3,7 +3,6 @@
 module CollectionSpace
   module Mapper
     class DataSplitter
-      ::DataSplitter = CollectionSpace::Mapper::DataSplitter
       attr_reader :data, :result
       def initialize(data, config)
         @data = data.strip
@@ -14,7 +13,6 @@ module CollectionSpace
     end
 
     class SimpleSplitter < DataSplitter
-      ::SimpleSplitter = CollectionSpace::Mapper::SimpleSplitter
       def initialize(data, config)
         super
         # negative limit parameter turns off suppression of trailing empty fields
@@ -23,7 +21,6 @@ module CollectionSpace
     end
 
     class SubgroupSplitter < DataSplitter
-      ::SubgroupSplitter = CollectionSpace::Mapper::SubgroupSplitter
       def initialize(data, config)
         super
         # negative limit parameter turns off suppression of trailing empty fields

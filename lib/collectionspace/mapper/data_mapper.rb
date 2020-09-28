@@ -3,7 +3,6 @@
 module CollectionSpace
   module Mapper
     class DataMapper
-      ::DataMapper = CollectionSpace::Mapper::DataMapper
       attr_reader :handler, :xphash
       attr_accessor :doc, :response
       def initialize(response, handler, xphash)
@@ -39,7 +38,7 @@ module CollectionSpace
           .first
         targetnode = @doc.xpath("/document/#{ns}").first
         child = Nokogiri::XML::Node.new('shortIdentifier', @doc)
-        child.content = Identifiers.short_identifier(term, :authority)
+        child.content = CollectionSpace::Mapper::Tools::Identifiers.short_identifier(term, :authority)
         targetnode.add_child(child)
       end
 

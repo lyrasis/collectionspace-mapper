@@ -14,7 +14,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::RefName do
       subtype = 'person'
       term = 'Mary Poole'
       refname = "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(MaryPoole1796320156)'Mary Poole'"
-      expect(RefName.build(source_type, type, subtype, term, @cache)).to eq(refname)
+      expect(CollectionSpace::Mapper::Tools::RefName.build(source_type, type, subtype, term, @cache)).to eq(refname)
     end
     it 'builds refname for vocabularies' do
       source_type = :vocabulary
@@ -22,7 +22,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::RefName do
       subtype = 'annotationtype'
       term = 'another term'
       refname = "urn:cspace:anthro.collectionspace.org:vocabularies:name(annotationtype):item:name(anotherterm)'another term'"
-      expect(RefName.build(source_type, type, subtype, term, @cache)).to eq(refname)
+      expect(CollectionSpace::Mapper::Tools::RefName.build(source_type, type, subtype, term, @cache)).to eq(refname)
     end
   end
 end

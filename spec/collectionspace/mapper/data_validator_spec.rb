@@ -5,9 +5,9 @@ require 'spec_helper'
 RSpec.describe CollectionSpace::Mapper::DataValidator do
   before(:all) do
     @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
-    @anthro_dv = DataValidator.new(RecordMapper.convert(@anthro_object_mapper), anthro_cache)
+    @anthro_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@anthro_object_mapper), anthro_cache)
     @botgarden_loanout_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-loanout.json')
-    @botgarden_dv = DataValidator.new(RecordMapper.convert(@botgarden_loanout_mapper), botgarden_cache)
+    @botgarden_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@botgarden_loanout_mapper), botgarden_cache)
   end
   
   it 'gets downcased list of required fields' do
@@ -15,9 +15,9 @@ RSpec.describe CollectionSpace::Mapper::DataValidator do
   end
 
   describe '#validate' do
-    it 'returns a Mapper::Response' do
+    it 'returns a CollectionSpace::Mapper::Response' do
       data = { 'objectNumber' => '123' }
-      expect(@anthro_dv.validate(data)).to be_a(Mapper::Response)
+      expect(@anthro_dv.validate(data)).to be_a(CollectionSpace::Mapper::Response)
     end
 
     context 'when recordtype has required field(s)' do

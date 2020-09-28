@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
 
   context 'botgarden profile' do
@@ -17,14 +17,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'pottag record' do
       before(:all) do
         @pottag_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-pottag.json')
-        @pottag_handler = DataHandler.new(@pottag_mapper, @client, @cache, @config)
+        @pottag_handler = CollectionSpace::Mapper::DataHandler.new(@pottag_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/pottag1.json')
-          @prepper = DataPrepper.new(@datahash, @pottag_handler)
-          @mapper = DataMapper.new(@prepper.prep, @pottag_handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @pottag_handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @pottag_handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('botgarden/pottag1.xml')
@@ -48,14 +48,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'propagation record' do
       before(:all) do
         @propagation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-propagation.json')
-        @propagation_handler = DataHandler.new(@propagation_mapper, @client, @cache, @config)
+        @propagation_handler = CollectionSpace::Mapper::DataHandler.new(@propagation_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/propagation1.json')
-          @prepper = DataPrepper.new(@datahash, @propagation_handler)
-          @mapper = DataMapper.new(@prepper.prep, @propagation_handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @propagation_handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @propagation_handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('botgarden/propagation1.xml')
@@ -80,14 +80,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'taxon record' do
       before(:all) do
         @taxon_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-taxon.json')
-        @taxon_handler = DataHandler.new(@taxon_mapper, @client, @cache, @config)
+        @taxon_handler = CollectionSpace::Mapper::DataHandler.new(@taxon_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/taxon1.json')
-          @prepper = DataPrepper.new(@datahash, @taxon_handler)
-          @mapper = DataMapper.new(@prepper.prep, @taxon_handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @taxon_handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @taxon_handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('botgarden/taxon1.xml')

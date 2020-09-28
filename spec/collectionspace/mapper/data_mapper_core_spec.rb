@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
 
   context 'core profile' do
@@ -17,14 +17,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'acquisition record' do
       before(:all) do
         @acquisition_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-acquisition.json')
-        @handler = DataHandler.new(@acquisition_mapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@acquisition_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/acquisition1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/acquisition1.xml')
@@ -48,14 +48,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'collectionobject record' do
       before(:all) do
         @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
-        @handler = DataHandler.new(@collectionobject_mapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@collectionobject_mapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/collectionobject1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/collectionobject1.xml')
@@ -79,14 +79,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'conditioncheck record' do
       before(:all) do
         @conditioncheckmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conditioncheck.json')
-        @handler = DataHandler.new(@conditioncheckmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@conditioncheckmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/conditioncheck1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/conditioncheck1.xml')
@@ -111,14 +111,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'conservation record' do
       before(:all) do
         @conservationmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conservation.json')
-        @handler = DataHandler.new(@conservationmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@conservationmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/conservation1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/conservation1.xml')
@@ -142,14 +142,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'exhibition record' do
       before(:all) do
         @exhibitionmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-exhibition.json')
-        @handler = DataHandler.new(@exhibitionmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@exhibitionmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/exhibition1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/exhibition1.xml')
@@ -173,14 +173,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'group record' do
       before(:all) do
         @groupmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-group.json')
-        @handler = DataHandler.new(@groupmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@groupmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/group1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/group1.xml')
@@ -204,14 +204,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'intake record' do
       before(:all) do
         @intakemapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-intake.json')
-        @handler = DataHandler.new(@intakemapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@intakemapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/intake1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/intake1.xml')
@@ -235,14 +235,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'loanin record' do
       before(:all) do
         @rm_core_co = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-loanin.json')
-        @handler = DataHandler.new(@rm_core_co, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@rm_core_co, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/loanin1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/loanin1.xml')
@@ -266,14 +266,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'loanout record' do
       before(:all) do
         @loanoutmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-loanout.json')
-        @handler = DataHandler.new(@loanoutmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@loanoutmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/loanout1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/loanout1.xml')
@@ -296,14 +296,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'movement record' do
       before(:all) do
         @movementmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-movement.json')
-        @handler = DataHandler.new(@movementmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@movementmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/movement1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/movement1.xml')
@@ -327,14 +327,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'media record' do
       before(:all) do
         @movementmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-media.json')
-        @handler = DataHandler.new(@movementmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@movementmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/media1.xml')
@@ -358,14 +358,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'objectexit record' do
       before(:all) do
         @objectexitmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-objectexit.json')
-        @handler = DataHandler.new(@objectexitmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@objectexitmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/objectexit1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/objectexit1.xml')
@@ -390,14 +390,14 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'uoc record' do
       before(:all) do
         @uocmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-uoc.json')
-        @handler = DataHandler.new(@uocmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(@uocmapper, @client, @cache, @config)
       end
 
       context 'record 1' do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/uoc1.json')
-          @prepper = DataPrepper.new(@datahash, @handler)
-          @mapper = DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/uoc1.xml')

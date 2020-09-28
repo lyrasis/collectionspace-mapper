@@ -8,7 +8,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
     @cache = botgarden_cache
     populate_botgarden(@cache)
     @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-taxon.json')
-    @handler = DataHandler.new(@mapper, @cache, @client, Mapper::DEFAULT_CONFIG)
+    @handler = CollectionSpace::Mapper::DataHandler.new(@mapper, @cache, @client, CollectionSpace::Mapper::DEFAULT_CONFIG)
   end
 
   describe '#valid?' do
@@ -35,28 +35,28 @@ RSpec.describe CollectionSpace::Mapper::Response do
         vresponse = @handler.validate(@data)
         @response = @handler.process(vresponse)
       end
-      it 'returns Mapper::Response with populated doc' do
+      it 'returns CollectionSpace::Mapper::Response with populated doc' do
         expect(@response.doc).to be_a(Nokogiri::XML::Document)
       end
-      it 'returns Mapper::Response with populated warnings' do
+      it 'returns CollectionSpace::Mapper::Response with populated warnings' do
         expect(@response.warnings).not_to be_empty
       end
-      it 'returns Mapper::Response with populated identifier' do
+      it 'returns CollectionSpace::Mapper::Response with populated identifier' do
         expect(@response.identifier).not_to be_empty
       end
-      it 'returns Mapper::Response with Hash of orig_data' do
+      it 'returns CollectionSpace::Mapper::Response with Hash of orig_data' do
         expect(@response.orig_data).to be_a(Hash)
       end
-      it 'returns Mapper::Response with unpopulated merged_data' do
+      it 'returns CollectionSpace::Mapper::Response with unpopulated merged_data' do
         expect(@response.merged_data).to be_empty
       end
-      it 'returns Mapper::Response with unpopulated split_data' do
+      it 'returns CollectionSpace::Mapper::Response with unpopulated split_data' do
         expect(@response.split_data).to be_empty
       end
-      it 'returns Mapper::Response with unpopulated transformed_data' do
+      it 'returns CollectionSpace::Mapper::Response with unpopulated transformed_data' do
         expect(@response.transformed_data).to be_empty
       end
-      it 'returns Mapper::Response with unpopulated combined_data' do
+      it 'returns CollectionSpace::Mapper::Response with unpopulated combined_data' do
         expect(@response.combined_data).to be_empty
       end
     end

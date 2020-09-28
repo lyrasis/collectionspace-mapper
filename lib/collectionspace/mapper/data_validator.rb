@@ -3,7 +3,6 @@
 module CollectionSpace
   module Mapper
     class DataValidator
-      ::DataValidator = CollectionSpace::Mapper::DataValidator
       attr_reader :mapper, :cache, :required_fields
       def initialize(record_mapper, cache)
         @mapper = record_mapper
@@ -14,7 +13,7 @@ module CollectionSpace
       end
 
       def validate(data)
-        response = Mapper::setup_data(data)
+        response = CollectionSpace::Mapper::setup_data(data)
         if response.valid?
           data = data.transform_keys(&:downcase)
           res = check_required_fields(data) unless @required_fields.empty?

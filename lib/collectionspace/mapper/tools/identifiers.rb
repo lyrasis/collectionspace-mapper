@@ -4,7 +4,6 @@ module CollectionSpace
   module Mapper
     module Tools
       module Identifiers
-        ::Identifiers = CollectionSpace::Mapper::Tools::Identifiers
         extend self
         def short_identifier(name, source_type)
           v = name.gsub(/\W/, '')
