@@ -15,8 +15,6 @@ require 'ruby-prof'
 
 module CollectionSpace
   module Mapper
-    ::Mapper = CollectionSpace::Mapper
-
     LOGGER = Logger.new(STDERR)
     DEFAULT_CONFIG = { delimiter: ';',
                        subgroup_delimiter: '^^',
@@ -62,7 +60,7 @@ module CollectionSpace
           raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
         rescue Errors::UnprocessableDataError => error
           error.set_backtrace([])
-          Mapper::LOGGER.error(error)
+          CollectionSpace::Mapper::LOGGER.error(error)
           err_resp = Response.new(data)
           err_resp.errors << error
           err_resp

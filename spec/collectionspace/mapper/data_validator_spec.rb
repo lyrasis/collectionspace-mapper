@@ -15,9 +15,9 @@ RSpec.describe CollectionSpace::Mapper::DataValidator do
   end
 
   describe '#validate' do
-    it 'returns a Mapper::Response' do
+    it 'returns a CollectionSpace::Mapper::Response' do
       data = { 'objectNumber' => '123' }
-      expect(@anthro_dv.validate(data)).to be_a(Mapper::Response)
+      expect(@anthro_dv.validate(data)).to be_a(CollectionSpace::Mapper::Response)
     end
 
     context 'when recordtype has required field(s)' do

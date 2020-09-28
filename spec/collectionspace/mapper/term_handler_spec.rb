@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::TermHandler do
   before(:all) do
-    @config = Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
     @client = core_client
     @cache = core_cache
     populate_core(@cache)

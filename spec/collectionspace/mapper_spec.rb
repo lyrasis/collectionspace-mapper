@@ -22,19 +22,19 @@ RSpec.describe CollectionSpace::Mapper do
   end
 
   describe '#setup_data' do
-    context 'when passed a Mapper::Response' do
+    context 'when passed a CollectionSpace::Mapper::Response' do
       it 'returns that Response' do
         response = Response.new({ 'objectNumber'=>'123' })
-        expect(Mapper::setup_data(response)).to eq(response)
+        expect(CollectionSpace::Mapper::setup_data(response)).to eq(response)
       end
     end
     context 'when passed a Hash' do
       before(:all) do
         @data = { 'objectNumber'=>'123' }
-        @response = Mapper::setup_data(@data)
+        @response = CollectionSpace::Mapper::setup_data(@data)
       end
-      it 'returns a Mapper::Response' do
-        expect(@response).to be_a(Mapper::Response)
+      it 'returns a CollectionSpace::Mapper::Response' do
+        expect(@response).to be_a(CollectionSpace::Mapper::Response)
       end
       it 'sets Hash as Response.orig_data' do
         expect(@response.orig_data).to eq(@data)
@@ -43,10 +43,10 @@ RSpec.describe CollectionSpace::Mapper do
     context 'when passed other class of object' do
       before(:all) do
         @data = ['objectNumber', '123']
-        @response = Mapper::setup_data(@data)
+        @response = CollectionSpace::Mapper::setup_data(@data)
       end
-      it 'returns a Mapper::Response' do
-        expect(@response).to be_a(Mapper::Response)
+      it 'returns a CollectionSpace::Mapper::Response' do
+        expect(@response).to be_a(CollectionSpace::Mapper::Response)
       end
       it 'sets data passed as Response.orig_data' do
         expect(@response.orig_data).to eq(@data)

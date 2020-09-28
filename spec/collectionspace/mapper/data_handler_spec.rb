@@ -19,7 +19,7 @@ end
 
   context 'when no config is passed at initialization' do
     it 'uses default config' do
-      expect(@anthro_place_handler.config).to eq(Mapper::DEFAULT_CONFIG)
+      expect(@anthro_place_handler.config).to eq(CollectionSpace::Mapper::DEFAULT_CONFIG)
     end
   end
   
@@ -50,7 +50,7 @@ end
     context 'anthro profile' do
       context 'collectionobject record' do
         before(:all) do
-          @config = Mapper::DEFAULT_CONFIG.merge({
+          @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({
             transforms: {
               'Collection' => {
                 special: %w[downcase_value],
@@ -153,10 +153,10 @@ end
   end
 
   describe '#validate' do
-    it 'returns Mapper::Response object' do
+    it 'returns CollectionSpace::Mapper::Response object' do
       data = { 'objectNumber' => '123' }
       result = @anthro_object_handler.validate(data)
-      expect(result).to be_a(Mapper::Response)
+      expect(result).to be_a(CollectionSpace::Mapper::Response)
     end
   end
 
@@ -197,7 +197,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
         handler = DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache, config)
         result = handler.prep(@data)
         expect(result.transformed_data).not_to be_empty
@@ -226,7 +226,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
         handler = DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache, config)
         result = handler.process(@data)
         expect(result.transformed_data).not_to be_empty
@@ -242,11 +242,11 @@ end
       @result = @anthro_object_handler.map(prep_response, prepper.xphash)
     end
     
-    it 'returns Mapper::Response object' do
-      expect(@result).to be_a(Mapper::Response)
+    it 'returns CollectionSpace::Mapper::Response object' do
+      expect(@result).to be_a(CollectionSpace::Mapper::Response)
     end
 
-    it 'the Mapper::Response object doc attribute is a Nokogiri XML Document' do
+    it 'the CollectionSpace::Mapper::Response object doc attribute is a Nokogiri XML Document' do
       expect(@result.doc).to be_a(Nokogiri::XML::Document)
     end
     context 'when response_mode = normal' do
@@ -256,7 +256,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
         handler = DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache, config)
         prepper = DataPrepper.new(@data, handler)
         result = handler.map(handler.prep(@data), prepper.xphash)

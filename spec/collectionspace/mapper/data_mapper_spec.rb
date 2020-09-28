@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
   context 'lhmc profile' do
     before(:all) do
@@ -93,7 +93,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'collectionobject record' do
       before(:all) do
-        config = Mapper::DEFAULT_CONFIG.merge({
+        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({
           transforms: {
             'collection' => {
               special: %w[downcase_value],
@@ -128,11 +128,11 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
 
       describe '#response' do
-        it 'returns Mapper::Response object' do
+        it 'returns CollectionSpace::Mapper::Response object' do
           res = @datamapper.response
-          expect(res).to be_a(Mapper::Response)
+          expect(res).to be_a(CollectionSpace::Mapper::Response)
         end
-        it 'Mapper::Response.doc is XML document' do
+        it 'CollectionSpace::Mapper::Response.doc is XML document' do
           res = @datamapper.response.doc
           expect(res).to be_a(Nokogiri::XML::Document)
         end
@@ -160,7 +160,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         cache = botgarden_cache
         populate_botgarden(cache)
         prop_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-propagation.json')
-        prop_handler = DataHandler.new(prop_mapper, client, cache, Mapper::DEFAULT_CONFIG)
+        prop_handler = DataHandler.new(prop_mapper, client, cache, CollectionSpace::Mapper::DEFAULT_CONFIG)
         datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/propagation1.json')
         prepper = DataPrepper.new(datahash, prop_handler)
         mapper = DataMapper.new(prepper.prep, prop_handler, prepper.xphash)

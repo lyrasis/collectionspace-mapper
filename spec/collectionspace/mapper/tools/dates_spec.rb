@@ -6,7 +6,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
   before(:all) do
     @client = anthro_client
     @cache = anthro_cache
-    @config = Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
 
   describe Dates::CspaceDate do

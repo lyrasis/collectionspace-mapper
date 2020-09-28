@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
 
   context 'core profile' do
