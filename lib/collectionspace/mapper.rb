@@ -15,6 +15,7 @@ require 'ruby-prof'
 
 module CollectionSpace
   module Mapper
+    extend self
     LOGGER = Logger.new(STDERR)
     DEFAULT_CONFIG = { delimiter: ';',
                        subgroup_delimiter: '^^',
@@ -50,7 +51,7 @@ module CollectionSpace
       end
     end
 
-    def self.setup_data(data)
+    def setup_data(data)
       if data.is_a?(Hash)
         Response.new(data)
       elsif data.is_a?(CollectionSpace::Mapper::Response)
