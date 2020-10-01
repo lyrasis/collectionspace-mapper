@@ -7,12 +7,12 @@
     "object_name": "Propagation",
     "profile_basename": "botgarden",
     "ns_uri": {
-      "propagations_common": "http://collectionspace.org/services/propagation"
+      "propagations_common": null
     },
     "identifier_field": "propNumber"
   },
   "docstructure": {
-    "propagations_common": {
+    "propagation_common": {
       "scarStratGroupList": {
         "scarStratGroup": {
         }
@@ -29,7 +29,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -48,7 +48,7 @@
         "vocabulary": "proptype"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -66,7 +66,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -84,7 +84,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -103,7 +103,7 @@
         "vocabulary": "propreason"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -121,7 +121,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -140,7 +140,7 @@
         "vocabulary": "scarstrat"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "scarStratGroupList",
         "scarStratGroup"
@@ -159,7 +159,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "scarStratGroupList",
         "scarStratGroup"
@@ -179,7 +179,7 @@
         "vocabulary": "durationunit"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "scarStratGroupList",
         "scarStratGroup"
@@ -201,7 +201,7 @@
         ]
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -222,7 +222,7 @@
         ]
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -241,7 +241,7 @@
         "vocabulary": "cuttingtype"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -260,7 +260,7 @@
         "vocabulary": "propHormones"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -278,7 +278,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -299,7 +299,7 @@
         ]
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -318,7 +318,7 @@
         "vocabulary": "propPlantType"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -336,7 +336,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -356,7 +356,7 @@
         "vocabulary": "propActivityType"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -375,7 +375,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -398,7 +398,7 @@
         ]
       },
       "source_type": "authority",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -418,7 +418,7 @@
         "vocabulary": "potsize"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -441,7 +441,7 @@
         ]
       },
       "source_type": "authority",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -461,7 +461,7 @@
         "vocabulary": "propConditions"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -481,7 +481,7 @@
         "vocabulary": "propChemicals"
       },
       "source_type": "vocabulary",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -500,7 +500,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -519,7 +519,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
         "propActivityGroupList",
         "propActivityGroup"
@@ -538,7 +538,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],
@@ -556,7 +556,7 @@
       "transforms": {
       },
       "source_type": "na",
-      "namespace": "propagations_common",
+      "namespace": "propagation_common",
       "xpath": [
 
       ],

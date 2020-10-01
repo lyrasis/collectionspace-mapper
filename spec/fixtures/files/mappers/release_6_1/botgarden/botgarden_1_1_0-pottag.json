@@ -9,7 +9,7 @@
     "ns_uri": {
       "pottags_common": "http://collectionspace.org/services/pottag"
     },
-    "identifier_field": "taxonName"
+    "identifier_field": null
   },
   "docstructure": {
     "pottags_common": {
@@ -88,7 +88,7 @@
 
       ],
       "data_type": "string",
-      "required": "id",
+      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [

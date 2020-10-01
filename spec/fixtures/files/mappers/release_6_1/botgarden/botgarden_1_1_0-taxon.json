@@ -483,28 +483,6 @@
       "transforms": {
         "authority": [
           "citationauthorities",
-          "worldcat"
-        ]
-      },
-      "source_type": "authority",
-      "namespace": "taxon_common",
-      "xpath": [
-        "taxonCitationList"
-      ],
-      "data_type": "string",
-      "required": "n",
-      "repeats": "y",
-      "in_repeating_group": "n",
-      "opt_list_values": [
-
-      ],
-      "datacolumn": "taxonCitationWorldcat"
-    },
-    {
-      "fieldname": "taxonCitation",
-      "transforms": {
-        "authority": [
-          "citationauthorities",
           "citation"
         ]
       },
@@ -521,6 +499,28 @@
 
       ],
       "datacolumn": "taxonCitationLocal"
+    },
+    {
+      "fieldname": "taxonCitation",
+      "transforms": {
+        "authority": [
+          "citationauthorities",
+          "worldcat"
+        ]
+      },
+      "source_type": "authority",
+      "namespace": "taxon_common",
+      "xpath": [
+        "taxonCitationList"
+      ],
+      "data_type": "string",
+      "required": "n",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "taxonCitationWorldcat"
     },
     {
       "fieldname": "taxonNote",
