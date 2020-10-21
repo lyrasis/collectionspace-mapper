@@ -1,13 +1,101 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+RSpec.describe CollectionSpace::Mapper::SingleColumnRequiredField do
+  before(:all) do
+    @rf = CollectionSpace::Mapper::SingleColumnRequiredField.new('objectNumber', ['objectNumber'])
+  end
+  describe '#present_in?' do
+    context 'when data has field key' do
+      it 'returns true' do
+        data = { 'objectnumber' => '123' }
+        expect(@rf.present_in?(data)).to be true
+      end
+    end
+    context 'when data lacks field key' do
+      it 'returns false' do
+        data = { 'objectid' => '123' }
+        expect(@rf.present_in?(data)).to be false
+      end
+    end
+  end
+  describe '#populated_in?' do
+    context 'when field is populated' do
+      it 'returns true' do
+        data = { 'objectnumber' => '123' }
+        expect(@rf.populated_in?(data)).to be true
+      end
+    end
+    context 'when field is not populated' do
+      it 'returns false' do
+        data = { 'objectnumber' => '' }
+        expect(@rf.populated_in?(data)).to be false
+      end
+    end
+  end
+  describe '#missing_message' do
+    it 'returns expected message' do
+      expected = 'required field missing: objectnumber must be present'
+    end
+  end
+  describe '#empty_message' do
+    it 'returns expected message' do
+      expected = 'required field empty: objectnumber must be populated'
+    end
+  end
+end
+
+RSpec.describe CollectionSpace::Mapper::MultiColumnRequiredField do
+  before(:all) do
+    columns = %w[currentLocationLocal currentLocationOffsite currentLocationOrganization]
+    @rf = CollectionSpace::Mapper::MultiColumnRequiredField.new('currentLocation', columns)
+  end
+  describe '#present_in?' do
+    context 'when data contains one of the field datacolumns' do
+      it 'returns true' do
+        data = { 'currentLocationLocal' => 'Big Room' }
+        expect(@rf.present_in?(data)).to be true
+      end
+    end
+    context 'when data lacks any of the field datacolumns' do
+      it 'returns false' do
+        data = { 'objectid' => '123' }
+        expect(@rf.present_in?(data)).to be false
+      end
+    end
+  end
+  describe '#populated_in?' do
+    context 'when data contains one of the field datacolumns' do
+      it 'returns true' do
+        data = { 'currentLocationLocal' => 'Big Room' }
+        expect(@rf.populated_in?(data)).to be true
+      end
+    end
+    context 'when data lacks any of the field datacolumns' do
+      it 'returns false' do
+        data = { 'currentLocationLocal' => '' }
+        expect(@rf.populated_in?(data)).to be false
+      end
+    end
+  end
+  describe '#missing_message' do
+    it 'returns expected message' do
+      expected = 'required field missing: currentlocation. At least one of the following fields must be present: currentLocationLocal, currentLocationOffsite, currentLocationOrganization'
+    end
+  end
+  describe '#empty_message' do
+    it 'returns expected message' do
+      expected = 'required field empty: currentlocation. At least one of the following fields must be populated: currentLocationLocal, currentLocationOffsite, currentLocationOrganization'
+    end
+  end
+end
 
 RSpec.describe CollectionSpace::Mapper::DataValidator do
   before(:all) do
-    @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
-    @anthro_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@anthro_object_mapper), anthro_cache)
-    @botgarden_loanout_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-loanout.json')
-    @botgarden_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@botgarden_loanout_mapper), botgarden_cache)
+    # @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
+    # @anthro_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@anthro_object_mapper), anthro_cache)
+    # @botgarden_loanout_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_1_1_0-loanout.json')
+    # @botgarden_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@botgarden_loanout_mapper), botgarden_cache)
   end
   
   it 'gets downcased list of required fields' do
@@ -20,6 +108,18 @@ RSpec.describe CollectionSpace::Mapper::DataValidator do
       expect(@anthro_dv.validate(data)).to be_a(CollectionSpace::Mapper::Response)
     end
 
+    context 'when recordtype has multiauthority required field' do
+      before(:all) do
+        @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-movement.json')
+        @validator = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@mapper), core_cache)
+      end
+      it 'validates' do
+        data = { 'movementReferenceNumber' => '1', 'currentLocationLocal' => 'Loc' }
+        v = @validator.validate(data)
+        expect(v.valid?).to be true
+      end
+    end
+    
     context 'when recordtype has required field(s)' do
       context 'and when required field present' do
         context 'and required field populated' do
