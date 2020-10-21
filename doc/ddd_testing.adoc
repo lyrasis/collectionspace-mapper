@@ -127,7 +127,7 @@ The following steps assume I've chosen the objectexit record type from the bonsa
 .. Save as XML only (browser wording may vary, but you want the raw XML file)
 .. Save to `collectionspace-mapper/spec/fixtures/files/xml/{profile}/{recordtypename}{number}.xml`
 ... For me, since this is the first bonsai objectexit, I'd save `bonsai/objectexit1.xml`
-
+.. Use http://xmlsoft.org/xmllint.html[xmllint] to reformat the file into separate lines: `xmllint --format -o filename filename`
 
 === 3. Create the datahash for your record
 
