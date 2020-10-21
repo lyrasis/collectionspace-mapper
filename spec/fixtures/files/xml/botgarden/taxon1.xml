@@ -72,8 +72,8 @@
     <csid>3a28e472-1aa0-41ff-a578</csid>
     <taxonRank>species</taxonRank>
     <taxonCitationList>
-      <taxonCitation>urn:cspace:botgarden.collectionspace.org:citationauthorities:name(worldcat):item:name(BullTorreyBotClub331599245358364)'Bull. Torrey Bot. Club 33'</taxonCitation>
       <taxonCitation>urn:cspace:botgarden.collectionspace.org:citationauthorities:name(citation):item:name(SpPl289917531599238184211)'Sp. Pl. 2: 899. 1753'</taxonCitation>
+      <taxonCitation>urn:cspace:botgarden.collectionspace.org:citationauthorities:name(worldcat):item:name(BullTorreyBotClub331599245358364)'Bull. Torrey Bot. Club 33'</taxonCitation>
     </taxonCitationList>
     <taxonIsNamedHybrid>false</taxonIsNamedHybrid>
     <taxonRecordTypes/>

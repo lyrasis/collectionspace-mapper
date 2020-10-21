@@ -29,6 +29,10 @@ module CollectionSpace
         super
       end
 
+      def populated_in?(data)
+        super
+      end
+
       def missing_message
         "required field missing: #{@columns[0]} must be present"
       end
@@ -47,12 +51,16 @@ module CollectionSpace
         super
       end
 
+      def populated_in?(data)
+        super
+      end
+
       def missing_message
-        "required field missing: #{fieldname}. At least one of the following fields must be present: #{@columns.join(', ')}"
+        "required field missing: #{@field}. At least one of the following fields must be present: #{@columns.join(', ')}"
       end
 
       def empty_message
-        "required field empty: #{fieldname}. At least one of the following fields must be populated: #{@columns.join(', ')}"
+        "required field empty: #{@field}. At least one of the following fields must be populated: #{@columns.join(', ')}"
       end
     end
 
@@ -64,12 +72,16 @@ module CollectionSpace
         @required_mappings = @mapper[:mappings].select{ |mapping| mapping[:required] == 'y' }
         @required_fields = get_required_fields
         @id_field = @mapper[:config][:identifier_field].downcase
+        # faux-require ID field for batch processing if it is not technically required by application
+        unless @required_fields.key?(@id_field) || @id_field == 'shortidentifier'
+          @required_fields[@id_field] = [@id_field]
+        end
       end
 
       def validate(data)
         response = CollectionSpace::Mapper::setup_data(data)
         if response.valid?
-          data = data.transform_keys(&:downcase)
+          data = data.transform_keys!(&:downcase)
           res = check_required_fields(data) unless @required_fields.empty?
           response.errors << res
           response.errors = response.errors.flatten.compact
@@ -88,37 +100,22 @@ module CollectionSpace
           column = m[:datacolumn].downcase
           h.key?(field) ? h[field] << column : h[field] = [column]
         end
-        #binding.pry
-        
+        h
       end
 
       def check_required_fields(data)
         errs = []
         @required_fields.each do |field, columns|
+          binding.pry if field == 'currentlocationlocal'
           if columns.length == 1
-            
-          else
+            checkfield = SingleColumnRequiredField.new(field, columns)
+            errs << checkfield.missing_message if !checkfield.present_in?(data)
+            errs << checkfield.empty_message if checkfield.present_in?(data) && !checkfield.populated_in?(data)
+          elsif columns.length > 1
+            checkfield = MultiColumnRequiredField.new(field, columns)
+            errs << checkfield.missing_message if !checkfield.present_in?(data)
+            errs << checkfield.empty_message if checkfield.present_in?(data) && !checkfield.populated_in?(data)
           end
-        end
-        
-        @required_fields.each do |f|
-          val = data.dig(f)
-          err = nil
-          if val.nil?
-            err = {level: :error,
-                   field: f,
-                   type: 'required field missing',
-                   message: "required field #{f} is missing"
-                  }
-          elsif val.empty?
-            err = {level: :error,
-                   field: f,
-                   type: 'required field empty',
-                   message: "required field #{f} is empty"
-                  }
-          else
-          end
-          errs << err
         end
         errs
       end
