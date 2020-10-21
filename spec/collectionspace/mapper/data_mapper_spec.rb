@@ -155,7 +155,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
   end
 
     describe '#add_namespaces' do
-      it 'adds botgarden propagation namespace' do
+      xit 'adds botgarden propagation namespace' do
         client = botgarden_client
         cache = botgarden_cache
         populate_botgarden(cache)
