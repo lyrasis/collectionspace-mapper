@@ -145,17 +145,13 @@ validated = handler.validate(data)
 errors = validated.errors # <1>
 valid = validated.valid? # <2>
 ----
-<1> Returns Array containing one error Hash (shown below)
+<1> Returns Array containing one error message String (shown below)
 <2> Returns Boolean false
 
 [source,ruby]
-.errors[0] - error hash example for missing field
+.errors - Array of error message Strings - example for missing field
 ----
-{ :level=>:error,
-   :field=>"objectnumber",
-   :type=>"required field missing",
-   :message=>"required field objectnumber is missing"
-}
+['required field missing: objectNumber must be present']
 ----
 
 [source,ruby]
@@ -166,17 +162,13 @@ validated = handler.validate(data)
 errors = validated.errors # <1>
 valid = validated.valid? # <2>
 ----
-<1> Returns Array containing one error Hash (shown below)
+<1> Returns Array containing one error message String (shown below)
 <2> Returns Boolean false
 
 [source,ruby]
-.errors[0] - error hash example for empty field
+.errors - Array of error message Strings - example for empty field
 ----
-{ :level=>:error,
-   :field=>"objectnumber",
-   :type=>"required field empty",
-   :message=>"required field objectnumber is empty"
-}
+['required field empty: objectNumber must be populated']
 ----
 
 === Processing a record
