@@ -5,6 +5,7 @@ require_relative './bonsai_helpers'
 require_relative './botgarden_helpers'
 require_relative './core_helpers'
 require_relative './lhmc_helpers'
+require_relative './ucb_helpers'
 
 module Helpers
   extend self
@@ -34,15 +35,23 @@ module Helpers
     doc.xpath('/*/*').each{ |n| n.name = n.name.sub('ns2:', '') }
     doc
   end
-  
-  def get_xml_fixture(filename)
-    doc = remove_namespaces(Nokogiri::XML(File.read("#{FIXTUREDIR}/#{filename}")){ |c| c.noblanks })
-    # fields to omit from testing across the board
-    rejectfields = %w[computedCurrentLocation].sort
+
+  def remove_blank_structured_dates(doc)
     doc.traverse do |node|
       # CSpace saves empty structured date fields with only a scalarValuesComputed value of false
       # we don't want to compare against these empty nodes
       node.remove if node.name['Date'] && node.text == 'false'
+    end
+    doc
+  end
+  
+  def get_xml_fixture(filename)
+    doc = remove_namespaces(Nokogiri::XML(File.read("#{FIXTUREDIR}/#{filename}")){ |c| c.noblanks })
+    doc = remove_blank_structured_dates(doc)
+    
+    # fields to omit from testing across the board
+    rejectfields = %w[computedCurrentLocation].sort
+    doc.traverse do |node|
       # Drop empty nodes
       node.remove unless node.text.match?(/\S/m)
       # Drop sections of the document we don't write with the mapper

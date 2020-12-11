@@ -15,14 +15,22 @@ module CollectionSpace
 
         case @source_type
         when 'authority'
-          authconfig = @mapping[:transforms][:authority]
-          @type = authconfig[0]
-          @subtype = authconfig[1]
-          check_terms
+          if @column['refname']
+            #validate values are refnames
+          else
+            authconfig = @mapping[:transforms][:authority]
+            @type = authconfig[0]
+            @subtype = authconfig[1]
+            check_terms
+          end
         when 'vocabulary'
-          @type = 'vocabularies'
-          @subtype = @mapping[:transforms][:vocabulary]
-          check_terms
+          if @column['refname']
+            #validate values are refnames
+          else
+            @type = 'vocabularies'
+            @subtype = @mapping[:transforms][:vocabulary]
+            check_terms
+          end
         when 'optionlist'
           check_opt_list_vals
         end

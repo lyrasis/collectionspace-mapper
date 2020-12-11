@@ -103,28 +103,149 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
     end
 
-    context 'when date string is not Chronic or services parseable (e.g. VIII.XIV.MMXX)' do
-      before(:all) do
-        @string = 'VIII.XIV.MMXX'
-        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+    context 'when date string is not Chronic or services parseable' do
+      context 'date = VIII.XIV.MMXX' do
+        before(:all) do
+          @string = 'VIII.XIV.MMXX'
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+        end
+
+        it '.timestamp will be nil' do
+          res = @res.timestamp
+          expect(res).to be_nil
+        end
+
+        it '.mappable is populated by hash' do
+          res = @res.mappable
+          expect(res).to be_a(Hash)
+        end
+
+        it 'dateDisplayDate = the unparseable string' do
+          expect(@res.mappable['dateDisplayDate']).to eq('VIII.XIV.MMXX')
+        end
+
+        it 'scalarValuesComputed = false' do
+          expect(@res.mappable['scalarValuesComputed']).to eq('false')
+        end
+      end
+    end
+
+    context 'when date string is Chronic parseable but we want services parsing' do
+      context 'when date string = march 2020' do
+        before(:all) do
+          @string = 'march 2020'
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+        end
+
+        it 'dateEarliestScalarValue = 2020-03-01T00:00:00.000Z' do
+          expect(@res.mappable['dateEarliestScalarValue']).to eq('2020-03-01T00:00:00.000Z')
+        end
+
+        it 'dateLatestScalarValue = 2020-04-01T00:00:00.000Z' do
+          expect(@res.mappable['dateLatestScalarValue']).to eq('2020-04-01T00:00:00.000Z')
+        end
+
+        it 'dateEarliestSingleMonth = 3' do
+          expect(@res.mappable['dateEarliestSingleMonth']).to eq('3')
+        end
+        
+        it 'dateLatestMonth = 3' do
+          expect(@res.mappable['dateLatestMonth']).to eq('3')
+        end
+
+        it 'dateEarliestSingleDay = 1' do
+          expect(@res.mappable['dateEarliestSingleDay']).to eq('1')
+        end
+        
+        it 'dateLatestDay = 31' do
+          expect(@res.mappable['dateLatestDay']).to eq('31')
+        end
+
+        it 'dateEarliestSingleYear = 2020' do
+          expect(@res.mappable['dateEarliestSingleYear']).to eq('2020')
+        end
+        
+        it 'dateLatestYear = 2020' do
+          expect(@res.mappable['dateLatestYear']).to eq('2020')
+        end
       end
 
-      it '.timestamp will be nil' do
-        res = @res.timestamp
-        expect(res).to be_nil
+      context 'when date string = 2020-03' do
+        before(:all) do
+          @string = '2020-03'
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+        end
+
+        it 'dateEarliestScalarValue = 2020-03-01T00:00:00.000Z' do
+          expect(@res.mappable['dateEarliestScalarValue']).to eq('2020-03-01T00:00:00.000Z')
+        end
+
+        it 'dateLatestScalarValue = 2020-04-01T00:00:00.000Z' do
+          expect(@res.mappable['dateLatestScalarValue']).to eq('2020-04-01T00:00:00.000Z')
+        end
+
+        it 'dateEarliestSingleMonth = 3' do
+          expect(@res.mappable['dateEarliestSingleMonth']).to eq('3')
+        end
+        
+        it 'dateLatestMonth = 3' do
+          expect(@res.mappable['dateLatestMonth']).to eq('3')
+        end
+
+        it 'dateEarliestSingleDay = 1' do
+          expect(@res.mappable['dateEarliestSingleDay']).to eq('1')
+        end
+        
+        it 'dateLatestDay = 31' do
+          expect(@res.mappable['dateLatestDay']).to eq('31')
+        end
+
+        it 'dateEarliestSingleYear = 2020' do
+          expect(@res.mappable['dateEarliestSingleYear']).to eq('2020')
+        end
+        
+        it 'dateLatestYear = 2020' do
+          expect(@res.mappable['dateLatestYear']).to eq('2020')
+        end
       end
 
-      it '.mappable is populated by hash' do
-        res = @res.mappable
-        expect(res).to be_a(Hash)
-      end
+      context 'when date string = 2002' do
+        before(:all) do
+          @string = '2002'
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+        end
 
-      it 'dateDisplayDate = the unparseable string' do
-        expect(@res.mappable['dateDisplayDate']).to eq('VIII.XIV.MMXX')
-      end
+        it 'dateEarliestScalarValue = 2002-01-01T00:00:00.000Z' do
+          expect(@res.mappable['dateEarliestScalarValue']).to eq('2002-01-01T00:00:00.000Z')
+        end
 
-      it 'scalarValuesComputed = false' do
-        expect(@res.mappable['scalarValuesComputed']).to eq('false')
+        it 'dateLatestScalarValue = 2003-01-01T00:00:00.000Z' do
+          expect(@res.mappable['dateLatestScalarValue']).to eq('2003-01-01T00:00:00.000Z')
+        end
+
+        it 'dateEarliestSingleMonth = 1' do
+          expect(@res.mappable['dateEarliestSingleMonth']).to eq('1')
+        end
+        
+        it 'dateLatestMonth = 12' do
+          expect(@res.mappable['dateLatestMonth']).to eq('12')
+        end
+
+        it 'dateEarliestSingleDay = 1' do
+          expect(@res.mappable['dateEarliestSingleDay']).to eq('1')
+        end
+        
+        it 'dateLatestDay = 31' do
+          expect(@res.mappable['dateLatestDay']).to eq('31')
+        end
+
+        it 'dateEarliestSingleYear = 2002' do
+          expect(@res.mappable['dateEarliestSingleYear']).to eq('2002')
+        end
+        
+        it 'dateLatestYear = 2002' do
+          expect(@res.mappable['dateLatestYear']).to eq('2002')
+        end
       end
     end
   end
