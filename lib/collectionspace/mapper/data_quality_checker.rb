@@ -15,22 +15,9 @@ module CollectionSpace
 
         case @source_type
         when 'authority'
-          if @column['refname']
-            validate_refnames
-          else
-            authconfig = @mapping[:transforms][:authority]
-            @type = authconfig[0]
-            @subtype = authconfig[1]
-            check_terms
-          end
+          validate_refnames if @column['refname']
         when 'vocabulary'
-          if @column['refname']
-            validate_refnames
-          else
-            @type = 'vocabularies'
-            @subtype = @mapping[:transforms][:vocabulary]
-            check_terms
-          end
+          validate_refnames if @column['refname']
         when 'optionlist'
           check_opt_list_vals
         end
@@ -61,29 +48,6 @@ module CollectionSpace
           value: val,
           message: "Malformed refname value in #{@column} column. Malformed value: #{val}."
         }
-      end
-      
-      def check_terms
-        if @data.first.is_a?(String)
-          @data.each{ |val| check_term(val) unless val.blank? }
-        else
-          @data.each{ |arr| arr.each{ |val| check_term(val) unless val.blank? } }
-        end
-      end
-
-      def check_term(val)
-        term_report = {
-          category: @source_type.to_sym,
-          field: @column,
-          type: @type,
-          subtype: @subtype,
-          value: val
-          }
-        if val.start_with?('urn:cspace')
-          @terms << term_report.merge({ found: true })
-        else
-          @terms << term_report.merge({ found: false })
-        end
       end
 
       def check_opt_list_vals
