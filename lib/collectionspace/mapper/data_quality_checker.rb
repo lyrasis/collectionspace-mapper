@@ -16,7 +16,7 @@ module CollectionSpace
         case @source_type
         when 'authority'
           if @column['refname']
-            #validate values are refnames
+            validate_refnames
           else
             authconfig = @mapping[:transforms][:authority]
             @type = authconfig[0]
@@ -25,7 +25,7 @@ module CollectionSpace
           end
         when 'vocabulary'
           if @column['refname']
-            #validate values are refnames
+            validate_refnames
           else
             @type = 'vocabularies'
             @subtype = @mapping[:transforms][:vocabulary]
@@ -38,6 +38,31 @@ module CollectionSpace
 
       private
 
+      def validate_refnames
+        if @data.first.is_a?(String)
+          @data.each{ |val| validate_refname(val) unless val.blank? }
+        else
+          @data.each{ |arr| arr.each{ |val| validate_refname(val) unless val.blank? } }
+        end
+      end
+
+      def validate_refname(val)
+        type_segment = {
+          'authority' => ':\w+authorit(ies|y):',
+          'vocabulary' => ':vocabularies:'
+        }
+        pattern = Regexp.new("^urn:cspace:.+#{type_segment[@source_type]}name\(.+\):item:name(.+)'.+'$")
+        return if val.match?(pattern)
+        @warnings << {
+          category: :malformed_refname_value,
+          field: @column,
+          type: @source_type,
+          subtype: nil,
+          value: val,
+          message: "Malformed refname value in #{@column} column. Malformed value: #{val}."
+        }
+      end
+      
       def check_terms
         if @data.first.is_a?(String)
           @data.each{ |val| check_term(val) unless val.blank? }
