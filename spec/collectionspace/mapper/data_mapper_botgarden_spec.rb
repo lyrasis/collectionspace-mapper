@@ -67,7 +67,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         # these tests are waiting for namespace uri fixes in CCU RecordMappers
         xit 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
-          puts diff
+          #puts diff
           expect(diff).to eq([])
         end
 
@@ -104,7 +104,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
         it 'maps as expected' do
           @fixture_xpaths.each do |xpath|
-            puts xpath
+            #puts xpath
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
