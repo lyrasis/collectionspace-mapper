@@ -56,12 +56,16 @@ module CollectionSpace
       end
       
       def clean_doc
-        @doc.traverse{ |node| node.remove unless node.text.match?(/\S/m) }
+        @doc.traverse do |node|
+          node.remove if node.text == '%NULLVALUE%'
+          node.remove unless node.text.match?(/\S/m)
+        end
       end
       
       def add_namespaces
         @doc.xpath('/*/*').each do |section|
-          uri = @handler.mapper[:config][:ns_uri][section.name]
+          fetchuri = @handler.mapper.dig(:config, :ns_uri, section.name)
+          uri = fetchuri.nil? ? 'http://no.uri.found' : fetchuri
           section.add_namespace_definition('ns2', uri)
           section.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
           section.name = "ns2:#{section.name}"

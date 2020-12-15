@@ -166,6 +166,8 @@ module CollectionSpace
           next if source_type.nil?
           
           column = mapping[:datacolumn]
+          next if column['refname']
+          
           data = sourcedata.fetch(column, nil)
           next if data.blank?
 

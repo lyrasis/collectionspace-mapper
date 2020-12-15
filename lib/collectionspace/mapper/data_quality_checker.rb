@@ -15,14 +15,9 @@ module CollectionSpace
 
         case @source_type
         when 'authority'
-          authconfig = @mapping[:transforms][:authority]
-          @type = authconfig[0]
-          @subtype = authconfig[1]
-          check_terms
+          validate_refnames if @column['refname']
         when 'vocabulary'
-          @type = 'vocabularies'
-          @subtype = @mapping[:transforms][:vocabulary]
-          check_terms
+          validate_refnames if @column['refname']
         when 'optionlist'
           check_opt_list_vals
         end
@@ -30,27 +25,29 @@ module CollectionSpace
 
       private
 
-      def check_terms
+      def validate_refnames
         if @data.first.is_a?(String)
-          @data.each{ |val| check_term(val) unless val.blank? }
+          @data.each{ |val| validate_refname(val) unless val.blank? }
         else
-          @data.each{ |arr| arr.each{ |val| check_term(val) unless val.blank? } }
+          @data.each{ |arr| arr.each{ |val| validate_refname(val) unless val.blank? } }
         end
       end
 
-      def check_term(val)
-        term_report = {
-          category: @source_type.to_sym,
+      def validate_refname(val)
+        type_segment = {
+          'authority' => ':\w+authorit(ies|y):',
+          'vocabulary' => ':vocabularies:'
+        }
+        pattern = Regexp.new("^urn:cspace:.+#{type_segment[@source_type]}name\(.+\):item:name(.+)'.+'$")
+        return if val.match?(pattern)
+        @warnings << {
+          category: :malformed_refname_value,
           field: @column,
-          type: @type,
-          subtype: @subtype,
-          value: val
-          }
-        if val.start_with?('urn:cspace')
-          @terms << term_report.merge({ found: true })
-        else
-          @terms << term_report.merge({ found: false })
-        end
+          type: @source_type,
+          subtype: nil,
+          value: val,
+          message: "Malformed refname value in #{@column} column. Malformed value: #{val}."
+        }
       end
 
       def check_opt_list_vals

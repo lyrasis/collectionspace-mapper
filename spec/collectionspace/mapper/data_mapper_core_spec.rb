@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({delimiter: ';'})
   end
 
   context 'core profile' do
@@ -95,7 +95,6 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
-          puts diff
         end
 
         it 'maps as expected' do
