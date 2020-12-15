@@ -139,6 +139,15 @@ This is a JSON representation of one "row" of imported data.
 . Save JSON file in `collectionspace-mapper/spec/fixtures/files/datahashes/{profile}/{recordtypename}{number}.json`
 .. The number in the filename should, in most cases, match up with the number in your saved XML file
 
+[TIP]
+====
+The utility script `utils/csv-to-datahashes.rb` can be used to create one datahash per row of a CSV file. Usage (assuming you are in the base directory of this repo): 
+
+`ruby utils/csv-to-datahashes.rb -i PATH_TO_CSV_FILE'`
+
+This will create multiple JSON files in the same directory as the CSV file. The JSON files have the same name as the CSV file, plus a number on the end to indicate which row of the CSV is the source of the JSON. The header row of the CSV is row 1, so your JSON files start numbering at row 2. 
+====
+
 *Some notes on datahash conventions:*
 
 Example: https://github.com/collectionspace/collectionspace-mapper/blob/master/spec/fixtures/files/datahashes/bonsai/objectexit1.json[`bonsai/objectexit1.json`]
