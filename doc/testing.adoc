@@ -19,18 +19,6 @@ toc::[]
 - https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/background.adoc[Conceptual background on purpose of CollectionSpace and `collectionspace-mapper`]
 - https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/setup_for_development.adoc[Get set up for development]
 
-== Organizing the work (+ useful reference info)
-
-https://docs.google.com/spreadsheets/d/1nhJRbgGjl7ZCTNlFFI1PnrpoJe-fDML5zMrS275HS3Q/edit?usp=sharing[Google Sheets file for organizing the work]
-
-I gave Erick, Kevin, and Kamore permission to edit the file, so the link should work for you if you log in with a Google account linked to your DDD email.
-
-CollectionSpace isn't always totally consistent, so this spreadsheet also serves as a reference for the internal/code names of different record types, how those record types are _usually_ displayed in the UI, and the pattern for using the CollectionSpace API to retrieve an XML version of a record created in the application.
-
-Priority 1 is highest priority. I will add numbers as the work proceeds.
-
-Put your name in the `claimed_by` column before starting work on a record type, so work doesn't get duplicated.
-
 == Steps
 
 The following steps assume I've chosen the objectexit record type from the bonsai profile.
