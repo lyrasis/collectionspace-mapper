@@ -21,11 +21,10 @@ toc::[]
 
 == Steps
 
-The following steps assume I've chosen the objectexit record type from the bonsai profile.
+The following steps assume I've chosen to test the objectexit record type from the bonsai profile.
 
 === 1. Prepare
 
-. Choose a record type from the spreadsheet to work on and put your name in the `claimed_by` column.
 . `cd` into this repo's folder
 . `git checkout master` (if not already on master)
 . `git pull`
@@ -87,6 +86,8 @@ Example: https://github.com/collectionspace/collectionspace-mapper/blob/master/s
 * `title` field -- example for including double quotes if necessary
 
 === 4. Populate cache with authority and vocabulary term data from your record
+
+*This step can be skipped if you are importing refname values and not display names of authority/vocabulary terms.*
 
 Do this in the `spec/{profile}_helpers.rb` file.
 
