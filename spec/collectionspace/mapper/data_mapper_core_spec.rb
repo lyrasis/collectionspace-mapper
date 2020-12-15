@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({delimiter: ';'})
   end
 
   context 'core profile' do
@@ -68,6 +68,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
         it 'maps as expected' do
           @fixture_xpaths.each do |xpath|
+            puts xpath
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)

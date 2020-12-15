@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataPrepper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
+    @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({delimiter: ';'})
   end
   
   context 'anthro profile' do
