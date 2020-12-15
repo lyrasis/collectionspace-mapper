@@ -82,6 +82,33 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
     end
 
+    context 'when date string has two-digit year (e.g. 9/19/91)' do
+      before(:all) do
+        @string = '9/19/91'
+      end
+
+      context 'when config[:two_digit_year_handling] = coerce' do
+        before(:all) do
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+        end
+
+        it 'Chronic parses date with coerced 4-digit year' do
+          expect(@res.timestamp.to_s).to start_with('1991-09-19')
+        end
+      end
+
+      context 'when config[:two_digit_year_handling] = literal' do
+        before(:all) do
+          config = @config.merge({two_digit_year_handling: 'literal'})
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config)
+        end
+
+        it 'Services parses date with uncoerced 2-digit year' do
+          expect(@res.mappable['dateEarliestSingleYear']).to eq('91')
+        end
+      end
+    end
+    
     context 'when date string is not Chronic parseable (e.g. 1/2/2000 - 12/21/2001)' do
       before(:all) do
         @string = '1/2/2000 - 12/21/2001'

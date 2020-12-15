@@ -30,10 +30,14 @@ module CollectionSpace
               '^\d{1,2} \w+ \d{4}$' #15 Feb 2020, 15 February 2020
             ].map{ |f| Regexp.new(f) }
 
+            two_digit_year_date_formats = [
+              '^\d{1,2}[-\/]\d{1,2}[-\/]\d{2}$'
+            ].map{ |f| Regexp.new(f) }
+            
             service_parseable_month_formats = [
               '^\w+ \d{4}$',
               '^\d{4} \w+$',
-              ].map{ |f| Regexp.new(f) }
+            ].map{ |f| Regexp.new(f) }
 
             other_month_formats = [
               '^\d{4}-\d{2}$',
@@ -41,8 +45,15 @@ module CollectionSpace
             ].map{ |f| Regexp.new(f) }
 
             if date_formats.any?{ |re| @date_string.match?(re) }
-              try_chronic_parse
+              try_chronic_parse(@date_string)
               @timestamp ? create_mappable_date : try_services_query
+            elsif two_digit_year_date_formats.any?{ |re| @date_string.match?(re) }
+              if @config[:two_digit_year_handling] == 'literal'
+                try_services_query
+              else
+                try_chronic_parse(coerced_year_date)
+                @timestamp ? create_mappable_date : try_services_query
+              end
             elsif service_parseable_month_formats.any?{ |re| @date_string.match?(re) }
               try_services_query
             elsif other_month_formats.any?{ |re| @date_string.match?(re) }
@@ -57,11 +68,26 @@ module CollectionSpace
             @stamp = stamp.blank? ? @date_string : stamp
           end
 
-          def try_chronic_parse
-            if @config[:date_format] == 'day month year'
-              @timestamp = Chronic.parse(@date_string, endian_precedence: :little)
+          def coerced_year_date
+            val = @date_string.gsub('/', '-').split('-')
+            yr = val.pop
+            this_year = Time.now.year.to_s
+            this_year_century = this_year[0,2]
+            this_year_last_two = this_year[2,2].to_i
+
+            if yr.to_i > this_year_last_two
+              val <<  "#{this_year_century.to_i - 1}#{yr}"
             else
-              @timestamp = Chronic.parse(@date_string)
+              val << "#{this_year_century}#{yr}"
+            end
+            val.join('-')
+          end
+          
+          def try_chronic_parse(string)
+            if @config[:date_format] == 'day month year'
+              @timestamp = Chronic.parse(string, endian_precedence: :little)
+            else
+              @timestamp = Chronic.parse(string)
             end
           end
           
@@ -82,7 +108,6 @@ module CollectionSpace
           def create_mappable_month
             year = @date_string.match(/(\d{4})/)[1].to_i
             month = @date_string.sub(year.to_s, '').match(/(\d{1,2})/)[1].to_i
-            next_year = year + 1
             next_month = month + 1
             last_day_of_month = Date.new(year, month, -1).day
             

@@ -21,7 +21,7 @@ module CollectionSpace
                        response_mode: 'normal',
                        force_defaults: false,
                        date_format: 'month day year',
-                       two_digit_year_handling: ''
+                       two_digit_year_handling: 'coerce'
                      }
 
     require 'collectionspace/mapper/data_handler'
