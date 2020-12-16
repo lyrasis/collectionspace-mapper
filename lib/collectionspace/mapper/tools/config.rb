@@ -12,17 +12,39 @@ module CollectionSpace
       end
 
       class ConfigResponseModeError < StandardError; end
+      class UnhandledConfigFormatError < StandardError; end
     end
 
     module Tools
       class Config
         attr_reader :hash
-        def initialize(hash)
-          @hash = hash
+        def initialize(config)
+          if config.is_a?(String)
+          @hash = JSON.parse(config)
+          symbolize
+          elsif config.is_a?(Hash)
+            @hash = config
+          else
+            raise CollectionSpace::Mapper::Errors::UnhandledConfigFormatError
+          end
           validate
         end
 
         private
+
+        def symbolize
+          @hash.transform_keys!(&:to_sym)
+          symbolize_transforms if @hash[:transforms]
+        end
+
+        def symbolize_transforms
+          @hash[:transforms].each do |field, hash|
+            hash = hash.transform_keys!(&:to_sym)
+            if hash[:replacements]
+              hash[:replacements].map!{ |h| h.transform_keys!(&:to_sym) }
+            end
+          end
+        end
         
         def validate
           begin
