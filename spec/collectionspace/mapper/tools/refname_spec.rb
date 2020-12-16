@@ -7,22 +7,53 @@ RSpec.describe CollectionSpace::Mapper::Tools::RefName do
     @cache = anthro_cache
     populate_anthro(@cache)
   end
-  describe '#build' do
+  context 'when initialized with source_type, type, subtype, term, and cache' do
     it 'builds refname for authorities' do
-      source_type = :authority
-      type = 'personauthorities'
-      subtype = 'person'
-      term = 'Mary Poole'
+      args = {
+        source_type: :authority,
+        type: 'personauthorities',
+        subtype: 'person',
+        term: 'Mary Poole',
+        cache: @cache
+      }
       refname = "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(MaryPoole1796320156)'Mary Poole'"
-      expect(CollectionSpace::Mapper::Tools::RefName.build(source_type, type, subtype, term, @cache)).to eq(refname)
+      result = CollectionSpace::Mapper::Tools::RefName.new(args)
+      expect(result.urn).to eq(refname)
     end
+
     it 'builds refname for vocabularies' do
-      source_type = :vocabulary
-      type = 'vocabularies'
-      subtype = 'annotationtype'
-      term = 'another term'
+      args = {
+        source_type: :vocabulary,
+        type: 'vocabularies',
+        subtype: 'annotationtype',
+        term: 'another term',
+        cache: @cache
+      }
       refname = "urn:cspace:anthro.collectionspace.org:vocabularies:name(annotationtype):item:name(anotherterm)'another term'"
-      expect(CollectionSpace::Mapper::Tools::RefName.build(source_type, type, subtype, term, @cache)).to eq(refname)
+      result = CollectionSpace::Mapper::Tools::RefName.new(args)
+      expect(result.urn).to eq(refname)
+    end
+  end
+
+  context 'when initialized with urn' do
+    it 'builds refname from URN' do
+      args = {
+        urn: "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(MaryPoole1796320156)'Mary Poole'"
+      }
+      result = CollectionSpace::Mapper::Tools::RefName.new(args)
+      expect(result.domain).to eq('anthro.collectionspace.org')
+      expect(result.display_name).to eq('Mary Poole')
+    end
+  end
+
+  context 'when initialized with non-sensical argument combination' do
+    it 'raises error' do
+      args = {
+        urn: "urn:cspace:anthro.collectionspace.org:personauthorities:name(person):item:name(MaryPoole1796320156)'Mary Poole'",
+        cache: @cache
+      }
+      expect { CollectionSpace::Mapper::Tools::RefName.new(args) }.to raise_error(CollectionSpace::Mapper::Tools::RefNameArgumentError)
     end
   end
 end
+
