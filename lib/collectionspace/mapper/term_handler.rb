@@ -37,21 +37,25 @@ module CollectionSpace
       def handle_term(val)
         return '' if val.blank?
         
-        refname = @cache.get(@type, @subtype, val)
+        refname_urn = @cache.get(@type, @subtype, val)
         
         term_report = {
           category: @source_type,
           field: @column,
-          type: @type,
-          subtype: @subtype,
-          value: val
           }
-        if refname
-          @terms << term_report.merge({ found: true })
-          refname
+        if refname_urn
+          refname_obj = CollectionSpace::Mapper::Tools::RefName.new(urn: refname_urn)
+          @terms << term_report.merge({ found: true, refname: refname_obj })
+          refname_urn
         else
-          @terms << term_report.merge({ found: false })
-          CollectionSpace::Mapper::Tools::RefName.build(@source_type, @type, @subtype, val, @cache)
+          refname_obj = CollectionSpace::Mapper::Tools::RefName.new(
+            source_type: @source_type,
+            type: @type,
+            subtype: @subtype,
+            term: val,
+            cache: @cache)
+          @terms << term_report.merge({ found: false, refname: refname_obj })
+          refname_obj.urn
         end
       end
     end

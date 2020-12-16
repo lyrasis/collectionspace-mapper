@@ -111,7 +111,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
       end
       it 'term hash :found == false when term does not exist already' do
         chk = @th.terms.select{ |h| !h[:found] }
-        expect(chk.first[:value]).to eq('Klingon')
+        expect(chk.first[:refname].display_name).to eq('Klingon')
       end
     end
 
@@ -141,7 +141,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
       end
       it 'term hash :found == false when term does not exist already' do
         chk = @th.terms.select{ |h| !h[:found] }
-        expect(chk.first[:value]).to eq('Reference 1')
+        expect(chk.first[:refname].display_name).to eq('Reference 1')
       end
     end
   end
