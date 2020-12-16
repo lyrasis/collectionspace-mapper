@@ -9,6 +9,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
                response_mode: "normal",
                force_defaults: false,
                date_format: "month day year",
+               two_digit_year_handling: "coerce",
                default_values: {
                  'objectNameType' => 'simple',
                  'objectNameCurrency' => 'current',
