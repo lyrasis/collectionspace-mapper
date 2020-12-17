@@ -57,15 +57,15 @@ module CollectionSpace
       elsif data.is_a?(CollectionSpace::Mapper::Response)
         data
       else
-        begin
+        #begin
           raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
-        rescue Errors::UnprocessableDataError => error
-          error.set_backtrace([])
-          CollectionSpace::Mapper::LOGGER.error(error)
-          err_resp = Response.new(data)
-          err_resp.errors << error
-          err_resp
-        end
+        # rescue Errors::UnprocessableDataError => error
+        #   error.set_backtrace([])
+        #   CollectionSpace::Mapper::LOGGER.error(error)
+        #   err_resp = Response.new(data)
+        #   err_resp.errors << error
+        #   err_resp
+        # end
       end
     end
 
