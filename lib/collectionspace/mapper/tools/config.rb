@@ -66,8 +66,6 @@ module CollectionSpace
           end
         end
 
-        private
-
         def valid_response_mode
           valid = %w[normal verbose]
           value = @hash[:response_mode]

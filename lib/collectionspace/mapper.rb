@@ -19,6 +19,8 @@ module CollectionSpace
     DEFAULT_CONFIG = { delimiter: '|',
                        subgroup_delimiter: '^^',
                        response_mode: 'normal',
+                       check_terms: true,
+                       check_record_status: true,
                        force_defaults: false,
                        date_format: 'month day year',
                        two_digit_year_handling: 'coerce'
@@ -57,15 +59,7 @@ module CollectionSpace
       elsif data.is_a?(CollectionSpace::Mapper::Response)
         data
       else
-        #begin
-          raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
-        # rescue Errors::UnprocessableDataError => error
-        #   error.set_backtrace([])
-        #   CollectionSpace::Mapper::LOGGER.error(error)
-        #   err_resp = Response.new(data)
-        #   err_resp.errors << error
-        #   err_resp
-        # end
+        raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
       end
     end
 

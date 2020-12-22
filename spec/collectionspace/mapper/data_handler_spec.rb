@@ -22,6 +22,22 @@ end
       expect(@anthro_place_handler.config).to eq(CollectionSpace::Mapper::DEFAULT_CONFIG)
     end
   end
+
+  context 'when cache is not directly passed in at initialization' do
+    context 'when mapping an authority' do
+      it 'cache.search_identifiers = false' do
+        mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
+        dh = CollectionSpace::Mapper::DataHandler.new(mapper, @anthro_client)
+        expect(dh.cache.inspect).to include('@search_identifiers=false')
+      end
+    end
+    context 'when mapping a non-authority' do
+      it 'cache.search_identifiers = true' do
+        dh = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client)
+        expect(dh.cache.inspect).to include('@search_identifiers=true')
+      end
+    end
+  end
   
   describe '#is_authority' do
     context 'anthro profile' do

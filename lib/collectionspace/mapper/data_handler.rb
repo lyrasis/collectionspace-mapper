@@ -8,15 +8,15 @@ module CollectionSpace
       attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
         :is_authority, :known_fields
 
-      def initialize(record_mapper, client, cache,
+      def initialize(record_mapper, client, cache = nil,
                      config = CollectionSpace::Mapper::DEFAULT_CONFIG
                     )
         @mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(record_mapper)
-        @client = client
-        @cache = cache
-        @config = get_config(config)
-        @response_mode = @config[:response_mode]
         @is_authority = get_is_authority
+        @client = client
+        @config = get_config(config)
+        @cache = cache.nil? ? get_cache : cache
+        @response_mode = @config[:response_mode]
         add_short_id_mapping if @is_authority
         @known_fields = @mapper[:mappings].map{ |m| m[:datacolumn] }.map(&:downcase)
         @mapper[:xpath] = xpath_hash
@@ -73,6 +73,19 @@ module CollectionSpace
       def get_config(config)
         config_object = CollectionSpace::Mapper::Tools::Config.new(config)
         config_object.hash
+      end
+
+      def get_cache
+        config = {
+          domain: @client.domain,
+          error_if_not_found: false,
+          lifetime: 5 * 60,
+          search_delay: 5 * 60,
+          search_enabled: true
+        }
+        # search for authority records by display name, not short ID
+        config[:search_identifiers] = @is_authority ? false : true
+        CollectionSpace::RefCache.new(config: config, client: @client)
       end
       
       def add_short_id_mapping
