@@ -1,15 +1,16 @@
 {
   "config": {
+    "profile_basename": "core",
     "document_name": "conditionchecks",
     "service_name": "Conditionchecks",
     "service_path": "conditionchecks",
     "service_type": "procedure",
     "object_name": "Conditioncheck",
-    "profile_basename": "core",
     "ns_uri": {
       "conditionchecks_common": "http://collectionspace.org/services/conditioncheck"
     },
-    "identifier_field": "conditionCheckRefNumber"
+    "identifier_field": "conditionCheckRefNumber",
+    "search_field": "conditionCheckRefNumber"
   },
   "docstructure": {
     "conditionchecks_common": {
@@ -49,67 +50,70 @@
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "y",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckRefNumber"
+      "datacolumn": "conditionCheckRefNumber",
+      "required": "y"
     },
     {
       "fieldname": "conditionCheckAssessmentDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckAssessmentDate"
+      "datacolumn": "conditionCheckAssessmentDate",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckMethod",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "conditionCheckMethods",
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
         "observed",
         "xrayed"
       ],
-      "datacolumn": "conditionCheckMethod"
+      "datacolumn": "conditionCheckMethod",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckReason",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "conditionCheckReasons",
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
@@ -119,7 +123,8 @@
         "loanin",
         "newacquisition"
       ],
-      "datacolumn": "conditionCheckReason"
+      "datacolumn": "conditionCheckReason",
+      "required": "n"
     },
     {
       "fieldname": "conditionChecker",
@@ -130,18 +135,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckerPerson"
+      "datacolumn": "conditionCheckerPerson",
+      "required": "n"
     },
     {
       "fieldname": "conditionChecker",
@@ -152,48 +158,69 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckerOrganization"
+      "datacolumn": "conditionCheckerOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "conditionChecker",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "conditionchecks_common",
+      "xpath": [
+
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "conditionCheckerRefname",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckNote"
+      "datacolumn": "conditionCheckNote",
+      "required": "n"
     },
     {
       "fieldname": "objectAuditCategory",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "objectAuditCategories",
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
@@ -201,19 +228,20 @@
         "low",
         "medium"
       ],
-      "datacolumn": "objectAuditCategory"
+      "datacolumn": "objectAuditCategory",
+      "required": "n"
     },
     {
       "fieldname": "conservationTreatmentPriority",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "conservationTreatmentPriorities",
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
@@ -221,38 +249,40 @@
         "low",
         "medium"
       ],
-      "datacolumn": "conservationTreatmentPriority"
+      "datacolumn": "conservationTreatmentPriority",
+      "required": "n"
     },
     {
       "fieldname": "nextConditionCheckDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "nextConditionCheckDate"
+      "datacolumn": "nextConditionCheckDate",
+      "required": "n"
     },
     {
       "fieldname": "completeness",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "completenessLevels",
       "namespace": "conditionchecks_common",
       "xpath": [
         "completenessGroupList",
         "completenessGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
@@ -260,154 +290,162 @@
         "fragmented",
         "incomplete"
       ],
-      "datacolumn": "completeness"
+      "datacolumn": "completeness",
+      "required": "n"
     },
     {
       "fieldname": "completenessDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "completenessGroupList",
         "completenessGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "completenessDate"
+      "datacolumn": "completenessDate",
+      "required": "n"
     },
     {
       "fieldname": "completenessNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "completenessGroupList",
         "completenessGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "completenessNote"
+      "datacolumn": "completenessNote",
+      "required": "n"
     },
     {
       "fieldname": "hazard",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "hazards",
       "namespace": "conditionchecks_common",
       "xpath": [
         "hazardGroupList",
         "hazardGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
         "poisonous",
         "radioactive"
       ],
-      "datacolumn": "hazard"
+      "datacolumn": "hazard",
+      "required": "n"
     },
     {
       "fieldname": "hazardDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "hazardGroupList",
         "hazardGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "hazardDate"
+      "datacolumn": "hazardDate",
+      "required": "n"
     },
     {
       "fieldname": "hazardNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "hazardGroupList",
         "hazardGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "hazardNote"
+      "datacolumn": "hazardNote",
+      "required": "n"
     },
     {
       "fieldname": "techAssessment",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "techAssessmentGroupList",
         "techAssessmentGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "techAssessment"
+      "datacolumn": "techAssessment",
+      "required": "n"
     },
     {
       "fieldname": "techAssessmentDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "techAssessmentGroupList",
         "techAssessmentGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "techAssessmentDate"
+      "datacolumn": "techAssessmentDate",
+      "required": "n"
     },
     {
       "fieldname": "condition",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "conditions",
       "namespace": "conditionchecks_common",
       "xpath": [
         "conditionCheckGroupList",
         "conditionCheckGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
@@ -416,335 +454,353 @@
         "needsnowork",
         "notexhibitablestable"
       ],
-      "datacolumn": "condition"
+      "datacolumn": "condition",
+      "required": "n"
     },
     {
       "fieldname": "conditionDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "conditionCheckGroupList",
         "conditionCheckGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionDate"
+      "datacolumn": "conditionDate",
+      "required": "n"
     },
     {
       "fieldname": "conditionNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "conditionCheckGroupList",
         "conditionCheckGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionNote"
+      "datacolumn": "conditionNote",
+      "required": "n"
     },
     {
       "fieldname": "envConditionNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "envConditionNoteGroupList",
         "envConditionNoteGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "envConditionNote"
+      "datacolumn": "envConditionNote",
+      "required": "n"
     },
     {
       "fieldname": "envConditionNoteDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "envConditionNoteGroupList",
         "envConditionNoteGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "envConditionNoteDate"
+      "datacolumn": "envConditionNoteDate",
+      "required": "n"
     },
     {
       "fieldname": "displayRecommendations",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "displayRecommendations"
+      "datacolumn": "displayRecommendations",
+      "required": "n"
     },
     {
       "fieldname": "handlingRecommendations",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "handlingRecommendations"
+      "datacolumn": "handlingRecommendations",
+      "required": "n"
     },
     {
       "fieldname": "securityRecommendations",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "securityRecommendations"
+      "datacolumn": "securityRecommendations",
+      "required": "n"
     },
     {
       "fieldname": "storageRequirements",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "storageRequirements"
+      "datacolumn": "storageRequirements",
+      "required": "n"
     },
     {
       "fieldname": "envRecommendations",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "envRecommendations"
+      "datacolumn": "envRecommendations",
+      "required": "n"
     },
     {
       "fieldname": "packingRecommendations",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "packingRecommendations"
+      "datacolumn": "packingRecommendations",
+      "required": "n"
     },
     {
       "fieldname": "specialRequirements",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "specialRequirements"
+      "datacolumn": "specialRequirements",
+      "required": "n"
     },
     {
       "fieldname": "legalRequirements",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "legalRequirements"
+      "datacolumn": "legalRequirements",
+      "required": "n"
     },
     {
       "fieldname": "legalReqsHeld",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "legalReqsHeldGroupList",
         "legalReqsHeldGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "legalReqsHeld"
+      "datacolumn": "legalReqsHeld",
+      "required": "n"
     },
     {
       "fieldname": "legalReqsHeldBeginDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "legalReqsHeldGroupList",
         "legalReqsHeldGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "legalReqsHeldBeginDate"
+      "datacolumn": "legalReqsHeldBeginDate",
+      "required": "n"
     },
     {
       "fieldname": "legalReqsHeldEndDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "legalReqsHeldGroupList",
         "legalReqsHeldGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "legalReqsHeldEndDate"
+      "datacolumn": "legalReqsHeldEndDate",
+      "required": "n"
     },
     {
       "fieldname": "legalReqsHeldNumber",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "legalReqsHeldGroupList",
         "legalReqsHeldGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "legalReqsHeldNumber"
+      "datacolumn": "legalReqsHeldNumber",
+      "required": "n"
     },
     {
       "fieldname": "legalReqsHeldRenewDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "legalReqsHeldGroupList",
         "legalReqsHeldGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "legalReqsHeldRenewDate"
+      "datacolumn": "legalReqsHeldRenewDate",
+      "required": "n"
     },
     {
       "fieldname": "salvagePriorityCode",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "salvagePriorityCodes",
       "namespace": "conditionchecks_common",
       "xpath": [
         "salvagePriorityCodeGroupList",
         "salvagePriorityCodeGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
@@ -752,26 +808,28 @@
         "low",
         "medium"
       ],
-      "datacolumn": "salvagePriorityCode"
+      "datacolumn": "salvagePriorityCode",
+      "required": "n"
     },
     {
       "fieldname": "salvagePriorityCodeDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conditionchecks_common",
       "xpath": [
         "salvagePriorityCodeGroupList",
         "salvagePriorityCodeGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "salvagePriorityCodeDate"
+      "datacolumn": "salvagePriorityCodeDate",
+      "required": "n"
     }
   ]
 }
