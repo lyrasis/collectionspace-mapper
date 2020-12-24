@@ -39,6 +39,7 @@ module CollectionSpace
 
         def new_from_urn
           parts = @urn.match(/^urn:cspace:([^:]+):([^:]+):name\(([^\)]+)\):item:name\(([^\)]+)\)'/)
+binding.pry if parts.nil?
           @domain = parts[1]
           @type = parts[2]
           @subtype = parts[3]
