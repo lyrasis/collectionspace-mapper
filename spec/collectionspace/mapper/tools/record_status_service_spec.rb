@@ -47,7 +47,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::RecordStatusService do
         #   in core.dev
         # you may need to re-create them if they have been removed
         it 'raises error because we cannot know what to do with imported record' do
-          expect{ @service.lookup('Inkpot Guineafowl') }.to raise_error(CollectionSpace::Mapper::Errors::MultipleCsRecordsFoundError)
+          expect{ @service.lookup('Inkpot Guineafowl') }.to raise_error(CollectionSpace::Mapper::MultipleCsRecordsFoundError)
         end
       end
     end

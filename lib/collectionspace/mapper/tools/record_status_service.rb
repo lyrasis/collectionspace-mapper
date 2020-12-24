@@ -2,12 +2,10 @@
 
 module CollectionSpace
   module Mapper
-    module Errors
-      class MultipleCsRecordsFoundError < StandardError
-        attr_reader :message
-        def initialize(count)
-          @message = "#{count} matching records found in CollectionSpace. Cannot determine which to update."
-        end
+    class MultipleCsRecordsFoundError < StandardError
+      attr_reader :message
+      def initialize(count)
+        @message = "#{count} matching records found in CollectionSpace. Cannot determine which to update."
       end
     end
     
@@ -48,7 +46,7 @@ module CollectionSpace
               refname: response.parsed[@response_top][@response_nested]['refName']
             }
           elsif ct > 1
-            raise CollectionSpace::Mapper::Errors::MultipleCsRecordsFoundError.new(ct)
+            raise CollectionSpace::Mapper::MultipleCsRecordsFoundError.new(ct)
           end
           report
         end

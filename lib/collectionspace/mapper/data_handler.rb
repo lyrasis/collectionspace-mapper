@@ -83,7 +83,7 @@ module CollectionSpace
 
         begin
           searchresult = @status_checker.lookup(value)
-        rescue CollectionSpace::Mapper::Errors::MultipleCsRecordsFoundError => e
+        rescue CollectionSpace::Mapper::MultipleCsRecordsFoundError => e
           err = {
             category: :multiple_matching_recs,
             field: @mapper[:config][:search_field],
