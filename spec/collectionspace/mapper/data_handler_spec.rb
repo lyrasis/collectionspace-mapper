@@ -6,14 +6,15 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
   before(:all) do
     @anthro_client = anthro_client
     @anthro_cache = anthro_cache
-    @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
+    populate_anthro(@anthro_cache)
+    @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
     @anthro_object_handler = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache)
-    @anthro_place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
+    @anthro_place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
     @anthro_place_handler = CollectionSpace::Mapper::DataHandler.new(@anthro_place_mapper, @anthro_client, @anthro_cache)
 
     @bonsai_client = bonsai_client
     @bonsai_cache = bonsai_cache
-    @bonsai_conservation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_0-conservation.json')
+    @bonsai_conservation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-conservation.json')
     @bonsai_conservation_handler = CollectionSpace::Mapper::DataHandler.new(@bonsai_conservation_mapper, @bonsai_client, @bonsai_cache)
 end
 
@@ -26,7 +27,7 @@ end
   context 'when cache is not directly passed in at initialization' do
     context 'when mapping an authority' do
       it 'cache.search_identifiers = false' do
-        mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-place.json')
+        mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
         dh = CollectionSpace::Mapper::DataHandler.new(mapper, @anthro_client)
         expect(dh.cache.inspect).to include('@search_identifiers=false')
       end
@@ -37,6 +38,23 @@ end
         expect(dh.cache.inspect).to include('@search_identifiers=true')
       end
     end
+  end
+
+  it 'tags all un-found terms as such' do
+    data1 = {
+      'objectNumber' => '1',
+      'publishTo' => 'Wordpress', #vocabulary - not in cache
+      'namedCollection' => 'nc', #authority - not in cache
+    }
+    data2 = {
+      'objectNumber' => '2',
+      'publishTo' => 'Wordpress', #vocabulary - now in cache
+      'namedCollection' => 'nc', #authority - now in cache
+      'contentConceptAssociated' => 'Birds' # authority, in cache
+    }
+    @anthro_object_handler.process(data1)
+    result = @anthro_object_handler.process(data2).terms.select{ |t| t[:found] == false }
+    expect(result.length).to eq(2)
   end
   
   describe '#is_authority' do

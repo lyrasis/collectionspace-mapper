@@ -16,7 +16,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'objectexit record' do
       before(:all) do
-        @objectexitmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_0-objectexit.json')
+        @objectexitmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-objectexit.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(@objectexitmapper, @client, @cache, @config)
       end
 

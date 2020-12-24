@@ -31,7 +31,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         force_defaults: false
       })
     
-      @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
+      @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
       @handler = CollectionSpace::Mapper::DataHandler.new(@collectionobject_mapper, @client, @cache, @collectionobject_config)
       @prepper = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, @handler)
     end
@@ -89,8 +89,8 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
       describe '#process_xpaths' do
         context 'when authority record' do
           before(:all) do
-            @place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-place.json')
-            @place_handler = CollectionSpace::Mapper::DataHandler.new(@place_mapper, @cache, @client, @config)
+            @place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-place-local.json')
+            @place_handler = CollectionSpace::Mapper::DataHandler.new(@place_mapper, @client, @cache, @config)
             data = get_datahash(path: 'spec/fixtures/files/datahashes/core/place001.json')
             @place_prepper = CollectionSpace::Mapper::DataPrepper.new(data, @place_handler)
           end

@@ -20,7 +20,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       # field which may be populated by multiple authorities.
       # Problem in claimantGroupList
       before(:all) do
-        @claimmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-claim.json')
+        @claimmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-claim.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(@claimmapper, @client, @cache, @config)
       end
       context 'record 1' do
@@ -51,7 +51,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'collectionobject record' do
       before(:all) do
-        @collectionobjectmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json')
+        @collectionobjectmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(@collectionobjectmapper, @client, @cache, @config)
       end
       # record 1 was used for testing default value merging, transformations, etc.
@@ -83,7 +83,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'osteology record' do
       before(:all) do
-        @osteologymapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-osteology.json')
+        @osteologymapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-osteology.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(@osteologymapper, @client, @cache, @config)
       end
       context 'record 1' do

@@ -41,6 +41,7 @@ module CollectionSpace
     require 'collectionspace/mapper/tools/identifiers'
     require 'collectionspace/mapper/tools/record_mapper'
     require 'collectionspace/mapper/tools/refname'
+    require 'collectionspace/mapper/tools/record_status_service'
 
     module Errors
         class UnprocessableDataError < StandardError
@@ -62,6 +63,11 @@ module CollectionSpace
         raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
       end
     end
+
+    def term_key(term)
+      "#{term[:refname].type}-#{term[:refname].subtype}-#{term[:refname].display_name}"
+    end
+
 
   end    
 end

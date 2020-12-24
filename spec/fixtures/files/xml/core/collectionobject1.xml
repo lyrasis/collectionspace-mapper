@@ -119,7 +119,6 @@
         <objectNameLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(hye)'Armenian'</objectNameLanguage>
       </objectNameGroup>
     </objectNameList>
-    <namedCollection>urn:cspace:core.collectionspace.org:workauthorities:name(work):item:name(Makeup1599644753826)'Makeup'</namedCollection>
     <styles>
       <style>curly</style>
       <style>rugged</style>
@@ -348,6 +347,9 @@
       <contentPeople>Shuka nayo</contentPeople>
       <contentPeople>Rollit</contentPeople>
     </contentPeoples>
+    <namedCollections>
+      <namedCollection>urn:cspace:core.collectionspace.org:workauthorities:name(work):item:name(Makeup1608768998350)'Makeup'</namedCollection>
+    </namedCollections>
     <measuredPartGroupList>
       <measuredPartGroup>
         <dimensionSummary>charger ya samsung</dimensionSummary>

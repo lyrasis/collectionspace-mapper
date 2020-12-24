@@ -82,9 +82,9 @@ If `verbose`, `Mapper::Response` also has the following attributes, which may be
 
 == check_terms
 
-If `true`, looks up each term via `collectionspace-refcache`. If found, uses existing refname. If not found, searches for term via cspace-services API and uses existing refname if found. If term not found in refcache or services API, builds a new refname and adds it to refcache.
+If `true`, looks up each term via `collectionspace-refcache`. If found, uses existing refname. If not found, searches for term via cspace-services API and uses existing refname if found. If term not found in refcache or services API, builds a new refname, uses that in the record, adds it to refcache, and returns the term with `found=false` in `Response::Terms`.
 
-If `false`, never searches services API for the term. Uses refcache refname if it exists, otherwise builds a new refname and adds it to refcache.
+If `false`, never searches services API for the term. Uses refcache refname if it exists, otherwise builds a new refname and adds it to refcache. Returns all terms with `found=false` in `Response::Terms`.
 
 [NOTE]
 ====

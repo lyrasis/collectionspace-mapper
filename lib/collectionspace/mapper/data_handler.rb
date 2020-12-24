@@ -24,6 +24,8 @@ module CollectionSpace
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
+        @new_terms = {}
+        @status_checker = CollectionSpace::Mapper::Tools::RecordStatusService.new(@client, @mapper)
       end
 
       def process(data)
@@ -31,8 +33,7 @@ module CollectionSpace
         if response.valid?
           prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
           prepper.prep
-          mapper = CollectionSpace::Mapper::DataMapper.new(prepper.response, self, prepper.xphash)
-          @response_mode == 'normal' ? mapper.response.normal : mapper.response
+          map(prepper.response, prepper.xphash)
         else
           response
         end
@@ -65,11 +66,58 @@ module CollectionSpace
       
       def map(response, xphash)
         mapper = CollectionSpace::Mapper::DataMapper.new(response, self, xphash)
-        @response_mode == 'normal' ? mapper.response.normal : mapper.response
+        result = mapper.response
+        tag_terms(result)
+        @config[:check_record_status] ? set_record_status(result) : result.record_status = :new
+        @response_mode == 'normal' ? result.normal : result
       end
 
       private
 
+      def set_record_status(response)
+        if @is_authority
+          value = response.split_data['termdisplayname'].first
+        else
+          value = response.identifier
+        end
+
+        begin
+          searchresult = @status_checker.lookup(value)
+        rescue CollectionSpace::Mapper::Errors::MultipleCsRecordsFoundError => e
+          err = {
+            category: :multiple_matching_recs,
+            field: @mapper[:config][:search_field],
+            type: nil,
+            subtype: nil,
+            value: value,
+            message: e.message
+          }
+          response.errors << err
+        else
+          status = searchresult[:status]
+          response.record_status = status
+          if status == :existing
+            response.csid = searchresult[:csid]
+            response.uri = searchresult[:uri]
+            response.refname = searchresult[:refname]
+          end
+        end
+      end
+
+      def tag_terms(result)
+        terms = result.terms
+        return if terms.empty?
+
+        terms.select{ |t| !t[:found] }.each do |term|
+          @new_terms[CollectionSpace::Mapper::term_key(term)] = nil
+        end
+        terms.select{ |t| t[:found] }.each do |term|
+          term[:found] = false if @new_terms.key?(CollectionSpace::Mapper::term_key(term))
+        end
+        
+        result.terms = terms
+      end
+      
       def get_config(config)
         config_object = CollectionSpace::Mapper::Tools::Config.new(config)
         config_object.hash
