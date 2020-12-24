@@ -1,15 +1,16 @@
 {
   "config": {
+    "profile_basename": "core",
     "document_name": "conservation",
     "service_name": "Conservation",
     "service_path": "conservation",
     "service_type": "procedure",
     "object_name": "Conservation",
-    "profile_basename": "core",
     "ns_uri": {
       "conservation_common": "http://collectionspace.org/services/conservation"
     },
-    "identifier_field": "conservationNumber"
+    "identifier_field": "conservationNumber",
+    "search_field": "conservationNumber"
   },
   "docstructure": {
     "conservation_common": {
@@ -39,18 +40,19 @@
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "y",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conservationNumber"
+      "datacolumn": "conservationNumber",
+      "required": "y"
     },
     {
       "fieldname": "status",
@@ -58,38 +60,60 @@
         "vocabulary": "conservationstatus"
       },
       "source_type": "vocabulary",
+      "source_name": "conservationstatus",
       "namespace": "conservation_common",
       "xpath": [
         "conservationStatusGroupList",
         "conservationStatusGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "status"
+      "datacolumn": "status",
+      "required": "n"
+    },
+    {
+      "fieldname": "status",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "conservationstatus",
+      "namespace": "conservation_common",
+      "xpath": [
+        "conservationStatusGroupList",
+        "conservationStatusGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "statusRefname",
+      "required": "n"
     },
     {
       "fieldname": "statusDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "conservationStatusGroupList",
         "conservationStatusGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "statusDate"
+      "datacolumn": "statusDate",
+      "required": "n"
     },
     {
       "fieldname": "treatmentPurpose",
@@ -97,18 +121,38 @@
         "vocabulary": "treatmentpurpose"
       },
       "source_type": "vocabulary",
+      "source_name": "treatmentpurpose",
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "treatmentPurpose"
+      "datacolumn": "treatmentPurpose",
+      "required": "n"
+    },
+    {
+      "fieldname": "treatmentPurpose",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "treatmentpurpose",
+      "namespace": "conservation_common",
+      "xpath": [
+
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "treatmentPurposeRefname",
+      "required": "n"
     },
     {
       "fieldname": "conservator",
@@ -119,18 +163,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "conservation_common",
       "xpath": [
         "conservators"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conservatorPerson"
+      "datacolumn": "conservatorPerson",
+      "required": "n"
     },
     {
       "fieldname": "conservator",
@@ -141,18 +186,38 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "conservation_common",
       "xpath": [
         "conservators"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conservatorOrganization"
+      "datacolumn": "conservatorOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "conservator",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "conservation_common",
+      "xpath": [
+        "conservators"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "conservatorRefname",
+      "required": "n"
     },
     {
       "fieldname": "otherParty",
@@ -163,19 +228,20 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "conservation_common",
       "xpath": [
         "otherPartyGroupList",
         "otherPartyGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "otherPartyPerson"
+      "datacolumn": "otherPartyPerson",
+      "required": "n"
     },
     {
       "fieldname": "otherParty",
@@ -186,19 +252,40 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "conservation_common",
       "xpath": [
         "otherPartyGroupList",
         "otherPartyGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "otherPartyOrganization"
+      "datacolumn": "otherPartyOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "otherParty",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "conservation_common",
+      "xpath": [
+        "otherPartyGroupList",
+        "otherPartyGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "otherPartyRefname",
+      "required": "n"
     },
     {
       "fieldname": "otherPartyRole",
@@ -206,38 +293,60 @@
         "vocabulary": "otherpartyrole"
       },
       "source_type": "vocabulary",
+      "source_name": "otherpartyrole",
       "namespace": "conservation_common",
       "xpath": [
         "otherPartyGroupList",
         "otherPartyGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "otherPartyRole"
+      "datacolumn": "otherPartyRole",
+      "required": "n"
+    },
+    {
+      "fieldname": "otherPartyRole",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "otherpartyrole",
+      "namespace": "conservation_common",
+      "xpath": [
+        "otherPartyGroupList",
+        "otherPartyGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "otherPartyRoleRefname",
+      "required": "n"
     },
     {
       "fieldname": "otherPartyNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "otherPartyGroupList",
         "otherPartyGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "otherPartyNote"
+      "datacolumn": "otherPartyNote",
+      "required": "n"
     },
     {
       "fieldname": "examinationStaff",
@@ -248,19 +357,40 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "conservation_common",
       "xpath": [
         "examinationGroupList",
         "examinationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "examinationStaff"
+      "datacolumn": "examinationStaff",
+      "required": "n"
+    },
+    {
+      "fieldname": "examinationStaff",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "conservation_common",
+      "xpath": [
+        "examinationGroupList",
+        "examinationGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "examinationStaffRefname",
+      "required": "n"
     },
     {
       "fieldname": "examinationPhase",
@@ -268,93 +398,118 @@
         "vocabulary": "examinationphase"
       },
       "source_type": "vocabulary",
+      "source_name": "examinationphase",
       "namespace": "conservation_common",
       "xpath": [
         "examinationGroupList",
         "examinationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "examinationPhase"
+      "datacolumn": "examinationPhase",
+      "required": "n"
+    },
+    {
+      "fieldname": "examinationPhase",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "examinationphase",
+      "namespace": "conservation_common",
+      "xpath": [
+        "examinationGroupList",
+        "examinationGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "examinationPhaseRefname",
+      "required": "n"
     },
     {
       "fieldname": "examinationDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "examinationGroupList",
         "examinationGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "examinationDate"
+      "datacolumn": "examinationDate",
+      "required": "n"
     },
     {
       "fieldname": "examinationNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "examinationGroupList",
         "examinationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "examinationNote"
+      "datacolumn": "examinationNote",
+      "required": "n"
     },
     {
       "fieldname": "fabricationNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fabricationNote"
+      "datacolumn": "fabricationNote",
+      "required": "n"
     },
     {
       "fieldname": "proposedTreatment",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "proposedTreatment"
+      "datacolumn": "proposedTreatment",
+      "required": "n"
     },
     {
       "fieldname": "approvedBy",
@@ -365,108 +520,133 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "approvedBy"
+      "datacolumn": "approvedBy",
+      "required": "n"
+    },
+    {
+      "fieldname": "approvedBy",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "conservation_common",
+      "xpath": [
+
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "approvedByRefname",
+      "required": "n"
     },
     {
       "fieldname": "approvedDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "approvedDate"
+      "datacolumn": "approvedDate",
+      "required": "n"
     },
     {
       "fieldname": "treatmentStartDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "treatmentStartDate"
+      "datacolumn": "treatmentStartDate",
+      "required": "n"
     },
     {
       "fieldname": "treatmentEndDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "treatmentEndDate"
+      "datacolumn": "treatmentEndDate",
+      "required": "n"
     },
     {
       "fieldname": "treatmentSummary",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "treatmentSummary"
+      "datacolumn": "treatmentSummary",
+      "required": "n"
     },
     {
       "fieldname": "proposedAnalysis",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "proposedAnalysis"
+      "datacolumn": "proposedAnalysis",
+      "required": "n"
     },
     {
       "fieldname": "researcher",
@@ -477,74 +657,97 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "researcher"
+      "datacolumn": "researcher",
+      "required": "n"
+    },
+    {
+      "fieldname": "researcher",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "conservation_common",
+      "xpath": [
+
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "researcherRefname",
+      "required": "n"
     },
     {
       "fieldname": "proposedAnalysisDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "proposedAnalysisDate"
+      "datacolumn": "proposedAnalysisDate",
+      "required": "n"
     },
     {
       "fieldname": "destAnalysisApprovedDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "destAnalysisGroupList",
         "destAnalysisGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "destAnalysisApprovedDate"
+      "datacolumn": "destAnalysisApprovedDate",
+      "required": "n"
     },
     {
       "fieldname": "destAnalysisApprovalNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "destAnalysisGroupList",
         "destAnalysisGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "destAnalysisApprovalNote"
+      "datacolumn": "destAnalysisApprovalNote",
+      "required": "n"
     },
     {
       "fieldname": "sampleBy",
@@ -555,57 +758,80 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "conservation_common",
       "xpath": [
         "destAnalysisGroupList",
         "destAnalysisGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "sampleBy"
+      "datacolumn": "sampleBy",
+      "required": "n"
+    },
+    {
+      "fieldname": "sampleBy",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "conservation_common",
+      "xpath": [
+        "destAnalysisGroupList",
+        "destAnalysisGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "sampleByRefname",
+      "required": "n"
     },
     {
       "fieldname": "sampleDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "destAnalysisGroupList",
         "destAnalysisGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "sampleDate"
+      "datacolumn": "sampleDate",
+      "required": "n"
     },
     {
       "fieldname": "sampleDescription",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "destAnalysisGroupList",
         "destAnalysisGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "sampleDescription"
+      "datacolumn": "sampleDescription",
+      "required": "n"
     },
     {
       "fieldname": "sampleReturned",
@@ -615,74 +841,78 @@
         ]
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "destAnalysisGroupList",
         "destAnalysisGroup"
       ],
       "data_type": "boolean",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "sampleReturned"
+      "datacolumn": "sampleReturned",
+      "required": "n"
     },
     {
       "fieldname": "sampleReturnedLocation",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
         "destAnalysisGroupList",
         "destAnalysisGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "sampleReturnedLocation"
+      "datacolumn": "sampleReturnedLocation",
+      "required": "n"
     },
     {
       "fieldname": "analysisMethod",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "analysisMethod"
+      "datacolumn": "analysisMethod",
+      "required": "n"
     },
     {
       "fieldname": "analysisResults",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "conservation_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "analysisResults"
+      "datacolumn": "analysisResults",
+      "required": "n"
     }
   ]
 }

@@ -15,7 +15,7 @@ RSpec.describe CollectionSpace::Mapper do
 
   context 'when reading in JSON RecordMapper file' do
     it 'returns a Hash' do
-      path = 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json'
+      path = 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json'
       h = get_json_record_mapper(path: path)
       expect(h).to be_a(Hash)
     end
@@ -41,18 +41,9 @@ RSpec.describe CollectionSpace::Mapper do
       end
     end
     context 'when passed other class of object' do
-      before(:all) do
-        @data = ['objectNumber', '123']
-        @response = CollectionSpace::Mapper::setup_data(@data)
-      end
       it 'returns a CollectionSpace::Mapper::Response' do
-        expect(@response).to be_a(CollectionSpace::Mapper::Response)
-      end
-      it 'sets data passed as Response.orig_data' do
-        expect(@response.orig_data).to eq(@data)
-      end
-      it 'response is invalid' do
-        expect(@response.valid?).to be false
+        data = ['objectNumber', '123']
+        expect{ CollectionSpace::Mapper::setup_data(data) }.to raise_error(CollectionSpace::Mapper::Errors::UnprocessableDataError, 'Cannot process a Array. Need a Hash or Mapper::Response')
       end
     end
   end

@@ -2,6 +2,8 @@
 
 module CollectionSpace
   module Mapper
+      class IdFieldNotInMapperError < StandardError; end
+    
     class RequiredField
       def initialize(fieldname, datacolumns)
         @field = fieldname.downcase
@@ -71,7 +73,7 @@ module CollectionSpace
         @cache = cache
         @required_mappings = @mapper[:mappings].select{ |mapping| mapping[:required] == 'y' }
         @required_fields = get_required_fields
-        @id_field = @mapper[:config][:identifier_field].downcase
+        @id_field = get_id_field
         # faux-require ID field for batch processing if it is not technically required by application
         unless @required_fields.key?(@id_field) || @id_field == 'shortidentifier'
           @required_fields[@id_field] = [@id_field]
@@ -92,6 +94,12 @@ module CollectionSpace
       end
       
       private
+
+      def get_id_field
+        idfield = @mapper[:config][:identifier_field]
+        raise CollectionSpace::Mapper::IdFieldNotInMapperError if idfield.nil?
+        idfield.nil? ? nil : idfield.downcase
+      end
 
       def get_required_fields
         h = {}

@@ -4,7 +4,7 @@ module CollectionSpace
   module Mapper
     class Response
       attr_reader :orig_data
-      attr_accessor :split_data, :merged_data, :transformed_data, :combined_data, :doc, :errors, :warnings, :identifier, :terms
+      attr_accessor :split_data, :merged_data, :transformed_data, :combined_data, :doc, :errors, :warnings, :identifier, :terms, :record_status, :csid, :uri, :refname
       def initialize(data_hash)
         @orig_data = data_hash
         @merged_data = {}

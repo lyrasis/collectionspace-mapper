@@ -1,15 +1,16 @@
 {
   "config": {
+    "profile_basename": "materials",
     "document_name": "groups",
     "service_name": "Groups",
     "service_path": "groups",
     "service_type": "procedure",
     "object_name": "Group",
-    "profile_basename": "materials",
     "ns_uri": {
       "groups_common": "http://collectionspace.org/services/group"
     },
-    "identifier_field": "title"
+    "identifier_field": "title",
+    "search_field": "title"
   },
   "docstructure": {
     "groups_common": {
@@ -21,30 +22,31 @@
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "groups_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "y",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "title"
+      "datacolumn": "title",
+      "required": "y"
     },
     {
       "fieldname": "responsibleDepartment",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "departments",
       "namespace": "groups_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
@@ -59,7 +61,8 @@
         "photographs",
         "prints-drawings"
       ],
-      "datacolumn": "responsibleDepartment"
+      "datacolumn": "responsibleDepartment",
+      "required": "n"
     },
     {
       "fieldname": "owner",
@@ -70,72 +73,95 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "groups_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "owner"
+      "datacolumn": "owner",
+      "required": "n"
+    },
+    {
+      "fieldname": "owner",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "groups_common",
+      "xpath": [
+
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "ownerRefname",
+      "required": "n"
     },
     {
       "fieldname": "groupEarliestSingleDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "groups_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "groupEarliestSingleDate"
+      "datacolumn": "groupEarliestSingleDate",
+      "required": "n"
     },
     {
       "fieldname": "groupLatestDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "groups_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "groupLatestDate"
+      "datacolumn": "groupLatestDate",
+      "required": "n"
     },
     {
       "fieldname": "scopeNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "groups_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "scopeNote"
+      "datacolumn": "scopeNote",
+      "required": "n"
     }
   ]
 }

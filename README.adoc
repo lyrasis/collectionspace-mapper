@@ -23,4 +23,8 @@ The new batch import tool currently being developed will:
 - Interact with CollectionSpace services API to create or update successfully mapped records in a CollectionSpace instance
 
 == Documentation
-See files in the doc folder for information on how to set up and use `collectionspace-mapper`.
+See files in the doc folder for all documentation. Of note:
+
+- https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/setup_for_development.adoc[Setting up for development/testing]
+- https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/usage.adoc[How to use `collectionspace-mapper` and its results]
+- https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/batch_configuration.adoc[Data processing and transformation options]

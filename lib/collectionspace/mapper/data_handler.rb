@@ -8,15 +8,15 @@ module CollectionSpace
       attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
         :is_authority, :known_fields
 
-      def initialize(record_mapper, client, cache,
+      def initialize(record_mapper, client, cache = nil,
                      config = CollectionSpace::Mapper::DEFAULT_CONFIG
                     )
         @mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(record_mapper)
-        @client = client
-        @cache = cache
-        @config = get_config(config)
-        @response_mode = @config[:response_mode]
         @is_authority = get_is_authority
+        @client = client
+        @config = get_config(config)
+        @cache = cache.nil? ? get_cache : cache
+        @response_mode = @config[:response_mode]
         add_short_id_mapping if @is_authority
         @known_fields = @mapper[:mappings].map{ |m| m[:datacolumn] }.map(&:downcase)
         @mapper[:xpath] = xpath_hash
@@ -24,6 +24,8 @@ module CollectionSpace
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
+        @new_terms = {}
+        @status_checker = CollectionSpace::Mapper::Tools::RecordStatusService.new(@client, @mapper)
       end
 
       def process(data)
@@ -31,8 +33,7 @@ module CollectionSpace
         if response.valid?
           prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
           prepper.prep
-          mapper = CollectionSpace::Mapper::DataMapper.new(prepper.response, self, prepper.xphash)
-          @response_mode == 'normal' ? mapper.response.normal : mapper.response
+          map(prepper.response, prepper.xphash)
         else
           response
         end
@@ -65,14 +66,74 @@ module CollectionSpace
       
       def map(response, xphash)
         mapper = CollectionSpace::Mapper::DataMapper.new(response, self, xphash)
-        @response_mode == 'normal' ? mapper.response.normal : mapper.response
+        result = mapper.response
+        tag_terms(result)
+        @config[:check_record_status] ? set_record_status(result) : result.record_status = :new
+        @response_mode == 'normal' ? result.normal : result
       end
 
       private
 
+      def set_record_status(response)
+        if @is_authority
+          value = response.split_data['termdisplayname'].first
+        else
+          value = response.identifier
+        end
+
+        begin
+          searchresult = @status_checker.lookup(value)
+        rescue CollectionSpace::Mapper::MultipleCsRecordsFoundError => e
+          err = {
+            category: :multiple_matching_recs,
+            field: @mapper[:config][:search_field],
+            type: nil,
+            subtype: nil,
+            value: value,
+            message: e.message
+          }
+          response.errors << err
+        else
+          status = searchresult[:status]
+          response.record_status = status
+          if status == :existing
+            response.csid = searchresult[:csid]
+            response.uri = searchresult[:uri]
+            response.refname = searchresult[:refname]
+          end
+        end
+      end
+
+      def tag_terms(result)
+        terms = result.terms
+        return if terms.empty?
+
+        terms.select{ |t| !t[:found] }.each do |term|
+          @new_terms[CollectionSpace::Mapper::term_key(term)] = nil
+        end
+        terms.select{ |t| t[:found] }.each do |term|
+          term[:found] = false if @new_terms.key?(CollectionSpace::Mapper::term_key(term))
+        end
+        
+        result.terms = terms
+      end
+      
       def get_config(config)
         config_object = CollectionSpace::Mapper::Tools::Config.new(config)
         config_object.hash
+      end
+
+      def get_cache
+        config = {
+          domain: @client.domain,
+          error_if_not_found: false,
+          lifetime: 5 * 60,
+          search_delay: 5 * 60,
+          search_enabled: true
+        }
+        # search for authority records by display name, not short ID
+        config[:search_identifiers] = @is_authority ? false : true
+        CollectionSpace::RefCache.new(config: config, client: @client)
       end
       
       def add_short_id_mapping

@@ -1,15 +1,16 @@
 {
   "config": {
+    "profile_basename": "core",
     "document_name": "intakes",
     "service_name": "Intake",
     "service_path": "intakes",
     "service_type": "procedure",
     "object_name": "Intake",
-    "profile_basename": "core",
     "ns_uri": {
       "intakes_common": "http://collectionspace.org/services/intake"
     },
-    "identifier_field": "entryNumber"
+    "identifier_field": "entryNumber",
+    "search_field": "entryNumber"
   },
   "docstructure": {
     "intakes_common": {
@@ -53,48 +54,50 @@
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "y",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "entryNumber"
+      "datacolumn": "entryNumber",
+      "required": "y"
     },
     {
       "fieldname": "entryDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "entryDate"
+      "datacolumn": "entryDate",
+      "required": "n"
     },
     {
       "fieldname": "entryReason",
       "transforms": {
       },
       "source_type": "optionlist",
+      "source_name": "entryReasons",
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
@@ -103,7 +106,8 @@
         "enquiry",
         "loan"
       ],
-      "datacolumn": "entryReason"
+      "datacolumn": "entryReason",
+      "required": "n"
     },
     {
       "fieldname": "entryMethod",
@@ -111,36 +115,57 @@
         "vocabulary": "entrymethod"
       },
       "source_type": "vocabulary",
+      "source_name": "entrymethod",
       "namespace": "intakes_common",
       "xpath": [
         "entryMethods"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "entryMethod"
+      "datacolumn": "entryMethod",
+      "required": "n"
+    },
+    {
+      "fieldname": "entryMethod",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "entrymethod",
+      "namespace": "intakes_common",
+      "xpath": [
+        "entryMethods"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "entryMethodRefname",
+      "required": "n"
     },
     {
       "fieldname": "returnDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "returnDate"
+      "datacolumn": "returnDate",
+      "required": "n"
     },
     {
       "fieldname": "currentOwner",
@@ -151,18 +176,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
         "currentOwners"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentOwnerPerson"
+      "datacolumn": "currentOwnerPerson",
+      "required": "n"
     },
     {
       "fieldname": "currentOwner",
@@ -173,18 +199,38 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
         "currentOwners"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentOwnerOrganization"
+      "datacolumn": "currentOwnerOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "currentOwner",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "currentOwners"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "currentOwnerRefname",
+      "required": "n"
     },
     {
       "fieldname": "depositor",
@@ -195,19 +241,20 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
         "depositorGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "depositorPerson"
+      "datacolumn": "depositorPerson",
+      "required": "n"
     },
     {
       "fieldname": "depositor",
@@ -218,38 +265,60 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
         "depositorGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "depositorOrganization"
+      "datacolumn": "depositorOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "depositor",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "depositorGroupList",
+        "depositorGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "depositorRefname",
+      "required": "n"
     },
     {
       "fieldname": "depositorsRequirements",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
         "depositorGroupList",
         "depositorGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "depositorsRequirements"
+      "datacolumn": "depositorsRequirements",
+      "required": "n"
     },
     {
       "fieldname": "approvalGroup",
@@ -257,19 +326,40 @@
         "vocabulary": "deaccessionapprovalgroup"
       },
       "source_type": "vocabulary",
+      "source_name": "deaccessionapprovalgroup",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
         "approvalGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "approvalGroup"
+      "datacolumn": "approvalGroup",
+      "required": "n"
+    },
+    {
+      "fieldname": "approvalGroup",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "deaccessionapprovalgroup",
+      "namespace": "intakes_common",
+      "xpath": [
+        "approvalGroupList",
+        "approvalGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "approvalGroupRefname",
+      "required": "n"
     },
     {
       "fieldname": "approvalIndividual",
@@ -280,19 +370,40 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
         "approvalGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "approvalIndividual"
+      "datacolumn": "approvalIndividual",
+      "required": "n"
+    },
+    {
+      "fieldname": "approvalIndividual",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "approvalGroupList",
+        "approvalGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "approvalIndividualRefname",
+      "required": "n"
     },
     {
       "fieldname": "approvalStatus",
@@ -300,111 +411,137 @@
         "vocabulary": "deaccessionapprovalstatus"
       },
       "source_type": "vocabulary",
+      "source_name": "deaccessionapprovalstatus",
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
         "approvalGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "approvalStatus"
+      "datacolumn": "approvalStatus",
+      "required": "n"
+    },
+    {
+      "fieldname": "approvalStatus",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "deaccessionapprovalstatus",
+      "namespace": "intakes_common",
+      "xpath": [
+        "approvalGroupList",
+        "approvalGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "approvalStatusRefname",
+      "required": "n"
     },
     {
       "fieldname": "approvalDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
         "approvalGroup"
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "approvalDate"
+      "datacolumn": "approvalDate",
+      "required": "n"
     },
     {
       "fieldname": "approvalNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
         "approvalGroupList",
         "approvalGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "approvalNote"
+      "datacolumn": "approvalNote",
+      "required": "n"
     },
     {
       "fieldname": "entryNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "entryNote"
+      "datacolumn": "entryNote",
+      "required": "n"
     },
     {
       "fieldname": "packingNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "packingNote"
+      "datacolumn": "packingNote",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollectionDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectionDate"
+      "datacolumn": "fieldCollectionDate",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollectionMethod",
@@ -412,72 +549,95 @@
         "vocabulary": "collectionmethod"
       },
       "source_type": "vocabulary",
+      "source_name": "collectionmethod",
       "namespace": "intakes_common",
       "xpath": [
         "fieldCollectionMethods"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectionMethod"
+      "datacolumn": "fieldCollectionMethod",
+      "required": "n"
+    },
+    {
+      "fieldname": "fieldCollectionMethod",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "collectionmethod",
+      "namespace": "intakes_common",
+      "xpath": [
+        "fieldCollectionMethods"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "fieldCollectionMethodRefname",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollectionNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectionNote"
+      "datacolumn": "fieldCollectionNote",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollectionNumber",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectionNumber"
+      "datacolumn": "fieldCollectionNumber",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollectionPlace",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectionPlace"
+      "datacolumn": "fieldCollectionPlace",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollectionSource",
@@ -488,18 +648,38 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
         "fieldCollectionSources"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectionSource"
+      "datacolumn": "fieldCollectionSource",
+      "required": "n"
+    },
+    {
+      "fieldname": "fieldCollectionSource",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "fieldCollectionSources"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "fieldCollectionSourceRefname",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollector",
@@ -510,18 +690,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
         "fieldCollectors"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectorPerson"
+      "datacolumn": "fieldCollectorPerson",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollector",
@@ -532,36 +713,57 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
         "fieldCollectors"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectorOrganization"
+      "datacolumn": "fieldCollectorOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "fieldCollector",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "fieldCollectors"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "fieldCollectorRefname",
+      "required": "n"
     },
     {
       "fieldname": "fieldCollectionEventName",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
         "fieldCollectionEventNames"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "fieldCollectionEventName"
+      "datacolumn": "fieldCollectionEventName",
+      "required": "n"
     },
     {
       "fieldname": "valuer",
@@ -572,18 +774,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "valuerPerson"
+      "datacolumn": "valuerPerson",
+      "required": "n"
     },
     {
       "fieldname": "valuer",
@@ -594,36 +797,57 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "valuerOrganization"
+      "datacolumn": "valuerOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "valuer",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "intakes_common",
+      "xpath": [
+
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "valuerRefname",
+      "required": "n"
     },
     {
       "fieldname": "valuationReferenceNumber",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "valuationReferenceNumber"
+      "datacolumn": "valuationReferenceNumber",
+      "required": "n"
     },
     {
       "fieldname": "insurer",
@@ -634,18 +858,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
         "insurers"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "insurerPerson"
+      "datacolumn": "insurerPerson",
+      "required": "n"
     },
     {
       "fieldname": "insurer",
@@ -656,90 +881,114 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
         "insurers"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "insurerOrganization"
+      "datacolumn": "insurerOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "insurer",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "insurers"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "insurerRefname",
+      "required": "n"
     },
     {
       "fieldname": "insurancePolicyNumber",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "insurancePolicyNumber"
+      "datacolumn": "insurancePolicyNumber",
+      "required": "n"
     },
     {
       "fieldname": "insuranceRenewalDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "insuranceRenewalDate"
+      "datacolumn": "insuranceRenewalDate",
+      "required": "n"
     },
     {
       "fieldname": "insuranceReferenceNumber",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "insuranceReferenceNumber"
+      "datacolumn": "insuranceReferenceNumber",
+      "required": "n"
     },
     {
       "fieldname": "insuranceNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "insuranceNote"
+      "datacolumn": "insuranceNote",
+      "required": "n"
     },
     {
       "fieldname": "currentLocation",
@@ -750,19 +999,20 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "location/local",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
         "currentLocationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentLocationLocationLocal"
+      "datacolumn": "currentLocationLocationLocal",
+      "required": "n"
     },
     {
       "fieldname": "currentLocation",
@@ -773,19 +1023,20 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "location/offsite",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
         "currentLocationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentLocationLocationOffsite"
+      "datacolumn": "currentLocationLocationOffsite",
+      "required": "n"
     },
     {
       "fieldname": "currentLocation",
@@ -796,19 +1047,20 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
         "currentLocationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentLocationOrganization"
+      "datacolumn": "currentLocationOrganization",
+      "required": "n"
     },
     {
       "fieldname": "currentLocation",
@@ -819,19 +1071,40 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "place/local",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
         "currentLocationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentLocationPlace"
+      "datacolumn": "currentLocationPlace",
+      "required": "n"
+    },
+    {
+      "fieldname": "currentLocation",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "location/local; location/offsite; organization/local; place/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "currentLocationGroupList",
+        "currentLocationGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "currentLocationRefname",
+      "required": "n"
     },
     {
       "fieldname": "currentLocationFitness",
@@ -839,56 +1112,79 @@
         "vocabulary": "conditionfitness"
       },
       "source_type": "vocabulary",
+      "source_name": "conditionfitness",
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
         "currentLocationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentLocationFitness"
+      "datacolumn": "currentLocationFitness",
+      "required": "n"
+    },
+    {
+      "fieldname": "currentLocationFitness",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "conditionfitness",
+      "namespace": "intakes_common",
+      "xpath": [
+        "currentLocationGroupList",
+        "currentLocationGroup"
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "currentLocationFitnessRefname",
+      "required": "n"
     },
     {
       "fieldname": "currentLocationNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
         "currentLocationGroupList",
         "currentLocationGroup"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "y",
       "opt_list_values": [
 
       ],
-      "datacolumn": "currentLocationNote"
+      "datacolumn": "currentLocationNote",
+      "required": "n"
     },
     {
       "fieldname": "locationDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "locationDate"
+      "datacolumn": "locationDate",
+      "required": "n"
     },
     {
       "fieldname": "normalLocation",
@@ -899,18 +1195,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "location/local",
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "normalLocationLocationLocal"
+      "datacolumn": "normalLocationLocationLocal",
+      "required": "n"
     },
     {
       "fieldname": "normalLocation",
@@ -921,18 +1218,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "location/offsite",
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "normalLocationLocationOffsite"
+      "datacolumn": "normalLocationLocationOffsite",
+      "required": "n"
     },
     {
       "fieldname": "normalLocation",
@@ -943,18 +1241,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "normalLocationOrganization"
+      "datacolumn": "normalLocationOrganization",
+      "required": "n"
     },
     {
       "fieldname": "normalLocation",
@@ -965,18 +1264,38 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "place/local",
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "normalLocationPlace"
+      "datacolumn": "normalLocationPlace",
+      "required": "n"
+    },
+    {
+      "fieldname": "normalLocation",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "location/local; location/offsite; organization/local; place/local",
+      "namespace": "intakes_common",
+      "xpath": [
+
+      ],
+      "data_type": "csrefname",
+      "repeats": "n",
+      "in_repeating_group": "n/a",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "normalLocationRefname",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckMethod",
@@ -984,18 +1303,38 @@
         "vocabulary": "conditioncheckmethod"
       },
       "source_type": "vocabulary",
+      "source_name": "conditioncheckmethod",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckMethods"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckMethod"
+      "datacolumn": "conditionCheckMethod",
+      "required": "n"
+    },
+    {
+      "fieldname": "conditionCheckMethod",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "conditioncheckmethod",
+      "namespace": "intakes_common",
+      "xpath": [
+        "conditionCheckMethods"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "conditionCheckMethodRefname",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckReason",
@@ -1003,18 +1342,38 @@
         "vocabulary": "conditioncheckreason"
       },
       "source_type": "vocabulary",
+      "source_name": "conditioncheckreason",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckReasons"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckReason"
+      "datacolumn": "conditionCheckReason",
+      "required": "n"
+    },
+    {
+      "fieldname": "conditionCheckReason",
+      "transforms": {
+      },
+      "source_type": "vocabulary",
+      "source_name": "conditioncheckreason",
+      "namespace": "intakes_common",
+      "xpath": [
+        "conditionCheckReasons"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "conditionCheckReasonRefname",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckerOrAssessor",
@@ -1025,18 +1384,19 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "person/local",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckersOrAssessors"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckerOrAssessorPerson"
+      "datacolumn": "conditionCheckerOrAssessorPerson",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckerOrAssessor",
@@ -1047,72 +1407,95 @@
         ]
       },
       "source_type": "authority",
+      "source_name": "organization/local",
       "namespace": "intakes_common",
       "xpath": [
         "conditionCheckersOrAssessors"
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "y",
       "in_repeating_group": "n",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckerOrAssessorOrganization"
+      "datacolumn": "conditionCheckerOrAssessorOrganization",
+      "required": "n"
+    },
+    {
+      "fieldname": "conditionCheckerOrAssessor",
+      "transforms": {
+      },
+      "source_type": "authority",
+      "source_name": "person/local; organization/local",
+      "namespace": "intakes_common",
+      "xpath": [
+        "conditionCheckersOrAssessors"
+      ],
+      "data_type": "csrefname",
+      "repeats": "y",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "conditionCheckerOrAssessorRefname",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckDate",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "date",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckDate"
+      "datacolumn": "conditionCheckDate",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckReferenceNumber",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckReferenceNumber"
+      "datacolumn": "conditionCheckReferenceNumber",
+      "required": "n"
     },
     {
       "fieldname": "conditionCheckNote",
       "transforms": {
       },
       "source_type": "na",
+      "source_name": null,
       "namespace": "intakes_common",
       "xpath": [
 
       ],
       "data_type": "string",
-      "required": "n",
       "repeats": "n",
       "in_repeating_group": "n/a",
       "opt_list_values": [
 
       ],
-      "datacolumn": "conditionCheckNote"
+      "datacolumn": "conditionCheckNote",
+      "required": "n"
     }
   ]
 }
