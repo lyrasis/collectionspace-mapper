@@ -215,6 +215,7 @@ processed = handler.process(validated) # <1>
 If your `config[:response_mode]` is set to `verbose`, you will also receive the full data hashes from each stage of processing (`@orig_data`, `@combined_data`, etc.).
 
 `processed.doc`:: Returns the mapped CollectionSpace XML as a `Nokogiri::XML::Document`. If `nil`, check for errors.
+`processed.xml`:: Returns the mapped CollectionSpace XML as a `String`. If nil, check for errors.
 `processed.identifier`:: Returns the value of the field specified as the record identifier
 `processed.errors`:: Returns Array of errors. Since you should not process invalid data, any errors in a response from processing will indicate problems in the mapping.
 `processed.warnings`:: Returns Array of data quality warnings

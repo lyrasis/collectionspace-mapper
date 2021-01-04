@@ -29,6 +29,10 @@ module CollectionSpace
          @combined_data = {}
         self
       end
+
+      def xml
+        doc ? doc.to_xml : nil
+      end
     end
   end
 end
