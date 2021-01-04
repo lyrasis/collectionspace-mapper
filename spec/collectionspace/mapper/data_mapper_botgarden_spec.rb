@@ -17,7 +17,8 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'pottag record' do
       # before(:all) do
       #   @pottag_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-pottag.json')
-      #   @pottag_handler = CollectionSpace::Mapper::DataHandler.new(@pottag_mapper, @client, @cache, @config)
+      #   @pottag_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @pottag_mapper,
+      #                                                              client: @client, cache: @cache, config: @config)
       # end
 
       context 'record 1' do
@@ -84,7 +85,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'taxon record' do
       before(:all) do
         @taxon_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-taxon-local.json')
-        @taxon_handler = CollectionSpace::Mapper::DataHandler.new(@taxon_mapper, @client, @cache, @config)
+        @taxon_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @taxon_mapper,
+                                                                  client: @client,
+                                                                  cache: @cache,
+                                                                  config: @config)
       end
 
       context 'record 1' do

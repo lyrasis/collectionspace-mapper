@@ -60,7 +60,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::RecordStatusService do
         @service = CollectionSpace::Mapper::Tools::RecordStatusService.new(@core_client, @core_co_mapper)
       end
       it 'works the same' do
-        res = @service.lookup('20CS.1980-32-1194')
+        res = @service.lookup('2000.1')
         expect(res[:status]).to eq(:existing)
       end
     end

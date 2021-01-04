@@ -52,35 +52,28 @@ The DataHandler object sets up all the stuff that only needs to be done once per
 
 You also send each row/record through DataHandler methods for processing.
 
+[source,ruby]
+.Creating a DataHandler with default config
+----
+handler = DataHandler.new(record_mapper: mapper_json, client: cs_client_object, cache: cs_refcache_object)
+----
+
+If you do not initialize new `DataHandler` with a specific, pre-created `collectionspace-refcache` object, one will be generated from the settings in the required `collectionspace-client`.
+
+[source,ruby]
+.Creating a DataHandler without pre-created cache
+----
+handler = DataHandler.new(record_mapper: mapper_json, client: cs_client_object)
+----
+
 === DataHandler config parameter
 
 A dataset-specific configuration hash may be passed in when creating a new DataHandler. This hash contains settings that control how the Mapper will parsed and transform the data.
 
-Details on available config options and how to format them are in the **Config options** section below.
+Details on available config options and how to format them are in the https://github.com/collectionspace/collectionspace-mapper/blob/master/doc/batch_configuration.adoc[batch configuration documentation].
 
-If no config parameter is passed in, the following minimum required default configuration will be applied:
+If no config parameter is passed in, the following minimum required default configuration from https://github.com/collectionspace/collectionspace-mapper/blob/master/lib/collectionspace/mapper.rb[`mapper.rb`] will be applied:
 
-.Default config
-[source,ruby]
-----
-{ delimiter: ';',
-  subgroup_delimiter: '^^',
-  response_mode: 'normal',
-  force_defaults: false,
-  date_format: 'month day year'
-}
-----
-
-[NOTE]
-====
-Default delimiter `;` will be replaced with `|` after DDD are finished contributing to test coverage.
-====
-
-[source,ruby]
-.Creating a DataHandler with default config
-----
-handler = DataHandler.new(record_mapper, client, cache)
-----
 
 [source,ruby]
 .Creating a DataHandler with custom batch config
@@ -90,7 +83,7 @@ config = {
   subgroup_delimiter: '~'
 }
 
-handler = DataHandler.new(record_mapper, client, cache, config)
+handler = DataHandler.new(record_mapper: mapper_json, client: cs_client_object, cache: cs_refcache_object, config: config)
 ----
 
 

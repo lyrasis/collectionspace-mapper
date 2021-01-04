@@ -22,6 +22,15 @@ module Helpers
     CollectionSpace::RefCache.new(config: cache_config, client: core_client)
   end
 
+  def core_cache_search
+    cache_config = {
+      domain: 'core.collectionspace.org',
+      search_enabled: true,
+      search_identifiers: false
+    }
+    CollectionSpace::RefCache.new(config: cache_config, client: core_client)
+  end
+
   def populate_core(cache)
     terms = [
       ['citationauthorities', 'citation', 'Wanting', "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Wanting1599560009399)'Wanting'"],
