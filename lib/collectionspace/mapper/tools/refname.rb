@@ -17,9 +17,6 @@ module CollectionSpace
           urn_args = %i[urn]
           args_given = args.keys.sort
 
-          pp(args)
-          puts ''
-          
           if args_given == urn_args
             @urn = args[:urn]
             new_from_urn
