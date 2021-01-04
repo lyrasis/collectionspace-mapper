@@ -64,4 +64,23 @@ RSpec.describe CollectionSpace::Mapper::Response do
       end
     end
   end
+
+  describe '#xml' do
+    context 'when there is a doc' do
+      it 'returns string' do
+        data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
+        vresponse = @handler.validate(data)
+        response = @handler.process(vresponse).xml
+        expect(response).to be_a(String)
+      end
+    end
+    context 'when there is no doc' do
+      it 'returns nil' do
+        data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
+        vresponse = @handler.validate(data)
+        response = vresponse.xml
+        expect(response).to be_nil
+      end
+    end
+  end
 end
