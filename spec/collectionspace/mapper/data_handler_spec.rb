@@ -18,6 +18,40 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     @bonsai_conservation_handler = CollectionSpace::Mapper::DataHandler.new(@bonsai_conservation_mapper, @bonsai_client, @bonsai_cache)
 end
 
+  context 'when config has check_terms = false' do
+    before(:all) do
+      @client = core_client
+      @cache = core_cache_search
+      @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+      @config = '{"check_terms": false}'
+      @handler = CollectionSpace::Mapper::DataHandler.new(@mapper, @client, @cache, @config)
+      @data = {"objectNumber"=>"20CS.001.0002",
+               "numberOfObjects"=>"1",
+               "title"=>"Rainbow",
+               "titleLanguage"=>"English",
+               "namedCollection"=>"Test Collection",
+               "collection"=>"rando"}
+      @data2 = {"objectNumber"=>"20CS.001.0001",
+                "numberOfObjects"=>"1",
+                "numberValue"=>"123456|98765",
+                "numberType"=>"lender|obsolete",
+                "title"=>"A Man| A Woman",
+                "titleLanguage"=>"English| Klingon",
+                "namedCollection"=>"Test collection",
+                "collection"=>"permanent collection"}
+    end
+    it 'returns found = false for all terms, even if they exist in client' do
+      res = @handler.process(@data)
+      not_found = res.terms.reject{ |t| t[:found] }
+      expect(not_found.length).to eq(2)
+    end
+    it 'returns found = false for all terms, even if they exist in client' do
+      res = @handler.process(@data2)
+      not_found = res.terms.reject{ |t| t[:found] }
+      expect(not_found.length).to eq(3)
+    end
+  end
+  
   context 'when no config is passed at initialization' do
     it 'uses default config' do
       expect(@anthro_place_handler.config).to eq(CollectionSpace::Mapper::DEFAULT_CONFIG)
