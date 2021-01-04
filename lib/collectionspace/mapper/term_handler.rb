@@ -41,7 +41,7 @@ module CollectionSpace
         
         term_report = {
           category: @source_type,
-          field: @column,
+          field: @column
         }
 
         if in_cache?(val)

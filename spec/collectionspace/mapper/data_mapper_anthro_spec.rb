@@ -21,7 +21,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       # Problem in claimantGroupList
       before(:all) do
         @claimmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-claim.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(@claimmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @claimmapper,
+                                                            client: @client,
+                                                            cache: @cache,
+                                                            config: @config)
       end
       context 'record 1' do
         before(:all) do
@@ -52,7 +55,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'collectionobject record' do
       before(:all) do
         @collectionobjectmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(@collectionobjectmapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobjectmapper,
+                                                            client: @client,
+                                                            cache: @cache,
+                                                            config: @config)
       end
       # record 1 was used for testing default value merging, transformations, etc.
       # we start with record 2 to purely test mapping functionality
@@ -84,7 +90,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'osteology record' do
       before(:all) do
         @osteologymapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-osteology.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(@osteologymapper, @client, @cache, @config)
+        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @osteologymapper,
+                                                            client: @client,
+                                                            cache: @cache,
+                                                            config: @config)
       end
       context 'record 1' do
         # before(:all) do

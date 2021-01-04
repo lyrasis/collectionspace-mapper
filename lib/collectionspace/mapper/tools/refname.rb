@@ -17,6 +17,9 @@ module CollectionSpace
           urn_args = %i[urn]
           args_given = args.keys.sort
 
+          pp(args)
+          puts ''
+          
           if args_given == urn_args
             @urn = args[:urn]
             new_from_urn
@@ -39,7 +42,6 @@ module CollectionSpace
 
         def new_from_urn
           parts = @urn.match(/^urn:cspace:([^:]+):([^:]+):name\(([^\)]+)\):item:name\(([^\)]+)\)'/)
-binding.pry if parts.nil?
           @domain = parts[1]
           @type = parts[2]
           @subtype = parts[3]

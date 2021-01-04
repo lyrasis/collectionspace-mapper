@@ -8,8 +8,8 @@ module CollectionSpace
       attr_reader :mapper, :client, :cache, :config, :blankdoc, :defaults, :validator,
         :is_authority, :known_fields
 
-      def initialize(record_mapper, client, cache = nil,
-                     config = CollectionSpace::Mapper::DEFAULT_CONFIG
+      def initialize(record_mapper:, client:, cache: nil,
+                     config: CollectionSpace::Mapper::DEFAULT_CONFIG
                     )
         @mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(record_mapper)
         @is_authority = get_is_authority

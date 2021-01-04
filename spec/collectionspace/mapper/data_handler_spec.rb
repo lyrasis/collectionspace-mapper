@@ -8,14 +8,20 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     @anthro_cache = anthro_cache
     populate_anthro(@anthro_cache)
     @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
-    @anthro_object_handler = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache)
+    @anthro_object_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
+                                                                      client: @anthro_client,
+                                                                      cache: @anthro_cache)
     @anthro_place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
-    @anthro_place_handler = CollectionSpace::Mapper::DataHandler.new(@anthro_place_mapper, @anthro_client, @anthro_cache)
+    @anthro_place_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_place_mapper,
+                                                                     client: @anthro_client,
+                                                                     cache: @anthro_cache)
 
     @bonsai_client = bonsai_client
     @bonsai_cache = bonsai_cache
     @bonsai_conservation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-conservation.json')
-    @bonsai_conservation_handler = CollectionSpace::Mapper::DataHandler.new(@bonsai_conservation_mapper, @bonsai_client, @bonsai_cache)
+    @bonsai_conservation_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @bonsai_conservation_mapper,
+                                                                            client: @bonsai_client,
+                                                                            cache: @bonsai_cache)
 end
 
   context 'when config has check_terms = false' do
@@ -24,7 +30,10 @@ end
       @cache = core_cache_search
       @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
       @config = '{"check_terms": false}'
-      @handler = CollectionSpace::Mapper::DataHandler.new(@mapper, @client, @cache, @config)
+      @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
+                                                          client: @client,
+                                                          cache: @cache,
+                                                          config: @config)
       @data = {"objectNumber"=>"20CS.001.0002",
                "numberOfObjects"=>"1",
                "title"=>"Rainbow",
@@ -62,13 +71,15 @@ end
     context 'when mapping an authority' do
       it 'cache.search_identifiers = false' do
         mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
-        dh = CollectionSpace::Mapper::DataHandler.new(mapper, @anthro_client)
+        dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
+                                                      client: @anthro_client)
         expect(dh.cache.inspect).to include('@search_identifiers=false')
       end
     end
     context 'when mapping a non-authority' do
       it 'cache.search_identifiers = true' do
-        dh = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client)
+        dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
+                                                      client: @anthro_client)
         expect(dh.cache.inspect).to include('@search_identifiers=true')
       end
     end
@@ -131,7 +142,10 @@ end
         end
         context 'collection data field' do
           it 'merges data field specific transforms' do
-            handler = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache, @config)
+            handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
+                                                               client: @anthro_client,
+                                                               cache: @anthro_cache,
+                                                               config: @config)
             fieldmap = handler.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
             xforms = {
               special: %w[downcase_value],
@@ -266,7 +280,10 @@ end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
         config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
-        handler = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache, config)
+        handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
+                                                           client: @anthro_client,
+                                                           cache: @anthro_cache,
+                                                           config: config)
         result = handler.prep(@data)
         expect(result.transformed_data).not_to be_empty
       end
@@ -295,7 +312,10 @@ end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
         config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
-        handler = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache, config)
+        handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
+                                                           client: @anthro_client,
+                                                           cache: @anthro_cache,
+                                                           config: config)
         result = handler.process(@data)
         expect(result.transformed_data).not_to be_empty
       end
@@ -325,7 +345,10 @@ end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
         config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
-        handler = CollectionSpace::Mapper::DataHandler.new(@anthro_object_mapper, @anthro_client, @anthro_cache, config)
+        handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
+                                                           client: @anthro_client,
+                                                           cache: @anthro_cache,
+                                                           config: config)
         prepper = CollectionSpace::Mapper::DataPrepper.new(@data, handler)
         result = handler.map(handler.prep(@data), prepper.xphash)
         expect(result.transformed_data).not_to be_empty
