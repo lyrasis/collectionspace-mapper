@@ -44,7 +44,10 @@ module CollectionSpace
               '^\d{1,2}[-\/]\d{4}$'
             ].map{ |f| Regexp.new(f) }
 
-            if date_formats.any?{ |re| @date_string.match?(re) }
+            if date_string == '%NULLVALUE%'
+              
+            elsif
+              date_formats.any?{ |re| @date_string.match?(re) }
               try_chronic_parse(@date_string)
               @timestamp ? create_mappable_date : try_services_query
             elsif two_digit_year_date_formats.any?{ |re| @date_string.match?(re) }
@@ -89,6 +92,10 @@ module CollectionSpace
             else
               @timestamp = Chronic.parse(string)
             end
+          end
+
+          def create_mappable_passthrough
+            @mappable['dateDisplayDate'] = @date_string
           end
           
           def create_mappable_date
@@ -157,7 +164,6 @@ module CollectionSpace
           end
 
           def fix_services_scalars(services_result)
-            #            binding.pry
             new_hash = {}
             services_result.each do |k, v|
               if k.end_with?('ScalarValue')
