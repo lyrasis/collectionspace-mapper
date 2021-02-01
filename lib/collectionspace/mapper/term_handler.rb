@@ -83,7 +83,7 @@ module CollectionSpace
       end
 
       def searched_term(val)
-        @cache.get(@type, @subtype, val)
+        @cache.get(@type, @subtype, val, search: true)
       end
       
       def add_found_term(refname_urn, term_report)
