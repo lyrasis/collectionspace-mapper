@@ -171,7 +171,11 @@ module CollectionSpace
           data = sourcedata.fetch(column, nil)
           next if data.blank?
 
-          th = CollectionSpace::Mapper::TermHandler.new(mapping, data, @cache, @config)
+          th = CollectionSpace::Mapper::TermHandler.new(mapping: mapping,
+                                                        data: data,
+                                                        client: @handler.client,
+                                                        cache: @cache,
+                                                        config: @config)
           @response.transformed_data[column] = th.result
           @response.terms << th.terms
         end
