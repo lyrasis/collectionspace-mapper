@@ -52,7 +52,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'titletranslationlanguage (vocabulary, field subgroup)' do
       before(:all) do
         data = [['Ancient Greek', 'Swahili'], ['Klingon', 'Spanish']]
-        @th = CollectionSpace::Mapper::TermHandler.new(@ttl_mapping, data, @cache, @config)
+        @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ttl_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'result is the transformed value for mapping' do
       expected = [["urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(grc)'Ancient Greek'",
@@ -69,7 +69,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'reference (authority, field group)' do
       before(:all) do
         data = ['Reference 1', 'Reference 2']
-      @th = CollectionSpace::Mapper::TermHandler.new(@ref_mapping, data, @cache, @config)
+      @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ref_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'result is the transformed value for mapping' do
         expected = [
@@ -89,7 +89,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'titletranslationlanguage (vocabulary, field subgroup)' do
       before(:all) do
         data = [['Ancient Greek', 'Swahili'], ['Sanza', 'Spanish']]
-        @th = CollectionSpace::Mapper::TermHandler.new(@ttl_mapping, data, @cache, @config)
+        @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ttl_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'contains a term Hash for each value' do
         expect(@th.terms.length).to eq(4)
@@ -107,7 +107,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'reference (authority, field group)' do
       before(:all) do
         data = ['Reference 3', 'Reference 3', 'Reference 4']
-        @th = CollectionSpace::Mapper::TermHandler.new(@ref_mapping, data, @cache, @config)
+        @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ref_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'contains a term Hash for each value' do
         expect(@th.terms.length).to eq(3)

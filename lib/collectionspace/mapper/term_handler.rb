@@ -4,12 +4,13 @@ module CollectionSpace
   module Mapper
     class TermHandler
       attr_reader :result, :terms
-      def initialize(mapping, data, cache, config)
+      def initialize(mapping:, data:, client:, cache:, config:)
         @mapping = mapping
         @column = mapping[:datacolumn]
         @field = mapping[:fieldname]
         @data = data
         @cache = cache
+        @client = client
         @config = config
         @source_type = @mapping[:source_type].to_sym
         @terms = []
@@ -83,7 +84,28 @@ module CollectionSpace
       end
 
       def searched_term(val)
-        @cache.get(@type, @subtype, val, search: true)
+        begin
+          response = @client.find(
+            type: @type,
+            subtype: @subtype,
+            value: val,
+            field: search_field
+          )
+        rescue StandardError => e
+          puts e.message
+        else
+          response.parsed.dig('abstract_common_list', 'list_item', 'refName')
+        end
+      end
+
+      def search_field
+        begin
+          field = CollectionSpace::Service.get(type: @type)[:term]
+        rescue StandardError => e
+          puts e.message
+        else
+          field
+        end
       end
       
       def add_found_term(refname_urn, term_report)
