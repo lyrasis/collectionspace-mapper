@@ -27,9 +27,9 @@ module CollectionSpace
 
       def validate_refnames
         if @data.first.is_a?(String)
-          @data.each{ |val| validate_refname(val) unless val.blank? }
+          @data.each{ |val| validate_refname(val) unless val.blank? || val == '%NULLVALUE%' }
         else
-          @data.each{ |arr| arr.each{ |val| validate_refname(val) unless val.blank? } }
+          @data.each{ |arr| arr.each{ |val| validate_refname(val) unless val.blank? || val == '%NULLVALUE%' } }
         end
       end
 
