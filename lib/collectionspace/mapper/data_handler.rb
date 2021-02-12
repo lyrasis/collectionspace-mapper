@@ -54,11 +54,7 @@ module CollectionSpace
         response = CollectionSpace::Mapper::setup_data(data)
         if response.valid?
           prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
-          prepper.split_data
-          prepper.transform_data
-          prepper.check_data
-          prepper.combine_data_fields
-          prepper.response
+          prepper.prep
         else
           response
         end
