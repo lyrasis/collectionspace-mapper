@@ -45,6 +45,8 @@ module CollectionSpace
 
       def handle_term_fields
         @xphash.each{ |xpath, hash| do_term_handling(xpath, hash) }
+        @response.warnings.flatten!
+        @response.errors.flatten!
         @response.transformed_data
       end
       
@@ -178,6 +180,8 @@ module CollectionSpace
                                                         config: @config)
           @response.transformed_data[column] = th.result
           @response.terms << th.terms
+          @response.warnings << th.warnings unless th.warnings.empty?
+          @response.errors << th.errors unless th.errors.empty?
         end
       end
 
