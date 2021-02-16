@@ -12,14 +12,45 @@ module CollectionSpace
 
         class CspaceDate
           TIMESTAMP_SUFFIX = 'T00:00:00.000Z'
-          attr_reader :date_string, :client, :cache, :config, :timestamp, :stamp, :mappable
+          attr_reader :date_string, :client, :config,
+            :parsed_date, :mappable, :warnings,
+            :timestamp, :stamp
 
           def initialize(date_string, client, config)
             @date_string = date_string
             @client = client
-            @config = config
+            @config = CollectionSpace::Mapper::Tools::Config.new(config).date_config
+            
             @mappable = {}
+            @warnings = []
             @ce = "urn:cspace:#{client.domain}:vocabularies:name(dateera):item:name(ce)'CE'"
+
+            process
+
+            old_processing if mappable.empty?
+          end
+
+          def process
+            return if date_string == '%NULLVALUE%'
+            
+            @parsed_date = Emendate.parse(date_string, config)
+
+            if parsing_errors?
+              warnings << "Cannot process date: #{date_string}. Passing it through as dateDisplayDate with no scalar values"
+              passthrough_display_date
+              end
+          end
+
+          def passthrough_display_date
+            @mappable = {"dateDisplayDate"=>date_string,
+                         "scalarValuesComputed"=>"false"}
+          end
+          
+          def parsing_errors?
+            parsed_date.errors.empty? ? false : true
+          end
+          
+          def old_processing
 
             date_formats = [
               '^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$', #02-15-2020, 2-15-2020, 2/15/2020, 02/15/2020
@@ -68,7 +99,7 @@ module CollectionSpace
             stamp = @mappable.fetch('dateEarliestScalarValue', nil)
             @stamp = stamp.blank? ? @date_string : stamp
           end
-
+          
           def coerced_year_date
             val = @date_string.gsub('/', '-').split('-')
             yr = val.pop
@@ -90,10 +121,6 @@ module CollectionSpace
             else
               @timestamp = Chronic.parse(string)
             end
-          end
-
-          def create_mappable_passthrough
-            @mappable['dateDisplayDate'] = @date_string
           end
           
           def create_mappable_date
@@ -154,10 +181,6 @@ module CollectionSpace
             if response.status_code == 200
               result = response.result['structureddate_common']
               @mappable = fix_services_scalars(result)
-            else
-              @mappable = { 'dateDisplayDate' => date_string,
-                           'scalarValuesComputed' => 'false'
-                          }
             end
           end
 
