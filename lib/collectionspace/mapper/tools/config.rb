@@ -30,11 +30,36 @@ module CollectionSpace
           validate
         end
 
+        def date_config
+          eo = emendate_option_names
+          hash.select{ |opt, val| eo.include?(opt) }
+        end
+        
         private
 
+        def emendate_option_names
+          o = Emendate::Options.new
+          o.options.keys
+        end
+        
         def symbolize
           @hash.transform_keys!(&:to_sym)
           symbolize_transforms if @hash[:transforms]
+          symbolize_emendate_string_values
+        end
+
+        def symbolize_emendate_string_values
+          eo = emendate_option_names
+          newhash = {}
+          
+          hash.each do |opt, val|
+            if eo.include?(opt) && val.is_a?(String)
+              newhash[opt] = val.to_sym
+            else
+              newhash[opt] = val
+            end
+          end
+          @hash = newhash
         end
 
         def symbolize_transforms

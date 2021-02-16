@@ -23,8 +23,6 @@ module CollectionSpace
                        check_terms: true,
                        check_record_status: true,
                        force_defaults: false,
-                       date_format: 'month day year',
-                       two_digit_year_handling: 'coerce'
                      }
 
     require 'collectionspace/mapper/data_handler'
