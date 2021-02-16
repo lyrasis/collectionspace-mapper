@@ -5,14 +5,13 @@ require 'spec_helper'
 RSpec.describe CollectionSpace::Mapper::Tools::Dates do
   before(:all) do
     @client = anthro_client
-    @cache = anthro_cache
     @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
 
   describe CollectionSpace::Mapper::Tools::Dates::CspaceDate do
     context 'when date string is Chronic parseable (e.g. 2020-08-14)' do
       before(:all) do
-        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new('2020-09-30', @client, @cache, @config)
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new('2020-09-30', @client, @config)
       end
       
       it 'populates .timestamp' do
@@ -62,20 +61,20 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
 
         context 'when no date_format specified in config' do
           it 'defaults to M/D/Y interpretation' do
-            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
+            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config).timestamp.to_s
             expect(res).to start_with('2020-01-02 12:00:00')
           end
         end
         context 'when date_format in config = month day year' do
           it 'interprets as M/D/Y' do
-            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config).timestamp.to_s
+            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config).timestamp.to_s
             expect(res).to start_with('2020-01-02 12:00:00')
           end
         end
         context 'when date_format in config = day month year' do
           it 'interprets as D/M/Y' do
             config = @config.merge({ date_format: 'day month year' })
-            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config).timestamp.to_s
+            res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, config).timestamp.to_s
             expect(res).to start_with('2020-02-01 12:00:00')
           end
         end
@@ -89,7 +88,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
 
       context 'when config[:two_digit_year_handling] = coerce' do
         before(:all) do
-          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config)
         end
 
         it 'Chronic parses date with coerced 4-digit year' do
@@ -100,7 +99,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       context 'when config[:two_digit_year_handling] = literal' do
         before(:all) do
           config = @config.merge({two_digit_year_handling: 'literal'})
-          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config)
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, config)
         end
 
         it 'Services parses date with uncoerced 2-digit year' do
@@ -112,7 +111,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
     context 'when date string is not Chronic parseable (e.g. 1/2/2000 - 12/21/2001)' do
       before(:all) do
         @string = '1/2/2000 - 12/21/2001'
-        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config)
       end
 
       it '.timestamp will be nil' do
@@ -134,7 +133,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       context 'date = VIII.XIV.MMXX' do
         before(:all) do
           @string = 'VIII.XIV.MMXX'
-          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config)
         end
 
         it '.timestamp will be nil' do
@@ -161,7 +160,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       context 'when date string = march 2020' do
         before(:all) do
           @string = 'march 2020'
-          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config)
         end
 
         it 'dateEarliestScalarValue = 2020-03-01T00:00:00.000Z' do
@@ -200,7 +199,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       context 'when date string = 2020-03' do
         before(:all) do
           @string = '2020-03'
-          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config)
         end
 
         it 'dateEarliestScalarValue = 2020-03-01T00:00:00.000Z' do
@@ -239,7 +238,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       context 'when date string = 2002' do
         before(:all) do
           @string = '2002'
-          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @config)
         end
 
         it 'dateEarliestScalarValue = 2002-01-01T00:00:00.000Z' do

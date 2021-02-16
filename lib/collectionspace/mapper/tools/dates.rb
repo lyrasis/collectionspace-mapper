@@ -11,17 +11,15 @@ module CollectionSpace
         extend self
 
         class CspaceDate
-          attr_reader :date_string, :client, :cache, :config, :timestamp, :stamp
-          attr_accessor :mappable
+          TIMESTAMP_SUFFIX = 'T00:00:00.000Z'
+          attr_reader :date_string, :client, :cache, :config, :timestamp, :stamp, :mappable
 
-          def initialize(date_string, client, cache, config)
+          def initialize(date_string, client, config)
             @date_string = date_string
             @client = client
-            @cache = cache
             @config = config
             @mappable = {}
-            @timestamp_suffix = 'T00:00:00.000Z'
-            @ce = "urn:cspace:#{@cache.domain}:vocabularies:name(dateera):item:name(ce)'CE'"
+            @ce = "urn:cspace:#{client.domain}:vocabularies:name(dateera):item:name(ce)'CE'"
 
             date_formats = [
               '^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$', #02-15-2020, 2-15-2020, 2/15/2020, 02/15/2020
@@ -107,8 +105,8 @@ module CollectionSpace
             @mappable['dateEarliestSingleMonth'] = date.month.to_s
             @mappable['dateEarliestSingleDay'] = date.day.to_s
             @mappable['dateEarliestSingleEra'] = @ce
-            @mappable['dateEarliestScalarValue'] = "#{date.stamp(:db)}#{@timestamp_suffix}"
-            @mappable['dateLatestScalarValue'] = "#{next_day.stamp(:db)}#{@timestamp_suffix}"
+            @mappable['dateEarliestScalarValue'] = "#{date.stamp(:db)}#{TIMESTAMP_SUFFIX}"
+            @mappable['dateLatestScalarValue'] = "#{next_day.stamp(:db)}#{TIMESTAMP_SUFFIX}"
             @mappable['scalarValuesComputed'] = 'true'
           end
 
@@ -127,8 +125,8 @@ module CollectionSpace
             @mappable['dateLatestMonth'] = month.to_s
             @mappable['dateLatestDay'] = last_day_of_month.to_s
             @mappable['dateLatestEra'] = @ce
-            @mappable['dateEarliestScalarValue'] = "#{year}-#{month.to_s.rjust(2, '0')}-01#{@timestamp_suffix}"
-            @mappable['dateLatestScalarValue'] = "#{year}-#{next_month.to_s.rjust(2, '0')}-01#{@timestamp_suffix}"
+            @mappable['dateEarliestScalarValue'] = "#{year}-#{month.to_s.rjust(2, '0')}-01#{TIMESTAMP_SUFFIX}"
+            @mappable['dateLatestScalarValue'] = "#{year}-#{next_month.to_s.rjust(2, '0')}-01#{TIMESTAMP_SUFFIX}"
             @mappable['scalarValuesComputed'] = 'true'
           end
 
@@ -145,8 +143,8 @@ module CollectionSpace
             @mappable['dateLatestMonth'] = '12'
             @mappable['dateLatestDay'] = '31'
             @mappable['dateLatestEra'] = @ce
-            @mappable['dateEarliestScalarValue'] = "#{year}-01-01#{@timestamp_suffix}"
-            @mappable['dateLatestScalarValue'] = "#{next_year}-01-01#{@timestamp_suffix}"
+            @mappable['dateEarliestScalarValue'] = "#{year}-01-01#{TIMESTAMP_SUFFIX}"
+            @mappable['dateLatestScalarValue'] = "#{next_year}-01-01#{TIMESTAMP_SUFFIX}"
             @mappable['scalarValuesComputed'] = 'true'
           end
 
@@ -167,7 +165,7 @@ module CollectionSpace
             new_hash = {}
             services_result.each do |k, v|
               if k.end_with?('ScalarValue')
-                new_hash[k] = "#{v}#{@timestamp_suffix}"
+                new_hash[k] = "#{v}#{TIMESTAMP_SUFFIX}"
               else
                 new_hash[k] = v
               end

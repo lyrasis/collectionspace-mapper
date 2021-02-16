@@ -199,9 +199,9 @@ module CollectionSpace
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).mappable
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @config).mappable
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).mappable }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @config).mappable }
           end
         end
       end
@@ -209,9 +209,9 @@ module CollectionSpace
       def unstructured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).stamp
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @config).stamp
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).stamp }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @config).stamp }
           end
         end
       end
