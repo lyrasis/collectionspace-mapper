@@ -25,6 +25,10 @@ module CollectionSpace
                        force_defaults: false,
                      }
 
+    # mixins
+    require 'collectionspace/mapper/term_searchable'
+
+    # classes
     require 'collectionspace/mapper/data_handler'
     require 'collectionspace/mapper/data_mapper'
     require 'collectionspace/mapper/data_prepper'

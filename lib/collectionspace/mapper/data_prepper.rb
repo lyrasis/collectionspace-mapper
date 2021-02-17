@@ -199,9 +199,15 @@ module CollectionSpace
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @config).mappable
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: d,
+                                                                  client: @handler.client,
+                                                                  cache: @handler.cache,
+                                                                  config: @config).mappable
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @config).mappable }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: v,
+                                                                             client: @handler.client,
+                                                                             cache: @handler.cache,
+                                                                             config: @config).mappable }
           end
         end
       end
@@ -209,9 +215,15 @@ module CollectionSpace
       def unstructured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @config).stamp
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: d,
+                                                                  client: @handler.client,
+                                                                  cache: @handler.cache,
+                                                                  config: @config).stamp
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @config).stamp }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: v,
+                                                                  client: @handler.client,
+                                                                  cache: @handler.cache,
+                                                                  config: @config).stamp }
           end
         end
       end

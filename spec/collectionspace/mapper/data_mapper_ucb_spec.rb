@@ -8,8 +8,6 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
                subgroup_delimiter: "^^",
                response_mode: "normal",
                force_defaults: false,
-               date_format: "month day year",
-               two_digit_year_handling: "coerce",
                default_values: {
                  'objectNameType' => 'simple',
                  'objectNameCurrency' => 'current',
@@ -53,9 +51,9 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
-  #        puts @fixture_doc
-   #       puts 'UNEXPECTED FIELDS'
-    #      puts diff
+    #      puts @fixture_doc
+          puts 'UNEXPECTED FIELDS'
+          puts diff
           expect(diff).to eq([])
         end
 

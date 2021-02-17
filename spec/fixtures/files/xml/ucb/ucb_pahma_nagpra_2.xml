@@ -341,7 +341,7 @@
           <dateEarliestSingleCertainty/>
           <dateEarliestSingleQualifierUnit/>
           <dateDisplayDate>3/4/2001</dateDisplayDate>
-          <dateLatestScalarValue>2001-03-05T00:00:00.000Z</dateLatestScalarValue>
+          <dateLatestScalarValue>2001-03-04T00:00:00.000Z</dateLatestScalarValue>
           <dateEarliestSingleQualifierValue/>
           <datePeriod/>
           <dateLatestEra/>
@@ -372,7 +372,7 @@
           <dateEarliestSingleCertainty/>
           <dateEarliestSingleQualifierUnit/>
           <dateDisplayDate>2/2/2002</dateDisplayDate>
-          <dateLatestScalarValue>2002-02-03T00:00:00.000Z</dateLatestScalarValue>
+          <dateLatestScalarValue>2002-02-02T00:00:00.000Z</dateLatestScalarValue>
           <dateEarliestSingleQualifierValue/>
           <datePeriod/>
           <dateLatestEra/>
@@ -465,7 +465,7 @@
           <dateEarliestSingleCertainty/>
           <dateEarliestSingleQualifierUnit/>
           <dateDisplayDate>march 2020</dateDisplayDate>
-          <dateLatestScalarValue>2020-04-01T00:00:00.000Z</dateLatestScalarValue>
+          <dateLatestScalarValue>2020-03-31T00:00:00.000Z</dateLatestScalarValue>
           <dateEarliestSingleQualifierValue/>
           <datePeriod/>
           <dateLatestEra>urn:cspace:pahma.cspace.berkeley.edu:vocabularies:name(dateera):item:name(ce)'CE'</dateLatestEra>
@@ -496,7 +496,7 @@
           <dateEarliestSingleCertainty/>
           <dateEarliestSingleQualifierUnit/>
           <dateDisplayDate>2002</dateDisplayDate>
-          <dateLatestScalarValue>2003-01-01T00:00:00.000Z</dateLatestScalarValue>
+          <dateLatestScalarValue>2002-12-31T00:00:00.000Z</dateLatestScalarValue>
           <dateEarliestSingleQualifierValue/>
           <datePeriod/>
           <dateLatestEra>urn:cspace:pahma.cspace.berkeley.edu:vocabularies:name(dateera):item:name(ce)'CE'</dateLatestEra>
