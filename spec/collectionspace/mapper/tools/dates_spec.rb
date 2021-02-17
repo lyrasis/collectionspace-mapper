@@ -17,7 +17,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: '%NULLVALUE%', client: @client, cache: @cache, config: @config)
       end
       
-      it '#stamp is mil' do
+      it '#stamp is nil' do
         res = @res.stamp
         expect(res).to be_nil
       end
