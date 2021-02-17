@@ -62,7 +62,7 @@ module CollectionSpace
 
           def process_dates
             if parsed_date.dates.length > 1
-              warnings << "Date parsing warning: Multiple parsed dates returned (#{date_ct}). Processing only the first"
+              warnings << "Date parsing warning: Multiple parsed dates returned (#{parsed_date.dates.length}). Processing only the first"
             end
 
             thedate = parsed_date.dates[0]
@@ -73,6 +73,17 @@ module CollectionSpace
               set_display_date
               set_scalar_values(thedate)
             end
+
+            set_supplied if thedate.certainty.include?(:inferred)
+            
+          end
+
+          def set_supplied
+            supp = get_vocabulary_term(vocab: 'datecertainty', term: 'supplied or inferred')
+            return if supp.nil?
+
+            mappable['dateEarliestSingleCertainty'] = supp
+            mappable['dateLatestCertainty'] = supp unless mappable['dateLatestScalarValue'].nil?
           end
           
           def set_single_scalar_values(pdate)
