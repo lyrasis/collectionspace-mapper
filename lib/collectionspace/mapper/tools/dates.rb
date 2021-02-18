@@ -37,27 +37,27 @@ module CollectionSpace
             
             @parsed_date = Emendate.parse(date_string, @config)
 
-            if parsing_errors?
-              warnings << "Date parsing warning: Cannot process date: #{date_string}. Passing it through as dateDisplayDate with no scalar values"
-              passthrough_display_date
-              return
-            end
-
             if parsing_warnings?
               parsed_date.warnings.each do |warning|
                 warnings << "Date parsing warning: #{warning}"
               end
             end
 
-            if no_dates?
-              nodate = get_vocabulary_term(vocab: 'datecertainty', term: 'no date')
+            if parsing_errors?
+              warnings << "Date parsing warning: Cannot process date: #{date_string}. Passing it through as dateDisplayDate with no scalar values"
               passthrough_display_date
-              set_earliest_certainty(nodate) unless nodate.nil?
+              return
+            end
+
+            if no_dates?
+              passthrough_display_date
+
+              set_certainty('no date')
               return
             end
 
             process_dates
-            @stamp = mappable['dateEarliestScalarValue']
+            @stamp = mappable['dateEarliestScalarValue'] ? mappable['dateEarliestScalarValue'] : mappable['dateLatestScalarValue']
           end
 
           def process_dates
@@ -66,54 +66,77 @@ module CollectionSpace
             end
 
             thedate = parsed_date.dates[0]
-            if thedate.date_start_full == thedate.date_end_full
-              set_display_date
-              set_single_scalar_values(thedate)
-            else
-              set_display_date
-              set_scalar_values(thedate)
+
+            set_display_date
+            set_scalar_values(thedate)
+            set_certainty_values(thedate.certainty)
+          end
+
+          def set_certainty_values(certainty)
+            return if certainty.empty?
+
+            certainty.sort!
+            
+            lookup = {
+              %i[approximate] => 'approximate',
+              %i[inferred] => 'supplied or inferred',
+              %i[uncertain] => 'possibly',
+              %i[approximate inferred uncertain] => 'approximate, possibly, and supplied',
+              %i[approximate inferred] => 'approximate and supplied',
+              %i[approximate uncertain] => 'approximate and possibly',
+              %i[inferred uncertain] => 'possibly and supplied'
+            }
+
+            term = lookup[certainty]
+
+            if term.nil?
+              warnings << "Date parsing warning: Unhandled certainty value combination: #{certainty.join(', ')}"
+              return
             end
 
-            set_supplied if thedate.certainty.include?(:inferred)
-            
-          end
-
-          def set_supplied
-            supp = get_vocabulary_term(vocab: 'datecertainty', term: 'supplied or inferred')
-            return if supp.nil?
-
-            mappable['dateEarliestSingleCertainty'] = supp
-            mappable['dateLatestCertainty'] = supp unless mappable['dateLatestScalarValue'].nil?
+            set_certainty(term)
           end
           
-          def set_single_scalar_values(pdate)
-            date = Date.parse(pdate.date_start_full)
+          def set_certainty(term)
+            refname = get_vocabulary_term(vocab: 'datecertainty', term: term)
+            if refname.nil?
+              warnings << "Date parsing warning: Missing vocabulary term: datecertainty: `#{term}`"
+              return
+            end
             
+            mappable['dateEarliestSingleCertainty'] = refname
+            return if term == 'no date'
+            mappable['dateLatestCertainty'] = refname unless mappable['dateLatestScalarValue'].nil?
+          end
+          
+          def set_earliest_scalar_values(pdate)
+            return if pdate.nil?
+            date = Date.parse(pdate)
             mappable['dateEarliestSingleYear'] = date.year.to_s
             mappable['dateEarliestSingleMonth'] = date.month.to_s
             mappable['dateEarliestSingleDay'] = date.day.to_s
             mappable['dateEarliestSingleEra'] = @ce
             mappable['dateEarliestScalarValue'] = "#{date.iso8601}#{TIMESTAMP_SUFFIX}"
-            mappable['dateLatestScalarValue'] = "#{date.iso8601}#{TIMESTAMP_SUFFIX}"
-            mappable['scalarValuesComputed'] = 'true'
+          end
 
+          def set_latest_scalar_values(pdate)
+            return if pdate.nil?
+            date = Date.parse(pdate)
+            mappable['dateLatestYear'] = date.year.to_s
+            mappable['dateLatestMonth'] = date.month.to_s
+            mappable['dateLatestDay'] = date.day.to_s
+            mappable['dateLatestEra'] = @ce
+            mappable['dateLatestScalarValue'] = "#{date.iso8601}#{TIMESTAMP_SUFFIX}"
           end
 
           def set_scalar_values(pdate)
-            s_date = Date.parse(pdate.date_start_full)
-            e_date = Date.parse(pdate.date_end_full)
-            
-            mappable['dateEarliestSingleYear'] = s_date.year.to_s
-            mappable['dateEarliestSingleMonth'] = s_date.month.to_s
-            mappable['dateEarliestSingleDay'] = s_date.day.to_s
-            mappable['dateEarliestSingleEra'] = @ce
-            mappable['dateEarliestScalarValue'] = "#{s_date.iso8601}#{TIMESTAMP_SUFFIX}"
+            set_earliest_scalar_values(pdate.date_start_full)
+            set_latest_scalar_values(pdate.date_end_full)
 
-            mappable['dateLatestYear'] = e_date.year.to_s
-            mappable['dateLatestMonth'] = e_date.month.to_s
-            mappable['dateLatestDay'] = e_date.day.to_s
-            mappable['dateLatestEra'] = @ce
-            mappable['dateLatestScalarValue'] = "#{e_date.iso8601}#{TIMESTAMP_SUFFIX}"
+            if mappable['dateLatestScalarValue'].nil?
+              mappable['dateLatestScalarValue'] = mappable['dateEarliestSingleScalarValue']
+            end
+            
             mappable['scalarValuesComputed'] = 'true'
           end
           

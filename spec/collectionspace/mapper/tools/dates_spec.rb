@@ -68,6 +68,11 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         it 'scalarValuesComputed = false' do
           expect(@res.mappable['scalarValuesComputed']).to eq('false')
         end
+
+        it 'records warning' do
+          w = 'Date parsing warning: Missing vocabulary term: datecertainty: `no date`'
+          expect(@res.warnings).to include(w)
+        end
       end
       context 'fcart client (has "no date" datecertainty vocab term)' do
         before(:all) do
@@ -383,6 +388,11 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         before(:all) do
           @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: '[1851 or 1862]', client: @client, cache: @cache, config: @config)
         end
+
+        it 'records warning' do
+          w = 'Date parsing warning: Missing vocabulary term: datecertainty: `supplied or inferred`'
+          expect(@res.warnings).to include(w)
+        end
         
         it '#stamp = 1851-01-01T00:00:00.000Z' do
           res = @res.stamp
@@ -431,8 +441,8 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         it 'dateLatestCertainty = nil' do
           expect(@res.mappable['dateLatestCertainty']).to be_nil
         end
-
       end
+      
       context 'ba client (has "supplied or inferred"  datecertainty vocab term)' do
         before(:all) do
           cache = ba_cache
@@ -487,6 +497,187 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
           expect(@res.mappable['dateLatestCertainty']).to eq("urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(suppliedorinferred1613499928079)'supplied or inferred'")
         end
         
+      end
+    end
+
+    context 'c. 1950s' do
+      context 'anthro client (Has "Approximate" datecertainty vocab term (note: capitalized!))' do
+        before(:all) do
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: 'c. 1950s', client: @client, cache: @cache, config: @config)
+        end
+        
+        it '#stamp = 1950-01-01T00:00:00.000Z' do
+          res = @res.stamp
+          expect(res).to eq('1950-01-01T00:00:00.000Z')
+        end
+
+        it 'dateEarliestScalarValue = 1950-01-01T00:00:00.000Z' do
+          expect(@res.mappable['dateEarliestScalarValue']).to eq('1950-01-01T00:00:00.000Z')
+        end
+
+        it 'dateLatestScalarValue = 1959-12-31T00:00:00.000Z' do
+          expect(@res.mappable['dateLatestScalarValue']).to eq('1959-12-31T00:00:00.000Z')
+        end
+
+        it 'dateEarliestSingleMonth = 1' do
+          expect(@res.mappable['dateEarliestSingleMonth']).to eq('1')
+        end
+        
+        it 'dateLatestMonth = 12' do
+          expect(@res.mappable['dateLatestMonth']).to eq('12')
+        end
+
+        it 'dateEarliestSingleDay = 1' do
+          expect(@res.mappable['dateEarliestSingleDay']).to eq('1')
+        end
+        
+        it 'dateLatestDay = 31' do
+          expect(@res.mappable['dateLatestDay']).to eq('31')
+        end
+
+        it 'dateEarliestSingleYear = 1950' do
+          expect(@res.mappable['dateEarliestSingleYear']).to eq('1950')
+        end
+        
+        it 'dateLatestYear = 1959' do
+          expect(@res.mappable['dateLatestYear']).to eq('1959')
+        end
+
+        it 'scalarValuesComputed = true' do
+          expect(@res.mappable['scalarValuesComputed']).to eq('true')
+        end
+
+        it 'dateEarliestSingleCertainty = approximate refname' do
+          expect(@res.mappable['dateEarliestSingleCertainty']).to eq("urn:cspace:anthro.collectionspace.org:vocabularies:name(datecertainty):item:name(approximate)'Approximate'")
+        end
+        it 'dateLatestCertainty = approximate refname' do
+          expect(@res.mappable['dateLatestCertainty']).to eq("urn:cspace:anthro.collectionspace.org:vocabularies:name(datecertainty):item:name(approximate)'Approximate'")
+        end
+      end
+      
+      context 'fcart client (has "approximate"  datecertainty vocab term (lowercase))' do
+        before(:all) do
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: 'c. 1950s', client: @fcart_client, cache: @fcart_cache, config: @config)
+        end
+        it 'dateEarliestSingleCertainty = approximate refname' do
+          expect(@res.mappable['dateEarliestSingleCertainty']).to eq("urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(approximate)'approximate'")
+        end
+        it 'dateLatestCertainty = approximate refname' do
+          expect(@res.mappable['dateLatestCertainty']).to eq("urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(approximate)'approximate'")
+        end
+      end
+    end
+
+    context '[ca. 2002-10]' do
+      context 'fcart client does not have `approximate and supplied` term' do
+        before(:all) do
+          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: '[ca. 2002-10]', client: @fcart_client, cache: @fcart_cache, config: @config)
+        end
+        it 'dateEarliestSingleCertainty = nil' do
+          expect(@res.mappable['dateEarliestSingleCertainty']).to be_nil
+        end
+        it 'dateLatestCertainty = nil' do
+          expect(@res.mappable['dateLatestCertainty']).to be_nil
+        end
+        it 'records warning' do
+          w = 'Date parsing warning: Missing vocabulary term: datecertainty: `approximate and supplied`'
+          expect(@res.warnings).to include(w)
+        end
+
+      end
+    end
+    
+    context 'before 1920' do
+      before(:all) do
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: 'before 1920', client: @client, cache: @cache, config: @config)
+      end
+      
+      it '#stamp = 1919-12-31T00:00:00.000Z' do
+        res = @res.stamp
+        expect(res).to eq('1919-12-31T00:00:00.000Z')
+      end
+
+      it 'dateEarliestScalarValue = nil' do
+          expect(@res.mappable['dateEarliestScalarValue']).to be_nil
+        end
+
+        it 'dateLatestScalarValue = 1919-12-31T00:00:00.000Z' do
+          expect(@res.mappable['dateLatestScalarValue']).to eq('1919-12-31T00:00:00.000Z')
+        end
+
+        it 'dateEarliestSingleMonth = nil' do
+          expect(@res.mappable['dateEarliestSingleMonth']).to be_nil
+        end
+        
+        it 'dateLatestMonth = 12' do
+          expect(@res.mappable['dateLatestMonth']).to eq('12')
+        end
+
+        it 'dateEarliestSingleDay = nil' do
+          expect(@res.mappable['dateEarliestSingleDay']).to be_nil
+        end
+        
+        it 'dateLatestDay = 31' do
+          expect(@res.mappable['dateLatestDay']).to eq('31')
+        end
+
+        it 'dateEarliestSingleYear = nil' do
+          expect(@res.mappable['dateEarliestSingleYear']).to be_nil
+        end
+        
+        it 'dateLatestYear = 1919' do
+          expect(@res.mappable['dateLatestYear']).to eq('1919')
+        end
+
+        it 'scalarValuesComputed = true' do
+          expect(@res.mappable['scalarValuesComputed']).to eq('true')
+        end
+    end
+
+    context 'after 1920' do
+      before(:all) do
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: 'after 1920', client: @client, cache: @cache, config: @config)
+      end
+
+      it '#stamp = 1921-01-01T00:00:00.000Z' do
+        res = @res.stamp
+        expect(res).to eq('1921-01-01T00:00:00.000Z')
+      end
+
+      it 'dateEarliestScalarValue = 1921-01-01T00:00:00.000Z' do
+        expect(@res.mappable['dateEarliestScalarValue']).to eq('1921-01-01T00:00:00.000Z')
+      end
+
+      it 'dateLatestScalarValue = todayT00:00:00.000Z' do
+        expect(@res.mappable['dateLatestScalarValue']).to eq("#{Date.today.iso8601}T00:00:00.000Z")
+      end
+
+      it 'dateEarliestSingleMonth = 1' do
+        expect(@res.mappable['dateEarliestSingleMonth']).to eq('1')
+      end
+      
+      it 'dateLatestMonth = current month' do
+        expect(@res.mappable['dateLatestMonth']).to eq(Date.today.month.to_s)
+      end
+
+      it 'dateEarliestSingleDay = 1' do
+        expect(@res.mappable['dateEarliestSingleDay']).to eq('1')
+      end
+      
+      it 'dateLatestDay = current day' do
+        expect(@res.mappable['dateLatestDay']).to eq(Date.today.day.to_s)
+      end
+
+      it 'dateEarliestSingleYear = 1921' do
+        expect(@res.mappable['dateEarliestSingleYear']).to eq('1921')
+      end
+      
+      it 'dateLatestYear = current year' do
+        expect(@res.mappable['dateLatestYear']).to eq(Date.today.year.to_s)
+      end
+
+      it 'scalarValuesComputed = true' do
+        expect(@res.mappable['scalarValuesComputed']).to eq('true')
       end
     end
   end
