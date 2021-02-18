@@ -12,7 +12,18 @@ module CollectionSpace
       end
 
       def get_vocabulary_term(vocab:, term:)
-        @cache.get('vocabularies', vocab, term, search: true)
+        result = @cache.get('vocabularies', vocab, term, search: true)
+        return result unless result.nil?
+
+        if has_caps?(term)
+          @cache.get('vocabularies', vocab, term.downcase, search: true)
+        else
+          @cache.get('vocabularies', vocab, term.capitalize, search: true)
+        end
+      end
+
+      def has_caps?(string)
+        string.match?(/[A-Z]/) ? true : false
       end
       
       def searched_term(val)
