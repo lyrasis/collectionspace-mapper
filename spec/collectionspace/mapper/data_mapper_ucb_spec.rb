@@ -51,17 +51,16 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
-    #      puts @fixture_doc
-          puts 'UNEXPECTED FIELDS'
-          puts diff
+          # puts @fixture_doc
+          # puts 'UNEXPECTED FIELDS'
+          # puts diff
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-#          puts @mapped_doc
+          #puts @mapped_doc
           @fixture_xpaths.each do |xpath|
-#            next if xpath.start_with?('/document/collectionobjects_nagpra/nagpraReportFiledGroupList/nagpraReportFiledGroup[6]/nagpraReportFiledDate')              
- #           puts xpath
+            #puts xpath
             fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
             mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)

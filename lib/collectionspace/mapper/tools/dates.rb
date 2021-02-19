@@ -131,10 +131,10 @@ module CollectionSpace
 
           def set_scalar_values(pdate)
             set_earliest_scalar_values(pdate.date_start_full)
-            set_latest_scalar_values(pdate.date_end_full)
+            set_latest_scalar_values(pdate.date_end_full) unless pdate.date_end_full == pdate.date_start_full
 
-            if mappable['dateLatestScalarValue'].nil?
-              mappable['dateLatestScalarValue'] = mappable['dateEarliestSingleScalarValue']
+            unless mappable.key?('dateLatestScalarValue')
+              mappable['dateLatestScalarValue'] = mappable['dateEarliestScalarValue']
             end
             
             mappable['scalarValuesComputed'] = 'true'
@@ -175,6 +175,7 @@ module CollectionSpace
           end
           
           def map(doc, parentnode, groupname)
+            binding.pry
             @parser_result.each do |datefield, value|
               value = DateTime.parse(value).iso8601(3).sub('+00:00', "Z") if datefield['ScalarValue']
             end
