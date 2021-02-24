@@ -29,8 +29,9 @@ module CollectionSpace
           set_relation_id
         else
           id_field = @handler.mapper[:config][:identifier_field]
-          datacol = @handler.mapper[:mappings].select{ |m| m[:fieldname] == id_field }.first[:datacolumn]
-          @response.identifier = @response.split_data[datacol].first
+          mapping = @handler.mapper[:mappings].select{ |m| m[:fieldname] == id_field }.first
+          value = @doc.xpath("//#{mapping[:namespace]}/#{mapping[:fieldname]}").first.text
+          @response.identifier = value
         end
       end
 
