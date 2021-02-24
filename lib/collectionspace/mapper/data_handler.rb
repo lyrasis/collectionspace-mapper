@@ -42,9 +42,9 @@ module CollectionSpace
 
       def object_hierarchy_default_values
         h = {'subjectdocumenttype' => 'collectionobjects',
-             'relationshiptype' => 'hasbroader',
+             'relationshiptype' => 'hasBroader',
              'objectdocumenttype' => 'collectionobjects'}
-        @defaults.merge(h)
+        @defaults = defaults.merge(h)
       end
 
       def check_fields(data)
