@@ -3,13 +3,17 @@
 module CollectionSpace
   module Mapper
     class ValueTransformer
-      attr_reader :orig, :result
-      def initialize(value, transforms, cache)
+      include TermSearchable
+      attr_reader :orig, :result, :warnings, :errors
+      def initialize(value, transforms, prepper)
         @value = value
         @orig = @value.clone
+        @warnings = []
+        @errors = []
 
         @transforms = transforms
-        @cache = cache
+        @cache = prepper.cache
+        @client = prepper.client
         @missing = {}
         process_replacements if @transforms.key?(:replacements)
         process_special if @transforms.key?(:special)
@@ -34,6 +38,7 @@ module CollectionSpace
         unless @value.empty?
           @value = @value.downcase if special.include?('downcase_value')
           process_behrensmeyer if special.include?('behrensmeyer_translate')
+          obj_num_to_csid if special.include?('obj_num_to_csid')
         end
       end
       
@@ -67,6 +72,10 @@ module CollectionSpace
         end
       end
 
+      def obj_num_to_csid
+        @value = obj_csid(@value)
+      end
+      
       def process_behrensmeyer
         lookup = {
           '0' => '0 - no cracking or flaking on bone surface',

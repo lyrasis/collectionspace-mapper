@@ -22,6 +22,7 @@ module CollectionSpace
         @mapper[:xpath] = xpath_hash
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
+        object_hierarchy_default_values if is_object_hierarchy?
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
         @new_terms = {}
@@ -37,6 +38,13 @@ module CollectionSpace
         else
           response
         end
+      end
+
+      def object_hierarchy_default_values
+        h = {'subjectdocumenttype' => 'collectionobjects',
+             'relationshiptype' => 'hasbroader',
+             'objectdocumenttype' => 'collectionobjects'}
+        @defaults.merge(h)
       end
 
       def check_fields(data)
@@ -145,6 +153,10 @@ module CollectionSpace
           in_repeating_group: 'n/a',
           datacolumn: 'shortIdentifier'
         }
+      end
+
+      def is_object_hierarchy?
+        @mapper[:config][:object_name] == 'Object Hierarchy Relation' ? true : false
       end
 
       def get_is_authority

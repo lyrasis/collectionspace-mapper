@@ -4,16 +4,23 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::ValueTransformer do
   before(:all) do
-    @cache = anthro_cache
-    populate_anthro(@cache)
-  end
+    client = anthro_client
+    cache = anthro_cache
+    populate_anthro(cache) 
+    mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+    handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
+                                                       client: client,
+                                                       cache: cache,
+                                                       config: CollectionSpace::Mapper::DEFAULT_CONFIG)
+    @prepper = CollectionSpace::Mapper::DataPrepper.new({}, handler)
+ end
 
   context 'when vocabulary' do
     context 'and vocabulary is behrensmeyer number' do
       it 'returns transformed value for retrieving refname' do
         value = '0'
         transforms = { vocabulary: 'behrensmeyer', special: %w[behrensmeyer_translate] }
-        res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @cache).result
+        res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @prepper).result
         ex = '0 - no cracking or flaking on bone surface'
         expect(res).to eq(ex)
       end
@@ -28,7 +35,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
                           { find: ' - ', replace: '-', type: :plain }
                         ]
                        }
-          res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @cache).result
+          res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @prepper).result
           ex = 'adolescent 26-75%'
           expect(res).to eq(ex)
         end
@@ -46,7 +53,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
           { find: '(\w)%%(\w)', replace: '\1 \2', type: :regexp }
         ]
       }
-      res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @cache).result
+      res = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, @prepper).result
       expect(res).to eq('rycy plynt')
     end
   end
