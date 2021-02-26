@@ -2,40 +2,94 @@
   "config": {
     "profile_basename": "core",
     "version": "6-1-0",
-    "recordtype": "objecthierarchy",
+    "recordtype": "authorityhierarchy",
     "document_name": "relations",
     "service_name": "Relations",
     "service_path": "relations",
     "service_type": "relation",
-    "object_name": "Object Hierarchy Relation",
+    "object_name": "Authority Hierarchy Relation",
     "ns_uri": {
       "relations_common": "http://collectionspace.org/services/relation"
     },
     "identifier_field": "csid",
-    "search_field": "objectNumber"
+    "search_field": "term"
   },
   "docstructure": {
     "relations_common": {
       "subjectCsid": {
       },
-      "subjectDocumentType": {
-      },
       "relationshipType": {
       },
-      "relationshipMetaType": {
-      },
       "objectCsid": {
-      },
-      "objectDocumentType": {
       }
     }
   },
   "mappings": [
     {
+      "fieldname": "termType",
+      "transforms": {
+      },
+      "source_type": "optionlist",
+      "source_name": "fakeProfileAuthorityTypes",
+      "namespace": "relations_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "repeats": "n",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+        "citationauthorities",
+        "conceptauthorities",
+        "locationauthorities",
+        "orgauthorities",
+        "personauthorities",
+        "placeauthorities",
+        "workauthorities"
+      ],
+      "datacolumn": "term_type",
+      "required": "y"
+    },
+    {
+      "fieldname": "termSubType",
+      "transforms": {
+      },
+      "source_type": "optionlist",
+      "source_name": "fakeProfileAuthoritySubtypes",
+      "namespace": "relations_common",
+      "xpath": [
+
+      ],
+      "data_type": "string",
+      "repeats": "n",
+      "in_repeating_group": "n",
+      "opt_list_values": [
+        "activity",
+        "citation",
+        "cona_work",
+        "concept",
+        "location",
+        "material_ca",
+        "nomenclature",
+        "occasion",
+        "offsite_sla",
+        "organization",
+        "person",
+        "place",
+        "tgn_place",
+        "ulan_oa",
+        "ulan_pa",
+        "work",
+        "worldcat"
+      ],
+      "datacolumn": "term_subtype",
+      "required": "y"
+    },
+    {
       "fieldname": "subjectCsid",
       "transforms": {
         "special": [
-          "obj_num_to_csid"
+          "term_to_csid"
         ]
       },
       "source_type": "na",
@@ -50,28 +104,8 @@
       "opt_list_values": [
 
       ],
-      "datacolumn": "narrower_object_number",
+      "datacolumn": "narrower_term",
       "required": "y"
-    },
-    {
-      "fieldname": "subjectDocumentType",
-      "transforms": {
-      },
-      "source_type": "na",
-      "source_name": null,
-      "namespace": "relations_common",
-      "xpath": [
-
-      ],
-      "data_type": "string",
-      "repeats": "n",
-      "in_repeating_group": "n",
-      "opt_list_values": [
-
-      ],
-      "datacolumn": "subjectdocumenttype",
-      "required": "y",
-      "to_template": false
     },
     {
       "fieldname": "relationshipType",
@@ -94,34 +128,10 @@
       "to_template": false
     },
     {
-      "fieldname": "relationshipMetaType",
-      "transforms": {
-      },
-      "source_type": "optionlist",
-      "source_name": "objectParentTypes",
-      "namespace": "relations_common",
-      "xpath": [
-
-      ],
-      "data_type": "string",
-      "repeats": "n",
-      "in_repeating_group": "n",
-      "opt_list_values": [
-        "set",
-        "derivative",
-        "separable-part",
-        "non-separable-part",
-        "recto",
-        "verso"
-      ],
-      "datacolumn": "relationship_type",
-      "required": "n"
-    },
-    {
       "fieldname": "objectCsid",
       "transforms": {
         "special": [
-          "obj_num_to_csid"
+          "term_to_csid"
         ]
       },
       "source_type": "na",
@@ -136,28 +146,8 @@
       "opt_list_values": [
 
       ],
-      "datacolumn": "broader_object_number",
+      "datacolumn": "broader_term",
       "required": "y"
-    },
-    {
-      "fieldname": "objectDocumentType",
-      "transforms": {
-      },
-      "source_type": "na",
-      "source_name": null,
-      "namespace": "relations_common",
-      "xpath": [
-
-      ],
-      "data_type": "string",
-      "repeats": "n",
-      "in_repeating_group": "n",
-      "opt_list_values": [
-
-      ],
-      "datacolumn": "objectdocumenttype",
-      "required": "y",
-      "to_template": false
     }
   ]
 }

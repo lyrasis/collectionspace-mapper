@@ -32,6 +32,7 @@ module CollectionSpace
     require 'collectionspace/mapper/data_handler'
     require 'collectionspace/mapper/data_mapper'
     require 'collectionspace/mapper/data_prepper'
+    require 'collectionspace/mapper/authority_hierarchy_prepper'
     require 'collectionspace/mapper/data_quality_checker'
     require 'collectionspace/mapper/data_splitter'
     require 'collectionspace/mapper/data_validator'

@@ -66,7 +66,6 @@ module CollectionSpace
             rec = result['list_item'][0]
             using_uri = "#{@client.config.base_uri}#{rec['uri']}"
             csid = rec['csid']
-            @cache.put('collectionobjects', '', objnum, csid)
             warnings << {
               category: :multiple_records_found_with_objnum,
               field: '',
@@ -76,6 +75,10 @@ module CollectionSpace
               message: "#{term_ct} records found. Using #{using_uri}"
             }
           end
+
+          return csid if csid.nil?
+          
+          @cache.put('collectionobjects', '', objnum, csid)
           return csid
         else
           errors << {
@@ -84,7 +87,61 @@ module CollectionSpace
             type: 'collectionobjects',
             subtype: '',
             value: objnum,
-            message: "#{term_ct} records found."
+            message: "Problem with search for #{objnum}."
+          }
+          return nil
+        end
+      end
+
+      def term_csid(term)
+        csid = cached_term(term)
+        return csid unless csid.nil?
+
+        field = CollectionSpace::Service.get(type: type)[:term]
+
+        response = @client.find(type: type, subtype: subtype, field: field, value: term)
+        if response.result.success?
+          result = response.parsed['abstract_common_list']
+          term_ct = result['totalItems'].to_i
+          case term_ct
+          when 0
+            errors << {
+              category: :no_records_found_for_term,
+              field: '',
+              type: type,
+              subtype: subtype,
+              value: term,
+              message: "#{term_ct} records found."
+            }
+            csid = nil
+          when 1
+            csid = result['list_item']['csid']
+          else
+            rec = result['list_item'][0]
+            using_uri = "#{@client.config.base_uri}#{rec['uri']}"
+            csid = rec['csid']
+            warnings << {
+              category: :multiple_records_found_for_term,
+              field: '',
+              type: type,
+              subtype: subtype,
+              value: term,
+              message: "#{term_ct} records found. Using #{using_uri}"
+            }
+          end
+
+          return csid if csid.nil?
+          
+          @cache.put(type, subtype, term, csid)
+          return csid
+        else
+          errors << {
+            category: :unsuccessful_csid_lookup_for_term,
+            field: '',
+            type: type,
+            subtype: subtype,
+            value: term,
+            message: "Problem with search for #{term}"
           }
           return nil
         end
