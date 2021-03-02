@@ -16,15 +16,29 @@ module CollectionSpace
       end
       
       def prep
-        @response.identifier = "#{@response.merged_data['broader_term']} > #{@response.merged_data['narrower_term']}"
+        set_id
         split_data
         transform_terms
         combine_data_fields
+        unless errors.empty?
+          @response.errors << errors
+          @response.errors.flatten!
+        end
+        unless warnings.empty?
+          @response.warnings << warnings
+          @response.warnings.flatten!
+        end
         @response
       end
 
       private
 
+      def set_id
+        bt = @response.merged_data['broader_term']
+        nt = @response.merged_data['narrower_term']
+        @response.identifier = "#{bt} > #{nt}"
+      end
+      
       def process_xpaths
         clear_unmapped_mappings
         @handler.mapper[:xpath] = @handler.xpath_hash

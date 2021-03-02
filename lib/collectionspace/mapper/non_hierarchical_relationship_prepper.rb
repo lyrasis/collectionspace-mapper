@@ -19,6 +19,7 @@ module CollectionSpace
         @response.identifier = "#{stringify_item(1)} -> #{stringify_item(2)}"
         split_data
         transform_terms
+        push_errors_and_warnings
         combine_data_fields
         @responses << @response
         flip_response
@@ -27,6 +28,17 @@ module CollectionSpace
 
       private
 
+      def push_errors_and_warnings
+        unless errors.empty?
+          @response.errors << errors
+          @response.errors.flatten!
+        end
+        unless warnings.empty?
+          @response.warnings << warnings
+          @response.warnings.flatten!
+        end
+      end
+      
       def stringify_item(i)
         id = "item#{i}_id"
         type = "item#{i}_type"
