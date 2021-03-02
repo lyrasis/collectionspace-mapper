@@ -83,7 +83,7 @@ module CollectionSpace
       def validate(data)
         response = CollectionSpace::Mapper::setup_data(data)
         if response.valid?
-          data = data.transform_keys!(&:downcase)
+          data = response.merged_data.transform_keys!(&:downcase)
           res = check_required_fields(data) unless @required_fields.empty?
           response.errors << res
           response.errors = response.errors.flatten.compact

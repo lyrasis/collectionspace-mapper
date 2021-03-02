@@ -10,10 +10,8 @@ module CollectionSpace
         @config = @handler.config
         @cache = @handler.cache
         @client = @handler.client
-        @response = CollectionSpace::Mapper::setup_data(data)
+        @response = CollectionSpace::Mapper::setup_data(data, @handler.defaults, @config)
         if @response.valid?
-          @data = @response.orig_data.transform_keys(&:downcase)
-          @response.merged_data = merge_default_values
           process_xpaths
         end
       end
@@ -63,19 +61,6 @@ module CollectionSpace
       end
 
       private
-
-      def merge_default_values
-        mdata = @data.clone
-        @handler.defaults.each do |f, val|
-          if @config[:force_defaults]
-            mdata[f] = val
-          else
-            dataval = @data.fetch(f, nil)
-            mdata[f] = val if dataval.nil? || dataval.empty?
-          end
-        end
-        mdata.compact
-      end
 
       def process_xpaths
         # keep only mappings for datacolumns present in data hash

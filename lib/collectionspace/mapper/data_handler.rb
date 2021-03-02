@@ -34,7 +34,7 @@ module CollectionSpace
       end
 
       def process(data)
-        response = CollectionSpace::Mapper::setup_data(data)
+        response = CollectionSpace::Mapper::setup_data(data, @defaults, @config)
           if response.valid?
             case record_type
             when 'authorityhierarchy'
@@ -87,7 +87,8 @@ module CollectionSpace
       end
       
       def validate(data)
-        @validator.validate(data)
+        response = CollectionSpace::Mapper::setup_data(data, @defaults, @config)
+        @validator.validate(response)
       end
 
       def prep(data)

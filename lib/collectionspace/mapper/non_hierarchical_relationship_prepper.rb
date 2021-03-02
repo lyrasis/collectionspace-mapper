@@ -9,7 +9,7 @@ module CollectionSpace
       def initialize(data, handler)
         super
         @cache = @handler.csidcache
-        @types = [@data['item1_type'], @data['item2_type']]
+        @types = [@response.merged_data['item1_type'], @response.merged_data['item2_type']]
         @errors = []
         @warnings = []
         @responses = []
@@ -30,11 +30,10 @@ module CollectionSpace
       def stringify_item(i)
         id = "item#{i}_id"
         type = "item#{i}_type"
-        thisid = @data[id]
-        thistype = @data[type]
+        thisid = @response.merged_data[id]
+        thistype = @response.merged_data[type]
         "#{thisid} (#{thistype})"
       end
-
 
       def flip_response
         resp2 = @response.dup
