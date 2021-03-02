@@ -3,12 +3,13 @@
 module CollectionSpace
   module Mapper
     class DataPrepper
-      attr_reader :data, :handler, :config
+      attr_reader :data, :handler, :config, :cache, :client
       attr_accessor :response, :xphash
       def initialize(data, handler)
         @handler = handler
         @config = @handler.config
         @cache = @handler.cache
+        @client = @handler.client
         @response = CollectionSpace::Mapper::setup_data(data)
         if @response.valid?
           @data = @response.orig_data.transform_keys(&:downcase)
@@ -129,13 +130,26 @@ module CollectionSpace
           else
             targetdata[column] = data.map do |d|
               if d.is_a?(String)
-                CollectionSpace::Mapper::ValueTransformer.new(d, mapping[:transforms], @cache).result
+                transform_value(d, mapping[:transforms], column)
               else
-                d.map{ |val| CollectionSpace::Mapper::ValueTransformer.new(val, mapping[:transforms], @cache).result}
+                d.map{ |val| transform_value(val, mapping[:transforms], column) }
               end
             end
           end
         end
+      end
+
+      def transform_value(value, transforms, column)
+        vt = CollectionSpace::Mapper::ValueTransformer.new(value, transforms, self)
+        unless vt.warnings.empty?
+          vt.warnings.each{ |w| w[:field] = column }
+          @response.warnings << vt.warnings
+        end
+        unless vt.errors.empty?
+          vt.errors.each{ |e| e[:field] = column }
+          @response.errors << vt.errors
+        end
+        vt.result
       end
 
       def do_date_transforms(xpath, xphash)

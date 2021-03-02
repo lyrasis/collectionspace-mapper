@@ -25,10 +25,23 @@ module CollectionSpace
       private
 
       def set_response_identifier
-        id_field = @handler.mapper[:config][:identifier_field]
-        mapping = @handler.mapper[:mappings].select{ |m| m[:fieldname] == id_field }.first
-        value = @doc.xpath("//#{mapping[:namespace]}/#{mapping[:fieldname]}").first.text
-        @response.identifier = value
+        if @handler.mapper[:config][:service_type] == 'relation'
+          set_relation_id
+        else
+          id_field = @handler.mapper[:config][:identifier_field]
+          mapping = @handler.mapper[:mappings].select{ |m| m[:fieldname] == id_field }.first
+          value = @doc.xpath("//#{mapping[:namespace]}/#{mapping[:fieldname]}").first.text
+          @response.identifier = value
+        end
+      end
+
+      def set_relation_id
+        case @handler.mapper[:config][:object_name]
+        when 'Object Hierarchy Relation'
+          narrow = @response.orig_data['narrower_object_number']
+          broad = @response.orig_data['broader_object_number']
+          @response.identifier = "#{broad} > #{narrow}"
+        end
       end
       
       def add_short_id

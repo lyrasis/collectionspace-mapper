@@ -26,9 +26,14 @@ module CollectionSpace
                        two_digit_year_handling: 'coerce'
                      }
 
+    # mixins
+    require 'collectionspace/mapper/term_searchable'
+
     require 'collectionspace/mapper/data_handler'
     require 'collectionspace/mapper/data_mapper'
     require 'collectionspace/mapper/data_prepper'
+    require 'collectionspace/mapper/authority_hierarchy_prepper'
+    require 'collectionspace/mapper/non_hierarchical_relationship_prepper'
     require 'collectionspace/mapper/data_quality_checker'
     require 'collectionspace/mapper/data_splitter'
     require 'collectionspace/mapper/data_validator'

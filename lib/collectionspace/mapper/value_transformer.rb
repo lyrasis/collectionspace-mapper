@@ -3,13 +3,17 @@
 module CollectionSpace
   module Mapper
     class ValueTransformer
-      attr_reader :orig, :result
-      def initialize(value, transforms, cache)
+      include TermSearchable
+      attr_reader :orig, :result, :warnings, :errors
+      def initialize(value, transforms, prepper)
         @value = value
         @orig = @value.clone
+        @warnings = []
+        @errors = []
 
         @transforms = transforms
-        @cache = cache
+        @cache = prepper.cache
+        @client = prepper.client
         @missing = {}
         process_replacements if @transforms.key?(:replacements)
         process_special if @transforms.key?(:special)
@@ -34,6 +38,7 @@ module CollectionSpace
         unless @value.empty?
           @value = @value.downcase if special.include?('downcase_value')
           process_behrensmeyer if special.include?('behrensmeyer_translate')
+          obj_num_to_csid if special.include?('obj_num_to_csid')
         end
       end
       
@@ -61,12 +66,23 @@ module CollectionSpace
           when 'f'
             @value = 'false'
           else
-            #          Rails.logger.warn("#{value} cannot be converted to boolean in FIELD/ROW. Defaulting to false")
             @value = 'false'
+            @warnings << {
+              category: :boolean_value_transform,
+              field: nil,
+              type: nil,
+              subtype: nil,
+              value: @value,
+              message: "#{@value} cannot be converted to boolean. Defaulting to false"
+            }
           end
         end
       end
 
+      def obj_num_to_csid
+        @value = obj_csid(@value, 'collectionobjects')
+      end
+      
       def process_behrensmeyer
         lookup = {
           '0' => '0 - no cracking or flaking on bone surface',

@@ -28,12 +28,11 @@ module CollectionSpace
         #  collectionspace-client code.
         # Tests in examples/search.rb
         def lookup(value)
-          response = @client.find(
-            type: @mapper[:config][:service_path],
-            subtype: @mapper[:config][:authority_subtype],
-            value: value,
-            field: @search_field
-          )
+          if @ns_prefix == 'relations'
+            response = lookup_relationship(value)
+          else
+            response = lookup_non_relationship(value)
+          end
 
           ct = count_results(response)
           if ct == 0
@@ -53,6 +52,21 @@ module CollectionSpace
 
         private
 
+        def lookup_relationship(value)
+          @client.get(
+            @path, query: { 'sbj' => value[:sub], 'obj' => value[:obj] }
+            )
+        end
+        
+        def lookup_non_relationship(value)
+          @client.find(
+            type: @mapper[:config][:service_path],
+            subtype: @mapper[:config][:authority_subtype],
+            value: value,
+            field: @search_field
+          )
+        end
+        
         def count_results(response)
           unless response.result.success?
             raise CollectionSpace::RequestError, response.result.body
