@@ -14,6 +14,71 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       populate_core(@cache)
     end
 
+    context 'non-hierarchical relationship record' do
+      before(:all) do
+        @nhr_mapper = get_json_record_mapper(
+          path: 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_nonhierarchicalrelationship.json'
+        )
+        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @nhr_mapper,
+                                                            client: @client,
+                                                            cache: @cache,
+                                                            config: @config)
+      end
+
+      context 'record 1' do
+        before(:all) do
+          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/nonHierarchicalRelationship1.json')
+          @response = @handler.process(@datahash)
+          @mapped_doc1 = remove_namespaces(@response[0].doc)
+          @mapped_doc2 = remove_namespaces(@response[1].doc)
+          @mapped_xpaths1 = list_xpaths(@mapped_doc1)
+          @mapped_xpaths2 = list_xpaths(@mapped_doc2)
+          @fixture_doc1 = get_xml_fixture('core/nonHierarchicalRelationship1A.xml')
+          @fixture_xpaths1 = test_xpaths(@fixture_doc1, @handler.mapper[:mappings])
+          @fixture_doc2 = get_xml_fixture('core/nonHierarchicalRelationship1B.xml')
+          @fixture_xpaths2 = test_xpaths(@fixture_doc2, @handler.mapper[:mappings])
+        end
+
+        context 'with original data' do
+          it 'sets response id field as expected' do
+            expect(@response[0].identifier).to eq('2020.1.107 TEST (collectionobjects) -> LOC2020.1.24 (movements)')
+          end
+          
+          it 'does not map unexpected fields' do
+            diff = @mapped_xpaths1 - @fixture_xpaths1
+            expect(diff).to eq([])
+          end
+
+          it 'maps as expected' do
+            @fixture_xpaths1.each do |xpath|
+              fixture_node = standardize_value(@fixture_doc1.xpath(xpath).text)
+              mapped_node = standardize_value(@mapped_doc1.xpath(xpath).text)
+              expect(mapped_node).to eq(fixture_node)
+            end
+          end
+        end
+
+        context 'with flipped data' do
+          it 'sets response id field as expected' do
+            expect(@response[1].identifier).to eq('LOC2020.1.24 (movements) -> 2020.1.107 TEST (collectionobjects)')
+          end
+          
+          it 'does not map unexpected fields' do
+            diff = @mapped_xpaths2 - @fixture_xpaths2
+            expect(diff).to eq([])
+          end
+
+          it 'maps as expected' do
+            @fixture_xpaths2.each do |xpath|
+              fixture_node = standardize_value(@fixture_doc2.xpath(xpath).text)
+              mapped_node = standardize_value(@mapped_doc2.xpath(xpath).text)
+              expect(mapped_node).to eq(fixture_node)
+            end
+          end
+        end
+      end
+    end
+
     context 'authority hierarchy record' do
       before(:all) do
         @ah_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_authorityhierarchy.json')

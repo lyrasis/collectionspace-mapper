@@ -18,6 +18,7 @@ module CollectionSpace
         @config = get_config(config)
         object_hierarchy_default_values if is_object_hierarchy?
         authority_hierarchy_default_values if is_authority_hierarchy?
+        non_hierarchical_relationship_default_values if is_non_hierarchical_relationship?
         @cache = cache.nil? ? get_cache : cache
         @csidcache = get_csidcache if @mapper[:config][:service_type] == 'relation'
         @response_mode = @config[:response_mode]
@@ -38,11 +39,17 @@ module CollectionSpace
             case record_type
             when 'authorityhierarchy'
               prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
+              prepper.prep
+              map(prepper.response, prepper.xphash)
+            when 'nonhierarchicalrelationship'
+              prepper = CollectionSpace::Mapper::NonHierarchicalRelationshipPrepper.new(response, self)
+              prepper.prep
+              prepper.responses.map{ |response| map(response, prepper.xphash) }
             else
               prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
+              prepper.prep
+              map(prepper.response, prepper.xphash)
             end
-            prepper.prep
-            map(prepper.response, prepper.xphash)
           else
             response
           end
@@ -63,6 +70,12 @@ module CollectionSpace
       def authority_hierarchy_default_values
         @config[:default_values] = {} unless @config.key?(:default_values)
         h = {'relationshiptype' => 'hasBroader'}
+        @config[:default_values] = @config[:default_values].merge(h)
+      end
+
+      def non_hierarchical_relationship_default_values
+        @config[:default_values] = {} unless @config.key?(:default_values)
+        h = {'relationshiptype' => 'affects'}
         @config[:default_values] = @config[:default_values].merge(h)
       end
 
@@ -166,6 +179,10 @@ module CollectionSpace
       def set_record_status(response)
         if @is_authority
           value = response.split_data['termdisplayname'].first
+        elsif is_relationship?
+          value = {}
+          value[:sub] = response.combined_data['relations_common']['subjectCsid'][0]
+          value[:obj] = response.combined_data['relations_common']['objectCsid'][0]
         else
           value = response.identifier
         end
@@ -259,12 +276,23 @@ module CollectionSpace
         record_type == 'authorityhierarchy' ? true : false
       end
 
+      def is_non_hierarchical_relationship?
+        record_type == 'nonhierarchicalrelationship' ? true : false
+      end
+
+      def is_relationship?
+        service_type == 'relation' ? true : false
+      end
+      
       def record_type
         @mapper[:config][:recordtype]
       end
+
+      def service_type
+        @mapper[:config][:service_type]
+      end
       
       def get_is_authority
-        service_type = @mapper[:config][:service_type]
         service_type == 'authority' ? true : false
       end
 

@@ -66,14 +66,21 @@ module CollectionSpace
           when 'f'
             @value = 'false'
           else
-            #          Rails.logger.warn("#{value} cannot be converted to boolean in FIELD/ROW. Defaulting to false")
             @value = 'false'
+            @warnings << {
+              category: :boolean_value_transform,
+              field: nil,
+              type: nil,
+              subtype: nil,
+              value: @value,
+              message: "#{@value} cannot be converted to boolean. Defaulting to false"
+            }
           end
         end
       end
 
       def obj_num_to_csid
-        @value = obj_csid(@value)
+        @value = obj_csid(@value, 'collectionobjects')
       end
       
       def process_behrensmeyer

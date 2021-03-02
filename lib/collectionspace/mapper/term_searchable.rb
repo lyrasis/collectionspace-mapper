@@ -41,11 +41,11 @@ module CollectionSpace
         end
       end
 
-      def obj_csid(objnum)
-        csid = @cache.get('collectionobjects', '', objnum)
+      def obj_csid(objnum, type)
+        csid = @cache.get(type, '', objnum)
         return csid unless csid.nil?
 
-        response = @client.find(type: 'collectionobjects', value: objnum)
+        response = @client.find(type: type, value: objnum)
         if response.result.success?
           result = response.parsed['abstract_common_list']
           term_ct = result['totalItems'].to_i
@@ -54,7 +54,7 @@ module CollectionSpace
             errors << {
               category: :no_records_found_with_objnum,
               field: '',
-              type: 'collectionobjects',
+              type: type,
               subtype: '',
               value: objnum,
               message: "#{term_ct} records found."
@@ -69,7 +69,7 @@ module CollectionSpace
             warnings << {
               category: :multiple_records_found_with_objnum,
               field: '',
-              type: 'collectionobjects',
+              type: type,
               subtype: '',
               value: objnum,
               message: "#{term_ct} records found. Using #{using_uri}"
@@ -78,13 +78,13 @@ module CollectionSpace
 
           return csid if csid.nil?
           
-          @cache.put('collectionobjects', '', objnum, csid)
+          @cache.put(type, '', objnum, csid)
           return csid
         else
           errors << {
             category: :unsuccessful_csid_lookup_for_objnum,
             field: '',
-            type: 'collectionobjects',
+            type: type,
             subtype: '',
             value: objnum,
             message: "Problem with search for #{objnum}."
