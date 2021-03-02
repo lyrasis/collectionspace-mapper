@@ -9,14 +9,14 @@ module CollectionSpace
       def initialize(data, handler)
         super
         @cache = @handler.csidcache
-        @type = @data['term_type']
-        @subtype = @data['term_subtype']
+        @type = @response.merged_data['term_type']
+        @subtype = @response.merged_data['term_subtype']
         @errors = []
         @warnings = []
       end
       
       def prep
-        @response.identifier = "#{@data['broader_term']} > #{@data['narrower_term']}"
+        @response.identifier = "#{@response.merged_data['broader_term']} > #{@response.merged_data['narrower_term']}"
         split_data
         transform_terms
         combine_data_fields
