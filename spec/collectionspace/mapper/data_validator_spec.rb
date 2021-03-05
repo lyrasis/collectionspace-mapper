@@ -96,6 +96,8 @@ RSpec.describe CollectionSpace::Mapper::DataValidator do
     @anthro_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@anthro_object_mapper), anthro_cache)
     @botgarden_loanout_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-loanout.json')
     @botgarden_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@botgarden_loanout_mapper), botgarden_cache)
+    @core_authhier_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_authorityhierarchy.json')
+    @core_authhier_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::Tools::RecordMapper.convert(@core_authhier_mapper), core_cache)
   end
 
   describe '#validate' do
@@ -143,6 +145,19 @@ RSpec.describe CollectionSpace::Mapper::DataValidator do
           v = @anthro_dv.validate(data)
           err = v.errors.select{ |err| err.start_with?('required field missing') }
           expect(err.size).to eq(1)
+        end
+      end
+
+      context 'when required field not present in data but provided by defaults' do
+        it 'no required field error returned' do
+          handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @core_authhier_mapper,
+                                                                      client: core_client,
+                                                                      cache: core_cache)
+          data = get_datahash(path: 'spec/fixtures/files/datahashes/core/authorityHierarchy1.json')
+          v = handler.validate(data)
+          err = v.errors.select{ |err| err.start_with?('required field') }
+          puts err
+          expect(err.size).to eq(0)
         end
       end
     end
