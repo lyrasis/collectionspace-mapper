@@ -35,24 +35,24 @@ module CollectionSpace
 
       def process(data)
         response = CollectionSpace::Mapper::setup_data(data, @defaults, @config)
-          if response.valid?
-            case record_type
-            when 'authorityhierarchy'
-              prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
-              prepper.prep
-              map(prepper.response, prepper.xphash)
-            when 'nonhierarchicalrelationship'
-              prepper = CollectionSpace::Mapper::NonHierarchicalRelationshipPrepper.new(response, self)
-              prepper.prep
-              prepper.responses.map{ |response| map(response, prepper.xphash) }
-            else
-              prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
-              prepper.prep
-              map(prepper.response, prepper.xphash)
-            end
+        if response.valid?
+          case record_type
+          when 'authorityhierarchy'
+            prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
+            prepper.prep
+            map(prepper.response, prepper.xphash)
+          when 'nonhierarchicalrelationship'
+            prepper = CollectionSpace::Mapper::NonHierarchicalRelationshipPrepper.new(response, self)
+            prepper.prep
+            prepper.responses.map{ |response| map(response, prepper.xphash) }
           else
-            response
+            prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
+            prepper.prep
+            map(prepper.response, prepper.xphash)
           end
+        else
+          response
+        end
       end
 
       def csidcache
