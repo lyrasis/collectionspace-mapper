@@ -150,9 +150,9 @@ module CollectionSpace
           if type['date']
             case type
             when 'structured date group'
-              sourcedata[column] = structured_date_transform(data)
+              sourcedata[column] = structured_date_transform(data, column)
             when 'date'
-              sourcedata[column] = unstructured_date_transform(data)
+              sourcedata[column] = unstructured_date_transform(data, column)
             end
           else
             sourcedata[column] = data  
@@ -195,12 +195,13 @@ module CollectionSpace
         end
       end
 
-      def process_date(date_string)
+      def process_date(date_string, column)
         processed = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: date_string,
                                                                   client: @handler.client,
                                                                   cache: @handler.cache,
                                                                   config: @config)
         if processed.warnings?
+          @response.warnings.each{ |w| w[:field] = column }
           @response.warnings << processed.warnings
           @response.warnings.flatten!
         end
@@ -208,22 +209,22 @@ module CollectionSpace
         processed
       end
       
-      def structured_date_transform(data)
+      def structured_date_transform(data, column)
         data.map do |d|
           if d.is_a?(String)
-              process_date(d).mappable
+              process_date(d, column).mappable
           else
-            d.map{ |v| process_date(v).mappable }
+            d.map{ |v| process_date(v, column).mappable }
           end
         end
       end
 
-      def unstructured_date_transform(data)
+      def unstructured_date_transform(data, column)
         data.map do |d|
           if d.is_a?(String)
-            process_date(d).stamp
+            process_date(d, column).stamp
           else
-            d.map{ |v| process_date(v).stamp }
+            d.map{ |v| process_date(v, column).stamp }
           end
         end
       end
