@@ -49,6 +49,18 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           end
         end
       end
+
+      context 'overflow subgroup record with even subgroup values' do
+        before(:all) do
+          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/collectionobject3.json')
+          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+        end
+        it 'mapper response does not include overflow subgroup warning' do
+          w = @mapper.response.warnings.any?{ |w| w[:category] == :subgroup_contains_data_for_nonexistent_groups }
+          expect(w).to be false
+        end
+      end
     end
   end
   
