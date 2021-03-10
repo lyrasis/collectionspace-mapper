@@ -70,8 +70,8 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         end
 
         it 'records warning' do
-          w = 'Date parsing warning: Missing vocabulary term: datecertainty: `no date`'
-          expect(@res.warnings).to include(w)
+          w = :date_certainty_vocab_term_missing
+          expect(@res.warnings.map{ |wrn| wrn[:category] }).to include(w)
         end
       end
       context 'fcart client (has "no date" datecertainty vocab term)' do
@@ -390,8 +390,8 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         end
 
         it 'records warning' do
-          w = 'Date parsing warning: Missing vocabulary term: datecertainty: `supplied or inferred`'
-          expect(@res.warnings).to include(w)
+          w = :date_certainty_vocab_term_missing
+          expect(@res.warnings.map{ |wrn| wrn[:category] }).to include(w)
         end
         
         it '#stamp = 1851-01-01T00:00:00.000Z' do
@@ -580,8 +580,8 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
           expect(@res.mappable['dateLatestCertainty']).to be_nil
         end
         it 'records warning' do
-          w = 'Date parsing warning: Missing vocabulary term: datecertainty: `approximate and supplied`'
-          expect(@res.warnings).to include(w)
+          w = :date_certainty_vocab_term_missing
+          expect(@res.warnings.map{ |wrn| wrn[:category] }).to include(w)
         end
 
       end

@@ -194,19 +194,26 @@ module CollectionSpace
           nil
         end
       end
+
+      def process_date(date_string)
+        processed = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: date_string,
+                                                                  client: @handler.client,
+                                                                  cache: @handler.cache,
+                                                                  config: @config)
+        if processed.warnings?
+          @response.warnings << processed.warnings
+          @response.warnings.flatten!
+        end
+        
+        processed
+      end
       
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: d,
-                                                                  client: @handler.client,
-                                                                  cache: @handler.cache,
-                                                                  config: @config).mappable
+              process_date(d).mappable
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: v,
-                                                                             client: @handler.client,
-                                                                             cache: @handler.cache,
-                                                                             config: @config).mappable }
+            d.map{ |v| process_date(v).mappable }
           end
         end
       end
@@ -214,15 +221,9 @@ module CollectionSpace
       def unstructured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: d,
-                                                                  client: @handler.client,
-                                                                  cache: @handler.cache,
-                                                                  config: @config).stamp
+            process_date(d).stamp
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: v,
-                                                                  client: @handler.client,
-                                                                  cache: @handler.cache,
-                                                                  config: @config).stamp }
+            d.map{ |v| process_date(v).stamp }
           end
         end
       end

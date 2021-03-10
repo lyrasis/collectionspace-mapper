@@ -39,12 +39,22 @@ module CollectionSpace
 
             if parsing_warnings?
               parsed_date.warnings.each do |warning|
-                warnings << "Date parsing warning: #{warning}"
+                warnings << {
+                  category: :date_parser_warning,
+                  field: nil,
+                  value: date_string,
+                  message: warning
+                }
               end
             end
 
             if parsing_errors?
-              warnings << "Date parsing warning: Cannot process date: #{date_string}. Passing it through as dateDisplayDate with no scalar values"
+              warnings << {
+                category: :date_cannot_be_processed,
+                field: nil,
+                value: date_string,
+                message: "\"#{date_string}\" will be passed through as dateDisplayDate with no scalar values"
+              }
               passthrough_display_date
               return
             end
@@ -61,9 +71,20 @@ module CollectionSpace
             @stamp = mappable['dateEarliestScalarValue'] ? mappable['dateEarliestScalarValue'] : mappable['dateLatestScalarValue']
           end
 
+          def warnings?
+            !@warnings.empty?
+          end
+          
+          private
+
           def process_dates
             if parsed_date.dates.length > 1
-              warnings << "Date parsing warning: Multiple parsed dates returned (#{parsed_date.dates.length}). Processing only the first"
+              warnings << {
+                category: :date_multiple_returned,
+                field: nil,
+                value: date_string,
+                message: "\"#{date_string}\" is parsed into #{parsed_date.dates.length} parsed dates. Only the first will be processed."
+              }
             end
 
             thedate = parsed_date.dates[0]
@@ -91,7 +112,12 @@ module CollectionSpace
             term = lookup[certainty]
 
             if term.nil?
-              warnings << "Date parsing warning: Unhandled certainty value combination: #{certainty.join(', ')}"
+              warnings << {
+                category: :date_certainty_value_combination,
+                field: nil,
+                value: date_string,
+                message: "Parsing \"#{date_string}\" results in this combination of certainty values, which cannot currently be handled by the mapper: #{certainty.join(', ')}"
+              }
               return
             end
 
@@ -101,7 +127,12 @@ module CollectionSpace
           def set_certainty(term)
             refname = get_vocabulary_term(vocab: 'datecertainty', term: term)
             if refname.nil?
-              warnings << "Date parsing warning: Missing vocabulary term: datecertainty: `#{term}`"
+              warnings << {
+                category: :date_certainty_vocab_term_missing,
+                field: nil,
+                value: term,
+                message: "datecertainty vocabulary does not include: \"#{term}\""
+              }
               return
             end
             

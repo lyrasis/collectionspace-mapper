@@ -11,6 +11,9 @@ module CollectionSpace
         @cache.get(type, subtype, val, search: false)
       end
 
+      # the thing with downcasing and capitalizing is needed because the form
+      # of certain vocabulary terms used across profiles is capitalized in
+      # some profiles, all lowercase in others. Consistency is a dream...
       def get_vocabulary_term(vocab:, term:)
         result = @cache.get('vocabularies', vocab, term, search: true)
         return result unless result.nil?
@@ -22,7 +25,14 @@ module CollectionSpace
         end
         return result unless result.nil?
 
-        search_vocabulary_term(vocab: vocab, term: term)
+        result = search_vocabulary_term(vocab: vocab, term: term)
+        return result unless result.nil?
+
+        if has_caps?(term)
+          search_vocabulary_term(vocab: vocab, term: term.downcase)
+        else
+          search_vocabulary_term(vocab: vocab, term: term.capitalize)
+        end
       end
 
       def search_vocabulary_term(vocab:, term:)
