@@ -20,8 +20,26 @@ module CollectionSpace
         else
           @cache.get('vocabularies', vocab, term.capitalize, search: true)
         end
+        return result unless result.nil?
+
+        search_vocabulary_term(vocab: vocab, term: term)
       end
 
+      def search_vocabulary_term(vocab:, term:)
+        begin
+          response = @client.find(
+            type: 'vocabularies',
+            subtype: vocab,
+            value: term,
+            field: 'displayName'
+          )
+        rescue StandardError => e
+          puts e.message
+        else
+          response_term_refname(response)
+        end
+      end
+      
       def has_caps?(string)
         string.match?(/[A-Z]/) ? true : false
       end

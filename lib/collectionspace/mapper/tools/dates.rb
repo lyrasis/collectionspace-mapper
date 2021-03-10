@@ -96,7 +96,6 @@ module CollectionSpace
             end
 
             set_certainty(term)
-            binding.pry
           end
           
           def set_certainty(term)
