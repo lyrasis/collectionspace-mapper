@@ -168,7 +168,7 @@ module CollectionSpace
       end
 
       def group_accommodates_subgroup?(groupdata, subgroupdata)
-        sg_max_length = subgroupdata.values.map(&:flatten).map(&:length).max
+        sg_max_length = subgroupdata.values.map(&:length).max
         sg_max_length <= groupdata.length ? true : false
       end
       
