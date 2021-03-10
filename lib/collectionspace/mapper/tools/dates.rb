@@ -83,7 +83,7 @@ module CollectionSpace
                 category: :date_multiple_returned,
                 field: nil,
                 value: date_string,
-                message: "\"#{date_string}\" is parsed into #{parsed_date.dates.length} parsed dates. Only the first will be processed."
+                message: "\"#{date_string}\" is parsed into #{parsed_date.dates.length} parsed dates. Only the first will be processed as scalar values."
               }
             end
 
