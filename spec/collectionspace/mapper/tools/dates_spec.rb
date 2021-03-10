@@ -490,10 +490,10 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
           expect(@res.mappable['scalarValuesComputed']).to eq('true')
         end
 
-        it 'dateEarliestSingleCertainty = nil' do
+        it 'dateEarliestSingleCertainty = refname for supplied or inferred' do
           expect(@res.mappable['dateEarliestSingleCertainty']).to eq("urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(suppliedorinferred1613499928079)'supplied or inferred'")
         end
-        it 'dateLatestCertainty = nil' do
+        it 'dateLatestCertainty = refname for supplied or inferred' do
           expect(@res.mappable['dateLatestCertainty']).to eq("urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(suppliedorinferred1613499928079)'supplied or inferred'")
         end
         

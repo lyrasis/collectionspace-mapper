@@ -57,6 +57,7 @@ module CollectionSpace
             end
 
             process_dates
+
             @stamp = mappable['dateEarliestScalarValue'] ? mappable['dateEarliestScalarValue'] : mappable['dateLatestScalarValue']
           end
 
@@ -175,7 +176,6 @@ module CollectionSpace
           end
           
           def map(doc, parentnode, groupname)
-            binding.pry
             @parser_result.each do |datefield, value|
               value = DateTime.parse(value).iso8601(3).sub('+00:00', "Z") if datefield['ScalarValue']
             end

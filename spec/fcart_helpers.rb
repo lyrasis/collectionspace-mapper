@@ -6,7 +6,7 @@ module Helpers
   def fcart_client
     CollectionSpace::Client.new(
       CollectionSpace::Configuration.new(
-        base_uri: 'https://anthro.dev.collectionspace.org/cspace-services',
+        base_uri: 'https://fcart.dev.collectionspace.org/cspace-services',
         username: 'admin@fcart.collectionspace.org',
         password: 'Administrator'
       )
