@@ -47,11 +47,11 @@ A JSON config hash may be passed to a new `Mapper::DataHandler` to control vario
 ----
 
 [NOTE]
-----
+====
 See https://github.com/kspurgin/emendate/blob/main/docs/options.adoc for details on date-related configuration options.
-----
+====
 
-== delimiter
+== `delimiter`
 
 Delimiter character or string used to split repeatable values within the cell of a CSV. 
 
@@ -59,7 +59,7 @@ Delimiter character or string used to split repeatable values within the cell of
 - *Defaults to:* |
 - *Data type*: string
 
-== subgroup_delimiter
+== `subgroup_delimiter`
 
 Delimiter character or string used to split repeatable values nested inside other repeatable values (example: titleTranslation, titleTranslationLanguage).
 
@@ -69,7 +69,7 @@ This is only used when if you are importing data into a repeatable field group w
 - *Defaults to:* ^^
 - *Data type*: string
 
-== response_mode
+== `response_mode`
 
 If `normal`, `Mapper::Response.orig_data` returns the original data hash, and `Mapper::Response.doc` returns the resulting XML document.
 
@@ -85,7 +85,7 @@ If `verbose`, `Mapper::Response` also has the following attributes, which may be
 - *Data type*: string
 - *Allowed values*: `normal`, `verbose`
 
-== check_terms
+== `check_terms`
 
 If `true`, looks up each term via `collectionspace-refcache`. If found, uses existing refname. If not found, searches for term via cspace-services API and uses existing refname if found. If term not found in refcache or services API, builds a new refname, uses that in the record, adds it to refcache, and returns the term with `found=false` in `Response::Terms`.
 
@@ -101,7 +101,7 @@ Set this to false only if you are certain no terms from your data exist in Colle
 - *Data type*: boolean
 - *Allowed values*: `true`, `false`
 
-== check_record_status
+== `check_record_status`
 
 If `true`, looks up each record via cspace-services API and sets `Response.record_status` to `:exists` if the record is found, or `:new` if it is not. 
 
@@ -117,7 +117,7 @@ Set this to false only if you are certain no records in your data exist in Colle
 - *Data type*: boolean
 - *Allowed values*: `true`, `false`
 
-== force_defaults
+== `force_defaults`
 
 Only has an effect if you are also providing `default_values` in your config.
 
