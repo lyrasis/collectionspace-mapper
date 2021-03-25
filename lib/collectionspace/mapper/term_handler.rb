@@ -91,16 +91,6 @@ module CollectionSpace
         @cache.get(type, subtype, val, search: false)
       end
 
-      def search_field
-        begin
-          field = CollectionSpace::Service.get(type: type)[:term]
-        rescue StandardError => e
-          puts e.message
-        else
-          field
-        end
-      end
-      
       def add_found_term(refname_urn, term_report)
         refname_obj = CollectionSpace::Mapper::Tools::RefName.new(urn: refname_urn)
         found = @config[:check_terms] ? true : false 
