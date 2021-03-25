@@ -91,21 +91,6 @@ module CollectionSpace
         @cache.get(type, subtype, val, search: false)
       end
 
-      def searched_term(val)
-        begin
-          response = @client.find(
-            type: type,
-            subtype: subtype,
-            value: val,
-            field: search_field
-          )
-        rescue StandardError => e
-          puts e.message
-        else
-          response_term_refname(response)
-        end
-      end
-
       def search_field
         begin
           field = CollectionSpace::Service.get(type: type)[:term]
