@@ -12,6 +12,8 @@ require 'facets/kernel/blank'
 require 'nokogiri'
 require 'xxhash'
 
+require 'ruby-prof'
+
 module CollectionSpace
   module Mapper
     extend self
