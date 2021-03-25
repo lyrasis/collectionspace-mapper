@@ -15,6 +15,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'non-hierarchical relationship record' do
+      # NOTE!
+      # These tests are prone to failing if one of the records used in the test in core.dev is deleted
+      # If a UUID is expected but you get blank, recreate the record in core.dev, rerun the test to
+      #   get the UUID for the new record, and replace the old UUID in both fixture XML files used. 
       before(:all) do
         @nhr_mapper = get_json_record_mapper(
           path: 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_nonhierarchicalrelationship.json'
