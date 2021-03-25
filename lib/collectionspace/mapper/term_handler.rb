@@ -3,6 +3,8 @@
 module CollectionSpace
   module Mapper
     class TermHandler
+      include TermSearchable
+      
       attr_reader :result, :terms, :warnings, :errors,
         :column, :source_type, :type, :subtype
       attr_accessor :value
@@ -104,28 +106,6 @@ module CollectionSpace
         end
       end
 
-      def response_term_refname(response)
-        term_ct = response.parsed.dig('abstract_common_list', 'totalItems')
-        return nil if term_ct.nil?
-
-        if term_ct.to_i == 1
-          refname = response.parsed.dig('abstract_common_list', 'list_item', 'refName')
-        elsif term_ct.to_i > 1
-          rec = response.parsed.dig('abstract_common_list', 'list_item')[0]
-          using_uri = "#{@client.config.base_uri}#{rec['uri']}"
-          refname = rec['refName']
-          warnings << {
-            category: :multiple_records_found_for_term,
-            field: column,
-            type: type,
-            subtype: subtype,
-            value: value,
-            message: "#{term_ct} records found. Using #{using_uri}"
-          }
-        end
-        refname
-      end
-      
       def search_field
         begin
           field = CollectionSpace::Service.get(type: type)[:term]
