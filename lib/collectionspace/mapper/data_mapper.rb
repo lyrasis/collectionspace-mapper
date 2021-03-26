@@ -60,11 +60,11 @@ module CollectionSpace
         targetnode = @doc.xpath("//#{xpath}")[0]
         xphash[:mappings] = xphash[:mappings].uniq{ |m| m[:fieldname] }
         if xphash[:is_group] == false
-          simple_map(xpath, xphash, targetnode, thisdata)
+          simple_map(xphash, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
-          map_group(xpath, xphash, targetnode, thisdata)
+          map_group(xpath, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == true
-          map_subgroup(xpath, xphash, targetnode, thisdata)
+          map_subgroup(xphash, thisdata)
         end
       end
       
@@ -94,7 +94,7 @@ module CollectionSpace
         end
       end
       
-      def simple_map(xpath, xphash, targetnode, thisdata)
+      def simple_map(xphash, targetnode, thisdata)
         xphash[:mappings].each do |fm|
           fn = fm[:fieldname]
           data = thisdata.fetch(fn, nil)
@@ -112,7 +112,7 @@ module CollectionSpace
         end
       end
       
-      def map_group(xpath, xphash, targetnode, thisdata)
+      def map_group(xpath, targetnode, thisdata)
         pnode = targetnode.parent
         groupname = targetnode.name.dup
         targetnode.remove
@@ -172,7 +172,7 @@ module CollectionSpace
         sg_max_length <= groupdata.length ? true : false
       end
       
-      def map_subgroup(xpath, xphash, targetnode, thisdata)
+      def map_subgroup(xphash, thisdata)
         parent_path = xphash[:parent]
         parent_set = @doc.xpath("//#{parent_path}")
         parent_size = parent_set.size

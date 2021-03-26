@@ -28,12 +28,12 @@ module CollectionSpace
       end
       
       def split_data
-        @xphash.each{ |xpath, hash| do_splits(xpath, hash) }
+        @xphash.each{ |xpath, hash| do_splits(hash) }
         @response.split_data
       end
 
       def transform_data
-        @xphash.each{ |xpath, hash| do_transforms(xpath, hash) }
+        @xphash.each{ |xpath, hash| do_transforms(hash) }
         @response.transformed_data
       end
 
@@ -43,14 +43,14 @@ module CollectionSpace
       end
 
       def handle_term_fields
-        @xphash.each{ |xpath, hash| do_term_handling(xpath, hash) }
+        @xphash.each{ |xpath, hash| do_term_handling(hash) }
         @response.warnings.flatten!
         @response.errors.flatten!
         @response.transformed_data
       end
       
       def check_data
-        @xphash.each{ |xpath, hash| check_data_quality(xpath, hash) }
+        @xphash.each{ |xpath, hash| check_data_quality(hash) }
         @response.warnings.flatten!
         @response.warnings
       end
@@ -78,7 +78,7 @@ module CollectionSpace
         end
       end
 
-      def do_splits(xpath, xphash)
+      def do_splits(xphash)
         if xphash[:is_group] == false
           xphash[:mappings].each do |mapping|
             column = mapping[:datacolumn]
@@ -103,7 +103,7 @@ module CollectionSpace
         end
       end
 
-      def do_transforms(xpath, xphash)
+      def do_transforms(xphash)
         splitdata = @response.split_data
         targetdata = @response.transformed_data
         xphash[:mappings].each do |mapping|
@@ -160,7 +160,7 @@ module CollectionSpace
         end
       end
 
-      def do_term_handling(xpath, xphash)
+      def do_term_handling(xphash)
         sourcedata = @response.transformed_data
         xphash[:mappings].each do |mapping|
           source_type = get_source_type(mapping[:source_type])
@@ -215,7 +215,7 @@ module CollectionSpace
         end
       end
 
-      def check_data_quality(xpath, xphash)
+      def check_data_quality(xphash)
         xformdata = @response.transformed_data
         xphash[:mappings].each do |mapping|
           data = xformdata[mapping[:datacolumn]]
