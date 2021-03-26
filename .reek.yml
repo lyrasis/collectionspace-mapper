@@ -162,7 +162,6 @@ detectors:
     - CollectionSpace::Mapper::DataMapper#simple_map
   NestedIterators:
     exclude:
-    - CollectionSpace::Mapper::AuthorityHierarchyPrepper#transform_terms
     - CollectionSpace::Mapper::DataHandler#build_xml
     - CollectionSpace::Mapper::DataHandler#merge_config_transforms
     - CollectionSpace::Mapper::DataHandler#xpath_hash

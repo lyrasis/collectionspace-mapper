@@ -55,8 +55,7 @@ module CollectionSpace
 
       def transform_terms
         %w[broader_term narrower_term].each do |field|
-          transformed = @response.split_data[field].map{ |term| term_csid(term) }
-          @response.transformed_data[field] = transformed
+          @response.transformed_data[field] = transformed_term(field)
         end
 
         @response.split_data.each do |field, value|
@@ -66,6 +65,10 @@ module CollectionSpace
         end
       end
 
+      def transformed_term(field)
+        @response.split_data[field].map{ |term| term_csid(term) }
+      end
+      
       def type
         @type
       end
