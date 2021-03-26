@@ -39,9 +39,9 @@ module CollectionSpace
         end
       end
       
-      def stringify_item(i)
-        id = "item#{i}_id"
-        type = "item#{i}_type"
+      def stringify_item(item_number)
+        id = "item#{item_number}_id"
+        type = "item#{item_number}_type"
         thisid = @response.merged_data[id]
         thistype = @response.merged_data[type]
         "#{thisid} (#{thistype})"

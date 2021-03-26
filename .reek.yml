@@ -267,9 +267,6 @@ detectors:
     - CollectionSpace::Mapper::Tools::RefName#new_from_urn
     - CollectionSpace::Mapper::ValueTransformer#process_boolean
     - CollectionSpace::Mapper#merge_default_values
-  UncommunicativeParameterName:
-    exclude:
-    - CollectionSpace::Mapper::NonHierarchicalRelationshipPrepper#stringify_item
   UncommunicativeVariableName:
     exclude:
     - CollectionSpace::Mapper::AuthorityHierarchyPrepper#clear_unmapped_mappings
