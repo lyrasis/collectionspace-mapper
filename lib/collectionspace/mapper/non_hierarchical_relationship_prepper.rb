@@ -62,7 +62,7 @@ module CollectionSpace
 
       def process_xpaths
         clear_unmapped_mappings
-        @handler.mapper[:xpath] = @handler.xpath_hash
+        @handler.mapper.xpath = @handler.xpath_hash
         super
       end
       
@@ -71,7 +71,7 @@ module CollectionSpace
       #  do not actually get used to produce XML
       def clear_unmapped_mappings
         to_clear = %w[subjectType objectType]
-        @handler.mapper[:mappings].reject!{ |m| to_clear.include?(m[:fieldname]) }
+        @handler.mapper.mappings.reject!{ |m| to_clear.include?(m[:fieldname]) }
       end
 
       def transform_terms

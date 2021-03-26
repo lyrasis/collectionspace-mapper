@@ -40,6 +40,7 @@ module CollectionSpace
     require 'collectionspace/mapper/data_splitter'
     require 'collectionspace/mapper/data_validator'
     require 'collectionspace/mapper/response'
+    require 'collectionspace/mapper/record_mapper'
     require 'collectionspace/mapper/term_handler'
     require 'collectionspace/mapper/value_transformer'
 
@@ -48,7 +49,6 @@ module CollectionSpace
 
     require 'collectionspace/mapper/tools/config'
     require 'collectionspace/mapper/tools/dates'
-    require 'collectionspace/mapper/tools/record_mapper'
     require 'collectionspace/mapper/tools/refname'
     require 'collectionspace/mapper/tools/record_status_service'
 

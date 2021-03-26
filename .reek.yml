@@ -165,7 +165,7 @@ detectors:
 # DataHandler#xpath_hash is a nightmare that needs to be its own class or something.
 # Don't even start messing with it here.
     - CollectionSpace::Mapper::DataHandler#xpath_hash
-    - CollectionSpace::Mapper::DataPrepper#combine_data_values
+#    - CollectionSpace::Mapper::DataPrepper#combine_data_values
     - CollectionSpace::Mapper::DataPrepper#combine_subgroup_values
     - CollectionSpace::Mapper::DataPrepper#do_transforms
     - CollectionSpace::Mapper::DataPrepper#process_xpaths

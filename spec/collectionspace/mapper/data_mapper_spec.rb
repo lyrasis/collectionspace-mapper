@@ -26,7 +26,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/collectionobject2.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'mapper response includes overflow subgroup warning' do
           w = @mapper.response.warnings.any?{ |w| w[:category] == :subgroup_contains_data_for_nonexistent_groups }
@@ -199,7 +199,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       
       describe '#add_namespaces' do
         it 'adds namespace definitions' do
-          urihash = @datamapper.handler.mapper[:config][:ns_uri].clone
+          urihash = @datamapper.handler.mapper.config[:ns_uri].clone
           urihash.transform_keys!{ |k| "ns2:#{k}" }
           docdefs = {}
           @datamapper.doc.xpath('/*/*').each do |ns|
