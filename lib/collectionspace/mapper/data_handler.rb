@@ -302,16 +302,20 @@ module CollectionSpace
       #   mappings for the appropriate fields
       def merge_config_transforms
         return unless @config[:transforms]
+        
         @config[:transforms].transform_keys!(&:downcase)
-        @config[:transforms].each do |datacol, x|
-          target = @mapper[:mappings].select{ |m| m[:datacolumn] == datacol }
-          unless target.empty?
-            target = target.first
-            target[:transforms] = target[:transforms].merge(x)
-          end
+        @config[:transforms].each do |data_column, transforms|
+          target = transform_target(data_column)
+          next unless target
+
+          target[:transforms] = target[:transforms].merge(transforms)
         end
       end
 
+      def transform_target(data_column)
+        @mapper[:mappings].select{ |field_mapping| field_mapping[:datacolumn] == data_column }.first
+      end
+      
       def build_xml
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.document{ create_record_namespace_nodes(xml) }
