@@ -129,8 +129,8 @@ module CollectionSpace
       end
 
       def populate_subgroup_field_data(field, data, target)
-        data.each_with_index do |val, i|
-          parent = target[i]
+        data.each_with_index do |val, subgroup_index|
+          parent = target[subgroup_index]
           child = Nokogiri::XML::Node.new(field, @doc)
           if val.is_a?(Hash)
             map_structured_date(child, val)
