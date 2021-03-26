@@ -15,7 +15,7 @@ fdoc = Helpers.get_xml_fixture(fixture)
 
 n = 10000
 
-xpaths = Helpers.test_xpaths(fdoc, dh.mapper[:mappings])
+xpaths = Helpers.test_xpaths(fdoc, dh.mapper.mappings)
 
 
 Benchmark.bm do |benchmark|

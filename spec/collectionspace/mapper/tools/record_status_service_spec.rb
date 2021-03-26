@@ -10,7 +10,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::RecordStatusService do
   describe '#lookup' do
     context 'when mapper is for an authority' do
       before(:all) do
-        @core_person_mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(get_json_record_mapper(
+        @core_person_mapper = CollectionSpace::Mapper::RecordMapper.new(get_json_record_mapper(
           path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-person-local.json'
         ))
         @service = CollectionSpace::Mapper::Tools::RecordStatusService.new(@core_client, @core_person_mapper)
@@ -54,7 +54,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::RecordStatusService do
 
     context 'when mapper is for an object' do
       before(:all) do
-        @core_co_mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(get_json_record_mapper(
+        @core_co_mapper = CollectionSpace::Mapper::RecordMapper.new(get_json_record_mapper(
           path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json'
         ))
         @service = CollectionSpace::Mapper::Tools::RecordStatusService.new(@core_client, @core_co_mapper)
@@ -67,7 +67,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::RecordStatusService do
 
     context 'when mapper is for a procedure' do
       before(:all) do
-        @core_acq_mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(get_json_record_mapper(
+        @core_acq_mapper = CollectionSpace::Mapper::RecordMapper.new(get_json_record_mapper(
           path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-acquisition.json'
         ))
         @service = CollectionSpace::Mapper::Tools::RecordStatusService.new(@core_client, @core_acq_mapper)

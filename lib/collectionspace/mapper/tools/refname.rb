@@ -26,15 +26,27 @@ module CollectionSpace
             @type = args[:type]
             @subtype = args[:subtype]
             @display_name = args[:term]
-            new_from_term(args[:source_type])
+            args[:source_type] == :authority ? new_from_authority_term : new_from_term
+            @urn = build_urn
+          #  new_from_term(args[:source_type])
           else
             raise CollectionSpace::Mapper::Tools::RefNameArgumentError
           end
         end
+
+        private
+
+        def build_urn
+          "urn:cspace:#{@domain}:#{@type}:name(#{@subtype}):item:name(#{@identifier})'#{@display_name}'"
+        end
         
-        def new_from_term(source_type)
-          @identifier = CollectionSpace::Mapper::Tools::Identifiers.short_identifier(@display_name, source_type)
-          @urn = "urn:cspace:#{@domain}:#{@type}:name(#{@subtype}):item:name(#{@identifier})'#{@display_name}'"
+        def new_from_term
+          
+          @identifier = CollectionSpace::Mapper::Identifiers::ShortIdentifier.new(term: @display_name).value
+        end
+
+        def new_from_authority_term
+          @identifier = CollectionSpace::Mapper::Identifiers::AuthorityShortIdentifier.new(term: @display_name).value
         end
 
         def new_from_urn

@@ -12,7 +12,7 @@ module CollectionSpace
       def initialize(record_mapper:, client:, cache: nil,
                      config: CollectionSpace::Mapper::DEFAULT_CONFIG
                     )
-        @mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(record_mapper)
+        @mapper = CollectionSpace::Mapper::RecordMapper.new(record_mapper)
         @is_authority = get_is_authority
         @client = client
         @config = get_config(config)
@@ -20,11 +20,11 @@ module CollectionSpace
         authority_hierarchy_default_values if is_authority_hierarchy?
         non_hierarchical_relationship_default_values if is_non_hierarchical_relationship?
         @cache = cache.nil? ? get_cache : cache
-        @csidcache = get_csidcache if @mapper[:config][:service_type] == 'relation'
+        @csidcache = get_csidcache if @mapper.config[:service_type] == 'relation'
         @response_mode = @config[:response_mode]
         add_short_id_mapping if @is_authority
-        @known_fields = @mapper[:mappings].map{ |m| m[:datacolumn] }.map(&:downcase)
-        @mapper[:xpath] = xpath_hash
+        @known_fields = @mapper.mappings.map{ |m| m[:datacolumn] }.map(&:downcase)
+        @mapper.xpath = xpath_hash
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
         merge_config_transforms
@@ -123,12 +123,12 @@ module CollectionSpace
       def xpath_hash
         h = {}
         # create key for each xpath containing fields, and set up structure of its value
-        @mapper[:mappings].each do |mapping|
+        @mapper.mappings.each do |mapping|
           mapping[:fullpath] = ( [mapping[:namespace]] + mapping[:xpath] ).flatten.join('/')
           h[mapping[:fullpath]] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
         end
         # add fieldmappings for children of each xpath
-        @mapper[:mappings].each do |mapping|
+        @mapper.mappings.each do |mapping|
           mapping[:datacolumn] = mapping[:datacolumn].downcase
           h[mapping[:fullpath]][:mappings] << mapping
         end
@@ -193,7 +193,7 @@ module CollectionSpace
         rescue CollectionSpace::Mapper::MultipleCsRecordsFoundError => e
           err = {
             category: :multiple_matching_recs,
-            field: @mapper[:config][:search_field],
+            field: @mapper.config[:search_field],
             type: nil,
             subtype: nil,
             value: value,
@@ -255,9 +255,9 @@ module CollectionSpace
       end
 
       def add_short_id_mapping
-        namespaces = @mapper[:mappings].map{ |m| m[:namespace]}.uniq
+        namespaces = @mapper.mappings.map{ |m| m[:namespace]}.uniq
         this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
-        @mapper[:mappings] << {
+        @mapper.mappings << {
           fieldname: 'shortIdentifier',
           namespace: this_ns,
           data_type: 'string',
@@ -286,11 +286,11 @@ module CollectionSpace
       end
       
       def record_type
-        @mapper[:config][:recordtype]
+        @mapper.config[:recordtype]
       end
 
       def service_type
-        @mapper[:config][:service_type]
+        @mapper.config[:service_type]
       end
       
       def get_is_authority
@@ -302,31 +302,37 @@ module CollectionSpace
       #   mappings for the appropriate fields
       def merge_config_transforms
         return unless @config[:transforms]
+        
         @config[:transforms].transform_keys!(&:downcase)
-        @config[:transforms].each do |datacol, x|
-          target = @mapper[:mappings].select{ |m| m[:datacolumn] == datacol }
-          unless target.empty?
-            target = target.first
-            target[:transforms] = target[:transforms].merge(x)
-          end
+        @config[:transforms].each do |data_column, transforms|
+          target = transform_target(data_column)
+          next unless target
+
+          target[:transforms] = target[:transforms].merge(transforms)
         end
       end
 
+      def transform_target(data_column)
+        @mapper.mappings.select{ |field_mapping| field_mapping[:datacolumn] == data_column }.first
+      end
+      
       def build_xml
         builder = Nokogiri::XML::Builder.new do |xml|
-          xml.document do
-            @mapper[:docstructure].keys.each do |ns|
-              xml.send(ns) do
-                process_group(xml, [ns])
-              end
-            end
-          end
+          xml.document{ create_record_namespace_nodes(xml) }
         end
         Nokogiri::XML(builder.to_xml)
       end
 
+      def create_record_namespace_nodes(xml)
+        @mapper.docstructure.keys.each do |namespace|
+          xml.send(namespace) do
+            process_group(xml, [namespace])
+          end
+        end
+      end
+      
       def process_group(xml, grouppath)
-        @mapper[:docstructure].dig(*grouppath).keys.each do |key|
+        @mapper.docstructure.dig(*grouppath).keys.each do |key|
           thispath = grouppath.clone.append(key)
           xml.send(key){
             process_group(xml, thispath)

@@ -15,6 +15,10 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'non-hierarchical relationship record' do
+      # NOTE!
+      # These tests are prone to failing if one of the records used in the test in core.dev is deleted
+      # If a UUID is expected but you get blank, recreate the record in core.dev, rerun the test to
+      #   get the UUID for the new record, and replace the old UUID in both fixture XML files used. 
       before(:all) do
         @nhr_mapper = get_json_record_mapper(
           path: 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_nonhierarchicalrelationship.json'
@@ -34,9 +38,9 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_xpaths1 = list_xpaths(@mapped_doc1)
           @mapped_xpaths2 = list_xpaths(@mapped_doc2)
           @fixture_doc1 = get_xml_fixture('core/nonHierarchicalRelationship1A.xml')
-          @fixture_xpaths1 = test_xpaths(@fixture_doc1, @handler.mapper[:mappings])
+          @fixture_xpaths1 = test_xpaths(@fixture_doc1, @handler.mapper.mappings)
           @fixture_doc2 = get_xml_fixture('core/nonHierarchicalRelationship1B.xml')
-          @fixture_xpaths2 = test_xpaths(@fixture_doc2, @handler.mapper[:mappings])
+          @fixture_xpaths2 = test_xpaths(@fixture_doc2, @handler.mapper.mappings)
         end
 
         context 'with original data' do
@@ -94,7 +98,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/authorityHierarchy1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
 
         it 'sets response id field as expected' do
@@ -130,7 +134,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/objectHierarchy1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
 
         it 'sets response id field as expected' do
@@ -166,7 +170,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/acquisition1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -197,7 +201,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/collectionobject1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -228,7 +232,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/conditioncheck1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -259,7 +263,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/conservation1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -290,7 +294,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/exhibition1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -321,7 +325,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/group1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -352,7 +356,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/intake1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -383,7 +387,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/loanin1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths 
@@ -414,7 +418,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/loanout1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -444,7 +448,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/movement1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -475,7 +479,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/media1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -506,7 +510,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/objectexit1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths 
@@ -538,7 +542,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('core/uoc1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths

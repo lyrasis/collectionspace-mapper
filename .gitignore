@@ -7,6 +7,8 @@
 /tmp/
 /doc/include.rb
 
+.reek.todo
+
 # rspec failure tracking
 .rspec_status
 

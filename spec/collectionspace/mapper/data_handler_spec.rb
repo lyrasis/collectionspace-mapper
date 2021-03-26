@@ -109,11 +109,11 @@ end
           expect(@anthro_place_handler.is_authority).to be true
         end
         it 'adds a mapping for shortIdentifier' do
-          result = @anthro_place_handler.mapper[:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
+          result = @anthro_place_handler.mapper.mappings.select{ |m| m[:fieldname] == 'shortIdentifier' }
           expect(result.length).to eq(1)
         end
         it 'adds a xphash entry for shortIdentifier' do
-          result = @anthro_place_handler.mapper[:xpath]['places_common'][:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
+          result = @anthro_place_handler.mapper.xpath['places_common'][:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
           expect(result.length).to eq(1)
         end
       end
@@ -146,7 +146,7 @@ end
                                                                client: @anthro_client,
                                                                cache: @anthro_cache,
                                                                config: @config)
-            fieldmap = handler.mapper[:mappings].select{ |m| m[:fieldname] == 'collection' }.first
+            fieldmap = handler.mapper.mappings.select{ |m| m[:fieldname] == 'collection' }.first
             xforms = {
               special: %w[downcase_value],
               replacements: [
@@ -166,7 +166,7 @@ end
         context 'xpath ending with commingledRemainsGroup' do
           before(:all) do
             xpath = 'collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup'
-            @h = @anthro_object_handler.mapper[:xpath][xpath]
+            @h = @anthro_object_handler.mapper.xpath[xpath]
           end
           it 'is_group = true' do
             expect(@h[:is_group]).to be true
@@ -188,7 +188,7 @@ end
         context 'xpath ending with mortuaryTreatmentGroup' do
           before(:all) do
             xpath = 'collectionobjects_anthro/commingledRemainsGroupList/commingledRemainsGroup/mortuaryTreatmentGroupList/mortuaryTreatmentGroup'
-            @h = @anthro_object_handler.mapper[:xpath][xpath]
+            @h = @anthro_object_handler.mapper.xpath[xpath]
           end
           it 'is_group = true' do
             expect(@h[:is_group]).to be true
@@ -206,7 +206,7 @@ end
 
         context 'xpath ending with collectionobjects_nagpra' do
           before(:all) do
-            @h = @anthro_object_handler.mapper[:xpath]['collectionobjects_nagpra']
+            @h = @anthro_object_handler.mapper.xpath['collectionobjects_nagpra']
           end
           it 'has 5 children' do
             expect(@h[:children].size).to eq(5)
@@ -218,14 +218,14 @@ context 'bonsai profile' do
   context 'conservation record type' do
     context 'xpath ending with fertilizersToBeUsed' do
       it 'is a repeating group' do
-        h = @bonsai_conservation_handler.mapper[:xpath]
+        h = @bonsai_conservation_handler.mapper.xpath
         res = h['conservation_livingplant/fertilizationGroupList/fertilizationGroup/fertilizersToBeUsed'][:is_group]
         expect(res).to be true
       end
     end
     context 'xpath ending with conservators' do
       it 'is a repeating group' do
-        h = @bonsai_conservation_handler.mapper[:xpath]
+        h = @bonsai_conservation_handler.mapper.xpath
         res = h['conservation_common/conservators'][:is_group]
         expect(res).to be false
       end

@@ -41,7 +41,7 @@ module CollectionSpace
       
       def process_xpaths
         clear_unmapped_mappings
-        @handler.mapper[:xpath] = @handler.xpath_hash
+        @handler.mapper.xpath = @handler.xpath_hash
         super
       end
       
@@ -50,13 +50,12 @@ module CollectionSpace
       #  do not actually get used to produce XML
       def clear_unmapped_mappings
         to_clear = %w[termType termSubType]
-        @handler.mapper[:mappings].reject!{ |m| to_clear.include?(m[:fieldname]) }
+        @handler.mapper.mappings.reject!{ |m| to_clear.include?(m[:fieldname]) }
       end
 
       def transform_terms
         %w[broader_term narrower_term].each do |field|
-          transformed = @response.split_data[field].map{ |term| term_csid(term) }
-          @response.transformed_data[field] = transformed
+          @response.transformed_data[field] = transformed_term(field)
         end
 
         @response.split_data.each do |field, value|
@@ -66,6 +65,10 @@ module CollectionSpace
         end
       end
 
+      def transformed_term(field)
+        @response.split_data[field].map{ |term| term_csid(term) }
+      end
+      
       def type
         @type
       end

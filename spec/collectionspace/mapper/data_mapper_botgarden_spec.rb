@@ -29,7 +29,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         #   @mapped_doc = remove_namespaces(@mapper.response.doc)
         #   @mapped_xpaths = list_xpaths(@mapped_doc)
         #   @fixture_doc = get_xml_fixture('botgarden/pottag1.xml')
-        #   @fixture_xpaths = test_xpaths(@fixture_doc, @pottag_handler.mapper[:mappings])
+        #   @fixture_xpaths = test_xpaths(@fixture_doc, @pottag_handler.mapper.mappings)
         # end
 
         # these tests are waiting on 6.1 to add a required ID field to pottag
@@ -62,7 +62,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         #   @mapped_doc = remove_namespaces(@mapper.response.doc)
         #   @mapped_xpaths = list_xpaths(@mapped_doc)
         #   @fixture_doc = get_xml_fixture('botgarden/propagation1.xml')
-        #   @fixture_xpaths = test_xpaths(@fixture_doc, @propagation_handler.mapper[:mappings])
+        #   @fixture_xpaths = test_xpaths(@fixture_doc, @propagation_handler.mapper.mappings)
         # end
 
         # these tests are waiting for namespace uri fixes in CCU RecordMappers
@@ -99,7 +99,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('botgarden/taxon1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @taxon_handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @taxon_handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
