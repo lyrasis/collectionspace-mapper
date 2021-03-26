@@ -314,17 +314,19 @@ module CollectionSpace
 
       def build_xml
         builder = Nokogiri::XML::Builder.new do |xml|
-          xml.document do
-            @mapper[:docstructure].keys.each do |ns|
-              xml.send(ns) do
-                process_group(xml, [ns])
-              end
-            end
-          end
+          xml.document{ create_record_namespace_nodes(xml) }
         end
         Nokogiri::XML(builder.to_xml)
       end
 
+      def create_record_namespace_nodes(xml)
+        @mapper[:docstructure].keys.each do |namespace|
+          xml.send(namespace) do
+            process_group(xml, [namespace])
+          end
+        end
+      end
+      
       def process_group(xml, grouppath)
         @mapper[:docstructure].dig(*grouppath).keys.each do |key|
           thispath = grouppath.clone.append(key)
