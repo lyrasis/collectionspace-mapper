@@ -94,21 +94,62 @@ module CollectionSpace
         end
       end
       
-      def simple_map(xphash, targetnode, thisdata)
-        xphash[:mappings].each do |fm|
-          fn = fm[:fieldname]
-          data = thisdata.fetch(fn, nil)
-          if data
-            data.each do |val|
-              child = Nokogiri::XML::Node.new(fn, @doc)
-              if val.is_a?(Hash)
-                map_structured_date(child, val)
-              else
-                child.content = val
-              end
-              targetnode.add_child(child)
-            end
+      def simple_map(xphash, parent, thisdata)
+        xphash[:mappings].each do |field_mapping|
+          field_name = field_mapping[:fieldname]
+          data = thisdata.fetch(field_name, nil)
+          populate_simple_field_data(field_name, data, parent) if data
+        end
+      end
+
+      def populate_simple_field_data(field_name, data, parent)
+        data.each do |val|
+          child = Nokogiri::XML::Node.new(field_name, @doc)
+          if val.is_a?(Hash)
+            map_structured_date(child, val)
+          else
+            child.content = val
           end
+          parent.add_child(child)
+        end
+      end
+      
+      def populate_group_field_data(index, data, parent)
+        data.each do |field, values|
+          if values[index]
+            child = Nokogiri::XML::Node.new(field, @doc)
+            if values[index].is_a?(Hash)
+              map_structured_date(child, values[index]) 
+            else values[index]
+              child.content = values[index]
+            end
+            parent.add_child(child)
+          end
+        end
+      end
+
+      def populate_subgroup_field_data(field, data, target)
+        data.each_with_index do |val, i|
+          parent = target[i]
+          child = Nokogiri::XML::Node.new(field, @doc)
+          if val.is_a?(Hash)
+            map_structured_date(child, val)
+          else
+            child.content = val
+            parent.add_child(child) if parent
+          end
+        end
+      end
+
+      def subgrouplist_target(parent_path, group_index, subgroup_path, subgroup)
+        grp_target = @doc.xpath("//#{parent_path}")[group_index]
+        target_xpath = "#{subgroup_path.join('/')}/#{subgroup}"
+        grp_target.xpath(target_xpath)
+      end
+
+      def map_subgroups_to_group(group, target)
+        group[:data].each do |field, data|
+          populate_subgroup_field_data(field, data, target)
         end
       end
       
@@ -117,8 +158,7 @@ module CollectionSpace
         groupname = targetnode.name.dup
         targetnode.remove
 
-        val_ct = thisdata.values.map{ |v| v.size }.uniq.sort.reverse
-        max_ct = val_ct[0]
+        max_ct = thisdata.values.map{ |v| v.size }.max
         max_ct.times do
           group = Nokogiri::XML::Node.new(groupname, @doc)
           pnode.add_child(group)
@@ -126,18 +166,7 @@ module CollectionSpace
 
         max_ct.times do |i|
           path = "//#{xpath}"
-          parent = @doc.xpath(path)[i]
-          thisdata.each do |k, v|
-            if v[i]
-              child = Nokogiri::XML::Node.new(k, @doc)
-              if v[i].is_a?(Hash)
-                map_structured_date(child, v[i]) 
-              else v[i]
-                child.content = v[i]
-              end
-              parent.add_child(child)
-            end
-          end
+          populate_group_field_data(i, thisdata, @doc.xpath(path)[i])
         end
       end
 
@@ -193,7 +222,13 @@ module CollectionSpace
       def subgroup_value_count(values)
         values.map{ |subgroup_values| subgroup_values.length }.max
       end
-      
+
+      def assign_subgroup_values_to_group_hash_data(groups, field, subgroups)
+        subgroups.each_with_index do |subgroup_values, group_index|
+          next if groups[group_index].nil?
+          groups[group_index][:data][field] = subgroup_values
+        end
+      end
       
       def map_subgroup(xphash, thisdata)
         parent_path = xphash[:parent]
@@ -212,19 +247,15 @@ module CollectionSpace
                                     intervening_path: subgroup_path,
                                     subgroup: subgroup) unless even_subgroup_field_values?(thisdata)
         add_too_many_subgroups_warning(parent_path: parent_path,
-                                    intervening_path: subgroup_path,
-                                    subgroup: subgroup) unless group_accommodates_subgroup?(groups, thisdata)
+                                       intervening_path: subgroup_path,
+                                       subgroup: subgroup) unless group_accommodates_subgroup?(groups, thisdata)
         
-        thisdata.each do |f, v|
-          v.each_with_index do |val, i|
-            next if groups[i].nil?
-            groups[i][:data][f] = val
-          end
-        end
+        thisdata.each{ |field, subgroups| assign_subgroup_values_to_group_hash_data(groups, field, subgroups) }
 
         groups.values.each{ |grp| create_intermediate_subgroup_hierarchy(grp, subgroup_path) }
 
         max_ct = maximum_subgroup_values(thisdata)
+
         groups.each do |i, data|
           max_ct.times do
             target = @doc.xpath("//#{parent_path}/#{subgroup_path.join('/')}")
@@ -232,23 +263,9 @@ module CollectionSpace
           end
         end
 
-        groups.each do |gi, grphash|
-          gxp = "//#{parent_path}"
-          grp_target = @doc.xpath(gxp)[gi]
-          txp = "#{subgroup_path.join('/')}/#{subgroup}"
-          subgrouplist_target = grp_target.xpath(txp)
-          grphash[:data].each do |field, data|
-            data.each_with_index do |val, i|
-              target = subgrouplist_target[i]
-              child = Nokogiri::XML::Node.new(field, @doc)
-              if val.is_a?(Hash)
-                map_structured_date(child, val)
-              else
-                child.content = val
-                target.add_child(child) if target
-              end
-            end
-          end
+        groups.each do |group_index, group|
+          target = subgrouplist_target(parent_path, group_index, subgroup_path, subgroup)
+          map_subgroups_to_group(group, target)
         end
       end
     end
