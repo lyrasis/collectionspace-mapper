@@ -171,11 +171,33 @@ module CollectionSpace
         sg_max_length = subgroupdata.values.map(&:length).max
         sg_max_length <= groupdata.length ? true : false
       end
+
+      # EXAMPLE: creates empty titleTranslationSubGroupList as a child of titleGroup
+      def create_intermediate_subgroup_hierarchy(grp, subgroup_path)
+        target = grp[:parent]
+        unless subgroup_path.empty?
+          subgroup_path.each do |segment|
+            child = Nokogiri::XML::Node.new(segment, @doc)
+            target.add_child(child)
+            target = child
+          end
+        end
+      end
+
+      # returns the count of field values for the subgroup field with the mosty values
+      # we need to know this in order to create enough empty subgroup elements to hold the data
+      def maximum_subgroup_values(data)
+        data.map{ |field, values| subgroup_value_count(values) }.flatten.max
+      end
+
+      def subgroup_value_count(values)
+        values.map{ |subgroup_values| subgroup_values.length }.max
+      end
+      
       
       def map_subgroup(xphash, thisdata)
         parent_path = xphash[:parent]
         parent_set = @doc.xpath("//#{parent_path}")
-        parent_size = parent_set.size
         subgroup_path = xphash[:mappings].first[:fullpath].gsub("#{xphash[:parent]}/", '').split('/')
         subgroup = subgroup_path.pop
 
@@ -199,22 +221,10 @@ module CollectionSpace
             groups[i][:data][f] = val
           end
         end
-        
-        # create grouping-only fields in the xml hierarchy for the subgroup
-        groups.each do |i, grp|
-          target = grp[:parent]
-          unless subgroup_path.empty?
-            subgroup_path.each do |segment|
-              child = Nokogiri::XML::Node.new(segment, @doc)
-              target.add_child(child)
-              target = child
-            end
-          end
-        end
 
-        # create the subgroups
-        val_ct = thisdata.values.map{ |g| g.map{ |sg| sg.size }.uniq.sort.reverse }.uniq.sort.reverse.flatten
-        max_ct = val_ct[0]
+        groups.values.each{ |grp| create_intermediate_subgroup_hierarchy(grp, subgroup_path) }
+
+        max_ct = maximum_subgroup_values(thisdata)
         groups.each do |i, data|
           max_ct.times do
             target = @doc.xpath("//#{parent_path}/#{subgroup_path.join('/')}")

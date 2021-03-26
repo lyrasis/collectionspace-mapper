@@ -165,9 +165,9 @@ detectors:
     - CollectionSpace::Mapper::DataHandler#build_xml
     - CollectionSpace::Mapper::DataHandler#merge_config_transforms
     - CollectionSpace::Mapper::DataHandler#xpath_hash
-    - CollectionSpace::Mapper::DataMapper#map_group
-    - CollectionSpace::Mapper::DataMapper#map_subgroup
-    - CollectionSpace::Mapper::DataMapper#simple_map
+#    - CollectionSpace::Mapper::DataMapper#map_group
+#    - CollectionSpace::Mapper::DataMapper#map_subgroup
+#    - CollectionSpace::Mapper::DataMapper#simple_map
     - CollectionSpace::Mapper::DataPrepper#combine_data_values
     - CollectionSpace::Mapper::DataPrepper#combine_subgroup_values
     - CollectionSpace::Mapper::DataPrepper#do_transforms
