@@ -51,7 +51,7 @@ module CollectionSpace
           .first
         targetnode = @doc.xpath("/document/#{ns}").first
         child = Nokogiri::XML::Node.new('shortIdentifier', @doc)
-        child.content = CollectionSpace::Mapper::Tools::Identifiers.short_identifier(term, :authority)
+        child.content = CollectionSpace::Mapper::Identifiers::AuthorityShortIdentifier.new(term: term).value
         targetnode.add_child(child)
       end
 

@@ -23,9 +23,6 @@ detectors:
     - CollectionSpace::Mapper::Response#warnings
     - CollectionSpace::Mapper::TermHandler#value
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#mappable
-  ControlParameter:
-    exclude:
-    - CollectionSpace::Mapper::Tools::Identifiers#short_identifier
   DuplicateMethodCall:
     exclude:
     - CollectionSpace::Mapper::AuthorityHierarchyPrepper#initialize

@@ -44,7 +44,6 @@ module CollectionSpace
 
       def handle_term(val)
         @value = val
-        
         return '' if val.blank?
         added = false
         

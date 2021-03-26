@@ -43,9 +43,11 @@ module CollectionSpace
     require 'collectionspace/mapper/term_handler'
     require 'collectionspace/mapper/value_transformer'
 
+    require 'collectionspace/mapper/identifiers/short_identifier'
+    require 'collectionspace/mapper/identifiers/authority_short_identifier'
+
     require 'collectionspace/mapper/tools/config'
     require 'collectionspace/mapper/tools/dates'
-    require 'collectionspace/mapper/tools/identifiers'
     require 'collectionspace/mapper/tools/record_mapper'
     require 'collectionspace/mapper/tools/refname'
     require 'collectionspace/mapper/tools/record_status_service'
