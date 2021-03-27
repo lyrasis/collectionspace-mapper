@@ -30,6 +30,7 @@ module CollectionSpace
 
     # mixins
     require 'collectionspace/mapper/term_searchable'
+    require 'collectionspace/mapper/tools/symbolizable'    
 
     require 'collectionspace/mapper/data_prepper'
     require 'collectionspace/mapper/authority_hierarchy_prepper'

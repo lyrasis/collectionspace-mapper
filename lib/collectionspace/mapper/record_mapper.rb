@@ -5,7 +5,11 @@ module CollectionSpace
 
     # represents a JSON RecordMapper containing the config, field mappings, and template
     #  for transforming a hash of data into CollectionSpace XML
+
+    # :reek:Attribute - when I get rid of xphash, this will go away
     class RecordMapper
+      include Tools::Symbolizable
+      
       attr_reader :config, :mappings, :docstructure
       attr_accessor :xpath
       
@@ -17,8 +21,8 @@ module CollectionSpace
       private
 
       def convert(json)
-        hash = json.transform_keys{ |key| key.to_sym }
-        @config = hash[:config].transform_keys{ |key| key.to_sym }
+        hash = symbolize(json)
+        @config = symbolize(hash[:config])
         @docstructure = hash[:docstructure]
         @mappings = CollectionSpace::Mapper::ColumnMappings.new(hash[:mappings])
       end
