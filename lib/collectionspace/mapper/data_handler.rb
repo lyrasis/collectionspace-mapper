@@ -23,7 +23,7 @@ module CollectionSpace
         @csidcache = get_csidcache if @mapper.config[:service_type] == 'relation'
         @response_mode = @config[:response_mode]
         add_short_id_mapping if @is_authority
-        @known_fields = @mapper.mappings.map{ |m| m[:datacolumn] }.map(&:downcase)
+        @known_fields = @mapper.mappings.known_columns
         @mapper.xpath = xpath_hash
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
@@ -256,10 +256,9 @@ module CollectionSpace
 
       def add_short_id_mapping
         namespaces = @mapper.mappings.map{ |m| m[:namespace]}.uniq
-        this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
         @mapper.mappings << {
           fieldname: 'shortIdentifier',
-          namespace: this_ns,
+          namespace: namespaces.first{ |ns| ns.end_with?('_common') },
           data_type: 'string',
           xpath: [],
           required: 'not in input data',

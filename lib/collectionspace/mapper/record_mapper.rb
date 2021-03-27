@@ -17,16 +17,10 @@ module CollectionSpace
       private
 
       def convert(json)
-        h = json.transform_keys{ |k| k.to_sym }
-        @config = h[:config].transform_keys{ |key| key.to_sym }
-        @docstructure = h[:docstructure]
-        h[:mappings].each do |m|
-          m.transform_keys!(&:to_sym)
-          if m[:transforms] && !m[:transforms].empty?
-            m[:transforms].transform_keys!(&:to_sym)
-          end
-        end
-        @mappings = h[:mappings]
+        hash = json.transform_keys{ |key| key.to_sym }
+        @config = hash[:config].transform_keys{ |key| key.to_sym }
+        @docstructure = hash[:docstructure]
+        @mappings = CollectionSpace::Mapper::ColumnMappings.new(hash[:mappings])
       end
     end
   end
