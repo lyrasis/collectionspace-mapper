@@ -15,9 +15,9 @@ module CollectionSpace
         @cache = @handler.cache
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
-        clean_doc
         add_short_id if @handler.is_authority
         set_response_identifier
+        clean_doc
         add_namespaces
         @response.doc = @doc
       end
@@ -29,8 +29,10 @@ module CollectionSpace
           set_relation_id
         else
           id_field = @handler.mapper.config[:identifier_field]
-          mapping = @handler.mapper.mappings.select{ |m| m[:fieldname] == id_field }.first
-          value = @doc.xpath("//#{mapping[:namespace]}/#{mapping[:fieldname]}").first.text
+          mapping = @handler.mapper.mappings.select{ |mapper| mapper.xml_fieldname == id_field }.first
+          thexpath = "//#{mapping.namespace}/#{mapping.xml_fieldname}"
+          value = @doc.xpath(thexpath).first
+            value = value.text
           @response.identifier = value
         end
       end
@@ -58,7 +60,7 @@ module CollectionSpace
       def map(xpath, xphash)
         thisdata = @data[xpath]
         targetnode = @doc.xpath("//#{xpath}")[0]
-        xphash[:mappings] = xphash[:mappings].uniq{ |m| m[:fieldname] }
+        xphash[:mappings] = xphash[:mappings].uniq{ |mapping| mapping.fieldname }
         if xphash[:is_group] == false
           simple_map(xphash, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
@@ -96,7 +98,7 @@ module CollectionSpace
       
       def simple_map(xphash, parent, thisdata)
         xphash[:mappings].each do |field_mapping|
-          field_name = field_mapping[:fieldname]
+          field_name = field_mapping.fieldname
           data = thisdata.fetch(field_name, nil)
           populate_simple_field_data(field_name, data, parent) if data
         end

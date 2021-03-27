@@ -124,13 +124,11 @@ module CollectionSpace
         h = {}
         # create key for each xpath containing fields, and set up structure of its value
         @mapper.mappings.each do |mapping|
-          mapping[:fullpath] = ( [mapping[:namespace]] + mapping[:xpath] ).flatten.join('/')
-          h[mapping[:fullpath]] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
+          h[mapping.fullpath] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
         end
         # add fieldmappings for children of each xpath
         @mapper.mappings.each do |mapping|
-          mapping[:datacolumn] = mapping[:datacolumn].downcase
-          h[mapping[:fullpath]][:mappings] << mapping
+          h[mapping.fullpath][:mappings] << mapping
         end
         # populate other attributes
         # populate parent of all non-top xpaths
@@ -159,7 +157,7 @@ module CollectionSpace
         # populate is_group
         h.each do |xpath, ph|
           ct = ph[:mappings].size
-          v = ph[:mappings].map{ |m| m[:in_repeating_group] }.uniq
+          v = ph[:mappings].map{ |mapping| mapping.in_repeating_group }.uniq
           ph[:is_group] = true if v == ['y']
           if v.size > 1
             puts "WARNING: #{xpath} has fields with different :in_repeating_group values (#{v}). Defaulting to treating NOT as a group"
@@ -255,7 +253,7 @@ module CollectionSpace
       end
 
       def add_short_id_mapping
-        namespaces = @mapper.mappings.map{ |m| m[:namespace]}.uniq
+        namespaces = @mapper.mappings.map{ |mapping| mapping.namespace}.uniq
         @mapper.mappings << {
           fieldname: 'shortIdentifier',
           namespace: namespaces.first{ |ns| ns.end_with?('_common') },
@@ -312,7 +310,7 @@ module CollectionSpace
       end
 
       def transform_target(data_column)
-        @mapper.mappings.select{ |field_mapping| field_mapping[:datacolumn] == data_column }.first
+        @mapper.mappings.select{ |field_mapping| field_mapping.datacolumn == data_column }.first
       end
       
       def build_xml

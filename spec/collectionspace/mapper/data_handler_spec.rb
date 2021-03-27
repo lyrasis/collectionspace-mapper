@@ -109,11 +109,13 @@ end
           expect(@anthro_place_handler.is_authority).to be true
         end
         it 'adds a mapping for shortIdentifier' do
-          result = @anthro_place_handler.mapper.mappings.select{ |m| m[:fieldname] == 'shortIdentifier' }
+          result = @anthro_place_handler.mapper.mappings.select{ |mapping| mapping.fieldname == 'shortIdentifier' }
           expect(result.length).to eq(1)
         end
         it 'adds a xphash entry for shortIdentifier' do
-          result = @anthro_place_handler.mapper.xpath['places_common'][:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
+          result = @anthro_place_handler.mapper.xpath['places_common'][:mappings].select do |mapping|
+            mapping.fieldname == 'shortIdentifier'
+          end
           expect(result.length).to eq(1)
         end
       end
@@ -146,7 +148,7 @@ end
                                                                client: @anthro_client,
                                                                cache: @anthro_cache,
                                                                config: @config)
-            fieldmap = handler.mapper.mappings.select{ |m| m[:fieldname] == 'collection' }.first
+            fieldmap = handler.mapper.mappings.select{ |mapping| mapping.fieldname == 'collection' }.first
             xforms = {
               special: %w[downcase_value],
               replacements: [

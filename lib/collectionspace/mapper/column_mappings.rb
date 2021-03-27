@@ -9,28 +9,22 @@ module CollectionSpace
     class ColumnMappings
       extend Forwardable
 
-      def_delegators :@all, :<<, :each, :reject!, :select, :map
+      def_delegators :@all, :each, :length, :map, :reject!, :select
       def initialize(mappings_array)
         @all = []
-        mappings_array.each{ |mapping| @all << symbolize(mapping) }
+        mappings_array.each{ |mapping| @all << CollectionSpace::Mapper::ColumnMapping.new(mapping) }
+      end
+
+      def <<(mapping_hash)
+        @all << CollectionSpace::Mapper::ColumnMapping.new(mapping_hash)
       end
 
       def known_columns
-        @all.map do |mapping|
-          mapping[:datacolumn].downcase
-        end
+        @all.map(&:datacolumn)
       end
 
-      private
-
-      def symbolize(mapping)
-        mapping.transform_keys!(&:to_sym)
-
-        transforms = mapping[:transforms]
-        return mapping if transforms.blank?
-        
-        transforms.transform_keys!(&:to_sym)
-        mapping
+      def required
+        @all.select(&:required?)
       end
     end
   end

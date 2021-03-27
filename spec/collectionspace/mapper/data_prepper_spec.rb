@@ -100,7 +100,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
           it 'keeps mapping for shortIdentifier in xphash' do
             @place_prepper.prep
             result = @place_prepper.xphash['places_common'][:mappings].select do |mapping|
-              mapping[:fieldname] == 'shortIdentifier'
+              mapping.fieldname == 'shortIdentifier'
             end
             expect(result.length).to eq(1)
           end

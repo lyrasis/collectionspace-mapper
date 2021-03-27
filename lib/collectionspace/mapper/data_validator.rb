@@ -71,7 +71,7 @@ module CollectionSpace
       def initialize(record_mapper, cache)
         @mapper = record_mapper
         @cache = cache
-        @required_mappings = @mapper.mappings.select{ |mapping| mapping[:required] == 'y' }
+        @required_mappings = @mapper.mappings.required
         @required_fields = get_required_fields
         @id_field = get_id_field
         # faux-require ID field for batch processing if it is not technically required by application
@@ -103,9 +103,9 @@ module CollectionSpace
 
       def get_required_fields
         h = {}
-        @required_mappings.each do |m|
-          field = m[:fieldname].downcase
-          column = m[:datacolumn].downcase
+        @required_mappings.each do |mapping|
+          field = mapping.fieldname.downcase
+          column = mapping.datacolumn.downcase
           h.key?(field) ? h[field] << column : h[field] = [column]
         end
         h

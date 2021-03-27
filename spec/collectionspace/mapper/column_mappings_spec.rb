@@ -52,15 +52,23 @@ RSpec.describe CollectionSpace::Mapper::ColumnMappings do
        :in_repeating_group=>"y",
        :opt_list_values=>["lender", "obsolete", "previous", "serial", "unknown"],
        :datacolumn=>"numberType",
-       :required=>"n"}
+       :required=>"n"},
+      {:datacolumn=>"otherRequired",
+       :required=>"y"}
     ]
     @mappings = CollectionSpace::Mapper::ColumnMappings.new(hash_mappings)
   end
 
   describe '#known_columns' do
     it 'returns list of downcased datacolumns' do
-      expected = %w[objectnumber numberofobjects numbervalue numbertype].sort
+      expected = %w[objectnumber numberofobjects numbervalue numbertype otherrequired].sort
       expect(@mappings.known_columns.sort).to eq(expected)
+    end
+  end
+
+  describe '#required' do
+    it 'returns column mappings for required fields' do
+      expect(@mappings.required.map(&:datacolumn).sort.join(' ')).to eq('objectnumber otherrequired')
     end
   end
 

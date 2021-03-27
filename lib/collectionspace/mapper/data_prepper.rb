@@ -64,16 +64,16 @@ module CollectionSpace
 
       def process_xpaths
         # keep only mappings for datacolumns present in data hash
-        mappings = @handler.mapper.mappings.select do |m|
-          m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
+        mappings = @handler.mapper.mappings.select do |mapper|
+          mapper.fieldname == 'shortIdentifier' || @response.merged_data.key?(mapper.datacolumn)
         end
         # create xpaths for remaining mappings...
-        @xphash = mappings.map{ |m| m[:fullpath] }.uniq
+        @xphash = mappings.map{ |mapper| mapper.fullpath }.uniq
         # hash with xpath as key and xpath info hash from DataHandler as value
         @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper.xpath[xpath]] }.to_h
         @xphash.each do |xpath, hash|
-          hash[:mappings] = hash[:mappings].select do |m|
-            m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
+          hash[:mappings] = hash[:mappings].select do |mapping|
+            mapping.fieldname == 'shortIdentifier' || @response.merged_data.key?(mapping.datacolumn)
           end
         end
       end
@@ -81,21 +81,22 @@ module CollectionSpace
       def do_splits(xphash)
         if xphash[:is_group] == false
           xphash[:mappings].each do |mapping|
-            column = mapping[:datacolumn]
+            column = mapping.datacolumn
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = mapping[:repeats] == 'y' ? CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result : [data.strip]
+
+            @response.split_data[column] = mapping.repeats == 'y' ? CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result : [data.strip]
           end
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
           xphash[:mappings].each do |mapping|
-            column = mapping[:datacolumn]
+            column = mapping.datacolumn
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
             @response.split_data[column] = CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result
           end
         elsif xphash[:is_group] && xphash[:is_subgroup]
           xphash[:mappings].each do |mapping|
-            column = mapping[:datacolumn]
+            column = mapping.datacolumn
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
             @response.split_data[column] = CollectionSpace::Mapper::SubgroupSplitter.new(data, @config).result
@@ -107,17 +108,17 @@ module CollectionSpace
         splitdata = @response.split_data
         targetdata = @response.transformed_data
         xphash[:mappings].each do |mapping|
-          column = mapping[:datacolumn]
+          column = mapping.datacolumn
           data = splitdata.fetch(column, nil)
           next if data.blank?
-          if mapping[:transforms].blank?
+          if mapping.transforms.blank?
             targetdata[column] = data
           else
             targetdata[column] = data.map do |d|
               if d.is_a?(String)
-                transform_value(d, mapping[:transforms], column)
+                transform_value(d, mapping.transforms, column)
               else
-                d.map{ |val| transform_value(val, mapping[:transforms], column) }
+                d.map{ |val| transform_value(val, mapping.transforms, column) }
               end
             end
           end
@@ -141,8 +142,8 @@ module CollectionSpace
         sourcedata = @response.transformed_data
 
         xphash[:mappings].each do |mapping|
-          column = mapping[:datacolumn]
-          type = mapping[:data_type]
+          column = mapping.datacolumn
+          type = mapping.data_type
           
           data = sourcedata.fetch(column, nil)
           next if data.blank?
@@ -163,10 +164,10 @@ module CollectionSpace
       def do_term_handling(xphash)
         sourcedata = @response.transformed_data
         xphash[:mappings].each do |mapping|
-          source_type = get_source_type(mapping[:source_type])
+          source_type = get_source_type(mapping.source_type)
           next if source_type.nil?
           
-          column = mapping[:datacolumn]
+          column = mapping.datacolumn
           next if column['refname']
           
           data = sourcedata.fetch(column, nil)
@@ -218,7 +219,7 @@ module CollectionSpace
       def check_data_quality(xphash)
         xformdata = @response.transformed_data
         xphash[:mappings].each do |mapping|
-          data = xformdata[mapping[:datacolumn]]
+          data = xformdata[mapping.datacolumn]
           next if data.blank?
           qc = CollectionSpace::Mapper::DataQualityChecker.new(mapping, data)
           @response.warnings << qc.warnings unless qc.warnings.empty?
@@ -230,12 +231,12 @@ module CollectionSpace
         fieldhash = {} # key = CSpace field names; value = array of data columns mapping to that field
         # create keys in fieldname and combined_data for all CSpace fields represented in data
         xphash[:mappings].each do |mapping|
-          fieldname = mapping[:fieldname]
+          fieldname = mapping.fieldname
           unless fieldhash.key?(fieldname)
             @response.combined_data[xpath][fieldname] = []
             fieldhash[fieldname] = []
           end
-          fieldhash[fieldname] << mapping[:datacolumn]
+          fieldhash[fieldname] << mapping.datacolumn
         end
 
         xform = @response.transformed_data
@@ -265,7 +266,7 @@ module CollectionSpace
         @response.combined_data[xpath].select{ |fieldname, val| val.blank? }.keys.each do |fieldname|
           @response.combined_data[xpath].delete(fieldname)
           unless fieldname == 'shortIdentifier'
-            @xphash[xpath][:mappings].delete_if{ |mapping| mapping[:fieldname] == fieldname }
+            @xphash[xpath][:mappings].delete_if{ |mapping| mapping.fieldname == fieldname }
           end
         end
       end

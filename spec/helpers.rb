@@ -78,7 +78,7 @@ module Helpers
   #  default stuff in the application/services layer, but don't need to be in mapped XML)
   # testdoc should be the result of calling get_xml_fixture
   def test_xpaths(testdoc, mappings)
-    mappaths = mappings.map{ |m| "/document/#{m[:fullpath]}/#{m[:fieldname]}" }
+    mappaths = mappings.map{ |mapping| "/document/#{mapping.fullpath}/#{mapping.fieldname}" }
 
     xpaths = list_xpaths(testdoc)
     # only include paths for fields defined in the mapper

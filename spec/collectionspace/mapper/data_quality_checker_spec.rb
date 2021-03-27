@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
   context 'when source_type = optionlist' do
-    mapping = {
+    mapping = CollectionSpace::Mapper::ColumnMapping.new({
       fieldname: 'collection',
       datacolumn: 'collection',
       transforms: {},
@@ -15,7 +15,7 @@ RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
         'study-collection',
         'teaching-collection'
       ]
-    }
+    })
     context 'and value is not in option list' do
       it 'returns warning' do
         data = ['Permanent Collection']
@@ -34,13 +34,13 @@ RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
 
   context 'when datacolumn contains `refname`' do
     context 'and source_type = vocabulary' do
-      mapping = {
+      mapping = CollectionSpace::Mapper::ColumnMapping.new({
         fieldname: 'nagprainventoryname',
         datacolumn: 'nagprainventorynamerefname',
         transforms: {},
         source_type: 'vocabulary',
         opt_list_values: []
-      }
+      })
       context 'and value is not well-formed refname' do
         it 'returns warning' do
           data = ["urn:pahma.cspace.berkeley.edu:vocabularies:name(nagpraPahmaInventoryNames):item:name(nagpraPahmaInventoryNames01)'AK-Alaska'"]
@@ -58,13 +58,13 @@ RSpec.describe CollectionSpace::Mapper::DataQualityChecker do
     end
 
     context 'and source_type = authority' do
-      mapping = {
+      mapping = CollectionSpace::Mapper::ColumnMapping.new({
         fieldname: 'nagpradetermculture',
         datacolumn: 'nagpradetermculturerefname',
         transforms: {},
         source_type: 'authority',
         opt_list_values: []
-      }
+      })
       context 'and value is not well-formed refname' do
         it 'returns warning' do
           data = ["urn:cspace:pahma.cspace.berkeley.edu:orgauthorities:name(organization):item:name(Chumash1607458832492)'Chumash"]

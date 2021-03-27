@@ -13,7 +13,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
                                                         client: @client,
                                                         cache: @cache,
                                                         config: @config)
-    @ref_mapping = {
+    @ref_mapping = CollectionSpace::Mapper::ColumnMapping.new({
       :fieldname=>"reference",
       :transforms=>{:authority=>["citationauthorities", "citation"]},
       :source_type=>"authority",
@@ -26,8 +26,8 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
       :opt_list_values=>[],
       :datacolumn=>"referencelocal",
       :fullpath=>"collectionobjects_common/referenceGroupList/referenceGroup"
-    }
-    @ttl_mapping =  {
+    })
+    @ttl_mapping =  CollectionSpace::Mapper::ColumnMapping.new({
       :fieldname=>"titleTranslationLanguage",
       :transforms=>{:vocabulary=>"languages"},
       :source_type=>"vocabulary",
@@ -45,7 +45,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
       :datacolumn=>"titletranslationlanguage",
       :fullpath=>
       "collectionobjects_common/titleGroupList/titleGroup/titleTranslationSubGroupList/titleTranslationSubGroup"
-    }
+    })
   end
 
   describe '#result' do

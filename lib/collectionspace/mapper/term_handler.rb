@@ -10,22 +10,22 @@ module CollectionSpace
       attr_accessor :value
       def initialize(mapping:, data:, client:, cache:, config:)
         @mapping = mapping
-        @column = mapping[:datacolumn]
-        @field = mapping[:fieldname]
+        @column = mapping.datacolumn
+        @field = mapping.fieldname
         @data = data
         @cache = cache
         @client = client
         @config = config
-        @source_type = @mapping[:source_type].to_sym
+        @source_type = @mapping.source_type.to_sym
         @terms = []
         case @source_type
         when :authority
-          authconfig = @mapping[:transforms][:authority]
+          authconfig = @mapping.transforms[:authority]
           @type = authconfig[0]
           @subtype = authconfig[1]
         when :vocabulary
           @type = 'vocabularies'
-          @subtype = @mapping[:transforms][:vocabulary]
+          @subtype = @mapping.transforms[:vocabulary]
         end
         @warnings = []
         @errors = []
