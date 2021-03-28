@@ -3,8 +3,12 @@
 module CollectionSpace
   module Mapper
     # mapping instructions for an individual data column
+    # :reek:InstanceVariableAssumption is spurious; we are setting the instance variables here
+    #  by iterating through the mapper hash. Given that the mapper data is created by the
+    #  Untangler, I am trusting it will be consistent and I'm not validating that expected
+    #  keys are present for now. This also makes writing tests onthe methods here a bit easier. 
     class ColumnMapping
-      attr_reader :data_type, :in_repeating_group, :namespace, :opt_list_values,
+      attr_reader :data_type, :fieldname, :in_repeating_group, :is_group, :namespace, :opt_list_values,
         :repeats, :source_type, :transforms
       def initialize(mapping_hash)
         mapping_hash.each do |key, value|
@@ -17,10 +21,6 @@ module CollectionSpace
         @datacolumn.downcase
       end
 
-      def fieldname
-        @fieldname
-      end
-
       def fullpath
         @fullpath ||= [@namespace, @xpath].flatten.join('/')
       end
@@ -29,16 +29,8 @@ module CollectionSpace
         @required == 'y'
       end
 
-      def xml_fieldname
-        @fieldname
-      end
-
-      def [](attribute)
-        instance_variable_get("@#{attribute}")
-      end
-
-      def []=(attribute, value)
-        instance_variable_set("@#{attribute}", value)
+      def update_transforms(new_transforms)
+        @transforms = @transforms.merge(new_transforms)
       end
       
       private

@@ -12,11 +12,11 @@ module CollectionSpace
       def_delegators :@all, :each, :length, :map, :reject!, :select
       def initialize(mappings_array)
         @all = []
-        mappings_array.each{ |mapping| @all << CollectionSpace::Mapper::ColumnMapping.new(mapping) }
+        mappings_array.each{ |mapping| @all << CS::Mapper::ColumnMapping.new(mapping) }
       end
 
       def <<(mapping_hash)
-        @all << CollectionSpace::Mapper::ColumnMapping.new(mapping_hash)
+        @all << CS::Mapper::ColumnMapping.new(mapping_hash)
       end
 
       def known_columns

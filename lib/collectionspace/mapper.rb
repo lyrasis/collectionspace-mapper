@@ -15,6 +15,7 @@ require 'xxhash'
 require 'ruby-prof'
 
 module CollectionSpace
+  ::CS = CollectionSpace
   module Mapper
     extend self
     LOGGER = Logger.new(STDERR)

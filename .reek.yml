@@ -79,7 +79,6 @@ detectors:
     - CollectionSpace::Mapper::Tools::Config#validate
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#create_mappable_month
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#initialize
-    - CollectionSpace::Mapper::Tools::RecordMapper#convert
     - CollectionSpace::Mapper::Tools::RecordStatusService#count_results
     - CollectionSpace::Mapper::Tools::RecordStatusService#get_service
     - CollectionSpace::Mapper::Tools::RecordStatusService#initialize
@@ -147,7 +146,6 @@ detectors:
     - CollectionSpace::Mapper::Tools::Dates
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate
     - CollectionSpace::Mapper::Tools::Identifiers
-    - CollectionSpace::Mapper::Tools::RecordMapper
     - CollectionSpace::Mapper::MultipleCsRecordsFoundError
     - CollectionSpace::Mapper::Tools::RecordStatusService
     - CollectionSpace::Mapper::Tools::RefName
@@ -258,7 +256,6 @@ detectors:
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#create_mappable_date
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#create_mappable_month
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#create_mappable_year
-    - CollectionSpace::Mapper::Tools::RecordMapper#convert
     - CollectionSpace::Mapper::Tools::RecordStatusService#lookup
     - CollectionSpace::Mapper::Tools::RefName#new_from_urn
     - CollectionSpace::Mapper::ValueTransformer#process_boolean
@@ -299,7 +296,6 @@ detectors:
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#fix_services_scalars
     - CollectionSpace::Mapper::Tools::Dates::CspaceDate#initialize
     - CollectionSpace::Mapper::Tools::Identifiers#short_identifier
-    - CollectionSpace::Mapper::Tools::RecordMapper#convert
     - CollectionSpace::Mapper::ValueTransformer#process_replacements
     - CollectionSpace::Mapper#merge_default_values
   UnusedParameters:
@@ -315,6 +311,7 @@ detectors:
     - CollectionSpace::Mapper::DataPrepper#get_source_type
     - CollectionSpace::Mapper::TermSearchable#has_caps?
     - CollectionSpace::Mapper::Tools::Identifiers#short_identifier
-    - CollectionSpace::Mapper::Tools::RecordMapper#convert
     - CollectionSpace::Mapper#merge_default_values
     - CollectionSpace::Mapper#term_key
+# real -- excluded because they ARE Utility modules
+    - CollectionSpace::Mapper::Tools::Symbolizable

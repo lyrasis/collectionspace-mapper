@@ -155,7 +155,7 @@ end
                 { find: ' ', replace: '-', type: :plain }
               ]
             }
-            expect(fieldmap[:transforms]).to eq(xforms)
+            expect(fieldmap.transforms).to eq(xforms)
           end
         end
       end

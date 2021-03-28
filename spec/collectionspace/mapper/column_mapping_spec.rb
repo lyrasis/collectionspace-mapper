@@ -18,6 +18,13 @@ RSpec.describe CollectionSpace::Mapper::ColumnMapping do
   #      :datacolumn=>"numberValue",
   #      :required=>"n"
 
+  describe '#datacolumn' do
+    it 'returns downcased column name' do
+      mapping = described_class.new({ :datacolumn=>"abCdeFg" })
+      expect(mapping.datacolumn).to eq('abcdefg')
+    end
+  end
+  
   describe '#fullpath' do
     before(:all) do
       hash_mapping = {

@@ -162,7 +162,7 @@ module CollectionSpace
           if v.size > 1
             puts "WARNING: #{xpath} has fields with different :in_repeating_group values (#{v}). Defaulting to treating NOT as a group"
           end
-          ph[:is_group] = true if ct == 1 && v == ['as part of larger repeating group'] && ph[:mappings][0][:repeats] == 'y'
+          ph[:is_group] = true if ct == 1 && v == ['as part of larger repeating group'] && ph[:mappings][0].repeats == 'y'
         end
 
         # populate is_subgroup
@@ -302,10 +302,10 @@ module CollectionSpace
         
         @config[:transforms].transform_keys!(&:downcase)
         @config[:transforms].each do |data_column, transforms|
-          target = transform_target(data_column)
-          next unless target
+          target_mapping = transform_target(data_column)
+          next unless target_mapping
 
-          target[:transforms] = target[:transforms].merge(transforms)
+          target_mapping.update_transforms(transforms)
         end
       end
 

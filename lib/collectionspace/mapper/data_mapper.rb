@@ -29,8 +29,8 @@ module CollectionSpace
           set_relation_id
         else
           id_field = @handler.mapper.config[:identifier_field]
-          mapping = @handler.mapper.mappings.select{ |mapper| mapper.xml_fieldname == id_field }.first
-          thexpath = "//#{mapping.namespace}/#{mapping.xml_fieldname}"
+          mapping = @handler.mapper.mappings.select{ |mapper| mapper.fieldname == id_field }.first
+          thexpath = "//#{mapping.namespace}/#{mapping.fieldname}"
           value = @doc.xpath(thexpath).first
             value = value.text
           @response.identifier = value
@@ -235,7 +235,7 @@ module CollectionSpace
       def map_subgroup(xphash, thisdata)
         parent_path = xphash[:parent]
         parent_set = @doc.xpath("//#{parent_path}")
-        subgroup_path = xphash[:mappings].first[:fullpath].gsub("#{xphash[:parent]}/", '').split('/')
+        subgroup_path = xphash[:mappings][0].fullpath.gsub("#{xphash[:parent]}/", '').split('/')
         subgroup = subgroup_path.pop
 
         # create a hash of subgroup data split up and structured for mapping
