@@ -12,19 +12,32 @@ module CollectionSpace
       def_delegators :@all, :each, :length, :map, :reject!, :select
       def initialize(mappings_array)
         @all = []
-        mappings_array.each{ |mapping| @all << CS::Mapper::ColumnMapping.new(mapping) }
+        @lookup = {}
+        mappings_array.each{ |mapping_hash| add_mapping(mapping_hash) }
       end
 
       def <<(mapping_hash)
-        @all << CS::Mapper::ColumnMapping.new(mapping_hash)
+        add_mapping(mapping_hash)
       end
 
       def known_columns
         @all.map(&:datacolumn)
       end
 
+      def lookup(columnname)
+        @lookup[columnname.downcase]
+      end
+
       def required
         @all.select(&:required?)
+      end
+
+      private
+
+      def add_mapping(mapping_hash)
+        mapobj = CS::Mapper::ColumnMapping.new(mapping_hash)
+        @all << mapobj
+        @lookup[mapobj.datacolumn] = mapobj
       end
     end
   end

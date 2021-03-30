@@ -3,8 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::ColumnMappings do
-  before(:all) do
-    hash_mappings = [
+  let(:hash_mappings) { [
       {:fieldname=>"objectNumber",
        :transforms=>{},
        :source_type=>"na",
@@ -55,21 +54,47 @@ RSpec.describe CollectionSpace::Mapper::ColumnMappings do
        :required=>"n"},
       {:datacolumn=>"otherRequired",
        :required=>"y"}
-    ]
-    @mappings = CollectionSpace::Mapper::ColumnMappings.new(hash_mappings)
-  end
+    ] }
+
+  let(:mappings) { CollectionSpace::Mapper::ColumnMappings.new(hash_mappings) }
+
+  let(:added_field) { {
+    fieldname: 'shortIdentifier',
+    namespace: 'persons_common',
+    data_type: 'string',
+    xpath: [],
+    required: 'not in input data',
+    repeats: 'n',
+    in_repeating_group: 'n/a',
+    datacolumn: 'shortIdentifier'
+  } }
+
+
 
   describe '#known_columns' do
     it 'returns list of downcased datacolumns' do
       expected = %w[objectnumber numberofobjects numbervalue numbertype otherrequired].sort
-      expect(@mappings.known_columns.sort).to eq(expected)
+      expect(mappings.known_columns.sort).to eq(expected)
     end
   end
 
   describe '#required' do
     it 'returns column mappings for required fields' do
-      expect(@mappings.required.map(&:datacolumn).sort.join(' ')).to eq('objectnumber otherrequired')
+      expect(mappings.required.map(&:datacolumn).sort.join(' ')).to eq('objectnumber otherrequired')
     end
   end
 
+  describe '#<<' do
+    it 'adds a mapping' do
+      mappings << added_field
+      expect(mappings.known_columns.include?('shortidentifier')).to be true
+    end
+  end
+
+  describe '#lookup' do
+    it 'returns ColumnMapping for column name' do
+      result = mappings.lookup('numberType').fieldname
+      expect(result).to eq('numberType')
+    end
+  end
 end
