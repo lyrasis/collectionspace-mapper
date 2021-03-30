@@ -11,19 +11,21 @@ module CollectionSpace
         end
 
         def symbolize_transforms(transforms)
-          transforms.each do |field, hash|
-            hash = hash.transform_keys!(&:to_sym)
-            replacements = hash[:replacements]
-            return hash unless replacements
-            symbolize_replacements(replacements)
-            hash
+          transforms.each do |field, fieldtransform|
+            fieldtransform.transform_keys!(&:to_sym)
+            next unless replacements?(fieldtransform)
+
+            symbolize_replacements(fieldtransform[:replacements])
           end
         end
 
         def symbolize_replacements(replacements)
-          replacements.map!{ |h| h.transform_keys!(&:to_sym) }
+          replacements.map!{ |hash| hash.transform_keys!(&:to_sym) }
         end
-        
+
+        def replacements?(fieldtransform)
+          fieldtransform.key?(:replacements)
+        end
       end
     end
   end
