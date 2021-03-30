@@ -28,7 +28,7 @@ module CollectionSpace
         @lookup[columnname.downcase]
       end
 
-      def required
+      def required_columns
         @all.select(&:required?)
       end
 

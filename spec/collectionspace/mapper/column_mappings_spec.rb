@@ -78,9 +78,9 @@ RSpec.describe CollectionSpace::Mapper::ColumnMappings do
     end
   end
 
-  describe '#required' do
+  describe '#required_columns' do
     it 'returns column mappings for required fields' do
-      expect(mappings.required.map(&:datacolumn).sort.join(' ')).to eq('objectnumber otherrequired')
+      expect(mappings.required_columns.map(&:datacolumn).sort.join(' ')).to eq('objectnumber otherrequired')
     end
   end
 
