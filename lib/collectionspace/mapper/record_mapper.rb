@@ -9,6 +9,7 @@ module CollectionSpace
     #  for transforming a hash of data into CollectionSpace XML
 
     # :reek:Attribute - when I get rid of xphash, this will go away
+    # :reek:InstanceVariableAssumption - instance variable gets set by convert
     class RecordMapper
       include Tools::Symbolizable
       

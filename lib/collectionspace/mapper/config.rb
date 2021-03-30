@@ -2,6 +2,7 @@
 
 module CollectionSpace
   module Mapper
+    # :reek:InstanceVariableAssumption - instance variables are set during initialization
     class Config
       class ConfigKeyMissingError < StandardError
         attr_reader :keys
