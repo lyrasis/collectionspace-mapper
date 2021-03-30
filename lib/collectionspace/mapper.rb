@@ -37,6 +37,7 @@ module CollectionSpace
     require 'collectionspace/mapper/authority_hierarchy_prepper'
     require 'collectionspace/mapper/column_mapping'
     require 'collectionspace/mapper/column_mappings'
+    require 'collectionspace/mapper/config'
     require 'collectionspace/mapper/data_handler'
     require 'collectionspace/mapper/data_mapper'
     require 'collectionspace/mapper/data_quality_checker'
@@ -51,7 +52,6 @@ module CollectionSpace
     require 'collectionspace/mapper/identifiers/short_identifier'
     require 'collectionspace/mapper/identifiers/authority_short_identifier'
 
-    require 'collectionspace/mapper/tools/config'
     require 'collectionspace/mapper/tools/dates'
     require 'collectionspace/mapper/tools/refname'
     require 'collectionspace/mapper/tools/record_status_service'

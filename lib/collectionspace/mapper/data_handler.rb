@@ -224,8 +224,7 @@ module CollectionSpace
       end
       
       def get_config(config)
-        config_object = CollectionSpace::Mapper::Tools::Config.new(config)
-        config_object.hash
+        CS::Mapper::Config.new(config).hash
       end
 
       def get_cache
