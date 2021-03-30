@@ -20,7 +20,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       # field which may be populated by multiple authorities.
       # Problem in claimantGroupList
       before(:all) do
-        @claimmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-claim.json')
+        @claimmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-claim.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @claimmapper,
                                                             client: @client,
                                                             cache: @cache,
@@ -54,7 +54,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'collectionobject record' do
       before(:all) do
-        @collectionobjectmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+        @collectionobjectmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobjectmapper,
                                                             client: @client,
                                                             cache: @cache,
@@ -89,7 +89,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'osteology record' do
       before(:all) do
-        @osteologymapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-osteology.json')
+        @osteologymapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-osteology.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @osteologymapper,
                                                             client: @client,
                                                             cache: @cache,

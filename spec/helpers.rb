@@ -18,7 +18,7 @@ module Helpers
   # turns strings into symbols that removed when writing to JSON
   # we can't just use the json symbolize_names option because @docstructure keys must
   #   remain strings
-  def get_json_record_mapper(path:)
+  def get_json_record_mapper(path)
     JSON.parse(File.read(path))
   end
 
