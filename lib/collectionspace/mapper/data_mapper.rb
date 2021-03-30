@@ -15,7 +15,7 @@ module CollectionSpace
         @cache = @handler.cache
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
-        add_short_id if @handler.is_authority
+        add_short_id if @handler.mapper.authority?
         set_response_identifier
         clean_doc
         add_namespaces

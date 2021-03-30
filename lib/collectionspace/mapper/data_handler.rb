@@ -9,23 +9,22 @@ module CollectionSpace
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       attr_reader :client, :cache, :config, :blankdoc, :defaults, :validator,
-        :is_authority, :known_fields
+        :known_fields
       attr_accessor :mapper
 
       def initialize(record_mapper:, client:, cache: nil,
                      config: CollectionSpace::Mapper::DEFAULT_CONFIG
                     )
         @mapper = CollectionSpace::Mapper::RecordMapper.new(record_mapper)
-        @is_authority = get_is_authority
         @client = client
         @config = get_config(config)
-        object_hierarchy_default_values if is_object_hierarchy?
-        authority_hierarchy_default_values if is_authority_hierarchy?
-        non_hierarchical_relationship_default_values if is_non_hierarchical_relationship?
+        object_hierarchy_default_values if @mapper.object_hierarchy?
+        authority_hierarchy_default_values if @mapper.authority_hierarchy?
+        non_hierarchical_relationship_default_values if @mapper.non_hierarchical_relationship?
         @cache = cache.nil? ? get_cache : cache
-        @csidcache = get_csidcache if @mapper.config.service_type == 'relation'
+        @csidcache = get_csidcache if @mapper.service_type == 'relation'
         @response_mode = @config[:response_mode]
-        add_short_id_mapping if @is_authority
+        add_short_id_mapping if @mapper.authority?
         @known_fields = @mapper.mappings.known_columns
         @mapper.xpath = xpath_hash
         @blankdoc = build_xml
@@ -39,7 +38,7 @@ module CollectionSpace
       def process(data)
         response = CollectionSpace::Mapper::setup_data(data, @defaults, @config)
         if response.valid?
-          case record_type
+          case @mapper.record_type
           when 'authorityhierarchy'
             prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
             prepper.prep
@@ -179,9 +178,9 @@ module CollectionSpace
       private
 
       def set_record_status(response)
-        if @is_authority
+        if @mapper.authority?
           value = response.split_data['termdisplayname'].first
-        elsif is_relationship?
+        elsif @mapper.relationship?
           value = {}
           value[:sub] = response.combined_data['relations_common']['subjectCsid'][0]
           value[:obj] = response.combined_data['relations_common']['objectCsid'][0]
@@ -239,7 +238,7 @@ module CollectionSpace
           search_enabled: true
         }
         # search for authority records by display name, not short ID
-        config[:search_identifiers] = @is_authority ? false : true
+        config[:search_identifiers] = @mapper.authority? ? false : true
         CollectionSpace::RefCache.new(config: config, client: @client)
       end
 
@@ -266,34 +265,6 @@ module CollectionSpace
           in_repeating_group: 'n/a',
           datacolumn: 'shortIdentifier'
         }
-      end
-
-      def is_object_hierarchy?
-        record_type == 'objecthierarchy' ? true : false
-      end
-
-      def is_authority_hierarchy?
-        record_type == 'authorityhierarchy' ? true : false
-      end
-
-      def is_non_hierarchical_relationship?
-        record_type == 'nonhierarchicalrelationship' ? true : false
-      end
-
-      def is_relationship?
-        service_type == 'relation' ? true : false
-      end
-      
-      def record_type
-        @mapper.config.recordtype
-      end
-
-      def service_type
-        @mapper.config.service_type
-      end
-      
-      def get_is_authority
-        service_type == 'authority' ? true : false
       end
 
       # you can specify per-data-key transforms in your config.json

@@ -19,6 +19,34 @@ module CollectionSpace
         @xpath = {}
         convert(json)
       end
+
+      def authority?
+        service_type == 'authority'
+      end
+
+      def object_hierarchy?
+        record_type == 'objecthierarchy'
+      end
+
+      def authority_hierarchy?
+        record_type == 'authorityhierarchy'
+      end
+
+      def non_hierarchical_relationship?
+        record_type == 'nonhierarchicalrelationship'
+      end
+
+      def relationship?
+        service_type == 'relation'
+      end
+      
+      def record_type
+        @config.recordtype
+      end
+
+      def service_type
+        @config.service_type
+      end
       
       private
 

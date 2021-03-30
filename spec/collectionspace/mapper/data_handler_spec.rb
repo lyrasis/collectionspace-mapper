@@ -105,9 +105,6 @@ end
   describe '#is_authority' do
     context 'anthro profile' do
       context 'place record' do
-        it 'sets is_authority to true' do
-          expect(@anthro_place_handler.is_authority).to be true
-        end
         it 'adds a mapping for shortIdentifier' do
           result = @anthro_place_handler.mapper.mappings.select{ |mapping| mapping.fieldname == 'shortIdentifier' }
           expect(result.length).to eq(1)
@@ -117,11 +114,6 @@ end
             mapping.fieldname == 'shortIdentifier'
           end
           expect(result.length).to eq(1)
-        end
-      end
-      context 'collectionobject record' do
-        it 'is_authority = false' do
-          expect(@anthro_object_handler.is_authority).to be false
         end
       end
     end
