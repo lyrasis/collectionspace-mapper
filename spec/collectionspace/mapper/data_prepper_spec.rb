@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataPrepper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({delimiter: ';'})
+    @config = {delimiter: ';'}
   end
   
   context 'anthro profile' do
@@ -66,12 +66,12 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
           end
           context 'and :force_defaults = true' do
             it 'maps the default value, overwriting value in the incoming data' do
-              config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({
+              config = {
                 default_values: {
                   'collection' => 'library-collection'
                 },
                 force_defaults: true,
-              })
+              }
               dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache, config: config)
               dp = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, dh)
               res = dp.prep.merged_data['collection']

@@ -4,6 +4,21 @@ module CollectionSpace
   module Mapper
     # :reek:InstanceVariableAssumption - instance variables are set during initialization
     class Config
+      attr_reader :delimiter, :subgroup_delimiter, :response_mode, :force_defaults, :check_record_status,
+                    :check_terms, :date_format, :two_digit_year_handling, :transforms, :default_values
+      # todo: move default config in here
+      include Tools::Symbolizable
+
+      DEFAULT_CONFIG = { delimiter: '|',
+                        subgroup_delimiter: '^^',
+                        response_mode: 'normal',
+                        check_terms: true,
+                        check_record_status: true,
+                        force_defaults: false,
+                        date_format: 'month day year',
+                        two_digit_year_handling: 'coerce'
+                       }
+
       class ConfigKeyMissingError < StandardError
         attr_reader :keys
         def initialize(message, keys)
@@ -11,16 +26,10 @@ module CollectionSpace
           @keys = keys
         end
       end
-
       class ConfigResponseModeError < StandardError; end
-
       class UnhandledConfigFormatError < StandardError; end
 
-      attr_reader :delimiter, :subgroup_delimiter, :response_mode, :force_defaults, :check_record_status,
-                    :check_terms, :date_format, :two_digit_year_handling, :transforms, :default_values
-      # todo: move default config in here
-      include Tools::Symbolizable
-      def initialize(config)
+      def initialize(config = DEFAULT_CONFIG)
         if config.is_a?(String)
           set_instance_variables(JSON.parse(config))
         elsif config.is_a?(Hash)
@@ -60,13 +69,13 @@ module CollectionSpace
         begin
           has_required_attributes
         rescue ConfigKeyMissingError => err
-          err.keys.each{ |key| instance_variable_set("@#{key}", CollectionSpace::Mapper::DEFAULT_CONFIG[key]) }
+          err.keys.each{ |key| instance_variable_set("@#{key}", DEFAULT_CONFIG[key]) }
         end
 
         begin
           valid_response_mode
         rescue ConfigResponseModeError => err
-          replacement_value = CollectionSpace::Mapper::DEFAULT_CONFIG[:response_mode]
+          replacement_value = DEFAULT_CONFIG[:response_mode]
           @response_mode = replacement_value
         end
       end
@@ -79,7 +88,7 @@ module CollectionSpace
       end
       
       def has_required_attributes
-        required_keys = CollectionSpace::Mapper::DEFAULT_CONFIG.keys
+        required_keys = DEFAULT_CONFIG.keys
         remaining_keys = required_keys - hash.keys
         unless remaining_keys.empty?
           raise ConfigKeyMissingError.new('Config missing key', remaining_keys)

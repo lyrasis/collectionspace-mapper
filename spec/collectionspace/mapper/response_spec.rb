@@ -11,7 +11,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
     @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                         client: @client,
                                                         cache: @cache,
-                                                        config: CollectionSpace::Mapper::DEFAULT_CONFIG)
+                                                        config: {})
   end
 
   describe '#valid?' do

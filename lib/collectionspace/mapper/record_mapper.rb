@@ -5,8 +5,11 @@ require 'collectionspace/mapper/tools/symbolizable'
 module CollectionSpace
   module Mapper
 
-    # represents a JSON RecordMapper containing the config, field mappings, and template
+    # Represents a JSON RecordMapper containing the config, field mappings, and template
     #  for transforming a hash of data into CollectionSpace XML
+    # The RecordMapper bundles up all the info needed by various other classes in order
+    #  to transform and map incoming data into CollectionSpace XML, so it gets passed
+    #  around to everything
 
     # :reek:Attribute - when I get rid of xphash, this will go away
     # :reek:InstanceVariableAssumption - instance variable gets set by convert

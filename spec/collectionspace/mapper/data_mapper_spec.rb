@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
+    @config = {}
   end
   
   context 'core profile' do
@@ -152,7 +152,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'collectionobject record' do
       before(:all) do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({
+        config = {
           transforms: {
             'collection' => {
               special: %w[downcase_value],
@@ -171,7 +171,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
             'publishTo' => 'DPLA;Omeka',
             'collection' => 'library-collection'
           },
-        })
+        }
 
         @recmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @recmapper, client: @client, cache: @cache, config: config)

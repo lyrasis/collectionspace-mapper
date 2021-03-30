@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({delimiter: ';'})
+    @config = {delimiter: ';'}
   end
 
   context 'core profile' do

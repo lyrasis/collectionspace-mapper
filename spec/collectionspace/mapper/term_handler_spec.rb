@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::TermHandler do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
     @client = core_client
     @cache = core_cache
     populate_core(@cache)
@@ -12,7 +11,8 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                         client: @client,
                                                         cache: @cache,
-                                                        config: @config)
+                                                        config: {})
+    @config = @handler.config
     @ref_mapping = CollectionSpace::Mapper::ColumnMapping.new({
       :fieldname=>"reference",
       :transforms=>{:authority=>["citationauthorities", "citation"]},
@@ -69,7 +69,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'reference (authority, field group)' do
       before(:all) do
         data = ['Reference 1', 'Reference 2']
-      @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ref_mapping, data: data, client: @client, cache: @cache, config: @config)
+        @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ref_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'result is the transformed value for mapping' do
         expected = [
@@ -89,17 +89,17 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'titletranslationlanguage (vocabulary, field subgroup)' do
       before(:all) do
         data = [['Ancient Greek', 'Swahili'], ['Sanza', 'Spanish']]
-        @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ttl_mapping, data: data, client: @client, cache: @cache, config: @config)
+        @th2 = CollectionSpace::Mapper::TermHandler.new(mapping: @ttl_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'contains a term Hash for each value' do
-        expect(@th.terms.length).to eq(4)
+        expect(@th2.terms.length).to eq(4)
       end
       it 'term hash :found == true when term exists already' do
-        chk = @th.terms.select{ |h| h[:found] }
+        chk = @th2.terms.select{ |h| h[:found] }
         expect(chk.length).to eq(3)
       end
       it 'term hash :found == false when term does not exist already' do
-        chk = @th.terms.select{ |h| !h[:found] }
+        chk = @th2.terms.select{ |h| !h[:found] }
         expect(chk.first[:refname].display_name).to eq('Sanza')
       end
     end

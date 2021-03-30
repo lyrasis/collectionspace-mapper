@@ -13,11 +13,11 @@ module CollectionSpace
       attr_accessor :mapper
 
       def initialize(record_mapper:, client:, cache: nil,
-                     config: CollectionSpace::Mapper::DEFAULT_CONFIG
+                     config: {}
                     )
+        @config = CS::Mapper::Config.new(config).hash
         @mapper = CollectionSpace::Mapper::RecordMapper.new(record_mapper)
         @client = client
-        @config = get_config(config)
         object_hierarchy_default_values if @mapper.object_hierarchy?
         authority_hierarchy_default_values if @mapper.authority_hierarchy?
         non_hierarchical_relationship_default_values if @mapper.non_hierarchical_relationship?
@@ -225,10 +225,6 @@ module CollectionSpace
         result.terms = terms
       end
       
-      def get_config(config)
-        CS::Mapper::Config.new(config).hash
-      end
-
       def get_cache
         config = {
           domain: @client.domain,

@@ -6,7 +6,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
   before(:all) do
     @client = anthro_client
     @cache = anthro_cache
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
+    @config = CS::Mapper::Config.new.hash
   end
 
   describe CollectionSpace::Mapper::Tools::Dates::CspaceDate do
@@ -74,7 +74,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         end
         context 'when date_format in config = day month year' do
           it 'interprets as D/M/Y' do
-            config = @config.merge({ date_format: 'day month year' })
+            config = CS::Mapper::Config.new({ date_format: 'day month year' }).hash
             res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config).timestamp.to_s
             expect(res).to start_with('2020-02-01 12:00:00')
           end
@@ -99,8 +99,8 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
 
       context 'when config[:two_digit_year_handling] = literal' do
         before(:all) do
-          config = @config.merge({two_digit_year_handling: 'literal'})
-          @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config)
+          config = CS::Mapper::Config.new({two_digit_year_handling: 'literal'}).hash
+          @res = CS::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config)
         end
 
         it 'Services parses date with uncoerced 2-digit year' do

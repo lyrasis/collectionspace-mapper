@@ -11,7 +11,7 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
     handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
                                                        client: client,
                                                        cache: cache,
-                                                       config: CollectionSpace::Mapper::DEFAULT_CONFIG)
+                                                       config: {})
     @prepper = CollectionSpace::Mapper::DataPrepper.new({}, handler)
  end
 

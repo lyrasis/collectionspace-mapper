@@ -60,12 +60,6 @@ end
       expect(not_found.length).to eq(3)
     end
   end
-  
-  context 'when no config is passed at initialization' do
-    it 'uses default config' do
-      expect(@anthro_place_handler.config).to eq(CollectionSpace::Mapper::DEFAULT_CONFIG)
-    end
-  end
 
   context 'when cache is not directly passed in at initialization' do
     context 'when mapping an authority' do
@@ -114,41 +108,6 @@ end
             mapping.fieldname == 'shortIdentifier'
           end
           expect(result.length).to eq(1)
-        end
-      end
-    end
-  end
-
-  describe '#merge_config_transforms' do
-    context 'anthro profile' do
-      context 'collectionobject record' do
-        before(:all) do
-          @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({
-            transforms: {
-              'Collection' => {
-                special: %w[downcase_value],
-                replacements: [
-                  { find: ' ', replace: '-', type: :plain }
-                ]
-              }
-            }
-          })
-        end
-        context 'collection data field' do
-          it 'merges data field specific transforms' do
-            handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
-                                                               client: @anthro_client,
-                                                               cache: @anthro_cache,
-                                                               config: @config)
-            fieldmap = handler.mapper.mappings.select{ |mapping| mapping.fieldname == 'collection' }.first
-            xforms = {
-              special: %w[downcase_value],
-              replacements: [
-                { find: ' ', replace: '-', type: :plain }
-              ]
-            }
-            expect(fieldmap.transforms).to eq(xforms)
-          end
         end
       end
     end
@@ -273,7 +232,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = { response_mode: 'verbose' }
         handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,
@@ -305,7 +264,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = { response_mode: 'verbose' }
         handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,
@@ -338,7 +297,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = { 'response_mode'=> 'verbose' }
         handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,
