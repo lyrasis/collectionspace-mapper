@@ -22,6 +22,10 @@ module Helpers
     JSON.parse(File.read(path))
   end
 
+  def get_record_mapper_object(path)
+    CS::Mapper::RecordMapper.new(File.read(path))
+  end
+
   def get_datahash(path:)
     JSON.parse(File.read(path))
   end
