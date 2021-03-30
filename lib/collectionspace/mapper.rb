@@ -56,7 +56,7 @@ module CollectionSpace
     def merge_default_values(data, defaults, config)
       mdata = data.orig_data.clone
       defaults.each do |f, val|
-        if config[:force_defaults]
+        if config.force_defaults
           mdata[f] = val
         else
           dataval = data.orig_data.fetch(f, nil)

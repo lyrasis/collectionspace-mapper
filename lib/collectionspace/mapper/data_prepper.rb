@@ -7,7 +7,7 @@ module CollectionSpace
       attr_accessor :response, :xphash
       def initialize(data, handler)
         @handler = handler
-        @config = @handler.config
+        @config = @handler.mapper.batchconfig
         @cache = @handler.cache
         @client = @handler.client
         @response = CollectionSpace::Mapper::setup_data(data, @handler.defaults, @config)
@@ -177,7 +177,7 @@ module CollectionSpace
                                                         data: data,
                                                         client: @handler.client,
                                                         cache: @cache,
-                                                        config: @config)
+                                                        mapper: @handler.mapper)
           @response.transformed_data[column] = th.result
           @response.terms << th.terms
           @response.warnings << th.warnings unless th.warnings.empty?
@@ -199,9 +199,15 @@ module CollectionSpace
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).mappable
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
+                                                                  @handler.client,
+                                                                  @handler.cache,
+                                                                  @handler.mapper.batchconfig).mappable
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).mappable }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
+                                                                             @handler.client,
+                                                                             @handler.cache,
+                                                                             @handler.mapper.batchconfig).mappable }
           end
         end
       end
@@ -209,9 +215,15 @@ module CollectionSpace
       def unstructured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).stamp
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
+                                                                  @handler.client,
+                                                                  @handler.cache,
+                                                                  @handler.mapper.batchconfig).stamp
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).stamp }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
+                                                                             @handler.client,
+                                                                             @handler.cache,
+                                                                             @handler.mapper.batchconfig).stamp }
           end
         end
       end

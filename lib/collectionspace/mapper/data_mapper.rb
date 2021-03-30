@@ -194,7 +194,7 @@ module CollectionSpace
           type: nil,
           subtype: nil,
           value: nil,
-          message: "Data for subgroup #{intervening_path.join('/')}/#{subgroup} is trying to map to more instances of parent group #{parent_path} than exist. Overflow subgroup values will be skipped. The usual cause of this is that you separated subgroup values that belong inside the same parent group with the repeating field delimiter (#{handler.config[:delimiter]}) instead of the subgroup delimiter (#{handler.config[:subgroup_delimiter]})"
+          message: "Data for subgroup #{intervening_path.join('/')}/#{subgroup} is trying to map to more instances of parent group #{parent_path} than exist. Overflow subgroup values will be skipped. The usual cause of this is that you separated subgroup values that belong inside the same parent group with the repeating field delimiter (#{handler.mapper.batchconfig.delimiter}) instead of the subgroup delimiter (#{handler.mapper.batchconfig.subgroup_delimiter})"
         }
       end
 

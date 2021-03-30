@@ -7,8 +7,8 @@ module CollectionSpace
       def initialize(data, config)
         @data = data.strip
         @config = config
-        @delim = @config[:delimiter]
-        @sgdelim = @config[:subgroup_delimiter]
+        @delim = @config.delimiter
+        @sgdelim = @config.subgroup_delimiter
       end
     end
 

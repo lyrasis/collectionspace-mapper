@@ -16,10 +16,11 @@ module CollectionSpace
     class RecordMapper
       include Tools::Symbolizable
       
-      attr_reader :config, :mappings, :docstructure
+      attr_reader :batchconfig, :config, :mappings, :docstructure
       attr_accessor :xpath
       
-      def initialize(json)
+      def initialize(json, batchconfig = nil)
+        @batchconfig = batchconfig
         jhash = json.is_a?(Hash) ? json : JSON.parse(json)
         @xpath = {}
         convert(jhash)

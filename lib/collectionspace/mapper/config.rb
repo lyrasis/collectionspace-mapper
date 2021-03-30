@@ -50,6 +50,11 @@ module CollectionSpace
         config
       end
 
+      def add_default_value(column, value)
+        @default_values ||= {}
+        @default_values[column] = value
+      end
+
       private
 
       def to_h
