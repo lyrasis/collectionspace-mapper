@@ -17,8 +17,9 @@ module CollectionSpace
       attr_accessor :xpath
       
       def initialize(json)
+        jhash = json.is_a?(Hash) ? json : JSON.parse(json)
         @xpath = {}
-        convert(json)
+        convert(jhash)
       end
 
       def authority?
