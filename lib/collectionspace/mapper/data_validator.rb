@@ -96,7 +96,7 @@ module CollectionSpace
       private
 
       def get_id_field
-        idfield = @mapper.config[:identifier_field]
+        idfield = @mapper.config.identifier_field
         raise CollectionSpace::Mapper::IdFieldNotInMapperError if idfield.nil?
         idfield.nil? ? nil : idfield.downcase
       end

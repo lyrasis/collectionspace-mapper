@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/tools/symbolizable'
+
 module CollectionSpace
   module Mapper
 
@@ -22,9 +24,9 @@ module CollectionSpace
 
       def convert(json)
         hash = symbolize(json)
-        @config = symbolize(hash[:config])
+        @config = CS::Mapper::RecordMapperConfig.new(hash[:config])
         @docstructure = hash[:docstructure]
-        @mappings = CollectionSpace::Mapper::ColumnMappings.new(hash[:mappings])
+        @mappings = CS::Mapper::ColumnMappings.new(hash[:mappings])
       end
     end
   end

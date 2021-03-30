@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/data_prepper'
+require 'collectionspace/mapper/term_searchable'
+
 module CollectionSpace
   module Mapper
     class NonHierarchicalRelationshipPrepper < CollectionSpace::Mapper::DataPrepper

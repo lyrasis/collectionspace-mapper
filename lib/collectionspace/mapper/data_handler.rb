@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/tools/record_status_service'
+require 'collectionspace/mapper/tools/dates'
+
 module CollectionSpace
   module Mapper
 
@@ -20,7 +23,7 @@ module CollectionSpace
         authority_hierarchy_default_values if is_authority_hierarchy?
         non_hierarchical_relationship_default_values if is_non_hierarchical_relationship?
         @cache = cache.nil? ? get_cache : cache
-        @csidcache = get_csidcache if @mapper.config[:service_type] == 'relation'
+        @csidcache = get_csidcache if @mapper.config.service_type == 'relation'
         @response_mode = @config[:response_mode]
         add_short_id_mapping if @is_authority
         @known_fields = @mapper.mappings.known_columns
@@ -191,7 +194,7 @@ module CollectionSpace
         rescue CollectionSpace::Mapper::MultipleCsRecordsFoundError => e
           err = {
             category: :multiple_matching_recs,
-            field: @mapper.config[:search_field],
+            field: @mapper.config.search_field,
             type: nil,
             subtype: nil,
             value: value,
@@ -282,11 +285,11 @@ module CollectionSpace
       end
       
       def record_type
-        @mapper.config[:recordtype]
+        @mapper.config.recordtype
       end
 
       def service_type
-        @mapper.config[:service_type]
+        @mapper.config.service_type
       end
       
       def get_is_authority

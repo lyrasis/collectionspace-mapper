@@ -25,10 +25,10 @@ module CollectionSpace
       private
 
       def set_response_identifier
-        if @handler.mapper.config[:service_type] == 'relation'
+        if @handler.mapper.config.service_type == 'relation'
           set_relation_id
         else
-          id_field = @handler.mapper.config[:identifier_field]
+          id_field = @handler.mapper.config.identifier_field
           mapping = @handler.mapper.mappings.select{ |mapper| mapper.fieldname == id_field }.first
           thexpath = "//#{mapping.namespace}/#{mapping.fieldname}"
           value = @doc.xpath(thexpath).first
@@ -38,7 +38,7 @@ module CollectionSpace
       end
 
       def set_relation_id
-        case @handler.mapper.config[:object_name]
+        case @handler.mapper.config.object_name
         when 'Object Hierarchy Relation'
           narrow = @response.orig_data['narrower_object_number']
           broad = @response.orig_data['broader_object_number']
@@ -79,7 +79,7 @@ module CollectionSpace
       
       def add_namespaces
         @doc.xpath('/*/*').each do |section|
-          fetchuri = @handler.mapper.config.dig(:ns_uri, section.name)
+          fetchuri = @handler.mapper.config.ns_uri[section.name]
           uri = fetchuri.nil? ? 'http://no.uri.found' : fetchuri
           section.add_namespace_definition('ns2', uri)
           section.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')

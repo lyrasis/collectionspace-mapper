@@ -29,32 +29,15 @@ module CollectionSpace
                        two_digit_year_handling: 'coerce'
                      }
 
-    # mixins
-    require 'collectionspace/mapper/term_searchable'
-    require 'collectionspace/mapper/tools/symbolizable'    
-
-    require 'collectionspace/mapper/data_prepper'
-    require 'collectionspace/mapper/authority_hierarchy_prepper'
-    require 'collectionspace/mapper/column_mapping'
-    require 'collectionspace/mapper/column_mappings'
-    require 'collectionspace/mapper/config'
-    require 'collectionspace/mapper/data_handler'
-    require 'collectionspace/mapper/data_mapper'
-    require 'collectionspace/mapper/data_quality_checker'
-    require 'collectionspace/mapper/data_splitter'
-    require 'collectionspace/mapper/data_validator'
-    require 'collectionspace/mapper/non_hierarchical_relationship_prepper'
-    require 'collectionspace/mapper/record_mapper'
-    require 'collectionspace/mapper/response'
-    require 'collectionspace/mapper/term_handler'
-    require 'collectionspace/mapper/value_transformer'
-
-    require 'collectionspace/mapper/identifiers/short_identifier'
-    require 'collectionspace/mapper/identifiers/authority_short_identifier'
-
-    require 'collectionspace/mapper/tools/dates'
-    require 'collectionspace/mapper/tools/refname'
-    require 'collectionspace/mapper/tools/record_status_service'
+    Dir[File.dirname(__FILE__) + 'mapper/tools/*.rb'].each do |file|
+      require "collectionspace/mapper/tools/#{File.basename(file, File.extname(file))}"
+    end
+    Dir[File.dirname(__FILE__) + '/mapper/identifiers/*.rb'].each do |file|
+      require "collectionspace/mapper/identifiers/#{File.basename(file, File.extname(file))}"
+    end
+    Dir[File.dirname(__FILE__) + '/mapper/*.rb'].each do |file|
+      require "collectionspace/mapper/#{File.basename(file, File.extname(file))}"
+    end
 
     module Errors
         class UnprocessableDataError < StandardError
