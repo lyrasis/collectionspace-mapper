@@ -65,7 +65,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
             end
           end
           context 'and :force_defaults = true' do
-            it 'maps the default value, overwriting value in the incoming data' do
+            it 'maps the default value, overwriting value in the incoming data', services_call: true do
               config = {
                 default_values: {
                   'collection' => 'library-collection'
@@ -195,7 +195,8 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
               data = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1_1.json')
               @prepper = CollectionSpace::Mapper::DataPrepper.new(data, @handler)
             end
-            it 'combines values properly' do
+            # todo: why does this call services api?
+            it 'combines values properly', services_call: true do
               xpath = 'media_common/measuredPartGroupList/measuredPartGroup/dimensionSubGroupList/dimensionSubGroup'
               result = @prepper.prep.combined_data[xpath]['measuredBy']
               expected = [

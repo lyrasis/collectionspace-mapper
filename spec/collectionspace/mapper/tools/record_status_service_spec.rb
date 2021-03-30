@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe CollectionSpace::Mapper::Tools::RecordStatusService do
+RSpec.describe CollectionSpace::Mapper::Tools::RecordStatusService, services_call: true do
   before(:all) do
     @core_client = core_client
   end

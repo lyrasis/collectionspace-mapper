@@ -149,7 +149,7 @@ RSpec.describe CollectionSpace::Mapper::DataValidator do
       end
 
       context 'when required field not present in data but provided by defaults' do
-        it 'no required field error returned' do
+        it 'no required field error returned', services_call: true do
           handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @core_authhier_mapper,
                                                                       client: core_client,
                                                                       cache: core_cache)

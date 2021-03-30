@@ -14,7 +14,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       populate_core(@cache)
     end
 
-    context 'non-hierarchical relationship record' do
+    context 'non-hierarchical relationship record', services_call: true do
       # NOTE!
       # These tests are prone to failing if one of the records used in the test in core.dev is deleted
       # If a UUID is expected but you get blank, recreate the record in core.dev, rerun the test to
@@ -83,7 +83,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
 
-    context 'authority hierarchy record' do
+    context 'authority hierarchy record', services_call: true do
       before(:all) do
         @ah_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_authorityhierarchy.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @ah_mapper, client: @client, cache: @cache, config: @config)
@@ -120,7 +120,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
 
-    context 'object hierarchy record' do
+    context 'object hierarchy record', services_call: true do
       before(:all) do
         @oh_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-object_hierarchy.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @oh_mapper, client: @client, cache: @cache, config: @config)
@@ -156,7 +156,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
 
-    context 'acquisition record' do
+    context 'acquisition record', services_call: true do
       before(:all) do
         @acquisition_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-acquisition.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @acquisition_mapper, client: @client, cache: @cache, config: @config)
@@ -218,7 +218,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
     
-    context 'conditioncheck record' do
+    context 'conditioncheck record', services_call: true do
       before(:all) do
         @conditioncheckmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conditioncheck.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @conditioncheckmapper, client: @client, cache: @cache, config: @config)
@@ -249,7 +249,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
 
-    context 'conservation record' do
+    context 'conservation record', services_call: true do
       before(:all) do
         @conservationmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conservation.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @conservationmapper, client: @client, cache: @cache, config: @config)
@@ -280,7 +280,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
     end
 
-    context 'exhibition record' do
+    context 'exhibition record', services_call: true do
       before(:all) do
         @exhibitionmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-exhibition.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @exhibitionmapper, client: @client, cache: @cache, config: @config)

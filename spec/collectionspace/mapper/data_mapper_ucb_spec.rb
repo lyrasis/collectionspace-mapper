@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe CollectionSpace::Mapper::DataMapper do
+RSpec.describe CollectionSpace::Mapper::DataMapper, services_call: true do
   before(:all) do
     @config = {delimiter: "|",
                subgroup_delimiter: "^^",

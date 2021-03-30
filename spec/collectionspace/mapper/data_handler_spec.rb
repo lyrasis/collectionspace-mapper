@@ -24,7 +24,8 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
                                                                             cache: @bonsai_cache)
 end
 
-  context 'when config has check_terms = false' do
+  # todo: why are these making services api calls?
+  context 'when config has check_terms = false', services_call: true do
     before(:all) do
       @client = core_client
       @cache = core_cache_search
@@ -61,7 +62,7 @@ end
     end
   end
 
-  context 'when cache is not directly passed in at initialization' do
+  context 'when cache is not directly passed in at initialization', services_call: true do
     context 'when mapping an authority' do
       it 'cache.search_identifiers = false' do
         mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
@@ -79,7 +80,7 @@ end
     end
   end
 
-  it 'tags all un-found terms as such' do
+  it 'tags all un-found terms as such', services_call: true do
     data1 = {
       'objectNumber' => '1',
       'publishTo' => 'Wordpress', #vocabulary - not in cache
@@ -243,7 +244,7 @@ end
     end
   end
 
-  describe '#process' do
+  describe '#process', services_call: true do
     before(:all) do
       @data = { 'objectNumber' => '123' }
     end
@@ -275,7 +276,7 @@ end
     end
   end
   
-  describe '#map' do
+  describe '#map', services_call: true do
     before(:all) do
       @data = { 'objectNumber' => '123' }
       prepper = CollectionSpace::Mapper::DataPrepper.new(@data, @anthro_object_handler)

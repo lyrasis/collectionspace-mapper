@@ -97,7 +97,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         end
       end
 
-      context 'when config[:two_digit_year_handling] = literal' do
+      context 'when config[:two_digit_year_handling] = literal', services_call: true do
         before(:all) do
           config = CS::Mapper::Config.new({two_digit_year_handling: 'literal'}).hash
           @res = CS::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, config)
@@ -109,7 +109,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
     end
     
-    context 'when date string is not Chronic parseable (e.g. 1/2/2000 - 12/21/2001)' do
+    context 'when date string is not Chronic parseable (e.g. 1/2/2000 - 12/21/2001)', services_call: true do
       before(:all) do
         @string = '1/2/2000 - 12/21/2001'
         @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(@string, @client, @cache, @config)
@@ -130,7 +130,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
     end
 
-    context 'when date string is not Chronic or services parseable' do
+    context 'when date string is not Chronic or services parseable', services_call: true do
       context 'date = VIII.XIV.MMXX' do
         before(:all) do
           @string = 'VIII.XIV.MMXX'
@@ -157,7 +157,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
     end
 
-    context 'when date string is Chronic parseable but we want services parsing' do
+    context 'when date string is Chronic parseable but we want services parsing', services_call: true do
       context 'when date string = march 2020' do
         before(:all) do
           @string = 'march 2020'

@@ -150,7 +150,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
       end
 
-    context 'collectionobject record' do
+    context 'collectionobject record', services_call: true do
       before(:all) do
         config = {
           transforms: {
