@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({delimiter: ';'})
+    @config = {delimiter: ';'}
   end
 
   context 'botgarden profile' do
@@ -16,7 +16,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'pottag record' do
       # before(:all) do
-      #   @pottag_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-pottag.json')
+      #   @pottag_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-pottag.json')
       #   @pottag_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @pottag_mapper,
       #                                                              client: @client, cache: @cache, config: @config)
       # end
@@ -50,7 +50,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'propagation record' do
       # before(:all) do
-      #   @propagation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-propagation.json')
+      #   @propagation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-propagation.json')
       #   @propagation_handler = CollectionSpace::Mapper::DataHandler.new(@propagation_mapper, @client, @cache, @config)
       # end
 
@@ -84,7 +84,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'taxon record' do
       before(:all) do
-        @taxon_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-taxon-local.json')
+        @taxon_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-taxon-local.json')
         @taxon_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @taxon_mapper,
                                                                   client: @client,
                                                                   cache: @cache,

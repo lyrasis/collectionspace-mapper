@@ -92,11 +92,11 @@ end
 
 RSpec.describe CollectionSpace::Mapper::DataValidator do
   before(:all) do
-    @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+    @anthro_object_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
     @anthro_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::RecordMapper.new(@anthro_object_mapper), anthro_cache)
-    @botgarden_loanout_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-loanout.json')
+    @botgarden_loanout_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-loanout.json')
     @botgarden_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::RecordMapper.new(@botgarden_loanout_mapper), botgarden_cache)
-    @core_authhier_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_authorityhierarchy.json')
+    @core_authhier_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_authorityhierarchy.json')
     @core_authhier_dv = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::RecordMapper.new(@core_authhier_mapper), core_cache)
   end
 
@@ -108,7 +108,7 @@ RSpec.describe CollectionSpace::Mapper::DataValidator do
 
     context 'when recordtype has multiauthority required field' do
       before(:all) do
-        @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-movement.json')
+        @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-movement.json')
         @validator = CollectionSpace::Mapper::DataValidator.new(CollectionSpace::Mapper::RecordMapper.new(@mapper), core_cache)
       end
       it 'validates' do

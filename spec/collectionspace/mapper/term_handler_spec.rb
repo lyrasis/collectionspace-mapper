@@ -4,16 +4,16 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::TermHandler do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
     @client = core_client
     @cache = core_cache
     populate_core(@cache)
-    @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+    @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
     @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                         client: @client,
                                                         cache: @cache,
-                                                        config: @config)
-    @ref_mapping = {
+                                                        config: {})
+    @config = @handler.config
+    @ref_mapping = CollectionSpace::Mapper::ColumnMapping.new({
       :fieldname=>"reference",
       :transforms=>{:authority=>["citationauthorities", "citation"]},
       :source_type=>"authority",
@@ -26,8 +26,8 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
       :opt_list_values=>[],
       :datacolumn=>"referencelocal",
       :fullpath=>"collectionobjects_common/referenceGroupList/referenceGroup"
-    }
-    @ttl_mapping =  {
+    })
+    @ttl_mapping =  CollectionSpace::Mapper::ColumnMapping.new({
       :fieldname=>"titleTranslationLanguage",
       :transforms=>{:vocabulary=>"languages"},
       :source_type=>"vocabulary",
@@ -45,7 +45,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
       :datacolumn=>"titletranslationlanguage",
       :fullpath=>
       "collectionobjects_common/titleGroupList/titleGroup/titleTranslationSubGroupList/titleTranslationSubGroup"
-    }
+    })
   end
 
   describe '#result' do
@@ -69,7 +69,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'reference (authority, field group)' do
       before(:all) do
         data = ['Reference 1', 'Reference 2']
-      @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ref_mapping, data: data, client: @client, cache: @cache, config: @config)
+        @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ref_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'result is the transformed value for mapping' do
         expected = [
@@ -89,17 +89,17 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     context 'titletranslationlanguage (vocabulary, field subgroup)' do
       before(:all) do
         data = [['Ancient Greek', 'Swahili'], ['Sanza', 'Spanish']]
-        @th = CollectionSpace::Mapper::TermHandler.new(mapping: @ttl_mapping, data: data, client: @client, cache: @cache, config: @config)
+        @th2 = CollectionSpace::Mapper::TermHandler.new(mapping: @ttl_mapping, data: data, client: @client, cache: @cache, config: @config)
       end
       it 'contains a term Hash for each value' do
-        expect(@th.terms.length).to eq(4)
+        expect(@th2.terms.length).to eq(4)
       end
       it 'term hash :found == true when term exists already' do
-        chk = @th.terms.select{ |h| h[:found] }
+        chk = @th2.terms.select{ |h| h[:found] }
         expect(chk.length).to eq(3)
       end
       it 'term hash :found == false when term does not exist already' do
-        chk = @th.terms.select{ |h| !h[:found] }
+        chk = @th2.terms.select{ |h| !h[:found] }
         expect(chk.first[:refname].display_name).to eq('Sanza')
       end
     end

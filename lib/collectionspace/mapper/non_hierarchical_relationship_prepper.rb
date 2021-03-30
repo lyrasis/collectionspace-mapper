@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/data_prepper'
+require 'collectionspace/mapper/term_searchable'
+
 module CollectionSpace
   module Mapper
     class NonHierarchicalRelationshipPrepper < CollectionSpace::Mapper::DataPrepper
@@ -71,7 +74,7 @@ module CollectionSpace
       #  do not actually get used to produce XML
       def clear_unmapped_mappings
         to_clear = %w[subjectType objectType]
-        @handler.mapper.mappings.reject!{ |m| to_clear.include?(m[:fieldname]) }
+        @handler.mapper.mappings.reject!{ |mapping| to_clear.include?(mapping.fieldname) }
       end
 
       def transform_terms

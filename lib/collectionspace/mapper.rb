@@ -16,41 +16,20 @@ require 'xxhash'
 require 'ruby-prof'
 
 module CollectionSpace
+  ::CS = CollectionSpace
   module Mapper
     extend self
     LOGGER = Logger.new(STDERR)
-    DEFAULT_CONFIG = { delimiter: '|',
-                       subgroup_delimiter: '^^',
-                       response_mode: 'normal',
-                       check_terms: true,
-                       check_record_status: true,
-                       force_defaults: false,
-                     }
-
-    # mixins
-    require 'collectionspace/mapper/term_searchable'
-
-    # classes
-    require 'collectionspace/mapper/data_handler'
-    require 'collectionspace/mapper/data_mapper'
-    require 'collectionspace/mapper/data_prepper'
-    require 'collectionspace/mapper/authority_hierarchy_prepper'
-    require 'collectionspace/mapper/non_hierarchical_relationship_prepper'
-    require 'collectionspace/mapper/data_quality_checker'
-    require 'collectionspace/mapper/data_splitter'
-    require 'collectionspace/mapper/data_validator'
-    require 'collectionspace/mapper/response'
-    require 'collectionspace/mapper/record_mapper'
-    require 'collectionspace/mapper/term_handler'
-    require 'collectionspace/mapper/value_transformer'
-
-    require 'collectionspace/mapper/identifiers/short_identifier'
-    require 'collectionspace/mapper/identifiers/authority_short_identifier'
-
-    require 'collectionspace/mapper/tools/config'
-    require 'collectionspace/mapper/tools/dates'
-    require 'collectionspace/mapper/tools/refname'
-    require 'collectionspace/mapper/tools/record_status_service'
+    
+    Dir[File.dirname(__FILE__) + 'mapper/tools/*.rb'].each do |file|
+      require "collectionspace/mapper/tools/#{File.basename(file, File.extname(file))}"
+    end
+    Dir[File.dirname(__FILE__) + '/mapper/identifiers/*.rb'].each do |file|
+      require "collectionspace/mapper/identifiers/#{File.basename(file, File.extname(file))}"
+    end
+    Dir[File.dirname(__FILE__) + '/mapper/*.rb'].each do |file|
+      require "collectionspace/mapper/#{File.basename(file, File.extname(file))}"
+    end
 
     module Errors
         class UnprocessableDataError < StandardError
@@ -63,7 +42,7 @@ module CollectionSpace
       end
     end
 
-    def setup_data(data, defaults = {}, config = DEFAULT_CONFIG)
+    def setup_data(data, defaults = {}, config = Mapper::Config.new)
       if data.is_a?(Hash)
         response = Response.new(data)
       elsif data.is_a?(CollectionSpace::Mapper::Response)

@@ -19,8 +19,12 @@ module Helpers
   # turns strings into symbols that removed when writing to JSON
   # we can't just use the json symbolize_names option because @docstructure keys must
   #   remain strings
-  def get_json_record_mapper(path:)
+  def get_json_record_mapper(path)
     JSON.parse(File.read(path))
+  end
+
+  def get_record_mapper_object(path)
+    CS::Mapper::RecordMapper.new(File.read(path))
   end
 
   def get_datahash(path:)
@@ -79,7 +83,7 @@ module Helpers
   #  default stuff in the application/services layer, but don't need to be in mapped XML)
   # testdoc should be the result of calling get_xml_fixture
   def test_xpaths(testdoc, mappings)
-    mappaths = mappings.map{ |m| "/document/#{m[:fullpath]}/#{m[:fieldname]}" }
+    mappaths = mappings.map{ |mapping| "/document/#{mapping.fullpath}/#{mapping.fieldname}" }
 
     xpaths = list_xpaths(testdoc)
     # only include paths for fields defined in the mapper

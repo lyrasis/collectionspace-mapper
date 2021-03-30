@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
+    @config = {}
   end
   
   context 'core profile' do
@@ -15,7 +15,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     context 'collectionobject record' do
       before(:all) do
-        @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+        @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache, config: @config)
       end
       context 'overflow subgroup record with uneven subgroup values' do
@@ -72,7 +72,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     context 'person record' do
       before(:all) do
-        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/lhmc/lhmc_3_1_1-person-local.json')
+        @recmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/lhmc/lhmc_3_1_1-person-local.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @recmapper, client: @client, cache: @cache, config: @config)
         @prepper = CollectionSpace::Mapper::DataPrepper.new({'termDisplayName' => 'Xanadu', 'placeNote' => 'note'}, @handler)
         @datamapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
@@ -114,7 +114,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     context 'loanout record' do
       before(:all) do
-        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-loanout.json')
+        @recmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-loanout.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @recmapper, client: @client, cache: @cache, config: @config)
         @prepper = CollectionSpace::Mapper::DataPrepper.new({'loanOutNumber' => '123', 'sterile' => 'n'}, @handler)
         @datamapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
@@ -137,7 +137,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       end
       context 'place record' do
         before(:all) do
-          @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
+          @recmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
           @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @recmapper, client: @client, cache: @cache, config: @config)
           @prepper = CollectionSpace::Mapper::DataPrepper.new({'termDisplayName' => 'Xanadu'}, @handler)
           @datamapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
@@ -152,7 +152,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'collectionobject record' do
       before(:all) do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({
+        config = {
           transforms: {
             'collection' => {
               special: %w[downcase_value],
@@ -171,9 +171,9 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
             'publishTo' => 'DPLA;Omeka',
             'collection' => 'library-collection'
           },
-        })
+        }
 
-        @recmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+        @recmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @recmapper, client: @client, cache: @cache, config: config)
         @prepper = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, @handler)
         @datamapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
@@ -199,7 +199,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
       
       describe '#add_namespaces' do
         it 'adds namespace definitions' do
-          urihash = @datamapper.handler.mapper.config[:ns_uri].clone
+          urihash = @datamapper.handler.mapper.config.ns_uri.clone
           urihash.transform_keys!{ |k| "ns2:#{k}" }
           docdefs = {}
           @datamapper.doc.xpath('/*/*').each do |ns|
@@ -218,7 +218,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         client = botgarden_client
         cache = botgarden_cache
         populate_botgarden(cache)
-        prop_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-propagation.json')
+        prop_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-propagation.json')
         prop_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: prop_mapper,
                                                                 client: client,
                                                                 cache: cache,

@@ -14,7 +14,7 @@ module CollectionSpace
         def initialize(client, mapper)
           @client = client
           @mapper = mapper
-          @is_authority = @mapper.config[:service_type] == 'authority' ? true : false
+          @is_authority = @mapper.config.service_type == 'authority' ? true : false
           service = get_service
           @search_field = @is_authority ? service[:term] : service[:field]
           @ns_prefix = service[:ns_prefix]
@@ -60,8 +60,8 @@ module CollectionSpace
         
         def lookup_non_relationship(value)
           @client.find(
-            type: @mapper.config[:service_path],
-            subtype: @mapper.config[:authority_subtype],
+            type: @mapper.config.service_path,
+            subtype: @mapper.config.authority_subtype,
             value: value,
             field: @search_field
           )
@@ -77,11 +77,11 @@ module CollectionSpace
         def get_service
           if @is_authority
             @client.service(
-              type: @mapper.config[:authority_type],
-              subtype: @mapper.config[:authority_subtype]
+              type: @mapper.config.authority_type,
+              subtype: @mapper.config.authority_subtype
             )
           else
-            @client.service(type: @mapper.config[:service_path])
+            @client.service(type: @mapper.config.service_path)
           end
         end
       end

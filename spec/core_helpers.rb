@@ -31,6 +31,11 @@ module Helpers
     CollectionSpace::RefCache.new(config: cache_config, client: core_client)
   end
 
+  def core_object_mapper
+    path = 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json'
+    get_record_mapper_object(path)
+  end
+
   def populate_core(cache)
     terms = [
       ['citationauthorities', 'citation', 'Wanting', "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Wanting1599560009399)'Wanting'"],

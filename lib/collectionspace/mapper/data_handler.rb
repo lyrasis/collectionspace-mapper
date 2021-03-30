@@ -1,29 +1,31 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/tools/record_status_service'
+require 'collectionspace/mapper/tools/dates'
+
 module CollectionSpace
   module Mapper
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
       attr_reader :client, :cache, :config, :blankdoc, :defaults, :validator,
-        :is_authority, :known_fields
+        :known_fields
       attr_accessor :mapper
 
       def initialize(record_mapper:, client:, cache: nil,
-                     config: CollectionSpace::Mapper::DEFAULT_CONFIG
+                     config: {}
                     )
+        @config = CS::Mapper::Config.new(config).hash
         @mapper = CollectionSpace::Mapper::RecordMapper.new(record_mapper)
-        @is_authority = get_is_authority
         @client = client
-        @config = get_config(config)
-        object_hierarchy_default_values if is_object_hierarchy?
-        authority_hierarchy_default_values if is_authority_hierarchy?
-        non_hierarchical_relationship_default_values if is_non_hierarchical_relationship?
+        object_hierarchy_default_values if @mapper.object_hierarchy?
+        authority_hierarchy_default_values if @mapper.authority_hierarchy?
+        non_hierarchical_relationship_default_values if @mapper.non_hierarchical_relationship?
         @cache = cache.nil? ? get_cache : cache
-        @csidcache = get_csidcache if @mapper.config[:service_type] == 'relation'
+        @csidcache = get_csidcache if @mapper.service_type == 'relation'
         @response_mode = @config[:response_mode]
-        add_short_id_mapping if @is_authority
-        @known_fields = @mapper.mappings.map{ |m| m[:datacolumn] }.map(&:downcase)
+        add_short_id_mapping if @mapper.authority?
+        @known_fields = @mapper.mappings.known_columns
         @mapper.xpath = xpath_hash
         @blankdoc = build_xml
         @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
@@ -36,7 +38,7 @@ module CollectionSpace
       def process(data)
         response = CollectionSpace::Mapper::setup_data(data, @defaults, @config)
         if response.valid?
-          case record_type
+          case @mapper.record_type
           when 'authorityhierarchy'
             prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
             prepper.prep
@@ -124,13 +126,11 @@ module CollectionSpace
         h = {}
         # create key for each xpath containing fields, and set up structure of its value
         @mapper.mappings.each do |mapping|
-          mapping[:fullpath] = ( [mapping[:namespace]] + mapping[:xpath] ).flatten.join('/')
-          h[mapping[:fullpath]] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
+          h[mapping.fullpath] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
         end
         # add fieldmappings for children of each xpath
         @mapper.mappings.each do |mapping|
-          mapping[:datacolumn] = mapping[:datacolumn].downcase
-          h[mapping[:fullpath]][:mappings] << mapping
+          h[mapping.fullpath][:mappings] << mapping
         end
         # populate other attributes
         # populate parent of all non-top xpaths
@@ -159,12 +159,12 @@ module CollectionSpace
         # populate is_group
         h.each do |xpath, ph|
           ct = ph[:mappings].size
-          v = ph[:mappings].map{ |m| m[:in_repeating_group] }.uniq
+          v = ph[:mappings].map{ |mapping| mapping.in_repeating_group }.uniq
           ph[:is_group] = true if v == ['y']
           if v.size > 1
             puts "WARNING: #{xpath} has fields with different :in_repeating_group values (#{v}). Defaulting to treating NOT as a group"
           end
-          ph[:is_group] = true if ct == 1 && v == ['as part of larger repeating group'] && ph[:mappings][0][:repeats] == 'y'
+          ph[:is_group] = true if ct == 1 && v == ['as part of larger repeating group'] && ph[:mappings][0].repeats == 'y'
         end
 
         # populate is_subgroup
@@ -178,9 +178,9 @@ module CollectionSpace
       private
 
       def set_record_status(response)
-        if @is_authority
+        if @mapper.authority?
           value = response.split_data['termdisplayname'].first
-        elsif is_relationship?
+        elsif @mapper.relationship?
           value = {}
           value[:sub] = response.combined_data['relations_common']['subjectCsid'][0]
           value[:obj] = response.combined_data['relations_common']['objectCsid'][0]
@@ -193,7 +193,7 @@ module CollectionSpace
         rescue CollectionSpace::Mapper::MultipleCsRecordsFoundError => e
           err = {
             category: :multiple_matching_recs,
-            field: @mapper.config[:search_field],
+            field: @mapper.config.search_field,
             type: nil,
             subtype: nil,
             value: value,
@@ -225,11 +225,6 @@ module CollectionSpace
         result.terms = terms
       end
       
-      def get_config(config)
-        config_object = CollectionSpace::Mapper::Tools::Config.new(config)
-        config_object.hash
-      end
-
       def get_cache
         config = {
           domain: @client.domain,
@@ -239,7 +234,7 @@ module CollectionSpace
           search_enabled: true
         }
         # search for authority records by display name, not short ID
-        config[:search_identifiers] = @is_authority ? false : true
+        config[:search_identifiers] = @mapper.authority? ? false : true
         CollectionSpace::RefCache.new(config: config, client: @client)
       end
 
@@ -255,11 +250,10 @@ module CollectionSpace
       end
 
       def add_short_id_mapping
-        namespaces = @mapper.mappings.map{ |m| m[:namespace]}.uniq
-        this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
+        namespaces = @mapper.mappings.map{ |mapping| mapping.namespace}.uniq
         @mapper.mappings << {
           fieldname: 'shortIdentifier',
-          namespace: this_ns,
+          namespace: namespaces.first{ |ns| ns.end_with?('_common') },
           data_type: 'string',
           xpath: [],
           required: 'not in input data',
@@ -267,34 +261,6 @@ module CollectionSpace
           in_repeating_group: 'n/a',
           datacolumn: 'shortIdentifier'
         }
-      end
-
-      def is_object_hierarchy?
-        record_type == 'objecthierarchy' ? true : false
-      end
-
-      def is_authority_hierarchy?
-        record_type == 'authorityhierarchy' ? true : false
-      end
-
-      def is_non_hierarchical_relationship?
-        record_type == 'nonhierarchicalrelationship' ? true : false
-      end
-
-      def is_relationship?
-        service_type == 'relation' ? true : false
-      end
-      
-      def record_type
-        @mapper.config[:recordtype]
-      end
-
-      def service_type
-        @mapper.config[:service_type]
-      end
-      
-      def get_is_authority
-        service_type == 'authority' ? true : false
       end
 
       # you can specify per-data-key transforms in your config.json
@@ -305,15 +271,15 @@ module CollectionSpace
         
         @config[:transforms].transform_keys!(&:downcase)
         @config[:transforms].each do |data_column, transforms|
-          target = transform_target(data_column)
-          next unless target
+          target_mapping = transform_target(data_column)
+          next unless target_mapping
 
-          target[:transforms] = target[:transforms].merge(transforms)
+          target_mapping.update_transforms(transforms)
         end
       end
 
       def transform_target(data_column)
-        @mapper.mappings.select{ |field_mapping| field_mapping[:datacolumn] == data_column }.first
+        @mapper.mappings.select{ |field_mapping| field_mapping.datacolumn == data_column }.first
       end
       
       def build_xml

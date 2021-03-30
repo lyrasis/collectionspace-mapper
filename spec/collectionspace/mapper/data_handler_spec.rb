@@ -7,18 +7,18 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     @anthro_client = anthro_client
     @anthro_cache = anthro_cache
     populate_anthro(@anthro_cache)
-    @anthro_object_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+    @anthro_object_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
     @anthro_object_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                                       client: @anthro_client,
                                                                       cache: @anthro_cache)
-    @anthro_place_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
+    @anthro_place_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
     @anthro_place_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_place_mapper,
                                                                      client: @anthro_client,
                                                                      cache: @anthro_cache)
 
     @bonsai_client = bonsai_client
     @bonsai_cache = bonsai_cache
-    @bonsai_conservation_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-conservation.json')
+    @bonsai_conservation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-conservation.json')
     @bonsai_conservation_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @bonsai_conservation_mapper,
                                                                             client: @bonsai_client,
                                                                             cache: @bonsai_cache)
@@ -28,7 +28,7 @@ end
     before(:all) do
       @client = core_client
       @cache = core_cache_search
-      @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+      @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
       @config = '{"check_terms": false}'
       @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                           client: @client,
@@ -60,17 +60,11 @@ end
       expect(not_found.length).to eq(3)
     end
   end
-  
-  context 'when no config is passed at initialization' do
-    it 'uses default config' do
-      expect(@anthro_place_handler.config).to eq(CollectionSpace::Mapper::DEFAULT_CONFIG)
-    end
-  end
 
   context 'when cache is not directly passed in at initialization' do
     context 'when mapping an authority' do
       it 'cache.search_identifiers = false' do
-        mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
+        mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
         dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
                                                       client: @anthro_client)
         expect(dh.cache.inspect).to include('@search_identifiers=false')
@@ -105,56 +99,15 @@ end
   describe '#is_authority' do
     context 'anthro profile' do
       context 'place record' do
-        it 'sets is_authority to true' do
-          expect(@anthro_place_handler.is_authority).to be true
-        end
         it 'adds a mapping for shortIdentifier' do
-          result = @anthro_place_handler.mapper.mappings.select{ |m| m[:fieldname] == 'shortIdentifier' }
+          result = @anthro_place_handler.mapper.mappings.select{ |mapping| mapping.fieldname == 'shortIdentifier' }
           expect(result.length).to eq(1)
         end
         it 'adds a xphash entry for shortIdentifier' do
-          result = @anthro_place_handler.mapper.xpath['places_common'][:mappings].select{ |m| m[:fieldname] == 'shortIdentifier' }
-          expect(result.length).to eq(1)
-        end
-      end
-      context 'collectionobject record' do
-        it 'is_authority = false' do
-          expect(@anthro_object_handler.is_authority).to be false
-        end
-      end
-    end
-  end
-
-  describe '#merge_config_transforms' do
-    context 'anthro profile' do
-      context 'collectionobject record' do
-        before(:all) do
-          @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({
-            transforms: {
-              'Collection' => {
-                special: %w[downcase_value],
-                replacements: [
-                  { find: ' ', replace: '-', type: :plain }
-                ]
-              }
-            }
-          })
-        end
-        context 'collection data field' do
-          it 'merges data field specific transforms' do
-            handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
-                                                               client: @anthro_client,
-                                                               cache: @anthro_cache,
-                                                               config: @config)
-            fieldmap = handler.mapper.mappings.select{ |m| m[:fieldname] == 'collection' }.first
-            xforms = {
-              special: %w[downcase_value],
-              replacements: [
-                { find: ' ', replace: '-', type: :plain }
-              ]
-            }
-            expect(fieldmap[:transforms]).to eq(xforms)
+          result = @anthro_place_handler.mapper.xpath['places_common'][:mappings].select do |mapping|
+            mapping.fieldname == 'shortIdentifier'
           end
+          expect(result.length).to eq(1)
         end
       end
     end
@@ -279,7 +232,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = { response_mode: 'verbose' }
         handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,
@@ -311,7 +264,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = { response_mode: 'verbose' }
         handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,
@@ -344,7 +297,7 @@ end
     end
     context 'when response_mode = verbose' do
       it 'returned response includes detailed data transformation info' do
-        config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({ response_mode: 'verbose' })
+        config = { 'response_mode'=> 'verbose' }
         handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,

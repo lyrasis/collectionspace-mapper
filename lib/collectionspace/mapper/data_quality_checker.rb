@@ -6,12 +6,12 @@ module CollectionSpace
       attr_reader :mapping, :data, :warnings, :terms
       def initialize(mapping, data)
         @mapping = mapping
-        @column = mapping[:datacolumn]
-        @field = mapping[:fieldname]
+        @column = mapping.datacolumn
+        @field = mapping.fieldname
         @data = data
         @warnings = []
         @terms = []
-        @source_type = @mapping[:source_type]
+        @source_type = @mapping.source_type
 
         case @source_type
         when 'authority'
@@ -51,7 +51,7 @@ module CollectionSpace
       end
 
       def check_opt_list_vals
-        @opts = @mapping[:opt_list_values]
+        @opts = @mapping.opt_list_values
         if @data.first.is_a?(String)
           @data.each{ |val| check_opt_list_val(val) unless val.blank? }
         else

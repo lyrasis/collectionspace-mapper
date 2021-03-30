@@ -15,9 +15,9 @@ module CollectionSpace
         @cache = @handler.cache
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
-        clean_doc
-        add_short_id if @handler.is_authority
+        add_short_id if @handler.mapper.authority?
         set_response_identifier
+        clean_doc
         add_namespaces
         @response.doc = @doc
       end
@@ -25,18 +25,20 @@ module CollectionSpace
       private
 
       def set_response_identifier
-        if @handler.mapper.config[:service_type] == 'relation'
+        if @handler.mapper.config.service_type == 'relation'
           set_relation_id
         else
-          id_field = @handler.mapper.config[:identifier_field]
-          mapping = @handler.mapper.mappings.select{ |m| m[:fieldname] == id_field }.first
-          value = @doc.xpath("//#{mapping[:namespace]}/#{mapping[:fieldname]}").first.text
+          id_field = @handler.mapper.config.identifier_field
+          mapping = @handler.mapper.mappings.select{ |mapper| mapper.fieldname == id_field }.first
+          thexpath = "//#{mapping.namespace}/#{mapping.fieldname}"
+          value = @doc.xpath(thexpath).first
+            value = value.text
           @response.identifier = value
         end
       end
 
       def set_relation_id
-        case @handler.mapper.config[:object_name]
+        case @handler.mapper.config.object_name
         when 'Object Hierarchy Relation'
           narrow = @response.orig_data['narrower_object_number']
           broad = @response.orig_data['broader_object_number']
@@ -58,7 +60,7 @@ module CollectionSpace
       def map(xpath, xphash)
         thisdata = @data[xpath]
         targetnode = @doc.xpath("//#{xpath}")[0]
-        xphash[:mappings] = xphash[:mappings].uniq{ |m| m[:fieldname] }
+        xphash[:mappings] = xphash[:mappings].uniq{ |mapping| mapping.fieldname }
         if xphash[:is_group] == false
           simple_map(xphash, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
@@ -77,7 +79,7 @@ module CollectionSpace
       
       def add_namespaces
         @doc.xpath('/*/*').each do |section|
-          fetchuri = @handler.mapper.config.dig(:ns_uri, section.name)
+          fetchuri = @handler.mapper.config.ns_uri[section.name]
           uri = fetchuri.nil? ? 'http://no.uri.found' : fetchuri
           section.add_namespace_definition('ns2', uri)
           section.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
@@ -96,7 +98,7 @@ module CollectionSpace
       
       def simple_map(xphash, parent, thisdata)
         xphash[:mappings].each do |field_mapping|
-          field_name = field_mapping[:fieldname]
+          field_name = field_mapping.fieldname
           data = thisdata.fetch(field_name, nil)
           populate_simple_field_data(field_name, data, parent) if data
         end
@@ -233,7 +235,7 @@ module CollectionSpace
       def map_subgroup(xphash, thisdata)
         parent_path = xphash[:parent]
         parent_set = @doc.xpath("//#{parent_path}")
-        subgroup_path = xphash[:mappings].first[:fullpath].gsub("#{xphash[:parent]}/", '').split('/')
+        subgroup_path = xphash[:mappings][0].fullpath.gsub("#{xphash[:parent]}/", '').split('/')
         subgroup = subgroup_path.pop
 
         # create a hash of subgroup data split up and structured for mapping

@@ -33,7 +33,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
   
     context 'collectionobject record' do
       before(:all) do
-        @objmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/ucb_pahma_nagpra-collectionobject.json')
+        @objmapper = get_json_record_mapper('spec/fixtures/files/mappers/ucb_pahma_nagpra-collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @objmapper,
                                                             client: @client,
                                                             cache: @cache,
