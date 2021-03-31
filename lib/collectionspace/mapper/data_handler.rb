@@ -8,8 +8,7 @@ module CollectionSpace
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      attr_reader :client, :cache, :defaults, :validator,
-        :known_fields
+      attr_reader :client, :cache, :defaults, :validator
       # this is an accessor rather than a reader until I refactor away the hideous
       #  xpath hash
       attr_accessor :mapper
@@ -25,7 +24,6 @@ module CollectionSpace
         @csidcache = get_csidcache if @mapper.service_type == 'relation'
         @response_mode = configobj.response_mode
         add_short_id_mapping if @mapper.authority?
-        @known_fields = @mapper.mappings.known_columns
         @mapper.xpath = xpath_hash
         @defaults = configobj.default_values ? configobj.default_values.transform_keys(&:downcase) : {}
         merge_config_transforms
@@ -78,7 +76,7 @@ module CollectionSpace
 
       def check_fields(data)
         data_fields = data.keys.map(&:downcase)
-        unknown = data_fields - known_fields
+        unknown = data_fields - @mapper.mappings.known_columns
         known = data_fields - unknown
         { known_fields: known, unknown_fields: unknown }
       end
