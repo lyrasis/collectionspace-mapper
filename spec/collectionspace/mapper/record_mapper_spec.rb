@@ -9,7 +9,7 @@ RSpec.describe CollectionSpace::Mapper::RecordMapper do
   end
 
   it 'has expected instance variables' do
-    expected = [:@xpath, :@config, :@docstructure, :@mappings, :@batchconfig].sort
+    expected = [:@xpath, :@config, :@xml_template, :@mappings, :@batchconfig].sort
     expect(@mapper.instance_variables.sort).to eq(expected)
   end
 

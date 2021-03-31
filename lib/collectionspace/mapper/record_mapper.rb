@@ -16,7 +16,7 @@ module CollectionSpace
     class RecordMapper
       include Tools::Symbolizable
       
-      attr_reader :batchconfig, :config, :mappings, :docstructure
+      attr_reader :batchconfig, :config, :mappings, :xml_template
       attr_accessor :xpath
       
       def initialize(json, batchconfig = nil)
@@ -59,7 +59,7 @@ module CollectionSpace
       def convert(json)
         hash = symbolize(json)
         @config = CS::Mapper::RecordMapperConfig.new(hash[:config])
-        @docstructure = hash[:docstructure]
+        @xml_template = CS::Mapper::XmlTemplate.new(hash[:docstructure])
         @mappings = CS::Mapper::ColumnMappings.new(hash[:mappings])
       end
     end

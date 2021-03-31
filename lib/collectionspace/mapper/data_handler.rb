@@ -8,7 +8,7 @@ module CollectionSpace
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      attr_reader :client, :cache, :blankdoc, :defaults, :validator,
+      attr_reader :client, :cache, :defaults, :validator,
         :known_fields
       # this is an accessor rather than a reader until I refactor away the hideous
       #  xpath hash
@@ -27,7 +27,6 @@ module CollectionSpace
         add_short_id_mapping if @mapper.authority?
         @known_fields = @mapper.mappings.known_columns
         @mapper.xpath = xpath_hash
-        @blankdoc = build_xml
         @defaults = configobj.default_values ? configobj.default_values.transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
@@ -276,30 +275,6 @@ module CollectionSpace
 
       def transform_target(data_column)
         @mapper.mappings.select{ |field_mapping| field_mapping.datacolumn == data_column }.first
-      end
-      
-      def build_xml
-        builder = Nokogiri::XML::Builder.new do |xml|
-          xml.document{ create_record_namespace_nodes(xml) }
-        end
-        Nokogiri::XML(builder.to_xml)
-      end
-
-      def create_record_namespace_nodes(xml)
-        @mapper.docstructure.keys.each do |namespace|
-          xml.send(namespace) do
-            process_group(xml, [namespace])
-          end
-        end
-      end
-      
-      def process_group(xml, grouppath)
-        @mapper.docstructure.dig(*grouppath).keys.each do |key|
-          thispath = grouppath.clone.append(key)
-          xml.send(key){
-            process_group(xml, thispath)
-          }
-        end
       end
     end
   end
