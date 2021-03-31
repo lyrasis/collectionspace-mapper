@@ -21,7 +21,6 @@ module CollectionSpace
         @response_mode = @mapper.batchconfig.response_mode
         add_short_id_mapping if @mapper.authority?
         @mapper.xpath = xpath_hash
-        @defaults = @mapper.batchconfig.default_values ? @mapper.batchconfig.default_values.transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
         @new_terms = {}
@@ -29,7 +28,7 @@ module CollectionSpace
       end
 
       def process(data)
-        response = CollectionSpace::Mapper::setup_data(data, @defaults, @mapper.batchconfig)
+        response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
         if response.valid?
           case @mapper.record_type
           when 'authorityhierarchy'
@@ -62,7 +61,7 @@ module CollectionSpace
       end
       
       def validate(data)
-        response = CollectionSpace::Mapper::setup_data(data, @defaults, @mapper.batchconfig)
+        response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
         @validator.validate(response)
       end
 

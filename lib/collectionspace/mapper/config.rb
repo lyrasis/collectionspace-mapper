@@ -36,6 +36,8 @@ module CollectionSpace
       def initialize(opts = {})
         config = opts[:config] || DEFAULT_CONFIG
         self.record_type = opts[:record_type]
+
+        @default_values = {}
         
         if config.is_a?(String)
           set_instance_variables(JSON.parse(config))
@@ -46,6 +48,7 @@ module CollectionSpace
         end
 
         special_defaults.each{ |col, val| add_default_value(col, val) }
+        @default_values.transform_keys!(&:downcase)
         validate
       end
 

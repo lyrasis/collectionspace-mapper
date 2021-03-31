@@ -41,7 +41,7 @@ module CollectionSpace
       end
     end
 
-    def setup_data(data, defaults = {}, config = Mapper::Config.new)
+    def setup_data(data, config = Mapper::Config.new)
       if data.is_a?(Hash)
         response = Response.new(data)
       elsif data.is_a?(CollectionSpace::Mapper::Response)
@@ -50,13 +50,16 @@ module CollectionSpace
         raise Errors::UnprocessableDataError.new("Cannot process a #{data.class}. Need a Hash or Mapper::Response", data)
       end
 
-      response.merged_data.empty? ? merge_default_values(response, defaults, config) : response
+      response.merged_data.empty? ? merge_default_values(response, config) : response
     end
 
-    def merge_default_values(data, defaults, config)
+    def merge_default_values(data, batchconfig)
+      defaults = batchconfig.default_values
+      return data unless defaults
+      
       mdata = data.orig_data.clone
       defaults.each do |f, val|
-        if config.force_defaults
+        if batchconfig.force_defaults
           mdata[f] = val
         else
           dataval = data.orig_data.fetch(f, nil)

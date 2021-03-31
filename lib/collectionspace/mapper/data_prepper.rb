@@ -10,7 +10,7 @@ module CollectionSpace
         @config = @handler.mapper.batchconfig
         @cache = @handler.cache
         @client = @handler.client
-        @response = CollectionSpace::Mapper::setup_data(data, @handler.defaults, @config)
+        @response = CollectionSpace::Mapper::setup_data(data, @config)
         if @response.valid?
           process_xpaths
         end
