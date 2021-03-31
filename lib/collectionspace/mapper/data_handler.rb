@@ -14,18 +14,14 @@ module CollectionSpace
       attr_accessor :mapper
 
       def initialize(record_mapper:, client:, cache: nil, config: {})
-        configobj = CS::Mapper::Config.new(config)
-        @mapper = CollectionSpace::Mapper::RecordMapper.new(record_mapper, configobj)
+        @mapper = CollectionSpace::Mapper::RecordMapper.new(record_mapper, config)
         @client = client
-        object_hierarchy_default_values if @mapper.object_hierarchy?
-        authority_hierarchy_default_values if @mapper.authority_hierarchy?
-        non_hierarchical_relationship_default_values if @mapper.non_hierarchical_relationship?
         @cache = cache.nil? ? get_cache : cache
         @csidcache = get_csidcache if @mapper.service_type == 'relation'
-        @response_mode = configobj.response_mode
+        @response_mode = @mapper.batchconfig.response_mode
         add_short_id_mapping if @mapper.authority?
         @mapper.xpath = xpath_hash
-        @defaults = configobj.default_values ? configobj.default_values.transform_keys(&:downcase) : {}
+        @defaults = @mapper.batchconfig.default_values ? @mapper.batchconfig.default_values.transform_keys(&:downcase) : {}
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
         @new_terms = {}
@@ -58,22 +54,6 @@ module CollectionSpace
         @csidcache
       end
       
-      def object_hierarchy_default_values
-        {'subjectdocumenttype' => 'collectionobjects',
-         'relationshiptype' => 'hasBroader',
-         'objectdocumenttype' => 'collectionobjects'}.each do |column, value|
-          @mapper.batchconfig.add_default_value(column, value)
-        end
-      end
-
-      def authority_hierarchy_default_values
-        @mapper.batchconfig.add_default_value('relationshiptype', 'hasBroader')
-      end
-
-      def non_hierarchical_relationship_default_values
-        @mapper.batchconfig.add_default_value('relationshiptype', 'affects')
-      end
-
       def check_fields(data)
         data_fields = data.keys.map(&:downcase)
         unknown = data_fields - @mapper.mappings.known_columns
