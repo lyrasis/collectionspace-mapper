@@ -47,22 +47,6 @@ module CollectionSpace
         end
       end
 
-      def csidcache
-        @csidcache
-      end
-      
-      def check_fields(data)
-        data_fields = data.keys.map(&:downcase)
-        unknown = data_fields - @mapper.mappings.known_columns
-        known = data_fields - unknown
-        { known_fields: known, unknown_fields: unknown }
-      end
-      
-      def validate(data)
-        response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
-        @validator.validate(response)
-      end
-
       def prep(data)
         response = CollectionSpace::Mapper::setup_data(data)
         if response.valid?
@@ -79,6 +63,22 @@ module CollectionSpace
         tag_terms(result)
         @mapper.batchconfig.check_record_status ? set_record_status(result) : result.record_status = :new
         @mapper.batchconfig.response_mode == 'normal' ? result.normal : result
+      end
+      
+      def csidcache
+        @csidcache
+      end
+      
+      def check_fields(data)
+        data_fields = data.keys.map(&:downcase)
+        unknown = data_fields - @mapper.mappings.known_columns
+        known = data_fields - unknown
+        { known_fields: known, unknown_fields: unknown }
+      end
+      
+      def validate(data)
+        response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
+        @validator.validate(response)
       end
 
       # builds hash containing information to be used in mapping the fields that are
