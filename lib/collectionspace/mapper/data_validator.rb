@@ -64,6 +64,7 @@ module CollectionSpace
       end
     end
 
+    # checks incoming data before mapping to ensure the necessary data is present to do the mapping
     class DataValidator
       class IdFieldNotInMapperError < StandardError; end
       
@@ -114,7 +115,6 @@ module CollectionSpace
       def check_required_fields(data)
         errs = []
         @required_fields.each do |field, columns|
-          binding.pry if field == 'currentlocationlocal'
           if columns.length == 1
             checkfield = SingleColumnRequiredField.new(field, columns)
             errs << checkfield.missing_message if !checkfield.present_in?(data)
