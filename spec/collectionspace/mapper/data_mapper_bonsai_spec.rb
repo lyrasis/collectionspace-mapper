@@ -27,7 +27,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/bonsai/objectexit1.json')
           @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('bonsai/objectexit1.xml')

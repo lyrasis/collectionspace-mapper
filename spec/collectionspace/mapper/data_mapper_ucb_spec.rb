@@ -45,7 +45,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper, services_call: true do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/ucb/ucb_pahma_nagpra_2.json')
           @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
           @mapped_doc = remove_blank_structured_dates(remove_namespaces(@mapper.response.doc))
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('ucb/ucb_pahma_nagpra_2.xml')

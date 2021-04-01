@@ -25,7 +25,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         # before(:all) do
         #   @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/pottag1.json')
         #   @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @pottag_handler)
-        #   @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @pottag_handler, @prepper.xphash)
+        #   @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @pottag_handler, @prepper.xphash)
         #   @mapped_doc = remove_namespaces(@mapper.response.doc)
         #   @mapped_xpaths = list_xpaths(@mapped_doc)
         #   @fixture_doc = get_xml_fixture('botgarden/pottag1.xml')
@@ -58,7 +58,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         # before(:all) do
         #   @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/propagation1.json')
         #   @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @propagation_handler)
-        #   @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @propagation_handler, @prepper.xphash)
+        #   @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @propagation_handler, @prepper.xphash)
         #   @mapped_doc = remove_namespaces(@mapper.response.doc)
         #   @mapped_xpaths = list_xpaths(@mapped_doc)
         #   @fixture_doc = get_xml_fixture('botgarden/propagation1.xml')
@@ -95,7 +95,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/botgarden/taxon1.json')
           @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @taxon_handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @taxon_handler, @prepper.xphash)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @taxon_handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('botgarden/taxon1.xml')

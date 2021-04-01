@@ -214,16 +214,16 @@ end
     end
     it 'can be called with response from validation' do
       vresult = @anthro_object_handler.validate(@data)
-      result = @anthro_object_handler.prep(vresult)
+      result = @anthro_object_handler.prep(vresult).response
       expect(result).to be_a(CollectionSpace::Mapper::Response)
     end
     it 'can be called with just data' do
-      result = @anthro_object_handler.prep(@data)
+      result = @anthro_object_handler.prep(@data).response
       expect(result).to be_a(CollectionSpace::Mapper::Response)
     end
     context 'when response_mode = normal' do
       it 'returned response to include detailed data transformation info needed for mapping' do
-        result = @anthro_object_handler.prep(@data)
+        result = @anthro_object_handler.prep(@data).response
         expect(result.transformed_data).not_to be_empty
       end
     end
@@ -234,7 +234,7 @@ end
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,
                                                            config: config)
-        result = handler.prep(@data)
+        result = handler.prep(@data).response
         expect(result.transformed_data).not_to be_empty
       end
     end
@@ -276,7 +276,7 @@ end
     before(:all) do
       @data = { 'objectNumber' => '123' }
       prepper = CollectionSpace::Mapper::DataPrepper.new(@data, @anthro_object_handler)
-      prep_response = @anthro_object_handler.prep(@data)
+      prep_response = @anthro_object_handler.prep(@data).response
       @result = @anthro_object_handler.map(prep_response, prepper.xphash)
     end
     
@@ -300,7 +300,7 @@ end
                                                            cache: @anthro_cache,
                                                            config: config)
         prepper = CollectionSpace::Mapper::DataPrepper.new(@data, handler)
-        result = handler.map(handler.prep(@data), prepper.xphash)
+        result = handler.map(handler.prep(@data).response, prepper.xphash)
         expect(result.transformed_data).not_to be_empty
       end
     end

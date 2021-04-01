@@ -21,7 +21,7 @@ module CollectionSpace
         transform_terms
         combine_data_fields
         push_errors_and_warnings
-        @response
+        self
       end
 
       private

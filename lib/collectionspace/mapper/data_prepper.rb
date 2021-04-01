@@ -24,7 +24,7 @@ module CollectionSpace
         @response.terms.flatten!
         check_data
         combine_data_fields
-        @response
+        self
       end
       
       def split_data

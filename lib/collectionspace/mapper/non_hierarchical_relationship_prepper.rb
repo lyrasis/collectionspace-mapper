@@ -26,7 +26,7 @@ module CollectionSpace
         combine_data_fields
         @responses << @response
         flip_response
-        @responses
+        self
       end
 
       private

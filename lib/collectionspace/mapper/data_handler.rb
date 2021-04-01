@@ -26,32 +26,29 @@ module CollectionSpace
       end
 
       def process(data)
+          prepped = prep(data)
+          case @mapper.record_type
+          when 'nonhierarchicalrelationship'
+            prepped.responses.map{ |response| map(response, prepped.xphash) }
+          else
+            map(prepped.response, prepped.xphash)
+          end
+      end
+
+      def prep(data)
         response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
         if response.valid?
           case @mapper.record_type
           when 'authorityhierarchy'
             prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
             prepper.prep
-            map(prepper.response, prepper.xphash)
           when 'nonhierarchicalrelationship'
             prepper = CollectionSpace::Mapper::NonHierarchicalRelationshipPrepper.new(response, self)
             prepper.prep
-            prepper.responses.map{ |response| map(response, prepper.xphash) }
           else
             prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
             prepper.prep
-            map(prepper.response, prepper.xphash)
           end
-        else
-          response
-        end
-      end
-
-      def prep(data)
-        response = CollectionSpace::Mapper::setup_data(data)
-        if response.valid?
-          prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
-          prepper.prep
         else
           response
         end
