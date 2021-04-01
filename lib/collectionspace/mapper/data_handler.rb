@@ -8,7 +8,7 @@ module CollectionSpace
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      attr_reader :client, :cache, :defaults, :validator
+      attr_reader :client, :cache, :validator
       # this is an accessor rather than a reader until I refactor away the hideous
       #  xpath hash
       attr_accessor :mapper
