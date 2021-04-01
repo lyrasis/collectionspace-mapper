@@ -18,7 +18,6 @@ module CollectionSpace
         @client = client
         @cache = cache.nil? ? get_cache : cache
         @csidcache = get_csidcache if @mapper.service_type == 'relation'
-        @response_mode = @mapper.batchconfig.response_mode
         add_short_id_mapping if @mapper.authority?
         @mapper.xpath = xpath_hash
         merge_config_transforms
@@ -80,7 +79,7 @@ module CollectionSpace
         result = mapper.response
         tag_terms(result)
         @mapper.batchconfig.check_record_status ? set_record_status(result) : result.record_status = :new
-        @response_mode == 'normal' ? result.normal : result
+        @mapper.batchconfig.response_mode == 'normal' ? result.normal : result
       end
 
       # builds hash containing information to be used in mapping the fields that are
