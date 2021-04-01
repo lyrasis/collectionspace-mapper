@@ -148,7 +148,7 @@ module CollectionSpace
       private
 
       def set_record_status(response)
-        if @mapper.authority?
+        if @mapper.service_type == CS::Mapper::Authority
           value = response.split_data['termdisplayname'].first
         elsif @mapper.relationship?
           value = {}
@@ -204,7 +204,7 @@ module CollectionSpace
           search_enabled: true
         }
         # search for authority records by display name, not short ID
-        config[:search_identifiers] = @mapper.authority? ? false : true
+        config[:search_identifiers] = @mapper.service_type == CS::Mapper::Authority ? false : true
         CollectionSpace::RefCache.new(config: config, client: @client)
       end
 

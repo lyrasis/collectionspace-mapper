@@ -27,10 +27,6 @@ module CollectionSpace
         @xpath = {}
       end
 
-      def authority?
-        service_type == CS::Mapper::Authority
-      end
-
       def relationship?
         service_type == CS::Mapper::Relationship
       end
