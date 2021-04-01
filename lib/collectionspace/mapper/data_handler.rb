@@ -18,7 +18,6 @@ module CollectionSpace
         @client = client
         @cache = cache.nil? ? get_cache : cache
         @csidcache = get_csidcache if @mapper.service_type == 'relation'
-        add_short_id_mapping if @mapper.authority?
         @mapper.xpath = xpath_hash
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
@@ -218,19 +217,6 @@ module CollectionSpace
           search_enabled: false
         }
         CollectionSpace::RefCache.new(config: config, client: @client)
-      end
-
-      def add_short_id_mapping
-        @mapper.mappings << {
-          fieldname: 'shortIdentifier',
-          namespace: @mapper.config.common_namespace,
-          data_type: 'string',
-          xpath: [],
-          required: 'not in input data',
-          repeats: 'n',
-          in_repeating_group: 'n/a',
-          datacolumn: 'shortIdentifier'
-        }
       end
 
       # you can specify per-data-key transforms in your config.json

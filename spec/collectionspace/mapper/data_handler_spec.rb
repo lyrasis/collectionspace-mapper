@@ -100,10 +100,6 @@ end
   describe '#is_authority' do
     context 'anthro profile' do
       context 'place record' do
-        it 'adds a mapping for shortIdentifier' do
-          result = @anthro_place_handler.mapper.mappings.select{ |mapping| mapping.fieldname == 'shortIdentifier' }
-          expect(result.length).to eq(1)
-        end
         it 'adds a xphash entry for shortIdentifier' do
           result = @anthro_place_handler.mapper.xpath['places_common'][:mappings].select do |mapping|
             mapping.fieldname == 'shortIdentifier'

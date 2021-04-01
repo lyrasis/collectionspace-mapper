@@ -49,7 +49,9 @@ module CollectionSpace
         hash = symbolize(json)
         @config = CS::Mapper::RecordMapperConfig.new(hash[:config])
         @xml_template = CS::Mapper::XmlTemplate.new(hash[:docstructure])
-        @mappings = CS::Mapper::ColumnMappings.new(hash[:mappings])
+        @mappings = CS::Mapper::ColumnMappings.new(mappings: hash[:mappings],
+                                                   service_type: service_type_extension,
+                                                   mapperconfig: @config)
       end
 
       def record_type_extension
@@ -60,6 +62,13 @@ module CollectionSpace
           CS::Mapper::AuthorityHierarchy
         when 'nonhierarchicalrelationship'
           CS::Mapper::NonHierarchicalRelationship
+        end
+      end
+
+      def service_type_extension
+        case service_type
+        when 'authority'
+          CS::Mapper::Authority
         end
       end
     end
