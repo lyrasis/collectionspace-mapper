@@ -7,18 +7,18 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     @anthro_client = anthro_client
     @anthro_cache = anthro_cache
     populate_anthro(@anthro_cache)
-    @anthro_object_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+    @anthro_object_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject.json')
     @anthro_object_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                                       client: @anthro_client,
                                                                       cache: @anthro_cache)
-    @anthro_place_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
+    @anthro_place_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_place-local.json')
     @anthro_place_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_place_mapper,
                                                                      client: @anthro_client,
                                                                      cache: @anthro_cache)
 
     @bonsai_client = bonsai_client
     @bonsai_cache = bonsai_cache
-    @bonsai_conservation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-conservation.json')
+    @bonsai_conservation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4-1-1_conservation.json')
     @bonsai_conservation_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @bonsai_conservation_mapper,
                                                                             client: @bonsai_client,
                                                                             cache: @bonsai_cache)
@@ -29,7 +29,7 @@ end
     before(:all) do
       @client = core_client
       @cache = core_cache_search
-      @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+      @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json')
       @config = '{"check_terms": false}'
       @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                           client: @client,
@@ -65,7 +65,7 @@ end
   context 'when cache is not directly passed in at initialization', services_call: true do
     context 'when mapping an authority' do
       it 'cache.search_identifiers = false' do
-        mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
+        mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_place-local.json')
         dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
                                                       client: @anthro_client)
         expect(dh.cache.inspect).to include('@search_identifiers=false')

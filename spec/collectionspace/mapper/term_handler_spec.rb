@@ -7,7 +7,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
     @client = core_client
     @cache = core_cache
     populate_core(@cache)
-    @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+    @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json')
     @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                         client: @client,
                                                         cache: @cache,

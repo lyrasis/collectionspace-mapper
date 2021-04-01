@@ -31,7 +31,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         force_defaults: false
       })
     
-      @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+      @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject.json')
       @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper,
                                                           client: @client,
                                                           cache: @cache,
@@ -92,7 +92,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
       describe '#process_xpaths' do
         context 'when authority record' do
           before(:all) do
-            @place_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-place-local.json')
+            @place_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_place-local.json')
             @place_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @place_mapper, client: @client, cache: @cache, config: @config)
             data = get_datahash(path: 'spec/fixtures/files/datahashes/core/place001.json')
             @place_prepper = CollectionSpace::Mapper::DataPrepper.new(data, @place_handler)
@@ -167,7 +167,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
 
           context 'and one or more combined field values is blank' do
             before(:all) do
-              @core_conservation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conservation.json')
+              @core_conservation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_conservation.json')
               @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @core_conservation_mapper, client: @client, cache: @cache, config: @config)
               data = get_datahash(path: 'spec/fixtures/files/datahashes/core/conservation0_1.json')
               @prepper = CollectionSpace::Mapper::DataPrepper.new(data, @handler)
@@ -186,7 +186,7 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
         end
         context 'when multi-authority field is part of repeating field subgroup' do
           before(:all) do
-            @core_media_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-media.json')
+            @core_media_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_media.json')
             @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @core_media_mapper, client: @client, cache: @cache, config: @config)
           end
           

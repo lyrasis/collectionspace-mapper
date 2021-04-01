@@ -32,7 +32,7 @@ module Helpers
   end
 
   def core_object_mapper
-    path = 'spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json'
+    path = 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json'
     get_record_mapper_object(path)
   end
 

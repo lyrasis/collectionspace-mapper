@@ -122,7 +122,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'object hierarchy record', services_call: true do
       before(:all) do
-        @oh_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-object_hierarchy.json')
+        @oh_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_objecthierarchy.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @oh_mapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -158,7 +158,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'acquisition record', services_call: true do
       before(:all) do
-        @acquisition_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-acquisition.json')
+        @acquisition_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_acquisition.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @acquisition_mapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -189,7 +189,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'collectionobject record' do
       before(:all) do
-        @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+        @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -220,7 +220,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'conditioncheck record', services_call: true do
       before(:all) do
-        @conditioncheckmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conditioncheck.json')
+        @conditioncheckmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_conditioncheck.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @conditioncheckmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -251,7 +251,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'conservation record', services_call: true do
       before(:all) do
-        @conservationmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-conservation.json')
+        @conservationmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_conservation.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @conservationmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -282,7 +282,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'exhibition record', services_call: true do
       before(:all) do
-        @exhibitionmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-exhibition.json')
+        @exhibitionmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_exhibition.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @exhibitionmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -313,7 +313,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'group record' do
       before(:all) do
-        @groupmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-group.json')
+        @groupmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_group.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @groupmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -344,7 +344,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'intake record' do
       before(:all) do
-        @intakemapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-intake.json')
+        @intakemapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_intake.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @intakemapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -375,7 +375,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'loanin record' do
       before(:all) do
-        @rm_core_co = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-loanin.json')
+        @rm_core_co = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_loanin.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @rm_core_co, client: @client, cache: @cache, config: @config)
       end
 
@@ -406,7 +406,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'loanout record' do
       before(:all) do
-        @loanoutmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-loanout.json')
+        @loanoutmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_loanout.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @loanoutmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -436,7 +436,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     context 'movement record' do
       before(:all) do
-        @movementmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-movement.json')
+        @movementmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_movement.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @movementmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -467,7 +467,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'media record' do
       before(:all) do
-        @movementmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-media.json')
+        @movementmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_media.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @movementmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -498,7 +498,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'objectexit record' do
       before(:all) do
-        @objectexitmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-objectexit.json')
+        @objectexitmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_objectexit.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @objectexitmapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -530,7 +530,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'uoc record' do
       before(:all) do
-        @uocmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-uoc.json')
+        @uocmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_uoc.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @uocmapper, client: @client, cache: @cache, config: @config)
       end
 
