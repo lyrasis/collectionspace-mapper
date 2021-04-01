@@ -150,7 +150,7 @@ module CollectionSpace
       def set_record_status(response)
         if @mapper.service_type == CS::Mapper::Authority
           value = response.split_data['termdisplayname'].first
-        elsif @mapper.relationship?
+        elsif @mapper.service_type == CS::Mapper::Relationship
           value = {}
           value[:sub] = response.combined_data['relations_common']['subjectCsid'][0]
           value[:obj] = response.combined_data['relations_common']['objectCsid'][0]

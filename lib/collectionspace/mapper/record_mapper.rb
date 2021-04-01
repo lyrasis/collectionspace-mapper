@@ -27,10 +27,6 @@ module CollectionSpace
         @xpath = {}
       end
 
-      def relationship?
-        service_type == CS::Mapper::Relationship
-      end
-      
       def record_type
         @config.recordtype
       end
