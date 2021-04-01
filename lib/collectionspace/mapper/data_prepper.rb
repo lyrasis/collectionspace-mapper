@@ -62,6 +62,18 @@ module CollectionSpace
 
       private
 
+      #used by NonHierarchicalRelationshipPrepper and AuthorityHierarchyPrepper
+      def push_errors_and_warnings
+        unless errors.empty?
+          @response.errors << errors
+          @response.errors.flatten!
+        end
+        unless warnings.empty?
+          @response.warnings << warnings
+          @response.warnings.flatten!
+        end
+      end
+
       def process_xpaths
         # keep only mappings for datacolumns present in data hash
         mappings = @handler.mapper.mappings.select do |mapper|

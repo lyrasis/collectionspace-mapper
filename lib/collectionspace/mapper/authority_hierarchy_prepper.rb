@@ -20,14 +20,7 @@ module CollectionSpace
         split_data
         transform_terms
         combine_data_fields
-        unless errors.empty?
-          @response.errors << errors
-          @response.errors.flatten!
-        end
-        unless warnings.empty?
-          @response.warnings << warnings
-          @response.warnings.flatten!
-        end
+        push_errors_and_warnings
         @response
       end
 

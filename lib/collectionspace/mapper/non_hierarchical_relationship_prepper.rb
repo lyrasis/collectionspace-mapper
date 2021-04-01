@@ -31,17 +31,6 @@ module CollectionSpace
 
       private
 
-      def push_errors_and_warnings
-        unless errors.empty?
-          @response.errors << errors
-          @response.errors.flatten!
-        end
-        unless warnings.empty?
-          @response.warnings << warnings
-          @response.warnings.flatten!
-        end
-      end
-      
       def stringify_item(item_number)
         id = "item#{item_number}_id"
         type = "item#{item_number}_type"
