@@ -221,10 +221,9 @@ module CollectionSpace
       end
 
       def add_short_id_mapping
-        namespaces = @mapper.mappings.map{ |mapping| mapping.namespace}.uniq
         @mapper.mappings << {
           fieldname: 'shortIdentifier',
-          namespace: namespaces.first{ |ns| ns.end_with?('_common') },
+          namespace: @mapper.config.common_namespace,
           data_type: 'string',
           xpath: [],
           required: 'not in input data',
