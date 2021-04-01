@@ -18,6 +18,10 @@ module CollectionSpace
         end
       end
 
+      def common_namespace
+        namespaces.select{ |namespace| namespace.end_with?('_common') }.first
+      end
+      
       def namespaces
         @ns_uri.keys
       end
