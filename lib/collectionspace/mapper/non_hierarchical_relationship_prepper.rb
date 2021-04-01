@@ -89,14 +89,6 @@ module CollectionSpace
           end
         end
       end
-
-      def type
-        @type
-      end
-
-      def subtype
-        @subtype
-      end
     end
   end
 end
