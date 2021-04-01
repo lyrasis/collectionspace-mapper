@@ -17,6 +17,10 @@ module CollectionSpace
           instance_variable_set("@#{key}", value)
         end
       end
+
+      def namespaces
+        @ns_uri.keys
+      end
     end
   end
 end
