@@ -34,6 +34,9 @@ module CollectionSpace
         @lookup[columnname.downcase]
       end
 
+      # columns that are required for initial processing of CSV data
+      # For non-hierarchical relationships and authority hierarchy relationships, includes some columns
+      #   that do not ultimately get mapped to XML
       def required_columns
         @all.select(&:required?)
       end

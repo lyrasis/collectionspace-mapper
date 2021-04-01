@@ -47,6 +47,13 @@ RSpec.describe CollectionSpace::Mapper::ColumnMapping do
       end
     end
 
+    context 'with required = y in template' do
+      it 'returns true' do
+        mapping = described_class.new({ :required=>"y in template" })
+        expect(mapping.required?).to be true
+      end
+    end
+
     context 'with required = n' do
       it 'returns false' do
         mapping = described_class.new({ :required=>"n" })

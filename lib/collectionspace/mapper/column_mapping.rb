@@ -25,8 +25,9 @@ module CollectionSpace
         @fullpath ||= [@namespace, @xpath].flatten.join('/')
       end
 
+      # includes both truly required and "required in template" 
       def required?
-        @required == 'y'
+        @required.start_with?('y')
       end
 
       def update_transforms(new_transforms)
