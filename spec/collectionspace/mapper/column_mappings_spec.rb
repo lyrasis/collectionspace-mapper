@@ -4,62 +4,62 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::ColumnMappings do
   let(:mappings) { [
-      {:fieldname=>"objectNumber",
-       :transforms=>{},
-       :source_type=>"na",
-       :source_name=>nil,
-       :namespace=>"collectionobjects_common",
-       :xpath=>[],
-       :data_type=>"string",
-       :repeats=>"n",
-       :in_repeating_group=>"n/a",
-       :opt_list_values=>[],
-       :datacolumn=>"objectNumber",
-       :required=>"y"},
-      {:fieldname=>"numberOfObjects",
-       :transforms=>{},
-       :source_type=>"na",
-       :source_name=>nil,
-       :namespace=>"collectionobjects_common",
-       :xpath=>[],
-       :data_type=>"integer",
-       :repeats=>"n",
-       :in_repeating_group=>"n/a",
-       :opt_list_values=>[],
-       :datacolumn=>"numberOfObjects",
-       :required=>"n"},
-      {:fieldname=>"numberValue",
-       :transforms=>{},
-       :source_type=>"na",
-       :source_name=>nil,
-       :namespace=>"collectionobjects_common",
-       :xpath=>["otherNumberList", "otherNumber"],
-       :data_type=>"string",
-       :repeats=>"n",
-       :in_repeating_group=>"y",
-       :opt_list_values=>[],
-       :datacolumn=>"numberValue",
-       :required=>"n"},
-      {:fieldname=>"numberType",
-       :transforms=>{},
-       :source_type=>"optionlist",
-       :source_name=>"numberTypes",
-       :namespace=>"collectionobjects_common",
-       :xpath=>["otherNumberList", "otherNumber"],
-       :data_type=>"string",
-       :repeats=>"n",
-       :in_repeating_group=>"y",
-       :opt_list_values=>["lender", "obsolete", "previous", "serial", "unknown"],
-       :datacolumn=>"numberType",
-       :required=>"n"},
-      {:datacolumn=>"otherRequired",
-       :required=>"y"}
-    ] }
+    {:fieldname=>"objectNumber",
+     :transforms=>{},
+     :source_type=>"na",
+     :source_name=>nil,
+     :namespace=>"collectionobjects_common",
+     :xpath=>[],
+     :data_type=>"string",
+     :repeats=>"n",
+     :in_repeating_group=>"n/a",
+     :opt_list_values=>[],
+     :datacolumn=>"objectNumber",
+     :required=>"y"},
+    {:fieldname=>"numberOfObjects",
+     :transforms=>{},
+     :source_type=>"na",
+     :source_name=>nil,
+     :namespace=>"collectionobjects_common",
+     :xpath=>[],
+     :data_type=>"integer",
+     :repeats=>"n",
+     :in_repeating_group=>"n/a",
+     :opt_list_values=>[],
+     :datacolumn=>"numberOfObjects",
+     :required=>"n"},
+    {:fieldname=>"numberValue",
+     :transforms=>{},
+     :source_type=>"na",
+     :source_name=>nil,
+     :namespace=>"collectionobjects_common",
+     :xpath=>["otherNumberList", "otherNumber"],
+     :data_type=>"string",
+     :repeats=>"n",
+     :in_repeating_group=>"y",
+     :opt_list_values=>[],
+     :datacolumn=>"numberValue",
+     :required=>"n"},
+    {:fieldname=>"numberType",
+     :transforms=>{},
+     :source_type=>"optionlist",
+     :source_name=>"numberTypes",
+     :namespace=>"collectionobjects_common",
+     :xpath=>["otherNumberList", "otherNumber"],
+     :data_type=>"string",
+     :repeats=>"n",
+     :in_repeating_group=>"y",
+     :opt_list_values=>["lender", "obsolete", "previous", "serial", "unknown"],
+     :datacolumn=>"numberType",
+     :required=>"n"},
+    {:datacolumn=>"otherRequired",
+     :required=>"y"}
+  ] }
 
+  let(:recordmapper) { instance_double('CS::Mapper::RecordMapper') }
   let(:mapperconfig) { instance_double('CS::Mapper::RecordMapperConfig') }
-  let(:mappingsobj) { described_class.new(mappings: mappings,
-                                          service_type: nil,
-                                          mapperconfig: mapperconfig) }
+  
+  let(:mappingsobj) { dc = described_class.new(mappings: mappings, mapper: recordmapper) }
 
   let(:added_field) { {
     fieldname: 'addedField',
@@ -72,12 +72,18 @@ RSpec.describe CollectionSpace::Mapper::ColumnMappings do
     datacolumn: 'addedfield'
   } }
 
+  before do
+    allow(recordmapper).to receive(:config).and_return(mapperconfig)
+    allow(recordmapper).to receive(:service_type).and_return(nil)
+  end
+  
   context 'when initialized from authority RecordMapper' do
     it 'adds shortIdentifier to mappings' do
       allow(mapperconfig).to receive(:common_namespace).and_return('citations_common')
+      allow(recordmapper).to receive(:service_type).and_return(CS::Mapper::Authority)
+      
       authmappings = described_class.new(mappings: mappings,
-                                          service_type: CS::Mapper::Authority,
-                                          mapperconfig: mapperconfig)
+                                         mapper: recordmapper)
       expect(authmappings.known_columns.include?('shortidentifier')).to be true
     end
   end
@@ -115,3 +121,4 @@ RSpec.describe CollectionSpace::Mapper::ColumnMappings do
     end
   end
 end
+

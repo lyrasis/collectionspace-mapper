@@ -13,8 +13,9 @@ module CollectionSpace
       def_delegators :@all, :each, :length, :map, :reject!, :select
       
       def initialize(opts = {})
-        @config = opts[:mapperconfig]
-        self.service_type = opts[:service_type]
+        @mapper = opts[:mapper]
+        @config = @mapper.config
+        self.service_type = @mapper.service_type
         @all = []
         @lookup = {}
         opts[:mappings].each{ |mapping_hash| add_mapping(mapping_hash) }

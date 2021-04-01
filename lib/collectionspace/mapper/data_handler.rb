@@ -17,7 +17,7 @@ module CollectionSpace
         @mapper = CollectionSpace::Mapper::RecordMapper.new(record_mapper, config)
         @client = client
         @cache = cache.nil? ? get_cache : cache
-        @csidcache = get_csidcache if @mapper.service_type == 'relation'
+        @csidcache = get_csidcache if @mapper.service_type == CS::Mapper::Relationship
         @mapper.xpath = xpath_hash
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)

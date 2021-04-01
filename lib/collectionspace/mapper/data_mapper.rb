@@ -25,7 +25,7 @@ module CollectionSpace
       private
 
       def set_response_identifier
-        if @handler.mapper.config.service_type == 'relation'
+        if @handler.mapper.service_type == CS::Mapper::Relationship
           set_relation_id
         else
           id_field = @handler.mapper.config.identifier_field

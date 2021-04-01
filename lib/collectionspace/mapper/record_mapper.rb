@@ -28,19 +28,26 @@ module CollectionSpace
       end
 
       def authority?
-        service_type == 'authority'
+        service_type == CS::Mapper::Authority
       end
 
       def relationship?
-        service_type == 'relation'
+        service_type == CS::Mapper::Relationship
       end
       
       def record_type
         @config.recordtype
       end
 
+      # The value returned here is used to enable module extension when creating
+      #  other classes using RecordMapper
       def service_type
-        @config.service_type
+        case @config.service_type
+        when 'authority'
+          CS::Mapper::Authority
+        when 'relation'
+          CS::Mapper::Relationship
+        end
       end
       
       private
@@ -49,9 +56,8 @@ module CollectionSpace
         hash = symbolize(json)
         @config = CS::Mapper::RecordMapperConfig.new(hash[:config])
         @xml_template = CS::Mapper::XmlTemplate.new(hash[:docstructure])
-        @mappings = CS::Mapper::ColumnMappings.new(mappings: hash[:mappings],
-                                                   service_type: service_type_extension,
-                                                   mapperconfig: @config)
+        @mappings = CS::Mapper::ColumnMappings.new(mappings: hash[:mappings],                             
+                                                   mapper: self)
       end
 
       def record_type_extension
@@ -62,13 +68,6 @@ module CollectionSpace
           CS::Mapper::AuthorityHierarchy
         when 'nonhierarchicalrelationship'
           CS::Mapper::NonHierarchicalRelationship
-        end
-      end
-
-      def service_type_extension
-        case service_type
-        when 'authority'
-          CS::Mapper::Authority
         end
       end
     end
