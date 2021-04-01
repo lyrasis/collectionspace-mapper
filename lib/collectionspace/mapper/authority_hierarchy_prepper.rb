@@ -4,7 +4,7 @@ module CollectionSpace
   module Mapper
     class AuthorityHierarchyPrepper < CollectionSpace::Mapper::DataPrepper
       include CollectionSpace::Mapper::TermSearchable
-      attr_reader :errors, :warnings
+      attr_reader :errors, :warnings, :type, :subtype
       
       def initialize(data, handler)
         super
@@ -67,14 +67,6 @@ module CollectionSpace
 
       def transformed_term(field)
         @response.split_data[field].map{ |term| term_csid(term) }
-      end
-      
-      def type
-        @type
-      end
-
-      def subtype
-        @subtype
       end
     end
   end
