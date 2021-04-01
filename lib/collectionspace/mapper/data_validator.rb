@@ -2,8 +2,6 @@
 
 module CollectionSpace
   module Mapper
-      class IdFieldNotInMapperError < StandardError; end
-    
     class RequiredField
       def initialize(fieldname, datacolumns)
         @field = fieldname.downcase
@@ -67,6 +65,8 @@ module CollectionSpace
     end
 
     class DataValidator
+      class IdFieldNotInMapperError < StandardError; end
+      
       attr_reader :mapper, :cache, :required_fields
       def initialize(record_mapper, cache)
         @mapper = record_mapper
@@ -97,7 +97,7 @@ module CollectionSpace
 
       def get_id_field
         idfield = @mapper.config.identifier_field
-        raise CollectionSpace::Mapper::IdFieldNotInMapperError if idfield.nil?
+        raise IdFieldNotInMapperError if idfield.nil?
         idfield.nil? ? nil : idfield.downcase
       end
 
