@@ -48,10 +48,7 @@ module CollectionSpace
       
       def add_short_id
         term = @response.transformed_data['termdisplayname'][0]
-        ns = @xphash.keys.map{ |k| k.sub(/^([^\/]+).*/, '\1') }
-          .select{ |k| k.end_with?('_common') }
-          .first
-        targetnode = @doc.xpath("/document/#{ns}").first
+        targetnode = @doc.xpath("/document/#{@handler.mapper.config.common_namespace}").first
         child = Nokogiri::XML::Node.new('shortIdentifier', @doc)
         child.content = CollectionSpace::Mapper::Identifiers::AuthorityShortIdentifier.new(term: term).value
         targetnode.add_child(child)
