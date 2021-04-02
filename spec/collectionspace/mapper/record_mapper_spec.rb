@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::RecordMapper do
-  
-  let(:mapper) { described_class.new(get_json_record_mapper(path)) }
+  let(:jsonmapper) { get_json_record_mapper(path) }
+  let(:mapper) { described_class.new(mapper: jsonmapper) }
   let(:path) { 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject.json' }
 
   it 'has expected instance variables' do

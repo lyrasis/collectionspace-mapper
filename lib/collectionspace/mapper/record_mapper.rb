@@ -20,10 +20,10 @@ module CollectionSpace
       attr_reader :batchconfig, :config, :mappings, :xml_template
       attr_accessor :xpath
       
-      def initialize(json, batchconfig = {})
-        jhash = json.is_a?(Hash) ? json : JSON.parse(json)
+      def initialize(opts)
+        jhash = opts[:mapper].is_a?(Hash) ? opts[:mapper] : JSON.parse(opts[:mapper])
         convert(jhash)
-        @batchconfig = CS::Mapper::Config.new(config: batchconfig, record_type: record_type_extension)
+        @batchconfig = CS::Mapper::Config.new(config: opts[:batchconfig], record_type: record_type_extension)
         @xpath = {}
       end
 

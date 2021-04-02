@@ -23,7 +23,7 @@ module Helpers
   end
 
   def get_record_mapper_object(path)
-    CS::Mapper::RecordMapper.new(File.read(path))
+    CS::Mapper::RecordMapper.new(mapper: File.read(path))
   end
 
   def get_datahash(path:)
