@@ -8,7 +8,7 @@ module CollectionSpace
       def initialize(data, handler)
         @handler = handler
         @config = @handler.mapper.batchconfig
-        @cache = @handler.cache
+        @cache = @handler.mapper.termcache
         @client = @handler.mapper.csclient
         @response = CollectionSpace::Mapper::setup_data(data, @config)
         if @response.valid?
@@ -213,12 +213,12 @@ module CollectionSpace
           if d.is_a?(String)
             CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
                                                                   @client,
-                                                                  @handler.cache,
+                                                                  @cache,
                                                                   @handler.mapper.batchconfig).mappable
           else
             d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
                                                                              @client,
-                                                                             @handler.cache,
+                                                                             @cache,
                                                                              @handler.mapper.batchconfig).mappable }
           end
         end
@@ -229,12 +229,12 @@ module CollectionSpace
           if d.is_a?(String)
             CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
                                                                   @client,
-                                                                  @handler.cache,
+                                                                  @cache,
                                                                   @handler.mapper.batchconfig).stamp
           else
             d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
                                                                              @client,
-                                                                             @handler.cache,
+                                                                             @cache,
                                                                              @handler.mapper.batchconfig).stamp }
           end
         end

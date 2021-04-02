@@ -8,15 +8,14 @@ module CollectionSpace
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      attr_reader :cache, :validator
+      attr_reader :validator
       # this is an accessor rather than a reader until I refactor away the hideous
       #  xpath hash
       attr_accessor :mapper
 
       def initialize(record_mapper:, client:, cache: nil, config: {})
-        @cache = cache.nil? ? get_cache : cache
         @mapper = CollectionSpace::Mapper::RecordMapper.new(mapper: record_mapper, batchconfig: config,
-                                                            csclient: client)
+                                                            csclient: client, termcache: cache)
         @mapper.xpath = xpath_hash
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)

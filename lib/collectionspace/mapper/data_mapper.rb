@@ -12,7 +12,7 @@ module CollectionSpace
         
         @data = @response.combined_data
         @doc = @handler.mapper.xml_template.blankdoc
-        @cache = @handler.cache
+        @cache = @handler.mapper.termcache
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
         add_short_id if @handler.mapper.service_type == CS::Mapper::Authority
