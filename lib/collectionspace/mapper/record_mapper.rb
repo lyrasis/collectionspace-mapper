@@ -17,16 +17,27 @@ module CollectionSpace
     class RecordMapper
       include Tools::Symbolizable
       
-      attr_reader :batchconfig, :config, :mappings, :xml_template
+      attr_reader :batchconfig, :config, :mappings, :xml_template, :csclient
+
       attr_accessor :xpath
       
       def initialize(opts)
         jhash = opts[:mapper].is_a?(Hash) ? opts[:mapper] : JSON.parse(opts[:mapper])
         convert(jhash)
         @batchconfig = CS::Mapper::Config.new(config: opts[:batchconfig], record_type: record_type_extension)
+        @csclient = opts[:csclient]
+        @termcache = opts[:termcache] || nil
         @xpath = {}
       end
 
+      def termcache
+        @termcache ||= get_termcache
+      end
+
+      def csidcache
+        @csidcache ||= get_csidcache
+      end
+      
       def record_type
         @config.recordtype
       end
@@ -50,6 +61,32 @@ module CollectionSpace
         @xml_template = CS::Mapper::XmlTemplate.new(hash[:docstructure])
         @mappings = CS::Mapper::ColumnMappings.new(mappings: hash[:mappings],                             
                                                    mapper: self)
+      end
+
+      def get_termcache
+        config = {
+          domain: @csclient.domain,
+          error_if_not_found: false,
+          lifetime: 5 * 60,
+          search_delay: 5 * 60,
+          search_enabled: true
+        }
+        # search for authority records by display name, not short ID
+        config[:search_identifiers] = service_type == CS::Mapper::Authority ? false : true
+        CollectionSpace::RefCache.new(config: config, client: @csclient)
+      end
+
+      def get_csidcache
+        return nil unless service_type == CS::Mapper::Relationship
+        
+        config = {
+          domain: @csclient.domain,
+          error_if_not_found: false,
+          lifetime: 5 * 60,
+          search_delay: 5 * 60,
+          search_enabled: false
+        }
+        CollectionSpace::RefCache.new(config: config, client: @csclient)
       end
 
       def record_type_extension

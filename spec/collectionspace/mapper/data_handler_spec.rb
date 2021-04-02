@@ -62,24 +62,6 @@ end
     end
   end
 
-  context 'when cache is not directly passed in at initialization', services_call: true do
-    context 'when mapping an authority' do
-      it 'cache.search_identifiers = false' do
-        mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_place-local.json')
-        dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
-                                                      client: @anthro_client)
-        expect(dh.cache.inspect).to include('@search_identifiers=false')
-      end
-    end
-    context 'when mapping a non-authority' do
-      it 'cache.search_identifiers = true' do
-        dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
-                                                      client: @anthro_client)
-        expect(dh.cache.inspect).to include('@search_identifiers=true')
-      end
-    end
-  end
-
   it 'tags all un-found terms as such', services_call: true do
     data1 = {
       'objectNumber' => '1',

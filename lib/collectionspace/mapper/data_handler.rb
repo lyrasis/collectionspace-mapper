@@ -8,21 +8,20 @@ module CollectionSpace
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      attr_reader :client, :cache, :validator
+      attr_reader :cache, :validator
       # this is an accessor rather than a reader until I refactor away the hideous
       #  xpath hash
       attr_accessor :mapper
 
       def initialize(record_mapper:, client:, cache: nil, config: {})
-        @client = client
         @cache = cache.nil? ? get_cache : cache
-        @mapper = CollectionSpace::Mapper::RecordMapper.new(mapper: record_mapper, batchconfig: config)
-        @csidcache = get_csidcache if @mapper.service_type == CS::Mapper::Relationship
+        @mapper = CollectionSpace::Mapper::RecordMapper.new(mapper: record_mapper, batchconfig: config,
+                                                            csclient: client)
         @mapper.xpath = xpath_hash
         merge_config_transforms
         @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
         @new_terms = {}
-        @status_checker = CollectionSpace::Mapper::Tools::RecordStatusService.new(@client, @mapper)
+        @status_checker = CollectionSpace::Mapper::Tools::RecordStatusService.new(@mapper.csclient, @mapper)
       end
 
       def process(data)
@@ -63,7 +62,7 @@ module CollectionSpace
       end
       
       def csidcache
-        @csidcache
+        @mapper.csidcache
       end
       
       def check_fields(data)
@@ -192,30 +191,6 @@ module CollectionSpace
         result.terms = terms
       end
       
-      def get_cache
-        config = {
-          domain: @client.domain,
-          error_if_not_found: false,
-          lifetime: 5 * 60,
-          search_delay: 5 * 60,
-          search_enabled: true
-        }
-        # search for authority records by display name, not short ID
-        config[:search_identifiers] = @mapper.service_type == CS::Mapper::Authority ? false : true
-        CollectionSpace::RefCache.new(config: config, client: @client)
-      end
-
-      def get_csidcache
-        config = {
-          domain: @client.domain,
-          error_if_not_found: false,
-          lifetime: 5 * 60,
-          search_delay: 5 * 60,
-          search_enabled: false
-        }
-        CollectionSpace::RefCache.new(config: config, client: @client)
-      end
-
       # you can specify per-data-key transforms in your config.json
       # This method merges the config.json transforms into the CollectionSpace::Mapper::RecordMapper field
       #   mappings for the appropriate fields

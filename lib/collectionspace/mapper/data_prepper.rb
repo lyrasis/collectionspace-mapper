@@ -9,7 +9,7 @@ module CollectionSpace
         @handler = handler
         @config = @handler.mapper.batchconfig
         @cache = @handler.cache
-        @client = @handler.client
+        @client = @handler.mapper.csclient
         @response = CollectionSpace::Mapper::setup_data(data, @config)
         if @response.valid?
           process_xpaths
@@ -187,7 +187,7 @@ module CollectionSpace
 
           th = CollectionSpace::Mapper::TermHandler.new(mapping: mapping,
                                                         data: data,
-                                                        client: @handler.client,
+                                                        client: @client,
                                                         cache: @cache,
                                                         mapper: @handler.mapper)
           @response.transformed_data[column] = th.result
@@ -212,12 +212,12 @@ module CollectionSpace
         data.map do |d|
           if d.is_a?(String)
             CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
-                                                                  @handler.client,
+                                                                  @client,
                                                                   @handler.cache,
                                                                   @handler.mapper.batchconfig).mappable
           else
             d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
-                                                                             @handler.client,
+                                                                             @client,
                                                                              @handler.cache,
                                                                              @handler.mapper.batchconfig).mappable }
           end
@@ -228,12 +228,12 @@ module CollectionSpace
         data.map do |d|
           if d.is_a?(String)
             CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
-                                                                  @handler.client,
+                                                                  @client,
                                                                   @handler.cache,
                                                                   @handler.mapper.batchconfig).stamp
           else
             d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
-                                                                             @handler.client,
+                                                                             @client,
                                                                              @handler.cache,
                                                                              @handler.mapper.batchconfig).stamp }
           end
