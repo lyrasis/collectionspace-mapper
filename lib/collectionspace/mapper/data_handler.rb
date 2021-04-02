@@ -8,7 +8,6 @@ module CollectionSpace
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      attr_reader :validator
       # this is an accessor rather than a reader until I refactor away the hideous
       #  xpath hash
       attr_accessor :mapper
@@ -18,7 +17,6 @@ module CollectionSpace
                                                             csclient: client, termcache: cache)
         @mapper.xpath = xpath_hash
         merge_config_transforms
-        @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
         @new_terms = {}
         @status_checker = CollectionSpace::Mapper::Tools::RecordStatusService.new(@mapper.csclient, @mapper)
       end
@@ -69,7 +67,7 @@ module CollectionSpace
       
       def validate(data)
         response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
-        @validator.validate(response)
+        validator.validate(response)
       end
 
       # builds hash containing information to be used in mapping the fields that are
@@ -184,6 +182,10 @@ module CollectionSpace
         end
         
         result.terms = terms
+      end
+
+      def validator
+        @validator ||= CS::Mapper::DataValidator.new(@mapper, @mapper.termcache)
       end
       
       # you can specify per-data-key transforms in your config.json
