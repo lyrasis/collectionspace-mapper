@@ -60,10 +60,6 @@ module CollectionSpace
         @mapper.batchconfig.response_mode == 'normal' ? result.normal : result
       end
       
-      def csidcache
-        @mapper.csidcache
-      end
-      
       def check_fields(data)
         data_fields = data.keys.map(&:downcase)
         unknown = data_fields - @mapper.mappings.known_columns
