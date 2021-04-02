@@ -14,9 +14,9 @@ module CollectionSpace
       attr_accessor :mapper
 
       def initialize(record_mapper:, client:, cache: nil, config: {})
-        @mapper = CollectionSpace::Mapper::RecordMapper.new(mapper: record_mapper, batchconfig: config)
         @client = client
         @cache = cache.nil? ? get_cache : cache
+        @mapper = CollectionSpace::Mapper::RecordMapper.new(mapper: record_mapper, batchconfig: config)
         @csidcache = get_csidcache if @mapper.service_type == CS::Mapper::Relationship
         @mapper.xpath = xpath_hash
         merge_config_transforms
