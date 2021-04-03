@@ -9,7 +9,7 @@ module CollectionSpace
     #  keys are present for now. This also makes writing tests onthe methods here a bit easier. 
     class ColumnMapping
       attr_reader :data_type, :fieldname, :in_repeating_group, :is_group, :namespace, :opt_list_values,
-        :repeats, :source_type, :transforms
+        :repeats, :source_type, :transforms, :xpath
       def initialize(mapping_hash)
         mapping_hash.each do |key, value|
           instance_variable_set("@#{key}", value)
