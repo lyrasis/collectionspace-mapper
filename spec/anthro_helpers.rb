@@ -19,7 +19,9 @@ module Helpers
       search_enabled: false,
       search_identifiers: false
     }
-    CollectionSpace::RefCache.new(config: cache_config, client: anthro_client)
+    cache = CollectionSpace::RefCache.new(config: cache_config, client: anthro_client)
+    populate_anthro(cache)
+    cache
   end
 
   def anthro_object_mapper

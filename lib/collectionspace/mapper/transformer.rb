@@ -5,30 +5,41 @@ module CollectionSpace
 
     # parent class of the data value Transformer class hierarchy
     class Transformer
-      attr_reader :order
+       attr_reader :precedence
       
-      PRECEDENCE = [FindReplaceTransformer,
-                    DowncaseTransformer,
-                    BooleanTransformer,
-                    DateStampTransformer,
-                    StructuredDateTransformer,
-                    BehrensmeyerTransformer,
-                    VocabularyTransformer,
-                    AuthorityTransformer,
-                    Transformer]
-      
-      def initialize(transform: {})
-        @order = PRECEDENCE.find_index(self.class.name)
+      def initialize(opts = {})
+        @precedence = lookup_precedence
       end
 
+      def transform(value)
+      end
+
+      def <=>(other)
+        @precedence <=> other.precedence
+      end
+      
       private
 
-      def self.create(type:, transform: {})
+      def lookup_precedence
+        [
+          CollectionSpace::Mapper::FindReplaceTransformer,
+          CollectionSpace::Mapper::DowncaseTransformer,
+          CollectionSpace::Mapper::BooleanTransformer,
+          CollectionSpace::Mapper::DateStampTransformer,
+          CollectionSpace::Mapper::StructuredDateTransformer,
+          CollectionSpace::Mapper::BehrensmeyerTransformer,
+          CollectionSpace::Mapper::VocabularyTransformer,
+          CollectionSpace::Mapper::AuthorityTransformer,
+          CollectionSpace::Mapper::Transformer
+        ].find_index(self.class)
+      end
+
+      def self.create(type:, transform: {}, recmapper:)
         case type.to_sym
         when :authority
-          AuthorityTransformer.new(transform: transform)
+          AuthorityTransformer.new(transform: transform, recmapper: recmapper)
         when :vocabulary
-          VocabularyTransformer.new(transform: transform)
+          VocabularyTransformer.new(transform: transform, recmapper: recmapper)
         when :special
           transform.map{ |xformname| special_transformers(xformname) }
         when :replacements
@@ -36,7 +47,7 @@ module CollectionSpace
         end
       end
 
-      def special_transformers(xformname)
+      def self.special_transformers(xformname)
         case xformname
         when 'boolean'
           BooleanTransformer.new

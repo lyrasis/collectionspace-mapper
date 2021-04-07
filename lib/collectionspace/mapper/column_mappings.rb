@@ -49,7 +49,7 @@ module CollectionSpace
       end
 
       def add_mapping(mapping_hash)
-        mapobj = CS::Mapper::ColumnMapping.new(mapping_hash)
+        mapobj = CS::Mapper::ColumnMapping.new(mapping_hash, @mapper)
         @all << mapobj
         @lookup[mapobj.datacolumn] = mapobj
       end

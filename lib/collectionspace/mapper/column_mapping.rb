@@ -8,9 +8,10 @@ module CollectionSpace
     #  Untangler, I am trusting it will be consistent and I'm not validating that expected
     #  keys are present for now. This also makes writing tests onthe methods here a bit easier. 
     class ColumnMapping
-      attr_reader :data_type, :fieldname, :in_repeating_group, :is_group, :namespace, :opt_list_values,
+      attr_reader :recmapper, :data_type, :fieldname, :in_repeating_group, :is_group, :namespace, :opt_list_values,
         :repeats, :source_type, :transforms, :xpath
-      def initialize(mapping_hash)
+      def initialize(mapping_hash, recmapper)
+        @recmapper = recmapper
         mapping_hash.each do |key, value|
           instance_variable_set("@#{key}", value)
         end

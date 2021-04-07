@@ -10,13 +10,17 @@ module CollectionSpace
     #   config-specified transformers should be first, followed by anything else, followed finally
     #   by AuthorityTermTransformer or VocabularyTermTransformer
     class Transformers
-      def initialize(colmapping:, transforms:)
+      def initialize(colmapping:, transforms:, recmapper:)
         @colmapping = colmapping
         @transforms = transforms
+        @recmapper = recmapper
         @queue = []
         populate_queue
       end
 
+      def queue
+        @queue.sort
+      end
       
       private
 
@@ -24,13 +28,15 @@ module CollectionSpace
         data_type_transforms
         return @queue if @transforms.empty?
 
-        @queue << @transforms.map{ |type, transform| Transformer.class.create(type: type, transform: transform) }
-        @queue.flatten
+        @queue << @transforms.map do |type, transform|
+          Transformer.create(type: type, transform: transform, recmapper: @recmapper)
+        end
+        @queue.flatten!
       end
 
       def data_type_transforms
-        @queue << DateStampTransformer.new if @colmapping.datatype == 'date'
-        @queue << StructuredDateTransformer.new if @colmapping.datatype == 'structured date group'
+        @queue << DateStampTransformer.new if @colmapping.data_type == 'date'
+        @queue << StructuredDateTransformer.new if @colmapping.data_type == 'structured date group'
       end      
     end
   end

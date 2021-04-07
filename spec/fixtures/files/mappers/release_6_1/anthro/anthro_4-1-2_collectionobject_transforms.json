@@ -1,0 +1,312 @@
+{
+  "config": {
+    "profile_basename": "anthro",
+    "version": "4-1-2",
+    "recordtype": "collectionobject",
+    "document_name": "collectionobjects",
+    "service_name": "CollectionObjects",
+    "service_path": "collectionobjects",
+    "service_type": "object",
+    "object_name": "CollectionObject",
+    "ns_uri": {
+      "collectionobjects_common": "http://collectionspace.org/services/collectionobject",
+      "collectionobjects_anthro": "http://collectionspace.org/services/collectionobject/domain/anthro",
+      "collectionobjects_annotation": "http://collectionspace.org/services/collectionobject/domain/annotation",
+      "collectionobjects_culturalcare": "http://collectionspace.org/services/collectionobject/domain/collectionobject",
+      "collectionobjects_nagpra": "http://collectionspace.org/services/collectionobject/domain/nagpra",
+      "collectionobjects_naturalhistory_extension": "http://collectionspace.org/services/collectionobject/domain/naturalhistory_extension"
+    },
+    "identifier_field": "objectNumber",
+    "search_field": "objectNumber"
+  },
+  "docstructure": {
+    "collectionobjects_common": {
+      "otherNumberList": {
+        "otherNumber": {
+        }
+      },
+      "responsibleDepartments": {
+      },
+      "namedCollections": {
+      },
+      "briefDescriptions": {
+      },
+      "publishToList": {
+      },
+      "inventoryStatusList": {
+      },
+      "objectNameList": {
+        "objectNameGroup": {
+        }
+      },
+      "assocPeopleGroupList": {
+        "assocPeopleGroup": {
+        }
+      },
+      "comments": {
+      },
+      "measuredPartGroupList": {
+        "measuredPartGroup": {
+          "dimensionSubGroupList": {
+            "dimensionSubGroup": {
+            }
+          }
+        }
+      },
+      "materialGroupList": {
+        "materialGroup": {
+        }
+      },
+      "titleGroupList": {
+        "titleGroup": {
+          "titleTranslationSubGroupList": {
+            "titleTranslationSubGroup": {
+            }
+          }
+        }
+      },
+      "usageGroupList": {
+        "usageGroup": {
+        }
+      },
+      "fieldCollectionMethods": {
+      },
+      "fieldCollectionSources": {
+      },
+      "fieldCollectors": {
+      },
+      "fieldColEventNames": {
+      },
+      "objectProductionDateGroupList": {
+      },
+      "techniqueGroupList": {
+        "techniqueGroup": {
+        }
+      },
+      "objectProductionPlaceGroupList": {
+        "objectProductionPlaceGroup": {
+        }
+      },
+      "objectProductionReasons": {
+      },
+      "objectProductionPeopleGroupList": {
+        "objectProductionPeopleGroup": {
+        }
+      },
+      "objectProductionPersonGroupList": {
+        "objectProductionPersonGroup": {
+        }
+      },
+      "objectProductionOrganizationGroupList": {
+        "objectProductionOrganizationGroup": {
+        }
+      },
+      "forms": {
+      },
+      "styles": {
+      },
+      "colors": {
+      },
+      "objectComponentGroupList": {
+        "objectComponentGroup": {
+        }
+      },
+      "contentLanguages": {
+      },
+      "contentActivities": {
+      },
+      "contentConcepts": {
+      },
+      "contentPositions": {
+      },
+      "contentObjectGroupList": {
+        "contentObjectGroup": {
+        }
+      },
+      "contentPeoples": {
+      },
+      "contentPersons": {
+      },
+      "contentPlaces": {
+      },
+      "contentScripts": {
+      },
+      "contentOrganizations": {
+      },
+      "contentEventNameGroupList": {
+        "contentEventNameGroup": {
+        }
+      },
+      "contentOtherGroupList": {
+        "contentOtherGroup": {
+        }
+      },
+      "textualInscriptionGroupList": {
+        "textualInscriptionGroup": {
+        }
+      },
+      "nonTextualInscriptionGroupList": {
+        "nonTextualInscriptionGroup": {
+        }
+      },
+      "assocActivityGroupList": {
+        "assocActivityGroup": {
+        }
+      },
+      "assocObjectGroupList": {
+        "assocObjectGroup": {
+        }
+      },
+      "assocConceptGroupList": {
+        "assocConceptGroup": {
+        }
+      },
+      "assocCulturalContextGroupList": {
+        "assocCulturalContextGroup": {
+        }
+      },
+      "assocOrganizationGroupList": {
+        "assocOrganizationGroup": {
+        }
+      },
+      "assocPersonGroupList": {
+        "assocPersonGroup": {
+        }
+      },
+      "assocPlaceGroupList": {
+        "assocPlaceGroup": {
+        }
+      },
+      "assocEventOrganizations": {
+      },
+      "assocEventPeoples": {
+      },
+      "assocEventPersons": {
+      },
+      "assocEventPlaces": {
+      },
+      "assocDateGroupList": {
+        "assocDateGroup": {
+        }
+      },
+      "ownersReferences": {
+      },
+      "viewersReferences": {
+      },
+      "referenceGroupList": {
+        "referenceGroup": {
+        }
+      },
+      "technicalAttributeGroupList": {
+        "technicalAttributeGroup": {
+        }
+      }
+    },
+    "collectionobjects_anthro": {
+      "ethnoFileCodes": {
+      },
+      "commingledRemainsGroupList": {
+        "commingledRemainsGroup": {
+          "mortuaryTreatmentGroupList": {
+            "mortuaryTreatmentGroup": {
+            }
+          }
+        }
+      },
+      "anthroOwnershipGroupList": {
+        "anthroOwnershipGroup": {
+        }
+      },
+      "localityGroupList": {
+        "localityGroup": {
+        }
+      }
+    },
+    "collectionobjects_annotation": {
+      "annotationGroupList": {
+        "annotationGroup": {
+        }
+      }
+    },
+    "collectionobjects_nagpra": {
+      "nagpraInventoryNames": {
+      },
+      "nagpraCategories": {
+      },
+      "graveAssocCodes": {
+      },
+      "repatriationNotes": {
+      },
+      "nagpraDetermGroupList": {
+        "nagpraDetermGroup": {
+        }
+      }
+    },
+    "collectionobjects_culturalcare": {
+      "culturalCareNotes": {
+      },
+      "accessLimitationsGroupList": {
+        "accessLimitationsGroup": {
+        }
+      }
+    },
+    "collectionobjects_naturalhistory_extension": {
+      "taxonomicIdentGroupList": {
+        "taxonomicIdentGroup": {
+        }
+      }
+    }
+  },
+  "mappings": [
+    {
+      "fieldname": "measuredBy",
+      "transforms": {
+        "authority": [
+          "personauthorities",
+          "person"
+        ]
+      },
+      "source_type": "authority",
+      "source_name": "person/local",
+      "namespace": "collectionobjects_common",
+      "xpath": [
+        "measuredPartGroupList",
+        "measuredPartGroup",
+        "dimensionSubGroupList",
+        "dimensionSubGroup"
+      ],
+      "data_type": "string",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "measuredByPerson",
+      "required": "n"
+    },
+    {
+      "fieldname": "behrensmeyerSingleLower",
+      "transforms": {
+        "vocabulary": "behrensmeyer",
+        "special": [
+          "behrensmeyer_translate"
+        ]
+      },
+      "source_type": "vocabulary",
+      "source_name": "behrensmeyer",
+      "namespace": "collectionobjects_anthro",
+      "xpath": [
+        "commingledRemainsGroupList",
+        "commingledRemainsGroup"
+      ],
+      "data_type": "string",
+      "repeats": "n",
+      "in_repeating_group": "y",
+      "opt_list_values": [
+
+      ],
+      "datacolumn": "behrensmeyerSingleLower",
+      "required": "n"
+    }
+  ]
+}
