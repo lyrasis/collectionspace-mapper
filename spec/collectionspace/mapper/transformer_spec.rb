@@ -3,68 +3,51 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::Transformer do
-  let(:mapperpath) { 'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json'}
-  let(:recmapper) { get_record_mapper_object(mapperpath) }
-  let(:mapping) { recmapper.mappings.lookup(colname) }
-  let(:colval) { described_class.new(column: colname,
-                                     value: colvalue,
-                                     recmapper: recmapper,
-                                     mapping: mapping) }
-
+  let(:client) { anthro_client }
+  let(:cache) { anthro_cache }
+  let(:mapperpath) { 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject_transforms.json'}
+  let(:recmapper) { CS::Mapper::RecordMapper.new(mapper: File.read(mapperpath),
+                                                 csclient: client,
+                                                 termcache: cache) }
 
   describe '.create' do
-    let(:creator) { described_class.create(column: colname,
-                                           value: colvalue,
-                                           recmapper: recmapper,
-                                           mapping: mapping) }
+    let(:creator) { described_class.create(recmapper: recmapper,
+                                           type: type,
+                                           transform: transform) }
     
-    context 'given core collectionobject collection value' do
-      let(:colname) { 'collection' }
-      let(:colvalue) { 'blah' }
-      it 'returns ColumnValue' do
-        expect(creator).to be_a(CS::Mapper::ColumnValue)
+    context 'given an authority transform' do
+      let(:type) { :authority }
+      let(:transform) { ['personauthorities', 'person'] }
+
+      it 'returns an AuthorityTransformer' do
+        expect(creator).to be_a(CS::Mapper::AuthorityTransformer)
       end
     end
 
-    context 'given core collectionobject comment value' do
-      let(:colname) { 'comment' }
-      let(:colvalue) { 'blah' }
-      it 'returns MultivalColumnValue' do
-        expect(creator).to be_a(CS::Mapper::MultivalColumnValue)
+    context 'given a vocabulary transform' do
+      let(:type) { :vocabulary }
+      let(:transform) { 'behrensmeyer' }
+      it 'returns a VocabularyTransformer' do
+        expect(creator).to be_a(CS::Mapper::VocabularyTransformer)
       end
     end
 
-    context 'given core collectionobject comment value' do
-      let(:colname) { 'title' }
-      let(:colvalue) { 'blah' }
-      it 'returns GroupColumnValue' do
-        expect(creator).to be_a(CS::Mapper::GroupColumnValue)
+    context 'given special transforms' do
+      let(:type) { :special }
+      let(:transform) { ['downcase_value', 'boolean', 'behrensmeyer_translate'] }
+      it 'returns array of expected transformers' do
+        expected = [CS::Mapper::DowncaseTransformer, CS::Mapper::BooleanTransformer,
+                    CS::Mapper::BehrensmeyerTransformer]
+        expect(creator.map(&:class)).to eq(expected)
       end
     end
 
-    context 'given bonsai conservation fertilizerToBeUsed value' do
-      let(:mapperpath) { 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4-1-1_conservation.json' }
-      let(:colname) { 'fertilizerToBeUsed' }
-      let(:colvalue) { 'blah' }
-      it 'returns GroupMultivalColumnValue' do
-        expect(creator).to be_a(CS::Mapper::GroupMultivalColumnValue)
+    context 'given replacement transforms' do
+      let(:type) { :replacements }
+      let(:transform) { [{:find=>" ", :replace=>"-", :type=>"plain"}] }
+      it 'returns a FindReplaceTransformer' do
+        expect(creator).to be_a(CS::Mapper::FindReplaceTransformer)
       end
-    end
-
-    context 'given core collectionobject titleTranslation value' do
-      let(:colname) { 'titleTranslation' }
-      let(:colvalue) { 'blah' }
-      it 'returns SubgroupColumnValue' do
-        expect(creator).to be_a(CS::Mapper::SubgroupColumnValue)
-      end
-    end
-  end
-
-  describe '#split' do
-    let(:colname) { 'collection' }
-    let(:colvalue) { 'blah ' }
-    it 'returns value as stripped single element in Array' do
-      expect(colval.split).to eq(['blah'])
     end
   end
 end

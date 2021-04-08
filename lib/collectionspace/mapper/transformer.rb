@@ -5,10 +5,11 @@ module CollectionSpace
 
     # parent class of the data value Transformer class hierarchy
     class Transformer
-       attr_reader :precedence
+       attr_reader :precedence, :warnings
       
       def initialize(opts = {})
         @precedence = lookup_precedence
+        @warnings = []
       end
 
       def transform(value)
@@ -43,7 +44,7 @@ module CollectionSpace
         when :special
           transform.map{ |xformname| special_transformers(xformname) }
         when :replacements
-          transform.map{ |iteration| FindReplaceTransformer.new(transform: iteration) }
+          FindReplaceTransformer.new(transform: transform)
         end
       end
 

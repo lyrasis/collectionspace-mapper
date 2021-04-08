@@ -14,10 +14,6 @@ RSpec.describe CollectionSpace::Mapper::Transformers do
                                      transforms: mapping.transforms,
                                      recmapper: recmapper) }
 
-  before do
-    allow(client).to receive(:domain).and_return('anthro.dev.collectionspace.org')
-  end
-
   describe '#queue' do
     context 'when measuredByPerson column' do
       let(:colname) { 'measuredByPerson' }

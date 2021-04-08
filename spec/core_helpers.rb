@@ -28,7 +28,9 @@ module Helpers
       search_enabled: true,
       search_identifiers: false
     }
-    CollectionSpace::RefCache.new(config: cache_config, client: core_client)
+    cache = CollectionSpace::RefCache.new(config: cache_config, client: core_client)
+    populate_core(cache)
+    cache
   end
 
   def core_object_mapper
