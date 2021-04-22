@@ -70,7 +70,7 @@ module CollectionSpace
         # create xpaths for remaining mappings...
         @xphash = mappings.map{ |m| m[:fullpath] }.uniq
         # hash with xpath as key and xpath info hash from DataHandler as value
-        @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper[:xpath][xpath]] }.to_h
+        @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper[:xpath][xpath].clone] }.to_h
         @xphash.each do |xpath, hash|
           hash[:mappings] = hash[:mappings].select do |m|
             m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
