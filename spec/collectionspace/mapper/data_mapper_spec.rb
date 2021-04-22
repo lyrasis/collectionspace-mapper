@@ -6,6 +6,39 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
     @config = CollectionSpace::Mapper::DEFAULT_CONFIG
   end
+
+  context 'fcart profile' do
+    before(:all) do
+      @client = fcart_client
+      @cache = fcart_cache
+      populate_fcart(@cache)
+    end
+
+    context 'acquisition record' do
+      before(:all) do
+        @acq_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/fcart/fcart_3_0_1-acquisition.json')
+        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @acq_mapper, client: @client, cache: @cache, config: @config)
+      end
+
+      it 'maps records as expected in sequence' do
+        data1 = JSON.parse("{\"creditline\":\"Gift of Frances, 1985\",\"accessiondategroup\":\"1985\",\"acquisitionmethod\":\"unknown-provenance\",\"acquisitionreferencenumber\":\"ACC216 (migrated accession)\",\"acquisitionsourceperson\":\"\",\"acquisitionsourceorganization\":\"\",\"acquisitionauthorizer\":\"\",\"acquisitionnote\":\"\"}")
+        data2 = JSON.parse("{\"creditline\":\"\",\"accessiondategroup\":\"\",\"acquisitionmethod\":\"unknown-provenance\",\"acquisitionreferencenumber\":\"ACC215 (migrated accession)\",\"acquisitionsourceperson\":\"\",\"acquisitionsourceorganization\":\"\",\"acquisitionauthorizer\":\"\",\"acquisitionnote\":\"\"}")
+        data3 = JSON.parse("{\"creditline\":\"Gift of Elizabeth, 1985\",\"accessiondategroup\":\"1985\",\"acquisitionmethod\":\"gift\",\"acquisitionreferencenumber\":\"ACC208 (migrated accession)\",\"acquisitionsourceperson\":\"Elizabeth\",\"acquisitionsourceorganization\":\"\",\"acquisitionauthorizer\":\"\",\"acquisitionnote\":\"Acquisition source role(s): Donor\"}")
+        data = [data1, data2, data3]
+        preppers = data.map{ |d| CollectionSpace::Mapper::DataPrepper.new(d, @handler) }
+        mappers = preppers.map{ |prepper| CollectionSpace::Mapper::DataMapper.new(prepper.prep, @handler, prepper.xphash) }
+        docs = mappers.map{ |mapper| remove_namespaces(mapper.response.doc) }
+        docxpaths = docs.map{ |doc| list_xpaths(doc) }
+
+        fixpaths = ['fcart/acqseq1.xml', 'fcart/acqseq2.xml', 'fcart/acqseq3.xml']
+        fixdocs = fixpaths.map{ |path| get_xml_fixture(path) }
+        fixxpaths = fixdocs.map{ |doc| list_xpaths(doc) }
+        
+        expect(docxpaths).to eq(fixxpaths)
+      end
+      
+    end
+    end
   
   context 'core profile' do
     before(:all) do
