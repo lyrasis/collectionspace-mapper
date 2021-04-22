@@ -11,6 +11,7 @@ module CollectionSpace
         @cache = @handler.cache
         @client = @handler.client
         @response = CollectionSpace::Mapper::setup_data(data, @handler.defaults, @config)
+        drop_empty_fields
         if @response.valid?
           process_xpaths
         end
@@ -62,11 +63,16 @@ module CollectionSpace
 
       private
 
+      def drop_empty_fields
+        @response.merged_data = @response.merged_data.delete_if{ |k, v| v.blank? }
+      end
+
       def process_xpaths
         # keep only mappings for datacolumns present in data hash
         mappings = @handler.mapper[:mappings].select do |m|
           m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
         end
+
         # create xpaths for remaining mappings...
         @xphash = mappings.map{ |m| m[:fullpath] }.uniq
         # hash with xpath as key and xpath info hash from DataHandler as value
