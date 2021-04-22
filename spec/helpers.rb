@@ -6,7 +6,6 @@ require_relative './botgarden_helpers'
 require_relative './core_helpers'
 require_relative './fcart_helpers'
 require_relative './lhmc_helpers'
-require_relative './ucb_helpers'
 
 module Helpers
   extend self
