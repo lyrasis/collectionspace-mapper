@@ -7,7 +7,7 @@ require 'facets/array/before'
 require_relative './helpers'
 
 config = {}
-rm_anthro_co = Helpers.get_json_record_mapper(path: 'spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
+rm_anthro_co = Helpers.get_json_record_mapper('spec/fixtures/files/mappers/anthro_4_0_0-collectionobject.json')
 dh = DataHandler.new(record_mapper: rm_anthro_co, cache: Helpers.anthro_cache, client: Helpers.anthro_client, config: config)
 
 fixture = 'anthro/collectionobject1.xml'
@@ -15,7 +15,7 @@ fdoc = Helpers.get_xml_fixture(fixture)
 
 n = 10000
 
-xpaths = Helpers.test_xpaths(fdoc, dh.mapper[:mappings])
+xpaths = Helpers.test_xpaths(fdoc, dh.mapper.mappings)
 
 
 Benchmark.bm do |benchmark|

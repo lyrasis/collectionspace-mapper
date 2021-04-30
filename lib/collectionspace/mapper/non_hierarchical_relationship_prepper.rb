@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/data_prepper'
+require 'collectionspace/mapper/term_searchable'
+
 module CollectionSpace
   module Mapper
     class NonHierarchicalRelationshipPrepper < CollectionSpace::Mapper::DataPrepper
@@ -8,7 +11,7 @@ module CollectionSpace
       
       def initialize(data, handler)
         super
-        @cache = @handler.csidcache
+        @cache = @handler.mapper.csidcache
         @types = [@response.merged_data['item1_type'], @response.merged_data['item2_type']]
         @errors = []
         @warnings = []
@@ -23,25 +26,14 @@ module CollectionSpace
         combine_data_fields
         @responses << @response
         flip_response
-        @responses
+        self
       end
 
       private
 
-      def push_errors_and_warnings
-        unless errors.empty?
-          @response.errors << errors
-          @response.errors.flatten!
-        end
-        unless warnings.empty?
-          @response.warnings << warnings
-          @response.warnings.flatten!
-        end
-      end
-      
-      def stringify_item(i)
-        id = "item#{i}_id"
-        type = "item#{i}_type"
+      def stringify_item(item_number)
+        id = "item#{item_number}_id"
+        type = "item#{item_number}_type"
         thisid = @response.merged_data[id]
         thistype = @response.merged_data[type]
         "#{thisid} (#{thistype})"
@@ -62,7 +54,7 @@ module CollectionSpace
 
       def process_xpaths
         clear_unmapped_mappings
-        @handler.mapper[:xpath] = @handler.xpath_hash
+        @handler.mapper.xpath = @handler.xpath_hash
         super
       end
       
@@ -71,7 +63,7 @@ module CollectionSpace
       #  do not actually get used to produce XML
       def clear_unmapped_mappings
         to_clear = %w[subjectType objectType]
-        @handler.mapper[:mappings].reject!{ |m| to_clear.include?(m[:fieldname]) }
+        @handler.mapper.mappings.reject!{ |mapping| to_clear.include?(mapping.fieldname) }
       end
 
       def transform_terms
@@ -85,14 +77,6 @@ module CollectionSpace
             @response.transformed_data[field] = value
           end
         end
-      end
-
-      def type
-        @type
-      end
-
-      def subtype
-        @subtype
       end
     end
   end

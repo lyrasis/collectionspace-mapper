@@ -1,101 +1,50 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/tools/record_status_service'
+require 'collectionspace/mapper/tools/dates'
+
 module CollectionSpace
   module Mapper
 
     # given a RecordMapper hash and a data hash, returns CollectionSpace XML document
     class DataHandler
-      attr_reader :client, :cache, :config, :blankdoc, :defaults, :validator,
-        :is_authority, :known_fields
+      # this is an accessor rather than a reader until I refactor away the hideous
+      #  xpath hash
       attr_accessor :mapper
 
-      def initialize(record_mapper:, client:, cache: nil,
-                     config: CollectionSpace::Mapper::DEFAULT_CONFIG
-                    )
-        @mapper = CollectionSpace::Mapper::Tools::RecordMapper.convert(record_mapper)
-        @is_authority = get_is_authority
-        @client = client
-        @config = get_config(config)
-        object_hierarchy_default_values if is_object_hierarchy?
-        authority_hierarchy_default_values if is_authority_hierarchy?
-        non_hierarchical_relationship_default_values if is_non_hierarchical_relationship?
-        @cache = cache.nil? ? get_cache : cache
-        @csidcache = get_csidcache if @mapper[:config][:service_type] == 'relation'
-        @response_mode = @config[:response_mode]
-        add_short_id_mapping if @is_authority
-        @known_fields = @mapper[:mappings].map{ |m| m[:datacolumn] }.map(&:downcase)
-        @mapper[:xpath] = xpath_hash
-        @blankdoc = build_xml
-        @defaults = @config[:default_values] ? @config[:default_values].transform_keys(&:downcase) : {}
+      def initialize(record_mapper:, client:, cache: nil, config: {})
+        @mapper = CollectionSpace::Mapper::RecordMapper.new(mapper: record_mapper, batchconfig: config,
+                                                            csclient: client, termcache: cache)
+        @mapper.xpath = xpath_hash
         merge_config_transforms
-        @validator = CollectionSpace::Mapper::DataValidator.new(@mapper, @cache)
         @new_terms = {}
-        @status_checker = CollectionSpace::Mapper::Tools::RecordStatusService.new(@client, @mapper)
+        @status_checker = CollectionSpace::Mapper::Tools::RecordStatusService.new(@mapper.csclient, @mapper)
       end
 
       def process(data)
-        response = CollectionSpace::Mapper::setup_data(data, @defaults, @config)
-        if response.valid?
-          case record_type
-          when 'authorityhierarchy'
-            prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
-            prepper.prep
-            map(prepper.response, prepper.xphash)
+          prepped = prep(data)
+          case @mapper.record_type
           when 'nonhierarchicalrelationship'
-            prepper = CollectionSpace::Mapper::NonHierarchicalRelationshipPrepper.new(response, self)
-            prepper.prep
-            prepper.responses.map{ |response| map(response, prepper.xphash) }
+            prepped.responses.map{ |response| map(response, prepped.xphash) }
           else
-            prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
-            prepper.prep
-            map(prepper.response, prepper.xphash)
+            map(prepped.response, prepped.xphash)
           end
-        else
-          response
-        end
-      end
-
-      def csidcache
-        @csidcache
-      end
-      
-      def object_hierarchy_default_values
-        @config[:default_values] = {} unless @config.key?(:default_values)
-        h = {'subjectdocumenttype' => 'collectionobjects',
-             'relationshiptype' => 'hasBroader',
-             'objectdocumenttype' => 'collectionobjects'}
-        @config[:default_values] = @config[:default_values].merge(h)
-      end
-
-      def authority_hierarchy_default_values
-        @config[:default_values] = {} unless @config.key?(:default_values)
-        h = {'relationshiptype' => 'hasBroader'}
-        @config[:default_values] = @config[:default_values].merge(h)
-      end
-
-      def non_hierarchical_relationship_default_values
-        @config[:default_values] = {} unless @config.key?(:default_values)
-        h = {'relationshiptype' => 'affects'}
-        @config[:default_values] = @config[:default_values].merge(h)
-      end
-
-      def check_fields(data)
-        data_fields = data.keys.map(&:downcase)
-        unknown = data_fields - known_fields
-        known = data_fields - unknown
-        { known_fields: known, unknown_fields: unknown }
-      end
-      
-      def validate(data)
-        response = CollectionSpace::Mapper::setup_data(data, @defaults, @config)
-        @validator.validate(response)
       end
 
       def prep(data)
-        response = CollectionSpace::Mapper::setup_data(data)
+        response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
         if response.valid?
-          prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
-          prepper.prep
+          case @mapper.record_type
+          when 'authorityhierarchy'
+            prepper = CollectionSpace::Mapper::AuthorityHierarchyPrepper.new(response, self)
+            prepper.prep
+          when 'nonhierarchicalrelationship'
+            prepper = CollectionSpace::Mapper::NonHierarchicalRelationshipPrepper.new(response, self)
+            prepper.prep
+          else
+            prepper = CollectionSpace::Mapper::DataPrepper.new(response, self)
+            prepper.prep
+          end
         else
           response
         end
@@ -105,8 +54,20 @@ module CollectionSpace
         mapper = CollectionSpace::Mapper::DataMapper.new(response, self, xphash)
         result = mapper.response
         tag_terms(result)
-        @config[:check_record_status] ? set_record_status(result) : result.record_status = :new
-        @response_mode == 'normal' ? result.normal : result
+        @mapper.batchconfig.check_record_status ? set_record_status(result) : result.record_status = :new
+        @mapper.batchconfig.response_mode == 'normal' ? result.normal : result
+      end
+      
+      def check_fields(data)
+        data_fields = data.keys.map(&:downcase)
+        unknown = data_fields - @mapper.mappings.known_columns
+        known = data_fields - unknown
+        { known_fields: known, unknown_fields: unknown }
+      end
+      
+      def validate(data)
+        response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)
+        validator.validate(response)
       end
 
       # builds hash containing information to be used in mapping the fields that are
@@ -123,14 +84,12 @@ module CollectionSpace
       def xpath_hash
         h = {}
         # create key for each xpath containing fields, and set up structure of its value
-        @mapper[:mappings].each do |mapping|
-          mapping[:fullpath] = ( [mapping[:namespace]] + mapping[:xpath] ).flatten.join('/')
-          h[mapping[:fullpath]] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
+        @mapper.mappings.each do |mapping|
+          h[mapping.fullpath] = {parent: '', children: [], is_group: false, is_subgroup: false, subgroups: [], mappings: []}
         end
         # add fieldmappings for children of each xpath
-        @mapper[:mappings].each do |mapping|
-          mapping[:datacolumn] = mapping[:datacolumn].downcase
-          h[mapping[:fullpath]][:mappings] << mapping
+        @mapper.mappings.each do |mapping|
+          h[mapping.fullpath][:mappings] << mapping
         end
         # populate other attributes
         # populate parent of all non-top xpaths
@@ -159,12 +118,12 @@ module CollectionSpace
         # populate is_group
         h.each do |xpath, ph|
           ct = ph[:mappings].size
-          v = ph[:mappings].map{ |m| m[:in_repeating_group] }.uniq
+          v = ph[:mappings].map{ |mapping| mapping.in_repeating_group }.uniq
           ph[:is_group] = true if v == ['y']
           if v.size > 1
             puts "WARNING: #{xpath} has fields with different :in_repeating_group values (#{v}). Defaulting to treating NOT as a group"
           end
-          ph[:is_group] = true if ct == 1 && v == ['as part of larger repeating group'] && ph[:mappings][0][:repeats] == 'y'
+          ph[:is_group] = true if ct == 1 && v == ['as part of larger repeating group'] && ph[:mappings][0].repeats == 'y'
         end
 
         # populate is_subgroup
@@ -178,9 +137,9 @@ module CollectionSpace
       private
 
       def set_record_status(response)
-        if @is_authority
+        if @mapper.service_type == CS::Mapper::Authority
           value = response.split_data['termdisplayname'].first
-        elsif is_relationship?
+        elsif @mapper.service_type == CS::Mapper::Relationship
           value = {}
           value[:sub] = response.combined_data['relations_common']['subjectCsid'][0]
           value[:obj] = response.combined_data['relations_common']['objectCsid'][0]
@@ -193,7 +152,7 @@ module CollectionSpace
         rescue CollectionSpace::Mapper::MultipleCsRecordsFoundError => e
           err = {
             category: :multiple_matching_recs,
-            field: @mapper[:config][:search_field],
+            field: @mapper.config.search_field,
             type: nil,
             subtype: nil,
             value: value,
@@ -224,114 +183,28 @@ module CollectionSpace
         
         result.terms = terms
       end
-      
-      def get_config(config)
-        config_object = CollectionSpace::Mapper::Tools::Config.new(config)
-        config_object.hash
-      end
 
-      def get_cache
-        config = {
-          domain: @client.domain,
-          error_if_not_found: false,
-          lifetime: 5 * 60,
-          search_delay: 5 * 60,
-          search_enabled: true
-        }
-        # search for authority records by display name, not short ID
-        config[:search_identifiers] = @is_authority ? false : true
-        CollectionSpace::RefCache.new(config: config, client: @client)
-      end
-
-      def get_csidcache
-        config = {
-          domain: @client.domain,
-          error_if_not_found: false,
-          lifetime: 5 * 60,
-          search_delay: 5 * 60,
-          search_enabled: false
-        }
-        CollectionSpace::RefCache.new(config: config, client: @client)
-      end
-
-      def add_short_id_mapping
-        namespaces = @mapper[:mappings].map{ |m| m[:namespace]}.uniq
-        this_ns = namespaces.first{ |ns| ns.end_with?('_common') }
-        @mapper[:mappings] << {
-          fieldname: 'shortIdentifier',
-          namespace: this_ns,
-          data_type: 'string',
-          xpath: [],
-          required: 'not in input data',
-          repeats: 'n',
-          in_repeating_group: 'n/a',
-          datacolumn: 'shortIdentifier'
-        }
-      end
-
-      def is_object_hierarchy?
-        record_type == 'objecthierarchy' ? true : false
-      end
-
-      def is_authority_hierarchy?
-        record_type == 'authorityhierarchy' ? true : false
-      end
-
-      def is_non_hierarchical_relationship?
-        record_type == 'nonhierarchicalrelationship' ? true : false
-      end
-
-      def is_relationship?
-        service_type == 'relation' ? true : false
+      def validator
+        @validator ||= CS::Mapper::DataValidator.new(@mapper, @mapper.termcache)
       end
       
-      def record_type
-        @mapper[:config][:recordtype]
-      end
-
-      def service_type
-        @mapper[:config][:service_type]
-      end
-      
-      def get_is_authority
-        service_type == 'authority' ? true : false
-      end
-
       # you can specify per-data-key transforms in your config.json
       # This method merges the config.json transforms into the CollectionSpace::Mapper::RecordMapper field
       #   mappings for the appropriate fields
       def merge_config_transforms
-        return unless @config[:transforms]
-        @config[:transforms].transform_keys!(&:downcase)
-        @config[:transforms].each do |datacol, x|
-          target = @mapper[:mappings].select{ |m| m[:datacolumn] == datacol }
-          unless target.empty?
-            target = target.first
-            target[:transforms] = target[:transforms].merge(x)
-          end
+        return unless @mapper.batchconfig.transforms
+        
+        @mapper.batchconfig.transforms.transform_keys!(&:downcase)
+        @mapper.batchconfig.transforms.each do |data_column, transforms|
+          target_mapping = transform_target(data_column)
+          next unless target_mapping
+
+          target_mapping.update_transforms(transforms)
         end
       end
 
-      def build_xml
-        builder = Nokogiri::XML::Builder.new do |xml|
-          xml.document do
-            @mapper[:docstructure].keys.each do |ns|
-              xml.send(ns) do
-                process_group(xml, [ns])
-              end
-            end
-          end
-        end
-        Nokogiri::XML(builder.to_xml)
-      end
-
-      def process_group(xml, grouppath)
-        @mapper[:docstructure].dig(*grouppath).keys.each do |key|
-          thispath = grouppath.clone.append(key)
-          xml.send(key){
-            process_group(xml, thispath)
-          }
-        end
+      def transform_target(data_column)
+        @mapper.mappings.select{ |field_mapping| field_mapping.datacolumn == data_column }.first
       end
     end
   end

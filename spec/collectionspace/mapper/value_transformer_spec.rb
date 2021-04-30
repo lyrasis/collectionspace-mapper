@@ -7,11 +7,11 @@ RSpec.describe CollectionSpace::Mapper::ValueTransformer do
     client = anthro_client
     cache = anthro_cache
     populate_anthro(cache) 
-    mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+    mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject.json')
     handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
                                                        client: client,
                                                        cache: cache,
-                                                       config: CollectionSpace::Mapper::DEFAULT_CONFIG)
+                                                       config: {})
     @prepper = CollectionSpace::Mapper::DataPrepper.new({}, handler)
  end
 

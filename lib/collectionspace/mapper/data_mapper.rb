@@ -11,13 +11,13 @@ module CollectionSpace
         @xphash = xphash
         
         @data = @response.combined_data
-        @doc = @handler.blankdoc.clone
-        @cache = @handler.cache
+        @doc = @handler.mapper.xml_template.blankdoc
+        @cache = @handler.mapper.termcache
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
-        clean_doc
-        add_short_id if @handler.is_authority
+        add_short_id if @handler.mapper.service_type == CS::Mapper::Authority
         set_response_identifier
+        clean_doc
         add_namespaces
         @response.doc = @doc
       end
@@ -25,18 +25,20 @@ module CollectionSpace
       private
 
       def set_response_identifier
-        if @handler.mapper[:config][:service_type] == 'relation'
+        if @handler.mapper.service_type == CS::Mapper::Relationship
           set_relation_id
         else
-          id_field = @handler.mapper[:config][:identifier_field]
-          mapping = @handler.mapper[:mappings].select{ |m| m[:fieldname] == id_field }.first
-          value = @doc.xpath("//#{mapping[:namespace]}/#{mapping[:fieldname]}").first.text
+          id_field = @handler.mapper.config.identifier_field
+          mapping = @handler.mapper.mappings.select{ |mapper| mapper.fieldname == id_field }.first
+          thexpath = "//#{mapping.namespace}/#{mapping.fieldname}"
+          value = @doc.xpath(thexpath).first
+            value = value.text
           @response.identifier = value
         end
       end
 
       def set_relation_id
-        case @handler.mapper[:config][:object_name]
+        case @handler.mapper.config.object_name
         when 'Object Hierarchy Relation'
           narrow = @response.orig_data['narrower_object_number']
           broad = @response.orig_data['broader_object_number']
@@ -46,25 +48,22 @@ module CollectionSpace
       
       def add_short_id
         term = @response.transformed_data['termdisplayname'][0]
-        ns = @xphash.keys.map{ |k| k.sub(/^([^\/]+).*/, '\1') }
-          .select{ |k| k.end_with?('_common') }
-          .first
-        targetnode = @doc.xpath("/document/#{ns}").first
+        targetnode = @doc.xpath("/document/#{@handler.mapper.config.common_namespace}").first
         child = Nokogiri::XML::Node.new('shortIdentifier', @doc)
-        child.content = CollectionSpace::Mapper::Tools::Identifiers.short_identifier(term, :authority)
+        child.content = CollectionSpace::Mapper::Identifiers::AuthorityShortIdentifier.new(term: term).value
         targetnode.add_child(child)
       end
 
       def map(xpath, xphash)
         thisdata = @data[xpath]
         targetnode = @doc.xpath("//#{xpath}")[0]
-        xphash[:mappings] = xphash[:mappings].uniq{ |m| m[:fieldname] }
+        xphash[:mappings] = xphash[:mappings].uniq{ |mapping| mapping.fieldname }
         if xphash[:is_group] == false
-          simple_map(xpath, xphash, targetnode, thisdata)
+          simple_map(xphash, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
-          map_group(xpath, xphash, targetnode, thisdata)
+          map_group(xpath, targetnode, thisdata)
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == true
-          map_subgroup(xpath, xphash, targetnode, thisdata)
+          map_subgroup(xphash, thisdata)
         end
       end
       
@@ -77,7 +76,7 @@ module CollectionSpace
       
       def add_namespaces
         @doc.xpath('/*/*').each do |section|
-          fetchuri = @handler.mapper.dig(:config, :ns_uri, section.name)
+          fetchuri = @handler.mapper.config.ns_uri[section.name]
           uri = fetchuri.nil? ? 'http://no.uri.found' : fetchuri
           section.add_namespace_definition('ns2', uri)
           section.add_namespace_definition('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
@@ -94,31 +93,71 @@ module CollectionSpace
         end
       end
       
-      def simple_map(xpath, xphash, targetnode, thisdata)
-        xphash[:mappings].each do |fm|
-          fn = fm[:fieldname]
-          data = thisdata.fetch(fn, nil)
-          if data
-            data.each do |val|
-              child = Nokogiri::XML::Node.new(fn, @doc)
-              if val.is_a?(Hash)
-                map_structured_date(child, val)
-              else
-                child.content = val
-              end
-              targetnode.add_child(child)
-            end
+      def simple_map(xphash, parent, thisdata)
+        xphash[:mappings].each do |field_mapping|
+          field_name = field_mapping.fieldname
+          data = thisdata.fetch(field_name, nil)
+          populate_simple_field_data(field_name, data, parent) if data
+        end
+      end
+
+      def populate_simple_field_data(field_name, data, parent)
+        data.each do |val|
+          child = Nokogiri::XML::Node.new(field_name, @doc)
+          if val.is_a?(Hash)
+            map_structured_date(child, val)
+          else
+            child.content = val
           end
+          parent.add_child(child)
         end
       end
       
-      def map_group(xpath, xphash, targetnode, thisdata)
+      def populate_group_field_data(index, data, parent)
+        data.each do |field, values|
+          if values[index]
+            child = Nokogiri::XML::Node.new(field, @doc)
+            if values[index].is_a?(Hash)
+              map_structured_date(child, values[index]) 
+            else values[index]
+              child.content = values[index]
+            end
+            parent.add_child(child)
+          end
+        end
+      end
+
+      def populate_subgroup_field_data(field, data, target)
+        data.each_with_index do |val, subgroup_index|
+          parent = target[subgroup_index]
+          child = Nokogiri::XML::Node.new(field, @doc)
+          if val.is_a?(Hash)
+            map_structured_date(child, val)
+          else
+            child.content = val
+            parent.add_child(child) if parent
+          end
+        end
+      end
+
+      def subgrouplist_target(parent_path, group_index, subgroup_path, subgroup)
+        grp_target = @doc.xpath("//#{parent_path}")[group_index]
+        target_xpath = "#{subgroup_path.join('/')}/#{subgroup}"
+        grp_target.xpath(target_xpath)
+      end
+
+      def map_subgroups_to_group(group, target)
+        group[:data].each do |field, data|
+          populate_subgroup_field_data(field, data, target)
+        end
+      end
+      
+      def map_group(xpath, targetnode, thisdata)
         pnode = targetnode.parent
         groupname = targetnode.name.dup
         targetnode.remove
 
-        val_ct = thisdata.values.map{ |v| v.size }.uniq.sort.reverse
-        max_ct = val_ct[0]
+        max_ct = thisdata.values.map{ |v| v.size }.max
         max_ct.times do
           group = Nokogiri::XML::Node.new(groupname, @doc)
           pnode.add_child(group)
@@ -126,18 +165,7 @@ module CollectionSpace
 
         max_ct.times do |i|
           path = "//#{xpath}"
-          parent = @doc.xpath(path)[i]
-          thisdata.each do |k, v|
-            if v[i]
-              child = Nokogiri::XML::Node.new(k, @doc)
-              if v[i].is_a?(Hash)
-                map_structured_date(child, v[i]) 
-              else v[i]
-                child.content = v[i]
-              end
-              parent.add_child(child)
-            end
-          end
+          populate_group_field_data(i, thisdata, @doc.xpath(path)[i])
         end
       end
 
@@ -163,7 +191,7 @@ module CollectionSpace
           type: nil,
           subtype: nil,
           value: nil,
-          message: "Data for subgroup #{intervening_path.join('/')}/#{subgroup} is trying to map to more instances of parent group #{parent_path} than exist. Overflow subgroup values will be skipped. The usual cause of this is that you separated subgroup values that belong inside the same parent group with the repeating field delimiter (#{handler.config[:delimiter]}) instead of the subgroup delimiter (#{handler.config[:subgroup_delimiter]})"
+          message: "Data for subgroup #{intervening_path.join('/')}/#{subgroup} is trying to map to more instances of parent group #{parent_path} than exist. Overflow subgroup values will be skipped. The usual cause of this is that you separated subgroup values that belong inside the same parent group with the repeating field delimiter (#{handler.mapper.batchconfig.delimiter}) instead of the subgroup delimiter (#{handler.mapper.batchconfig.subgroup_delimiter})"
         }
       end
 
@@ -171,12 +199,40 @@ module CollectionSpace
         sg_max_length = subgroupdata.values.map(&:length).max
         sg_max_length <= groupdata.length ? true : false
       end
+
+      # EXAMPLE: creates empty titleTranslationSubGroupList as a child of titleGroup
+      def create_intermediate_subgroup_hierarchy(grp, subgroup_path)
+        target = grp[:parent]
+        unless subgroup_path.empty?
+          subgroup_path.each do |segment|
+            child = Nokogiri::XML::Node.new(segment, @doc)
+            target.add_child(child)
+            target = child
+          end
+        end
+      end
+
+      # returns the count of field values for the subgroup field with the mosty values
+      # we need to know this in order to create enough empty subgroup elements to hold the data
+      def maximum_subgroup_values(data)
+        data.map{ |field, values| subgroup_value_count(values) }.flatten.max
+      end
+
+      def subgroup_value_count(values)
+        values.map{ |subgroup_values| subgroup_values.length }.max
+      end
+
+      def assign_subgroup_values_to_group_hash_data(groups, field, subgroups)
+        subgroups.each_with_index do |subgroup_values, group_index|
+          next if groups[group_index].nil?
+          groups[group_index][:data][field] = subgroup_values
+        end
+      end
       
-      def map_subgroup(xpath, xphash, targetnode, thisdata)
+      def map_subgroup(xphash, thisdata)
         parent_path = xphash[:parent]
         parent_set = @doc.xpath("//#{parent_path}")
-        parent_size = parent_set.size
-        subgroup_path = xphash[:mappings].first[:fullpath].gsub("#{xphash[:parent]}/", '').split('/')
+        subgroup_path = xphash[:mappings][0].fullpath.gsub("#{xphash[:parent]}/", '').split('/')
         subgroup = subgroup_path.pop
 
         # create a hash of subgroup data split up and structured for mapping
@@ -190,31 +246,15 @@ module CollectionSpace
                                     intervening_path: subgroup_path,
                                     subgroup: subgroup) unless even_subgroup_field_values?(thisdata)
         add_too_many_subgroups_warning(parent_path: parent_path,
-                                    intervening_path: subgroup_path,
-                                    subgroup: subgroup) unless group_accommodates_subgroup?(groups, thisdata)
+                                       intervening_path: subgroup_path,
+                                       subgroup: subgroup) unless group_accommodates_subgroup?(groups, thisdata)
         
-        thisdata.each do |f, v|
-          v.each_with_index do |val, i|
-            next if groups[i].nil?
-            groups[i][:data][f] = val
-          end
-        end
-        
-        # create grouping-only fields in the xml hierarchy for the subgroup
-        groups.each do |i, grp|
-          target = grp[:parent]
-          unless subgroup_path.empty?
-            subgroup_path.each do |segment|
-              child = Nokogiri::XML::Node.new(segment, @doc)
-              target.add_child(child)
-              target = child
-            end
-          end
-        end
+        thisdata.each{ |field, subgroups| assign_subgroup_values_to_group_hash_data(groups, field, subgroups) }
 
-        # create the subgroups
-        val_ct = thisdata.values.map{ |g| g.map{ |sg| sg.size }.uniq.sort.reverse }.uniq.sort.reverse.flatten
-        max_ct = val_ct[0]
+        groups.values.each{ |grp| create_intermediate_subgroup_hierarchy(grp, subgroup_path) }
+
+        max_ct = maximum_subgroup_values(thisdata)
+
         groups.each do |i, data|
           max_ct.times do
             target = @doc.xpath("//#{parent_path}/#{subgroup_path.join('/')}")
@@ -222,23 +262,9 @@ module CollectionSpace
           end
         end
 
-        groups.each do |gi, grphash|
-          gxp = "//#{parent_path}"
-          grp_target = @doc.xpath(gxp)[gi]
-          txp = "#{subgroup_path.join('/')}/#{subgroup}"
-          subgrouplist_target = grp_target.xpath(txp)
-          grphash[:data].each do |field, data|
-            data.each_with_index do |val, i|
-              target = subgrouplist_target[i]
-              child = Nokogiri::XML::Node.new(field, @doc)
-              if val.is_a?(Hash)
-                map_structured_date(child, val)
-              else
-                child.content = val
-                target.add_child(child) if target
-              end
-            end
-          end
+        groups.each do |group_index, group|
+          target = subgrouplist_target(parent_path, group_index, subgroup_path, subgroup)
+          map_subgroups_to_group(group, target)
         end
       end
     end

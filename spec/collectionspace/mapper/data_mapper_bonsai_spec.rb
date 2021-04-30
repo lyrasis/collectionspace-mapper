@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG.merge({delimiter: ';'})
+    @config = {delimiter: ';'}
   end
 
   context 'bonsai profile' do
@@ -16,7 +16,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     
     context 'objectexit record' do
       before(:all) do
-        @objectexitmapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-objectexit.json')
+        @objectexitmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4-1-1_objectexit.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @objectexitmapper,
                                                             client: @client,
                                                             cache: @cache,
@@ -27,11 +27,11 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/bonsai/objectexit1.json')
           @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('bonsai/objectexit1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths

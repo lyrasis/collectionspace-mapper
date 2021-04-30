@@ -4,11 +4,11 @@ module CollectionSpace
   module Mapper
     class AuthorityHierarchyPrepper < CollectionSpace::Mapper::DataPrepper
       include CollectionSpace::Mapper::TermSearchable
-      attr_reader :errors, :warnings
+      attr_reader :errors, :warnings, :type, :subtype
       
       def initialize(data, handler)
         super
-        @cache = @handler.csidcache
+        @cache = @handler.mapper.csidcache
         @type = @response.merged_data['term_type']
         @subtype = @response.merged_data['term_subtype']
         @errors = []
@@ -20,15 +20,8 @@ module CollectionSpace
         split_data
         transform_terms
         combine_data_fields
-        unless errors.empty?
-          @response.errors << errors
-          @response.errors.flatten!
-        end
-        unless warnings.empty?
-          @response.warnings << warnings
-          @response.warnings.flatten!
-        end
-        @response
+        push_errors_and_warnings
+        self
       end
 
       private
@@ -41,7 +34,7 @@ module CollectionSpace
       
       def process_xpaths
         clear_unmapped_mappings
-        @handler.mapper[:xpath] = @handler.xpath_hash
+        @handler.mapper.xpath = @handler.xpath_hash
         super
       end
       
@@ -50,13 +43,12 @@ module CollectionSpace
       #  do not actually get used to produce XML
       def clear_unmapped_mappings
         to_clear = %w[termType termSubType]
-        @handler.mapper[:mappings].reject!{ |m| to_clear.include?(m[:fieldname]) }
+        @handler.mapper.mappings.reject!{ |mapping| to_clear.include?(mapping.fieldname) }
       end
 
       def transform_terms
         %w[broader_term narrower_term].each do |field|
-          transformed = @response.split_data[field].map{ |term| term_csid(term) }
-          @response.transformed_data[field] = transformed
+          @response.transformed_data[field] = transformed_term(field)
         end
 
         @response.split_data.each do |field, value|
@@ -66,12 +58,8 @@ module CollectionSpace
         end
       end
 
-      def type
-        @type
-      end
-
-      def subtype
-        @subtype
+      def transformed_term(field)
+        @response.split_data[field].map{ |term| term_csid(term) }
       end
     end
   end

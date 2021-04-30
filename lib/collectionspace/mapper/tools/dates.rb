@@ -51,7 +51,7 @@ module CollectionSpace
               try_chronic_parse(@date_string)
               @timestamp ? create_mappable_date : try_services_query
             elsif two_digit_year_date_formats.any?{ |re| @date_string.match?(re) }
-              if @config[:two_digit_year_handling] == 'literal'
+              if @config.two_digit_year_handling == 'literal'
                 try_services_query
               else
                 try_chronic_parse(coerced_year_date)
@@ -87,7 +87,7 @@ module CollectionSpace
           end
           
           def try_chronic_parse(string)
-            if @config[:date_format] == 'day month year'
+            if @config.date_format == 'day month year'
               @timestamp = Chronic.parse(string, endian_precedence: :little)
             else
               @timestamp = Chronic.parse(string)

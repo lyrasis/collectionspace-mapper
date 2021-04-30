@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This project bumps the version number for any changes (including documentation updates and refactorings). Versions with only documentation or refactoring changes may not be released. Versions with bugfixes will be released. Changes made to unreleased versions will be indicated by version number under each release that includes those changes.
 
 ## [Unreleased]
+
+## [2.2.6 (Unreleased)] - 2021-04-30
 ### Changed
 - Refactoring
 

@@ -19,9 +19,16 @@ module Helpers
       search_enabled: false,
       search_identifiers: false
     }
-    CollectionSpace::RefCache.new(config: cache_config, client: anthro_client)
+    cache = CollectionSpace::RefCache.new(config: cache_config, client: anthro_client)
+    populate_anthro(cache)
+    cache
   end
 
+  def anthro_object_mapper
+    path = 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject.json'
+    get_record_mapper_object(path)
+  end
+  
   def populate_anthro(cache)
     terms = [
       ['conceptauthorities', 'archculture', 'Blackfoot', "urn:cspace:anthro.collectionspace.org:conceptauthorities:name(archculture):item:name(Blackfoot1576172504869)'Blackfoot'"],

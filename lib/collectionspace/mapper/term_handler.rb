@@ -1,29 +1,35 @@
 # frozen_string_literal: true
 
+require 'collectionspace/mapper/tools/refname'
+
 module CollectionSpace
   module Mapper
     class TermHandler
+      include TermSearchable
+      
       attr_reader :result, :terms, :warnings, :errors,
         :column, :source_type, :type, :subtype
       attr_accessor :value
-      def initialize(mapping:, data:, client:, cache:, config:)
+      def initialize(mapping:, data:, client:, cache:, mapper:)
         @mapping = mapping
-        @column = mapping[:datacolumn]
-        @field = mapping[:fieldname]
         @data = data
-        @cache = cache
         @client = client
-        @config = config
-        @source_type = @mapping[:source_type].to_sym
+        @cache = cache
+        @mapper = mapper
+        
+        @column = mapping.datacolumn
+        @field = mapping.fieldname
+        @config = @mapper.batchconfig
+        @source_type = @mapping.source_type.to_sym
         @terms = []
         case @source_type
         when :authority
-          authconfig = @mapping[:transforms][:authority]
+          authconfig = @mapping.transforms[:authority]
           @type = authconfig[0]
           @subtype = authconfig[1]
         when :vocabulary
           @type = 'vocabularies'
-          @subtype = @mapping[:transforms][:vocabulary]
+          @subtype = @mapping.transforms[:vocabulary]
         end
         @warnings = []
         @errors = []
@@ -42,7 +48,6 @@ module CollectionSpace
 
       def handle_term(val)
         @value = val
-        
         return '' if val.blank?
         added = false
         
@@ -58,7 +63,7 @@ module CollectionSpace
             added = true
           end
         else # not in cache
-          if @config[:check_terms]
+          if @config.check_terms
             refname_urn = searched_term(val)
             if refname_urn
               add_found_term(refname_urn, term_report)
@@ -89,56 +94,9 @@ module CollectionSpace
         @cache.get(type, subtype, val, search: false)
       end
 
-      def searched_term(val)
-        begin
-          response = @client.find(
-            type: type,
-            subtype: subtype,
-            value: val,
-            field: search_field
-          )
-        rescue StandardError => e
-          puts e.message
-        else
-          response_term_refname(response)
-        end
-      end
-
-      def response_term_refname(response)
-        term_ct = response.parsed.dig('abstract_common_list', 'totalItems')
-        return nil if term_ct.nil?
-
-        if term_ct.to_i == 1
-          refname = response.parsed.dig('abstract_common_list', 'list_item', 'refName')
-        elsif term_ct.to_i > 1
-          rec = response.parsed.dig('abstract_common_list', 'list_item')[0]
-          using_uri = "#{@client.config.base_uri}#{rec['uri']}"
-          refname = rec['refName']
-          warnings << {
-            category: :multiple_records_found_for_term,
-            field: column,
-            type: type,
-            subtype: subtype,
-            value: value,
-            message: "#{term_ct} records found. Using #{using_uri}"
-          }
-        end
-        refname
-      end
-      
-      def search_field
-        begin
-          field = CollectionSpace::Service.get(type: type)[:term]
-        rescue StandardError => e
-          puts e.message
-        else
-          field
-        end
-      end
-      
       def add_found_term(refname_urn, term_report)
         refname_obj = CollectionSpace::Mapper::Tools::RefName.new(urn: refname_urn)
-        found = @config[:check_terms] ? true : false 
+        found = @config.check_terms ? true : false 
         @terms << term_report.merge({ found: found, refname: refname_obj })
       end
     end

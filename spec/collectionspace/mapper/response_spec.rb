@@ -7,11 +7,11 @@ RSpec.describe CollectionSpace::Mapper::Response do
     @client = botgarden_client
     @cache = botgarden_cache
     populate_botgarden(@cache)
-    @mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2_0_1-taxon-local.json')
+    @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/botgarden/botgarden_2-0-1_taxon-local.json')
     @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                         client: @client,
                                                         cache: @cache,
-                                                        config: CollectionSpace::Mapper::DEFAULT_CONFIG)
+                                                        config: {})
   end
 
   describe '#valid?' do
@@ -31,7 +31,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
     end
   end
 
-  describe '#normal' do
+  describe '#normal', services_call: true do
     context 'when response_mode = normal in config' do
       before(:all) do
         @data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
@@ -66,7 +66,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
   end
 
   describe '#xml' do
-    context 'when there is a doc' do
+    context 'when there is a doc', services_call: true do
       it 'returns string' do
         data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
         vresponse = @handler.validate(data)

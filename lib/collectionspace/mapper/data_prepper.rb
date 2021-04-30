@@ -7,10 +7,10 @@ module CollectionSpace
       attr_accessor :response, :xphash
       def initialize(data, handler)
         @handler = handler
-        @config = @handler.config
-        @cache = @handler.cache
-        @client = @handler.client
-        @response = CollectionSpace::Mapper::setup_data(data, @handler.defaults, @config)
+        @config = @handler.mapper.batchconfig
+        @cache = @handler.mapper.termcache
+        @client = @handler.mapper.csclient
+        @response = CollectionSpace::Mapper::setup_data(data, @config)
         drop_empty_fields
         if @response.valid?
           process_xpaths
@@ -25,16 +25,16 @@ module CollectionSpace
         @response.terms.flatten!
         check_data
         combine_data_fields
-        @response
+        self
       end
       
       def split_data
-        @xphash.each{ |xpath, hash| do_splits(xpath, hash) }
+        @xphash.each{ |xpath, hash| do_splits(hash) }
         @response.split_data
       end
 
       def transform_data
-        @xphash.each{ |xpath, hash| do_transforms(xpath, hash) }
+        @xphash.each{ |xpath, hash| do_transforms(hash) }
         @response.transformed_data
       end
 
@@ -44,14 +44,14 @@ module CollectionSpace
       end
 
       def handle_term_fields
-        @xphash.each{ |xpath, hash| do_term_handling(xpath, hash) }
+        @xphash.each{ |xpath, hash| do_term_handling(hash) }
         @response.warnings.flatten!
         @response.errors.flatten!
         @response.transformed_data
       end
       
       def check_data
-        @xphash.each{ |xpath, hash| check_data_quality(xpath, hash) }
+        @xphash.each{ |xpath, hash| check_data_quality(hash) }
         @response.warnings.flatten!
         @response.warnings
       end
@@ -63,45 +63,58 @@ module CollectionSpace
 
       private
 
+      #used by NonHierarchicalRelationshipPrepper and AuthorityHierarchyPrepper
+      def push_errors_and_warnings
+        unless errors.empty?
+          @response.errors << errors
+          @response.errors.flatten!
+        end
+        unless warnings.empty?
+          @response.warnings << warnings
+          @response.warnings.flatten!
+        end
+      end
+
       def drop_empty_fields
         @response.merged_data = @response.merged_data.delete_if{ |k, v| v.blank? }
       end
 
       def process_xpaths
         # keep only mappings for datacolumns present in data hash
-        mappings = @handler.mapper[:mappings].select do |m|
-          m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
+        mappings = @handler.mapper.mappings.select do |mapper|
+          mapper.fieldname == 'shortIdentifier' || @response.merged_data.key?(mapper.datacolumn)
         end
 
         # create xpaths for remaining mappings...
-        @xphash = mappings.map{ |m| m[:fullpath] }.uniq
+        @xphash = mappings.map{ |mapper| mapper.fullpath }.uniq
         # hash with xpath as key and xpath info hash from DataHandler as value
-        @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper[:xpath][xpath].clone] }.to_h
+        @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper.xpath[xpath].clone] }.to_h
         @xphash.each do |xpath, hash|
-          hash[:mappings] = hash[:mappings].select do |m|
-            m[:fieldname] == 'shortIdentifier' || @response.merged_data.key?(m[:datacolumn])
+          hash[:mappings] = hash[:mappings].select do |mapping|
+            mapping.fieldname == 'shortIdentifier' || @response.merged_data.key?(mapping.datacolumn)
           end
         end
       end
 
-      def do_splits(xpath, xphash)
+      def do_splits(xphash)
         if xphash[:is_group] == false
           xphash[:mappings].each do |mapping|
-            column = mapping[:datacolumn]
+            column = mapping.datacolumn
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
-            @response.split_data[column] = mapping[:repeats] == 'y' ? CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result : [data.strip]
+
+            @response.split_data[column] = mapping.repeats == 'y' ? CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result : [data.strip]
           end
         elsif xphash[:is_group] == true && xphash[:is_subgroup] == false
           xphash[:mappings].each do |mapping|
-            column = mapping[:datacolumn]
+            column = mapping.datacolumn
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
             @response.split_data[column] = CollectionSpace::Mapper::SimpleSplitter.new(data, @config).result
           end
         elsif xphash[:is_group] && xphash[:is_subgroup]
           xphash[:mappings].each do |mapping|
-            column = mapping[:datacolumn]
+            column = mapping.datacolumn
             data = @response.merged_data.fetch(column, nil)
             next if data.nil? || data.empty?
             @response.split_data[column] = CollectionSpace::Mapper::SubgroupSplitter.new(data, @config).result
@@ -109,21 +122,21 @@ module CollectionSpace
         end
       end
 
-      def do_transforms(xpath, xphash)
+      def do_transforms(xphash)
         splitdata = @response.split_data
         targetdata = @response.transformed_data
         xphash[:mappings].each do |mapping|
-          column = mapping[:datacolumn]
+          column = mapping.datacolumn
           data = splitdata.fetch(column, nil)
           next if data.blank?
-          if mapping[:transforms].blank?
+          if mapping.transforms.blank?
             targetdata[column] = data
           else
             targetdata[column] = data.map do |d|
               if d.is_a?(String)
-                transform_value(d, mapping[:transforms], column)
+                transform_value(d, mapping.transforms, column)
               else
-                d.map{ |val| transform_value(val, mapping[:transforms], column) }
+                d.map{ |val| transform_value(val, mapping.transforms, column) }
               end
             end
           end
@@ -147,8 +160,8 @@ module CollectionSpace
         sourcedata = @response.transformed_data
 
         xphash[:mappings].each do |mapping|
-          column = mapping[:datacolumn]
-          type = mapping[:data_type]
+          column = mapping.datacolumn
+          type = mapping.data_type
           
           data = sourcedata.fetch(column, nil)
           next if data.blank?
@@ -166,13 +179,13 @@ module CollectionSpace
         end
       end
 
-      def do_term_handling(xpath, xphash)
+      def do_term_handling(xphash)
         sourcedata = @response.transformed_data
         xphash[:mappings].each do |mapping|
-          source_type = get_source_type(mapping[:source_type])
+          source_type = get_source_type(mapping.source_type)
           next if source_type.nil?
           
-          column = mapping[:datacolumn]
+          column = mapping.datacolumn
           next if column['refname']
           
           data = sourcedata.fetch(column, nil)
@@ -180,9 +193,9 @@ module CollectionSpace
 
           th = CollectionSpace::Mapper::TermHandler.new(mapping: mapping,
                                                         data: data,
-                                                        client: @handler.client,
+                                                        client: @client,
                                                         cache: @cache,
-                                                        config: @config)
+                                                        mapper: @handler.mapper)
           @response.transformed_data[column] = th.result
           @response.terms << th.terms
           @response.warnings << th.warnings unless th.warnings.empty?
@@ -204,9 +217,15 @@ module CollectionSpace
       def structured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).mappable
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
+                                                                  @client,
+                                                                  @cache,
+                                                                  @handler.mapper.batchconfig).mappable
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).mappable }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
+                                                                             @client,
+                                                                             @cache,
+                                                                             @handler.mapper.batchconfig).mappable }
           end
         end
       end
@@ -214,17 +233,23 @@ module CollectionSpace
       def unstructured_date_transform(data)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d, @handler.client, @handler.cache, @config).stamp
+            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
+                                                                  @client,
+                                                                  @cache,
+                                                                  @handler.mapper.batchconfig).stamp
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v, @handler.client, @handler.cache, @config).stamp }
+            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
+                                                                             @client,
+                                                                             @cache,
+                                                                             @handler.mapper.batchconfig).stamp }
           end
         end
       end
 
-      def check_data_quality(xpath, xphash)
+      def check_data_quality(xphash)
         xformdata = @response.transformed_data
         xphash[:mappings].each do |mapping|
-          data = xformdata[mapping[:datacolumn]]
+          data = xformdata[mapping.datacolumn]
           next if data.blank?
           qc = CollectionSpace::Mapper::DataQualityChecker.new(mapping, data)
           @response.warnings << qc.warnings unless qc.warnings.empty?
@@ -236,12 +261,12 @@ module CollectionSpace
         fieldhash = {} # key = CSpace field names; value = array of data columns mapping to that field
         # create keys in fieldname and combined_data for all CSpace fields represented in data
         xphash[:mappings].each do |mapping|
-          fieldname = mapping[:fieldname]
+          fieldname = mapping.fieldname
           unless fieldhash.key?(fieldname)
             @response.combined_data[xpath][fieldname] = []
             fieldhash[fieldname] = []
           end
-          fieldhash[fieldname] << mapping[:datacolumn]
+          fieldhash[fieldname] << mapping.datacolumn
         end
 
         xform = @response.transformed_data
@@ -271,7 +296,7 @@ module CollectionSpace
         @response.combined_data[xpath].select{ |fieldname, val| val.blank? }.keys.each do |fieldname|
           @response.combined_data[xpath].delete(fieldname)
           unless fieldname == 'shortIdentifier'
-            @xphash[xpath][:mappings].delete_if{ |mapping| mapping[:fieldname] == fieldname }
+            @xphash[xpath][:mappings].delete_if{ |mapping| mapping.fieldname == fieldname }
           end
         end
       end
