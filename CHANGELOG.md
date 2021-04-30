@@ -9,17 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This project bumps the version number for any changes (including documentation updates and refactorings). Versions with only documentation or refactoring changes may not be released. Versions with bugfixes will be released. Changes made to unreleased versions will be indicated by version number under each release that includes those changes.
 
 ## [Unreleased]
-### Added
-#### [2.2.4]
-- CHANGELOG.md
 ### Changed
-#### [2.2.5]
 - Refactoring
-#### [2.2.4]
+
+## [2.2.5] - 2021-04-22
+### Added
+- CHANGELOG.md
+
+### Changed
+- BUGFIX: Fixes an issue where, when many records are mapped using the same `DataHandler`, some XML records were missing expected elements.
+
+### Deleted
+- Tests for UCB-specific mapping. These tests had served their purpose, were no longer needed, and were not worth fixing when they started to fail because the dev instance on UCB's end changed or went away.
+
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.2.3...v2.2.5
+
+## [2.2.4 (Unreleased)] - 2021-03-25
+
 - Updated values in fixtures causing test failures due to records being deleted from CollectionSpace dev instance
 
 ## [2.2.3] - 2021-03-09
 ### Changed
 - BUGFIX: Spurious warnings about subgroup overflows are no longer emitted
 
-https://github.com/collectionspace/collectionspace-mapper/compare/v2.2.2...v2.2.3
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.2.2...v2.2.3
