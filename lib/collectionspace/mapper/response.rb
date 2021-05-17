@@ -18,6 +18,10 @@ module CollectionSpace
         @identifier = ''
       end
 
+      def add_warning(warning)
+        @warnings << warning
+      end
+      
       def valid?
         @errors.empty? ? true : false
       end

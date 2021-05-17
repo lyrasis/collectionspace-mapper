@@ -174,25 +174,25 @@ module CollectionSpace
       end
 
       def add_uneven_subgroup_warning(parent_path:, intervening_path:, subgroup:)
-        response.warnings << {
+        response.add_warning({
           category: :uneven_subgroup_field_values,
           field: nil,
           type: nil,
           subtype: nil,
           value: nil,
           message: "Fields in subgroup #{parent_path}/#{intervening_path.join('/')}/#{subgroup} have different numbers of values"
-        }
+        })
       end
 
       def add_too_many_subgroups_warning(parent_path:, intervening_path:, subgroup:)
-        response.warnings << {
+        response.add_warning({
           category: :subgroup_contains_data_for_nonexistent_groups,
           field: nil,
           type: nil,
           subtype: nil,
           value: nil,
           message: "Data for subgroup #{intervening_path.join('/')}/#{subgroup} is trying to map to more instances of parent group #{parent_path} than exist. Overflow subgroup values will be skipped. The usual cause of this is that you separated subgroup values that belong inside the same parent group with the repeating field delimiter (#{handler.mapper.batchconfig.delimiter}) instead of the subgroup delimiter (#{handler.mapper.batchconfig.subgroup_delimiter})"
-        }
+        })
       end
 
       def group_accommodates_subgroup?(groupdata, subgroupdata)
