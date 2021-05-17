@@ -10,11 +10,11 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
-## [2.3.1] - 2021-05-17
+## [2.3.1], [2.3.2] - 2021-05-17
 ### Deleted 
 - Development dependency on ruby-prof that should not have been committed
 
-Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.3.0...v2.3.1
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.3.0...v2.3.2
 
 ## [2.3.0] - 2021-05-17
 ### Added
