@@ -10,6 +10,12 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
+## [2.4.0] - 2021-05-17
+### Added
+- Public `DataHandler.service_type` method so that `cspace-batch-import` does not reach into the guts of the class for that info
+
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.3.2...v2.3.3
+
 ## [2.3.1], [2.3.2] - 2021-05-17
 ### Deleted 
 - Development dependency on ruby-prof that should not have been committed
