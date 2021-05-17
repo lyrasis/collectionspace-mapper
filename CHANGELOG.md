@@ -10,6 +10,13 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
+## [2.3.0] - 2021-05-17
+### Added
+- Implements "the bomb" for deleting existing field values. See [the PR](https://github.com/collectionspace/collectionspace-mapper/pull/108) for details.
+- This release also includes unreleased refactored code from 2.2.6
+
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.2.5...v2.3.0
+
 ## [2.2.6 (Unreleased)] - 2021-04-30
 ### Changed
 - Refactoring
