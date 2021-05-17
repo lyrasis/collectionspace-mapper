@@ -45,7 +45,10 @@ module CollectionSpace
             ].map{ |f| Regexp.new(f) }
 
             if date_string == '%NULLVALUE%'
-              
+              #do nothing
+            elsif date_string == THE_BOMB
+              @timestamp = date_string
+              blow_up_date
             elsif
               date_formats.any?{ |re| @date_string.match?(re) }
               try_chronic_parse(@date_string)
@@ -110,6 +113,17 @@ module CollectionSpace
             @mappable['dateEarliestScalarValue'] = "#{date.stamp(:db)}#{@timestamp_suffix}"
             @mappable['dateLatestScalarValue'] = "#{next_day.stamp(:db)}#{@timestamp_suffix}"
             @mappable['scalarValuesComputed'] = 'true'
+          end
+
+          def blow_up_date
+            @mappable['dateDisplayDate'] = THE_BOMB
+            @mappable['dateEarliestSingleYear'] = THE_BOMB
+            @mappable['dateEarliestSingleMonth'] = THE_BOMB
+            @mappable['dateEarliestSingleDay'] = THE_BOMB
+            @mappable['dateEarliestSingleEra'] = THE_BOMB
+            @mappable['dateEarliestScalarValue'] = THE_BOMB
+            @mappable['dateLatestScalarValue'] = THE_BOMB
+            @mappable['scalarValuesComputed'] = THE_BOMB
           end
 
           def create_mappable_month

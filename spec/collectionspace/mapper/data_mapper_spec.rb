@@ -96,6 +96,26 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         end
       end
     end
+
+    context 'media record' do
+      before(:all) do
+        @media_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_media.json')
+        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @media_mapper, client: @client, cache: @cache)
+        
+      end
+      context 'sending through the bomb emoji' do
+        it 'sends through an empty node for any field containing bomb' do
+          datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/media2.json')
+          prepper = CollectionSpace::Mapper::DataPrepper.new(datahash, @handler)
+          mapper = CollectionSpace::Mapper::DataMapper.new(prepper.prep.response, @handler, prepper.xphash)
+          doc = remove_namespaces(mapper.response.doc)
+          xpaths = list_xpaths(doc).reject{ |xpath| xpath['identificationNumber'] }
+          vals = []
+          xpaths.each{ |xpath| vals << doc.xpath(xpath).text }
+          expect(vals.uniq).to eq([''])
+        end
+      end
+    end
   end
   
   context 'lhmc profile' do
