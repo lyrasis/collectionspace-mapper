@@ -8,9 +8,10 @@ module CollectionSpace
     #  Untangler, I am trusting it will be consistent and I'm not validating that expected
     #  keys are present for now. This also makes writing tests onthe methods here a bit easier. 
     class ColumnMapping
-      attr_reader :data_type, :fieldname, :in_repeating_group, :is_group, :namespace, :opt_list_values,
-        :repeats, :source_type, :transforms
-      def initialize(mapping_hash)
+      attr_reader :recmapper, :data_type, :fieldname, :in_repeating_group, :is_group, :namespace, :opt_list_values,
+        :repeats, :source_type, :transforms, :xpath
+      def initialize(mapping_hash, recmapper)
+        @recmapper = recmapper
         mapping_hash.each do |key, value|
           instance_variable_set("@#{key}", value)
         end
@@ -25,8 +26,9 @@ module CollectionSpace
         @fullpath ||= [@namespace, @xpath].flatten.join('/')
       end
 
+      # includes both truly required and "required in template" 
       def required?
-        @required == 'y'
+        @required.start_with?('y')
       end
 
       def update_transforms(new_transforms)

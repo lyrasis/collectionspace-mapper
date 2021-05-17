@@ -8,7 +8,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
     @cache = anthro_cache
     @fcart_client = fcart_client
     @fcart_cache = fcart_cache
-    @config = CS::Mapper::Config(Emendate::Options.new.options).hash
+    @config = Emendate::Options.new.options
   end
 
   describe CollectionSpace::Mapper::Tools::Dates::CspaceDate do
@@ -165,7 +165,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
       context 'ambiguous_month_day: :as_day_month' do
         it 'interprets as D/M/Y' do
-          config = CS::Mapper::Config.new({ambiguous_month_day: :as_day_month}).hash
+          config = CS::Mapper::Config.new(config: {ambiguous_month_day: :as_day_month})
           res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: @string, client: @client, cache: @cache, config: config)
           expect(res.mappable['dateEarliestScalarValue']).to start_with('2020-02-01')
         end
@@ -188,9 +188,9 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
         end
       end
 
-      context 'when config[:two_digit_year_handling] = literal' do
+      context 'when config[:two_digit_year_handling] = literal', services_call: true do
         before(:all) do
-          config = CS::Mapper::Config.new({two_digit_year_handling: :literal}).hash
+          config = CS::Mapper::Config.new(config: {two_digit_year_handling: :literal})
           @res = CS::Mapper::Tools::Dates::CspaceDate.new(date_string: @string, client: @client, config: config, cache: @cache)
         end
 

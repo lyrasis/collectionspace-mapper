@@ -2,10 +2,14 @@
 
 module CollectionSpace
   module Mapper
+
+    # This is the default config, which is modified for object or authority hierarchy,
+    #   or non-hierarchichal relationships via module extension
     # :reek:InstanceVariableAssumption - instance variables are set during initialization
     class Config
       attr_reader :delimiter, :subgroup_delimiter, :response_mode, :force_defaults, :check_record_status,
-                    :check_terms, :date_format, :two_digit_year_handling, :transforms, :default_values
+        :check_terms, :date_format, :two_digit_year_handling, :transforms, :default_values,
+        :record_type
       # todo: move default config in here
       include Tools::Symbolizable
 
@@ -15,8 +19,7 @@ module CollectionSpace
                         check_terms: true,
                         check_record_status: true,
                         force_defaults: false,
-                        date_format: 'month day year',
-                        two_digit_year_handling: 'coerce'
+                        two_digit_year_handling: :coerce
                        }
 
       class ConfigKeyMissingError < StandardError
@@ -29,7 +32,12 @@ module CollectionSpace
       class ConfigResponseModeError < StandardError; end
       class UnhandledConfigFormatError < StandardError; end
 
-      def initialize(config = DEFAULT_CONFIG)
+      def initialize(opts = {})
+        config = opts[:config] || DEFAULT_CONFIG
+        self.record_type = opts[:record_type]
+
+        @default_values = {}
+
         if config.is_a?(String)
           set_instance_variables(JSON.parse(config))
         elsif config.is_a?(Hash)
@@ -37,9 +45,20 @@ module CollectionSpace
         else
           raise UnhandledConfigFormatError
         end
+
+        special_defaults.each{ |col, val| add_default_value(col, val) }
+        @default_values.transform_keys!(&:downcase)
         validate
       end
 
+      def date_config
+        date_options = {}
+        Emendate::Options.new.options.keys.each do |optname|
+          date_options[optname] = send(optname) if self.respond_to?(optname)
+        end
+        date_options
+      end
+      
       def hash
         config = self.to_h
         config = symbolize(config)
@@ -50,11 +69,22 @@ module CollectionSpace
         config
       end
 
+      def add_default_value(column, value)
+        @default_values ||= {}
+        @default_values[column] = value
+      end
+
       private
+
+      def record_type=(mawdule)
+        return unless mawdule
+        extend(mawdule)
+      end
 
       def to_h
         hash = {}
         instance_variables.each do |var|
+          next if var == :@record_type
           key = var.to_s.delete('@').to_sym
           hash[key] = instance_variable_get(var)
         end
@@ -93,6 +123,10 @@ module CollectionSpace
         unless remaining_keys.empty?
           raise ConfigKeyMissingError.new('Config missing key', remaining_keys)
         end
+      end
+
+      def special_defaults
+        {}
       end
     end
   end

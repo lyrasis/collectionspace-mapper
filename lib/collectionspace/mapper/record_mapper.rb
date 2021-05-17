@@ -9,48 +9,48 @@ module CollectionSpace
     #  for transforming a hash of data into CollectionSpace XML
     # The RecordMapper bundles up all the info needed by various other classes in order
     #  to transform and map incoming data into CollectionSpace XML, so it gets passed
-    #  around to everything
+    #  around to everything as a kind of mondo-configuration-object, which is probably
+    #  terrible OOD but better than what I had before? 
 
     # :reek:Attribute - when I get rid of xphash, this will go away
     # :reek:InstanceVariableAssumption - instance variable gets set by convert
     class RecordMapper
       include Tools::Symbolizable
       
-      attr_reader :config, :mappings, :docstructure
+      attr_reader :batchconfig, :config, :mappings, :xml_template, :csclient
+
       attr_accessor :xpath
       
-      def initialize(json)
-        jhash = json.is_a?(Hash) ? json : JSON.parse(json)
-        @xpath = {}
+      def initialize(opts)
+        jhash = opts[:mapper].is_a?(Hash) ? opts[:mapper] : JSON.parse(opts[:mapper])
         convert(jhash)
+        @batchconfig = CS::Mapper::Config.new(config: opts[:batchconfig], record_type: record_type_extension)
+        @csclient = opts[:csclient]
+        @termcache = opts[:termcache] || nil
+        @xpath = {}
       end
 
-      def authority?
-        service_type == 'authority'
+      def termcache
+        @termcache ||= get_termcache
       end
 
-      def object_hierarchy?
-        record_type == 'objecthierarchy'
-      end
-
-      def authority_hierarchy?
-        record_type == 'authorityhierarchy'
-      end
-
-      def non_hierarchical_relationship?
-        record_type == 'nonhierarchicalrelationship'
-      end
-
-      def relationship?
-        service_type == 'relation'
+      def csidcache
+        @csidcache ||= get_csidcache
       end
       
       def record_type
         @config.recordtype
       end
 
+      # The value returned here is used to enable module extension when creating
+      #  other classes using RecordMapper
       def service_type
-        @config.service_type
+        case @config.service_type
+        when 'authority'
+          CS::Mapper::Authority
+        when 'relation'
+          CS::Mapper::Relationship
+        end
       end
       
       private
@@ -58,8 +58,46 @@ module CollectionSpace
       def convert(json)
         hash = symbolize(json)
         @config = CS::Mapper::RecordMapperConfig.new(hash[:config])
-        @docstructure = hash[:docstructure]
-        @mappings = CS::Mapper::ColumnMappings.new(hash[:mappings])
+        @xml_template = CS::Mapper::XmlTemplate.new(hash[:docstructure])
+        @mappings = CS::Mapper::ColumnMappings.new(mappings: hash[:mappings],                             
+                                                   mapper: self)
+      end
+
+      def get_termcache
+        config = {
+          domain: @csclient.domain,
+          error_if_not_found: false,
+          lifetime: 5 * 60,
+          search_delay: 5 * 60,
+          search_enabled: true
+        }
+        # search for authority records by display name, not short ID
+        config[:search_identifiers] = service_type == CS::Mapper::Authority ? false : true
+        CollectionSpace::RefCache.new(config: config, client: @csclient)
+      end
+
+      def get_csidcache
+        return nil unless service_type == CS::Mapper::Relationship
+        
+        config = {
+          domain: @csclient.domain,
+          error_if_not_found: false,
+          lifetime: 5 * 60,
+          search_delay: 5 * 60,
+          search_enabled: false
+        }
+        CollectionSpace::RefCache.new(config: config, client: @csclient)
+      end
+
+      def record_type_extension
+        case record_type
+        when 'objecthierarchy'
+          CS::Mapper::ObjectHierarchy
+        when 'authorityhierarchy'
+          CS::Mapper::AuthorityHierarchy
+        when 'nonhierarchicalrelationship'
+          CS::Mapper::NonHierarchicalRelationship
+        end
       end
     end
   end

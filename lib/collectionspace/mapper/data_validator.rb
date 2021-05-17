@@ -2,8 +2,6 @@
 
 module CollectionSpace
   module Mapper
-      class IdFieldNotInMapperError < StandardError; end
-    
     class RequiredField
       def initialize(fieldname, datacolumns)
         @field = fieldname.downcase
@@ -66,7 +64,10 @@ module CollectionSpace
       end
     end
 
+    # checks incoming data before mapping to ensure the necessary data is present to do the mapping
     class DataValidator
+      class IdFieldNotInMapperError < StandardError; end
+      
       attr_reader :mapper, :cache, :required_fields
       def initialize(record_mapper, cache)
         @mapper = record_mapper
@@ -97,7 +98,7 @@ module CollectionSpace
 
       def get_id_field
         idfield = @mapper.config.identifier_field
-        raise CollectionSpace::Mapper::IdFieldNotInMapperError if idfield.nil?
+        raise IdFieldNotInMapperError if idfield.nil?
         idfield.nil? ? nil : idfield.downcase
       end
 
@@ -114,7 +115,6 @@ module CollectionSpace
       def check_required_fields(data)
         errs = []
         @required_fields.each do |field, columns|
-          binding.pry if field == 'currentlocationlocal'
           if columns.length == 1
             checkfield = SingleColumnRequiredField.new(field, columns)
             errs << checkfield.missing_message if !checkfield.present_in?(data)

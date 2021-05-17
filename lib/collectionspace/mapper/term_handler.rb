@@ -10,14 +10,16 @@ module CollectionSpace
       attr_reader :result, :terms, :warnings, :errors,
         :column, :source_type, :type, :subtype
       attr_accessor :value
-      def initialize(mapping:, data:, client:, cache:, config:)
+      def initialize(mapping:, data:, client:, cache:, mapper:)
         @mapping = mapping
+        @data = data
+        @client = client
+        @cache = cache
+        @mapper = mapper
+        
         @column = mapping.datacolumn
         @field = mapping.fieldname
-        @data = data
-        @cache = cache
-        @client = client
-        @config = config
+        @config = @mapper.batchconfig
         @source_type = @mapping.source_type.to_sym
         @terms = []
         case @source_type
@@ -61,7 +63,7 @@ module CollectionSpace
             added = true
           end
         else # not in cache
-          if @config[:check_terms]
+          if @config.check_terms
             refname_urn = searched_term(val)
             if refname_urn
               add_found_term(refname_urn, term_report)
@@ -94,7 +96,7 @@ module CollectionSpace
 
       def add_found_term(refname_urn, term_report)
         refname_obj = CollectionSpace::Mapper::Tools::RefName.new(urn: refname_urn)
-        found = @config[:check_terms] ? true : false 
+        found = @config.check_terms ? true : false 
         @terms << term_report.merge({ found: found, refname: refname_obj })
       end
     end

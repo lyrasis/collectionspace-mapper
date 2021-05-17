@@ -11,11 +11,11 @@ module CollectionSpace
         @xphash = xphash
         
         @data = @response.combined_data
-        @doc = @handler.blankdoc.clone
-        @cache = @handler.cache
+        @doc = @handler.mapper.xml_template.blankdoc
+        @cache = @handler.mapper.termcache
         
         @xphash.each{ |xpath, hash| map(xpath, hash) }
-        add_short_id if @handler.mapper.authority?
+        add_short_id if @handler.mapper.service_type == CS::Mapper::Authority
         set_response_identifier
         clean_doc
         add_namespaces
@@ -25,7 +25,7 @@ module CollectionSpace
       private
 
       def set_response_identifier
-        if @handler.mapper.config.service_type == 'relation'
+        if @handler.mapper.service_type == CS::Mapper::Relationship
           set_relation_id
         else
           id_field = @handler.mapper.config.identifier_field
@@ -48,10 +48,7 @@ module CollectionSpace
       
       def add_short_id
         term = @response.transformed_data['termdisplayname'][0]
-        ns = @xphash.keys.map{ |k| k.sub(/^([^\/]+).*/, '\1') }
-          .select{ |k| k.end_with?('_common') }
-          .first
-        targetnode = @doc.xpath("/document/#{ns}").first
+        targetnode = @doc.xpath("/document/#{@handler.mapper.config.common_namespace}").first
         child = Nokogiri::XML::Node.new('shortIdentifier', @doc)
         child.content = CollectionSpace::Mapper::Identifiers::AuthorityShortIdentifier.new(term: term).value
         targetnode.add_child(child)
@@ -194,7 +191,7 @@ module CollectionSpace
           type: nil,
           subtype: nil,
           value: nil,
-          message: "Data for subgroup #{intervening_path.join('/')}/#{subgroup} is trying to map to more instances of parent group #{parent_path} than exist. Overflow subgroup values will be skipped. The usual cause of this is that you separated subgroup values that belong inside the same parent group with the repeating field delimiter (#{handler.config[:delimiter]}) instead of the subgroup delimiter (#{handler.config[:subgroup_delimiter]})"
+          message: "Data for subgroup #{intervening_path.join('/')}/#{subgroup} is trying to map to more instances of parent group #{parent_path} than exist. Overflow subgroup values will be skipped. The usual cause of this is that you separated subgroup values that belong inside the same parent group with the repeating field delimiter (#{handler.mapper.batchconfig.delimiter}) instead of the subgroup delimiter (#{handler.mapper.batchconfig.subgroup_delimiter})"
         }
       end
 

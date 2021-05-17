@@ -17,39 +17,45 @@ RSpec.describe CollectionSpace::Mapper::ColumnMapping do
   #      :opt_list_values=>[],
   #      :datacolumn=>"numberValue",
   #      :required=>"n"
-
+  let(:recordmapper) { instance_double('CS::Mapper::RecordMapper') }
+  let(:mapping) { described_class.new(hash, recordmapper) }
+  
   describe '#datacolumn' do
+    let(:hash) { {:datacolumn=>"abCdeFg"} }
     it 'returns downcased column name' do
-      mapping = described_class.new({ :datacolumn=>"abCdeFg" })
       expect(mapping.datacolumn).to eq('abcdefg')
     end
   end
   
   describe '#fullpath' do
-    before(:all) do
-      hash_mapping = {
+    let(:hash) { {
         :namespace=>"collectionobjects_common",
         :xpath=>["otherNumberList", "otherNumber"],
-      }
-      @mapping = described_class.new(hash_mapping)
-    end
+      } }
     it 'returns full xpath to target CollectionSpace field' do
       expected = 'collectionobjects_common/otherNumberList/otherNumber'
-      expect(@mapping.fullpath).to eq(expected)
+      expect(mapping.fullpath).to eq(expected)
     end
   end
 
   describe '#required?' do
     context 'with required = y' do
+      let(:hash) { { :required=>"y" } }
       it 'returns true' do
-        mapping = described_class.new({ :required=>"y" })
+        expect(mapping.required?).to be true
+      end
+    end
+
+    context 'with required = y in template' do
+      let(:hash) { { :required=>"y in template" } }
+      it 'returns true' do
         expect(mapping.required?).to be true
       end
     end
 
     context 'with required = n' do
+      let(:hash) { { :required=>"n" } }
       it 'returns false' do
-        mapping = described_class.new({ :required=>"n" })
         expect(mapping.required?).to be false
       end
     end

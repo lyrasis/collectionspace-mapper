@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = CollectionSpace::Mapper::DEFAULT_CONFIG
+    @config = {}
   end
 
   context 'customized fcart profile' do
@@ -16,7 +16,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
     context 'collectionobject record' do
       before(:all) do
-        @collectionobject_mapper = get_json_record_mapper(path: 'spec/fixtures/files/mappers/release_6_1/fcart/fcart_3_0_1-collectionobject.json')
+        @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/fcart/fcart_3-0-1_collectionobject.json')
         @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache, config: @config)
       end
 
@@ -24,11 +24,11 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/fcart/collectionobject1.json')
           @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('fcart/collectionobject1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         xit 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths
@@ -48,11 +48,11 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
         before(:all) do
           @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/fcart/collectionobject2.json')
           @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep, @handler, @prepper.xphash)
+          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
           @mapped_doc = remove_namespaces(@mapper.response.doc)
           @mapped_xpaths = list_xpaths(@mapped_doc)
           @fixture_doc = get_xml_fixture('fcart/collectionobject2.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper[:mappings])
+          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
         end
         it 'does not map unexpected fields' do
           diff = @mapped_xpaths - @fixture_xpaths

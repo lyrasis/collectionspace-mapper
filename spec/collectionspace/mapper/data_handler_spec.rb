@@ -7,28 +7,29 @@ RSpec.describe CollectionSpace::Mapper::DataHandler do
     @anthro_client = anthro_client
     @anthro_cache = anthro_cache
     populate_anthro(@anthro_cache)
-    @anthro_object_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json')
+    @anthro_object_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject.json')
     @anthro_object_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
                                                                       client: @anthro_client,
                                                                       cache: @anthro_cache)
-    @anthro_place_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
+    @anthro_place_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_place-local.json')
     @anthro_place_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_place_mapper,
                                                                      client: @anthro_client,
                                                                      cache: @anthro_cache)
 
     @bonsai_client = bonsai_client
     @bonsai_cache = bonsai_cache
-    @bonsai_conservation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4_1_1-conservation.json')
+    @bonsai_conservation_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/bonsai/bonsai_4-1-1_conservation.json')
     @bonsai_conservation_handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @bonsai_conservation_mapper,
                                                                             client: @bonsai_client,
                                                                             cache: @bonsai_cache)
 end
 
-  context 'when config has check_terms = false' do
+  # todo: why are these making services api calls?
+  context 'when config has check_terms = false', services_call: true do
     before(:all) do
       @client = core_client
       @cache = core_cache_search
-      @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6_1_0-collectionobject.json')
+      @mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json')
       @config = '{"check_terms": false}'
       @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @mapper,
                                                           client: @client,
@@ -61,25 +62,7 @@ end
     end
   end
 
-  context 'when cache is not directly passed in at initialization' do
-    context 'when mapping an authority' do
-      it 'cache.search_identifiers = false' do
-        mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-place-local.json')
-        dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
-                                                      client: @anthro_client)
-        expect(dh.cache.inspect).to include('@search_identifiers=false')
-      end
-    end
-    context 'when mapping a non-authority' do
-      it 'cache.search_identifiers = true' do
-        dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: @anthro_object_mapper,
-                                                      client: @anthro_client)
-        expect(dh.cache.inspect).to include('@search_identifiers=true')
-      end
-    end
-  end
-
-  it 'tags all un-found terms as such' do
+  it 'tags all un-found terms as such', services_call: true do
     data1 = {
       'objectNumber' => '1',
       'publishTo' => 'Wordpress', #vocabulary - not in cache
@@ -99,10 +82,6 @@ end
   describe '#is_authority' do
     context 'anthro profile' do
       context 'place record' do
-        it 'adds a mapping for shortIdentifier' do
-          result = @anthro_place_handler.mapper.mappings.select{ |mapping| mapping.fieldname == 'shortIdentifier' }
-          expect(result.length).to eq(1)
-        end
         it 'adds a xphash entry for shortIdentifier' do
           result = @anthro_place_handler.mapper.xpath['places_common'][:mappings].select do |mapping|
             mapping.fieldname == 'shortIdentifier'
@@ -217,16 +196,16 @@ end
     end
     it 'can be called with response from validation' do
       vresult = @anthro_object_handler.validate(@data)
-      result = @anthro_object_handler.prep(vresult)
+      result = @anthro_object_handler.prep(vresult).response
       expect(result).to be_a(CollectionSpace::Mapper::Response)
     end
     it 'can be called with just data' do
-      result = @anthro_object_handler.prep(@data)
+      result = @anthro_object_handler.prep(@data).response
       expect(result).to be_a(CollectionSpace::Mapper::Response)
     end
     context 'when response_mode = normal' do
       it 'returned response to include detailed data transformation info needed for mapping' do
-        result = @anthro_object_handler.prep(@data)
+        result = @anthro_object_handler.prep(@data).response
         expect(result.transformed_data).not_to be_empty
       end
     end
@@ -237,13 +216,13 @@ end
                                                            client: @anthro_client,
                                                            cache: @anthro_cache,
                                                            config: config)
-        result = handler.prep(@data)
+        result = handler.prep(@data).response
         expect(result.transformed_data).not_to be_empty
       end
     end
   end
 
-  describe '#process' do
+  describe '#process', services_call: true do
     before(:all) do
       @data = { 'objectNumber' => '123' }
     end
@@ -275,11 +254,11 @@ end
     end
   end
   
-  describe '#map' do
+  describe '#map', services_call: true do
     before(:all) do
       @data = { 'objectNumber' => '123' }
       prepper = CollectionSpace::Mapper::DataPrepper.new(@data, @anthro_object_handler)
-      prep_response = @anthro_object_handler.prep(@data)
+      prep_response = @anthro_object_handler.prep(@data).response
       @result = @anthro_object_handler.map(prep_response, prepper.xphash)
     end
     
@@ -303,7 +282,7 @@ end
                                                            cache: @anthro_cache,
                                                            config: config)
         prepper = CollectionSpace::Mapper::DataPrepper.new(@data, handler)
-        result = handler.map(handler.prep(@data), prepper.xphash)
+        result = handler.map(handler.prep(@data).response, prepper.xphash)
         expect(result.transformed_data).not_to be_empty
       end
     end

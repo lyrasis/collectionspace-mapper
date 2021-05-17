@@ -7,10 +7,11 @@ module CollectionSpace
       attr_accessor :response, :xphash
       def initialize(data, handler)
         @handler = handler
-        @config = @handler.config
-        @cache = @handler.cache
-        @client = @handler.client
-        @response = CollectionSpace::Mapper::setup_data(data, @handler.defaults, @config)
+        @config = @handler.mapper.batchconfig
+        @cache = @handler.mapper.termcache
+        @client = @handler.mapper.csclient
+        @response = CollectionSpace::Mapper::setup_data(data, @config)
+        drop_empty_fields
         if @response.valid?
           process_xpaths
         end
@@ -24,7 +25,7 @@ module CollectionSpace
         @response.terms.flatten!
         check_data
         combine_data_fields
-        @response
+        self
       end
       
       def split_data
@@ -62,15 +63,32 @@ module CollectionSpace
 
       private
 
+      #used by NonHierarchicalRelationshipPrepper and AuthorityHierarchyPrepper
+      def push_errors_and_warnings
+        unless errors.empty?
+          @response.errors << errors
+          @response.errors.flatten!
+        end
+        unless warnings.empty?
+          @response.warnings << warnings
+          @response.warnings.flatten!
+        end
+      end
+
+      def drop_empty_fields
+        @response.merged_data = @response.merged_data.delete_if{ |k, v| v.blank? }
+      end
+
       def process_xpaths
         # keep only mappings for datacolumns present in data hash
         mappings = @handler.mapper.mappings.select do |mapper|
           mapper.fieldname == 'shortIdentifier' || @response.merged_data.key?(mapper.datacolumn)
         end
+
         # create xpaths for remaining mappings...
         @xphash = mappings.map{ |mapper| mapper.fullpath }.uniq
         # hash with xpath as key and xpath info hash from DataHandler as value
-        @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper.xpath[xpath]] }.to_h
+        @xphash = @xphash.map{ |xpath| [xpath, @handler.mapper.xpath[xpath].clone] }.to_h
         @xphash.each do |xpath, hash|
           hash[:mappings] = hash[:mappings].select do |mapping|
             mapping.fieldname == 'shortIdentifier' || @response.merged_data.key?(mapping.datacolumn)
@@ -175,9 +193,9 @@ module CollectionSpace
 
           th = CollectionSpace::Mapper::TermHandler.new(mapping: mapping,
                                                         data: data,
-                                                        client: @handler.client,
+                                                        client: @client,
                                                         cache: @cache,
-                                                        config: @config)
+                                                        mapper: @handler.mapper)
           @response.transformed_data[column] = th.result
           @response.terms << th.terms
           @response.warnings << th.warnings unless th.warnings.empty?
@@ -198,8 +216,8 @@ module CollectionSpace
 
       def process_date(date_string, column)
         processed = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: date_string,
-                                                                  client: @handler.client,
-                                                                  cache: @handler.cache,
+                                                                  client: @client,
+                                                                  cache: @cache,
                                                                   config: @config)
         if processed.warnings?
           @response.warnings.each{ |w| w[:field] = column }

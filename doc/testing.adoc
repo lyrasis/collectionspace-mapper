@@ -325,4 +325,8 @@ Sometimes I may make some example changes in my branch to establish a pattern, a
 
 Once you've merged and made any remaining changes, request re-review. 
 
+== Tips
 
+To exclude tests that require an Internet connection to pass, do:
+
+`rspec --tag ~services_call`

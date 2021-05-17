@@ -21,7 +21,7 @@ module CollectionSpace
             @date_string = date_string
             @client = client
             @cache = cache
-            @config = CollectionSpace::Mapper::Tools::Config.new(config).date_config
+            @config = config
             
             @mappable = {}
             @warnings = []
@@ -35,7 +35,7 @@ module CollectionSpace
           def process
             return if date_string == '%NULLVALUE%'
             
-            @parsed_date = Emendate.parse(date_string, @config)
+            @parsed_date = Emendate.parse(date_string, @config.date_config)
 
             if parsing_warnings?
               parsed_date.warnings.each do |warning|

@@ -44,10 +44,9 @@ module Helpers
   def populate_ba(cache)
     terms = [
       ['vocabularies', 'dateera', 'CE', "urn:cspace:fcart.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'"],
-      ['vocabularies', 'datecertainty', 'supplied or inferred', "urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(suppliedorinferred1613499928079)'supplied or inferred'"]
+      ['vocabularies', 'datecertainty', 'supplied or inferred', "urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(suppliedorinferred1613499928079)'supplied or inferred'"],
+      ['personauthorities', 'person', 'Elizabeth', "urn:cspace:fcart.collectionspace.org:personauthorities:name(person):item:name(Elizabeth123)'Elizabeth'"]
     ]
     populate(cache, terms)
   end
-
-
 end

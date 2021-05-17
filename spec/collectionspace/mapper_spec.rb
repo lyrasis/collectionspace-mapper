@@ -36,7 +36,7 @@ RSpec.describe CollectionSpace::Mapper do
 
   context 'when testing' do
     let(:rc) { anthro_cache }
-    let(:mapperpath) { 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json' }
+    let(:mapperpath) { 'spec/fixtures/files/mappers/release_6_1/anthro/anthro_4-1-2_collectionobject.json' }
     
     
     it 'can create anthro refcache' do
