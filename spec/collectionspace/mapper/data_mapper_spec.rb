@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
   before(:all) do
-    @config = {}
+    @config = CS::Mapper::Config.new
   end
 
   context 'fcart profile' do
@@ -49,7 +49,7 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     context 'collectionobject record' do
       before(:all) do
         @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache)
+        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache, config: @config)
         
       end
       context 'overflow subgroup record with uneven subgroup values' do

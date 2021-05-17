@@ -8,7 +8,7 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
     @cache = anthro_cache
     @fcart_client = fcart_client
     @fcart_cache = fcart_cache
-    @config = Emendate::Options.new.options
+    @config = CS::Mapper::Config.new
   end
 
   describe CollectionSpace::Mapper::Tools::Dates::CspaceDate do
@@ -145,29 +145,29 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
     end
 
-    context 'when date format is ambiguous re: month/date order (e.g. 1/2/2020)' do
+    context 'when date format is ambiguous re: month/date order (e.g. 02/03/2020)' do
       before(:all) do
-        @string = '1/2/2020'
+        @string = '02/03/2020'
       end
 
       context 'ambiguous_month_day not explicitly set' do
         it 'defaults to M/D/Y interpretation' do
           res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: @string, client: @client, cache: @cache, config: @config)
-          expect(res.mappable['dateEarliestScalarValue']).to start_with('2020-01-02')
+          expect(res.mappable['dateEarliestScalarValue']).to start_with('2020-02-03')
         end
       end
       context 'ambiguous_month_day: :as_month_day' do
         it 'interprets as M/D/Y' do
-          config = @config.merge({ambiguous_month_day: :as_month_day})
+          config = CS::Mapper::Config.new(config: {ambiguous_month_day: :as_month_day})
           res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: @string, client: @client, cache: @cache, config: config)
-          expect(res.mappable['dateEarliestScalarValue']).to start_with('2020-01-02')
+          expect(res.mappable['dateEarliestScalarValue']).to start_with('2020-02-03')
         end
       end
       context 'ambiguous_month_day: :as_day_month' do
         it 'interprets as D/M/Y' do
           config = CS::Mapper::Config.new(config: {ambiguous_month_day: :as_day_month})
           res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: @string, client: @client, cache: @cache, config: config)
-          expect(res.mappable['dateEarliestScalarValue']).to start_with('2020-02-01')
+          expect(res.mappable['dateEarliestScalarValue']).to start_with('2020-03-02')
         end
       end
     end

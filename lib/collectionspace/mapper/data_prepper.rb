@@ -220,7 +220,7 @@ module CollectionSpace
                                                                   cache: @cache,
                                                                   config: @config)
         if processed.warnings?
-          @response.warnings.each{ |w| w[:field] = column }
+          @response.warnings.flatten.each{ |w| w[:field] = column }
           @response.warnings << processed.warnings
           @response.warnings.flatten!
         end

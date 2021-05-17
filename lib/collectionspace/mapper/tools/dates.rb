@@ -34,7 +34,7 @@ module CollectionSpace
 
           def process
             return if date_string == '%NULLVALUE%'
-            
+
             @parsed_date = Emendate.parse(date_string, @config.date_config)
 
             if parsing_warnings?

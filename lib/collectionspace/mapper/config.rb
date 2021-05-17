@@ -8,7 +8,7 @@ module CollectionSpace
     # :reek:InstanceVariableAssumption - instance variables are set during initialization
     class Config
       attr_reader :delimiter, :subgroup_delimiter, :response_mode, :force_defaults, :check_record_status,
-        :check_terms, :date_format, :two_digit_year_handling, :transforms, :default_values,
+        :check_terms, :date_format, :two_digit_year_handling, :ambiguous_month_day, :transforms, :default_values,
         :record_type
       # todo: move default config in here
       include Tools::Symbolizable
@@ -33,19 +33,25 @@ module CollectionSpace
       class UnhandledConfigFormatError < StandardError; end
 
       def initialize(opts = {})
-        config = opts[:config] || DEFAULT_CONFIG
         self.record_type = opts[:record_type]
-
-        @default_values = {}
-
-        if config.is_a?(String)
-          set_instance_variables(JSON.parse(config))
-        elsif config.is_a?(Hash)
-          set_instance_variables(config)
+        
+        passed_config = opts[:config] || {}
+        
+        if passed_config.is_a?(String)
+          hash_config = JSON.parse(passed_config).transform_keys!(&:to_sym)
+        elsif passed_config.is_a?(Hash)
+          hash_config = passed_config
+        elsif passed_config.is_a?(CS::Mapper::Config)
+          hash_config = passed_config.hash
         else
           raise UnhandledConfigFormatError
         end
 
+        merged_config = default_config.merge(hash_config)
+
+        set_instance_variables(merged_config)
+
+        @default_values = merged_config[:default_values] || {}
         special_defaults.each{ |col, val| add_default_value(col, val) }
         @default_values.transform_keys!(&:downcase)
         validate
@@ -72,6 +78,10 @@ module CollectionSpace
       def add_default_value(column, value)
         @default_values ||= {}
         @default_values[column] = value
+      end
+
+      def default_config
+        DEFAULT_CONFIG.merge(Emendate::Options.new.options)
       end
 
       private
