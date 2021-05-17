@@ -92,6 +92,37 @@ end
     end
   end
 
+  describe '#service_type' do
+    let(:servicetype) { handler.service_type }
+    context 'anthro profile' do
+      context 'collectionobject record' do
+        let(:handler) { @anthro_object_handler }
+
+        it 'returns object' do
+          expect(servicetype).to eq('object')
+        end
+      end
+
+      context 'place record' do
+        let(:handler) { @anthro_place_handler }
+
+        it 'returns authority' do
+          expect(servicetype).to eq('authority')
+        end
+      end
+    end
+
+    context 'bonsai profile' do
+      context 'conservation record' do
+        let(:handler) { @bonsai_conservation_handler }
+
+        it 'returns procedure' do
+          expect(servicetype).to eq('procedure')
+        end
+      end
+    end
+  end
+  
   describe '#xpath_hash' do
     context 'anthro profile' do
       context 'collectionobject record' do
