@@ -49,7 +49,7 @@ module Helpers
     doc
   end
   
-  def get_xml_fixture(filename)
+  def get_xml_fixture(filename, remove_blanks = true)
     doc = remove_namespaces(Nokogiri::XML(File.read("#{FIXTUREDIR}/#{filename}")){ |c| c.noblanks })
     doc = remove_blank_structured_dates(doc)
     
@@ -57,7 +57,9 @@ module Helpers
     rejectfields = %w[computedCurrentLocation].sort
     doc.traverse do |node|
       # Drop empty nodes
-      node.remove unless node.text.match?(/\S/m)
+      if remove_blanks
+        node.remove unless node.text.match?(/\S/m)
+      end
       # Drop sections of the document we don't write with the mapper
       node.remove if node.name == 'collectionspace_core' || node.name == 'account_permission'
       # Drop fields created by CS application
@@ -82,17 +84,23 @@ module Helpers
   #  default stuff in the application/services layer, but don't need to be in mapped XML)
   # testdoc should be the result of calling get_xml_fixture
   def test_xpaths(testdoc, mappings)
-    mappaths = mappings.map{ |mapping| "/document/#{mapping.fullpath}/#{mapping.fieldname}" }
-
     xpaths = list_xpaths(testdoc)
-    # only include paths for fields defined in the mapper
-    xpaths = xpaths.select do |path|
-      path = path.match(/^(.*)\//)[1].gsub(/\[\d+\]/, '')
-      mappaths.any?{ |e| path.start_with?(e) }
-    end
-    xpaths
+    mapper_defined_paths(xpaths, mappings)
   end
 
+  def mapper_defined_paths(xpaths, mappings)
+    mappaths = mappings.map{ |mapping| "/document/#{mapping.fullpath}/#{mapping.fieldname}" }
+
+    xpaths.select do |path|
+      path = remove_xpath_occurrence_indicators(path)
+      mappaths.any?{ |e| path.start_with?(e) }
+    end
+  end
+  
+  def remove_xpath_occurrence_indicators(path)
+    path.match(/^(.*)\//)[1].gsub(/\[\d+\]/, '')
+  end
+  
   def list_xpaths(doc)
     xpaths = get_xpaths(doc)
     xpaths = field_value_xpaths(xpaths)
