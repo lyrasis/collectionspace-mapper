@@ -10,6 +10,32 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
+## [2.4.1] - 2021-06-02
+### Added
+- Tests for vocabulary/authority-controlled fields containing %NULLVALUE% and THE BOMB
+
+### Changed
+- Term handler now passes through %NULLVALUE% as an empty string, and passes 💣 through as 💣. This means you no longer get spurious "not found" term warnings about these values, and they have the expected result when imported.
+
+## [2.4.0] - 2021-05-17
+### Added
+- Public `DataHandler.service_type` method so that `cspace-batch-import` does not reach into the guts of the class for that info
+
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.3.2...v2.3.3
+
+## [2.3.1], [2.3.2] - 2021-05-17
+### Deleted 
+- Development dependency on ruby-prof that should not have been committed
+
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.3.0...v2.3.2
+
+## [2.3.0] - 2021-05-17
+### Added
+- Implements "the bomb" for deleting existing field values. See [the PR](https://github.com/collectionspace/collectionspace-mapper/pull/108) for details.
+- This release also includes unreleased refactored code from 2.2.6
+
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.2.5...v2.3.0
+
 ## [2.2.6 (Unreleased)] - 2021-04-30
 ### Changed
 - Refactoring

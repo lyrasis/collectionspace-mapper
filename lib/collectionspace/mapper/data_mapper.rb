@@ -18,6 +18,7 @@ module CollectionSpace
         add_short_id if @handler.mapper.service_type == CS::Mapper::Authority
         set_response_identifier
         clean_doc
+        defuse_bomb
         add_namespaces
         @response.doc = @doc
       end
@@ -71,6 +72,12 @@ module CollectionSpace
         @doc.traverse do |node|
           node.remove if node.text == '%NULLVALUE%'
           node.remove unless node.text.match?(/\S/m)
+        end
+      end
+
+      def defuse_bomb
+        @doc.traverse do |node|
+          node.content = '' if node.text == THE_BOMB
         end
       end
       

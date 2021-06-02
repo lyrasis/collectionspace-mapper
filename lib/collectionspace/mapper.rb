@@ -13,13 +13,13 @@ require 'facets/kernel/blank'
 require 'nokogiri'
 require 'xxhash'
 
-require 'ruby-prof'
-
 module CollectionSpace
   ::CS = CollectionSpace
   module Mapper
     extend self
     LOGGER = Logger.new(STDERR)
+
+    THE_BOMB = "\u{1F4A3}"
     
     Dir[File.dirname(__FILE__) + 'mapper/tools/*.rb'].each do |file|
       require "collectionspace/mapper/tools/#{File.basename(file, File.extname(file))}"

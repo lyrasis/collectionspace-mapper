@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="collectionobjects">
+  <ns2:collectionspace_core xmlns:ns2="http://collectionspace.org/collectionspace_core/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <createdAt>2020-09-09T10:00:45.052Z</createdAt>
+    <updatedBy>admin@core.collectionspace.org</updatedBy>
+    <createdBy>admin@core.collectionspace.org</createdBy>
+    <workflowState>project</workflowState>
+    <tenantId>1</tenantId>
+    <refName>urn:cspace:core.collectionspace.org:collectionobjects:id(998b6cad-4a55-4904-93b2)'36548'</refName>
+    <uri>/collectionobjects/998b6cad-4a55-4904-93b2</uri>
+    <updatedAt>2020-09-09T11:28:51.773Z</updatedAt>
+  </ns2:collectionspace_core>
+  <ns2:collectionobjects_common xmlns:ns2="http://collectionspace.org/services/collectionobject" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <objectNumber>36548</objectNumber>
+    <titleGroupList>
+      <titleGroup>
+        <titleTranslationSubGroupList>
+          <titleTranslationSubGroup>
+            <titleTranslation>Chat</titleTranslation>
+            <titleTranslationLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(fra)'French'</titleTranslationLanguage>
+          </titleTranslationSubGroup>
+          <titleTranslationSubGroup>
+            <titleTranslation>Mow mow</titleTranslation>
+          </titleTranslationSubGroup>
+          <titleTranslationSubGroup>
+            <titleTranslation>Gato</titleTranslation>
+            <titleTranslationLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(spa)'Spanish'</titleTranslationLanguage>
+          </titleTranslationSubGroup>
+        </titleTranslationSubGroupList>
+        <titleLanguage>urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(eng)'English'</titleLanguage>
+        <title>Cat</title>
+      </titleGroup>
+    </titleGroupList>
+    <namedCollections>
+      <namedCollection></namedCollection>
+    </namedCollections>
+  </ns2:collectionobjects_common>
+  <ns2:account_permission xmlns:ns2="http://collectionspace.org/services/authorization">
+    <account>
+      <accountId>d884e854-a10b-49c8-87e7-e7a900ffdc52</accountId>
+      <screenName>Administrator</screenName>
+      <userId>admin@core.collectionspace.org</userId>
+      <tenantId>1</tenantId>
+    </account>
+  </ns2:account_permission>
+</document>

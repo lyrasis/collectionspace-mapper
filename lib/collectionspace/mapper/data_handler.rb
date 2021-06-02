@@ -64,6 +64,11 @@ module CollectionSpace
         known = data_fields - unknown
         { known_fields: known, unknown_fields: unknown }
       end
+
+      # this is surfaced in public interface because it is used by cspace-batch-import
+      def service_type
+        @mapper.config.service_type
+      end
       
       def validate(data)
         response = CollectionSpace::Mapper::setup_data(data, @mapper.batchconfig)

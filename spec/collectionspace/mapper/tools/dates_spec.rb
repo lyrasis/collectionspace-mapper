@@ -28,6 +28,22 @@ RSpec.describe CollectionSpace::Mapper::Tools::Dates do
       end
     end
 
+    context 'THE BOMB' do
+      before(:all) do
+        @res = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: '💣', client: @client, cache: @cache, config: @config)
+      end
+      
+      it '#stamp is the bomb' do
+        res = @res.stamp
+        expect(res).to eq('💣')
+      end
+
+      it '#mappable elements all contain the bomb' do
+        res = @res.mappable.values.uniq
+        expect(res).to eq(['💣'])
+      end
+    end
+
     context 'when date string is not parseable' do
       context 'date = VIII.XIV.MMXX' do
         before(:all) do

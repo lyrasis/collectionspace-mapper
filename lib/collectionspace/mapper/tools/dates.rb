@@ -22,7 +22,6 @@ module CollectionSpace
             @client = client
             @cache = cache
             @config = config
-            
             @mappable = {}
             @warnings = []
 
@@ -35,6 +34,13 @@ module CollectionSpace
           def process
             return if date_string == '%NULLVALUE%'
 
+            if date_string == THE_BOMB
+              @timestamp = date_string
+              @stamp = date_string
+              blow_up_date
+              return
+            end
+            
             @parsed_date = Emendate.parse(date_string, @config.date_config)
 
             if parsing_warnings?
@@ -119,7 +125,7 @@ module CollectionSpace
 
             set_certainty(term)
           end
-          
+
           def set_certainty(term)
             refname = get_vocabulary_term(vocab: 'datecertainty', term: term)
             if refname.nil?
@@ -135,7 +141,83 @@ module CollectionSpace
             return if term == 'no date'
             mappable['dateLatestCertainty'] = refname unless mappable['dateLatestScalarValue'].nil?
           end
-          
+
+          def create_mappable_date
+            date = @timestamp.to_date
+            next_day = date + 1
+            
+            @mappable['dateDisplayDate'] = @date_string
+            @mappable['dateEarliestSingleYear'] = date.year.to_s
+            @mappable['dateEarliestSingleMonth'] = date.month.to_s
+            @mappable['dateEarliestSingleDay'] = date.day.to_s
+            @mappable['dateEarliestSingleEra'] = @ce
+            @mappable['dateEarliestScalarValue'] = "#{date.stamp(:db)}#{@timestamp_suffix}"
+            @mappable['dateLatestScalarValue'] = "#{next_day.stamp(:db)}#{@timestamp_suffix}"
+            @mappable['scalarValuesComputed'] = 'true'
+          end
+
+          def blow_up_date
+            @mappable['dateDisplayDate'] = THE_BOMB
+            @mappable['dateEarliestSingleYear'] = THE_BOMB
+            @mappable['dateEarliestSingleMonth'] = THE_BOMB
+            @mappable['dateEarliestSingleDay'] = THE_BOMB
+            @mappable['dateEarliestSingleEra'] = THE_BOMB
+            @mappable['dateEarliestScalarValue'] = THE_BOMB
+            @mappable['dateLatestScalarValue'] = THE_BOMB
+            @mappable['scalarValuesComputed'] = THE_BOMB
+          end
+
+          def create_mappable_month
+            year = @date_string.match(/(\d{4})/)[1].to_i
+            month = @date_string.sub(year.to_s, '').match(/(\d{1,2})/)[1].to_i
+            next_month = month + 1
+            last_day_of_month = Date.new(year, month, -1).day
+            
+            @mappable['dateDisplayDate'] = @date_string
+            @mappable['dateEarliestSingleYear'] = year.to_s
+            @mappable['dateEarliestSingleMonth'] = month.to_s
+            @mappable['dateEarliestSingleDay'] = '1'
+            @mappable['dateEarliestSingleEra'] = @ce
+            @mappable['dateLatestYear'] = year.to_s
+            @mappable['dateLatestMonth'] = month.to_s
+            @mappable['dateLatestDay'] = last_day_of_month.to_s
+            @mappable['dateLatestEra'] = @ce
+            @mappable['dateEarliestScalarValue'] = "#{year}-#{month.to_s.rjust(2, '0')}-01#{@timestamp_suffix}"
+            @mappable['dateLatestScalarValue'] = "#{year}-#{next_month.to_s.rjust(2, '0')}-01#{@timestamp_suffix}"
+            @mappable['scalarValuesComputed'] = 'true'
+          end
+
+          def create_mappable_year
+            year = @date_string
+            next_year = @date_string.to_i + 1
+            
+            @mappable['dateDisplayDate'] = @date_string
+            @mappable['dateEarliestSingleYear'] = year
+            @mappable['dateEarliestSingleMonth'] = '1'
+            @mappable['dateEarliestSingleDay'] = '1'
+            @mappable['dateEarliestSingleEra'] = @ce
+            @mappable['dateLatestYear'] = year
+            @mappable['dateLatestMonth'] = '12'
+            @mappable['dateLatestDay'] = '31'
+            @mappable['dateLatestEra'] = @ce
+            @mappable['dateEarliestScalarValue'] = "#{year}-01-01#{@timestamp_suffix}"
+            @mappable['dateLatestScalarValue'] = "#{next_year}-01-01#{@timestamp_suffix}"
+            @mappable['scalarValuesComputed'] = 'true'
+          end
+
+          def try_services_query
+            sdquery = "structureddates?displayDate=#{date_string}"
+            response = client.get(sdquery)
+            if response.status_code == 200
+              result = response.result['structureddate_common']
+              @mappable = fix_services_scalars(result)
+            else
+              @mappable = { 'dateDisplayDate' => date_string,
+                           'scalarValuesComputed' => 'false'
+                          }
+            end
+          end
+
           def set_earliest_scalar_values(pdate)
             return if pdate.nil?
             date = Date.parse(pdate)

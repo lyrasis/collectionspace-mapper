@@ -1,5 +1,5 @@
 module CollectionSpace
   module Mapper
-    VERSION = "2.2.6"
+    VERSION = "2.4.1"
   end
 end
