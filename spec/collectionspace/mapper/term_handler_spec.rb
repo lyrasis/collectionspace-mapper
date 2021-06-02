@@ -55,19 +55,20 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
   describe '#result' do
     context 'titletranslationlanguage (vocabulary, field subgroup)' do
       let(:colname) { 'titleTranslationLanguage' }
-      let(:data) { [['Ancient Greek', 'Swahili'], ['Klingon', 'Spanish']] }
+      let(:data) { [['%NULLVALUE%', 'Swahili'], ['Klingon', 'Spanish'], [CS::Mapper::THE_BOMB]] }
 
       it 'result is the transformed value for mapping' do
-      expected = [["urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(grc)'Ancient Greek'",
-                   "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(swa)'Swahili'"],
-                  ["urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(Klingon)'Klingon'",
-                   "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(spa)'Spanish'"]]
-      expect(th.result).to eq(expected)
-    end
-    it 'all values are refnames' do
-      chk = th.result.flatten.select{ |v| v.start_with?('urn:') }
-      expect(chk.length).to eq(4)
-    end
+        expected = [['',
+                     "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(swa)'Swahili'"],
+                    ["urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(Klingon)'Klingon'",
+                     "urn:cspace:core.collectionspace.org:vocabularies:name(languages):item:name(spa)'Spanish'"],
+                   [CS::Mapper::THE_BOMB]]
+        expect(th.result).to eq(expected)
+      end
+      it 'all values are refnames, blanks, or the bomb' do
+        chk = th.result.flatten.select{ |v| v.start_with?('urn:') || v.empty? || v = CS::Mapper::THE_BOMB }
+        expect(chk.length).to eq(5)
+      end
     end
 
     context 'reference (authority, field group)' do
@@ -91,14 +92,14 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
   describe '#terms' do
     context 'titletranslationlanguage (vocabulary, field subgroup)' do
       let(:colname) { 'titleTranslationLanguage' }
-      let(:data) { [['Ancient Greek', 'Swahili'], ['Sanza', 'Spanish']] }
+      let(:data) { [['%NULLVALUE%', 'Swahili'], ['Sanza', 'Spanish'], [CS::Mapper::THE_BOMB]] }
 
       it 'contains a term Hash for each value' do
-        expect(th.terms.length).to eq(4)
+        expect(th.terms.length).to eq(3)
       end
       it 'term hash :found == true when term exists already' do
         chk = th.terms.select{ |h| h[:found] }
-        expect(chk.length).to eq(3)
+        expect(chk.length).to eq(2)
       end
       it 'term hash :found == false when term does not exist already' do
         chk = th.terms.select{ |h| !h[:found] }
