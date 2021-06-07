@@ -73,12 +73,13 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
 
     context 'reference (authority, field group)' do
       let(:colname) { 'referenceLocal' }
-      let(:data) { ['Reference 1', 'Reference 2'] }
+      let(:data) { ['Reference 1', 'Reference 2', '%NULLVALUE%'] }
       
       it 'result is the transformed value for mapping' do
         expected = [
           "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Reference11143445083)'Reference 1'",
-          "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Reference22573957271)'Reference 2'"
+          "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Reference22573957271)'Reference 2'",
+          ''
           ]
         expect(th.result).to eq(expected)
       end
@@ -109,7 +110,7 @@ RSpec.describe CollectionSpace::Mapper::TermHandler do
 
     context 'reference (authority, field group)' do
       let(:colname) { 'referenceLocal' }
-      let(:data) { ['Reference 3', 'Reference 3', 'Reference 4'] }
+      let(:data) { ['Reference 3', 'Reference 3', 'Reference 4', '%NULLVALUE%'] }
       
       it 'contains a term Hash for each value' do
         expect(th.terms.length).to eq(3)

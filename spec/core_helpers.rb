@@ -40,6 +40,8 @@ module Helpers
 
   def populate_core(cache)
     terms = [
+      ['citationauthorities', 'citation', 'Arthur', "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Arthur62605812848)'Arthur'"],      
+      ['citationauthorities', 'citation', 'Harding', "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Harding2510592089)'Harding'"],      
       ['citationauthorities', 'citation', 'Wanting', "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Wanting1599560009399)'Wanting'"],
       ['citationauthorities', 'citation', 'makasi', "urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(makasi1599645537547)'makasi'"],
       ['citationauthorities', 'worldcat', 'Chelse', "urn:cspace:core.collectionspace.org:citationauthorities:name(worldcat):item:name(Chelse1599645525740)'Chelse'"],
