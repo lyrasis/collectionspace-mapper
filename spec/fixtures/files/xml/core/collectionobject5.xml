@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document name="collectionobjects">
+    <ns2:collectionspace_core xmlns:ns2="http://collectionspace.org/collectionspace_core/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <createdAt>2020-12-04T23:35:00.440Z</createdAt>
+        <updatedBy>ks-import@lyrasistechnology.org</updatedBy>
+        <createdBy>ks-import@lyrasistechnology.org</createdBy>
+        <workflowState>project</workflowState>
+        <tenantId>100015</tenantId>
+        <refName>urn:cspace:core.collectionspace.org:collectionobjects:id(aae17169-0ffe-41b3-a212)'OBJ187'</refName>
+        <uri>/collectionobjects/aae17169-0ffe-41b3-a212</uri>
+        <updatedAt>2021-06-07T15:37:57.306Z</updatedAt>
+    </ns2:collectionspace_core>
+    <ns2:collectionobjects_common xmlns:ns2="http://collectionspace.org/services/collectionobject"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <objectNumber>OBJ187</objectNumber>
+        <referenceGroupList>
+            <referenceGroup>
+                <reference>urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Harding2510592089)'Harding'</reference>
+                <referenceNote>page 56
+object illustrated
+figure number: 120</referenceNote>
+            </referenceGroup>
+            <referenceGroup>
+                <reference>urn:cspace:core.collectionspace.org:citationauthorities:name(citation):item:name(Arthur62605812848)'Arthur'</reference>
+                <referenceNote>Reference to related bibliography</referenceNote>
+            </referenceGroup>
+            <referenceGroup>
+                <referenceNote>Long note here
+
+[Name 11/2015]</referenceNote>
+            </referenceGroup>
+        </referenceGroupList>
+    </ns2:collectionobjects_common>
+    <ns2:account_permission xmlns:ns2="http://collectionspace.org/services/authorization">
+        <account>
+            <accountId>23bc3fc9-1d0a-45f9-9005-99148a2661e7</accountId>
+            <screenName>CSV Batch Import (Kristina)</screenName>
+            <userId>ks-import@lyrasistechnology.org</userId>
+            <tenantId>100015</tenantId>
+        </account>
+    </ns2:account_permission>
+</document>

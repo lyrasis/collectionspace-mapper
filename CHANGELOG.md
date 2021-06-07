@@ -10,6 +10,13 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
+## [2.4.2] - 2021-06-07
+### Added
+- Test coverage for %NULLVALUE% authority terms in repeating subgroups
+
+### Changed
+- Refactored core mapper tests
+
 ## [2.4.1] - 2021-06-02
 ### Added
 - Tests for vocabulary/authority-controlled fields containing %NULLVALUE% and THE BOMB
