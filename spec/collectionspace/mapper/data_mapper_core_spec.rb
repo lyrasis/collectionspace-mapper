@@ -3,60 +3,57 @@
 require 'spec_helper'
 
 RSpec.describe CollectionSpace::Mapper::DataMapper do
-  before(:all) do
-    @config = {delimiter: ';'}
-  end
+  let(:config) { {delimiter: ';'} }
 
   context 'core profile' do
-    before(:all) do
-      @client = core_client
-      @cache = core_cache
-      populate_core(@cache)
-    end
+    let(:client) { core_client }
+    let(:cache) { populate_core(core_cache) }
+    let(:handler) { CollectionSpace::Mapper::DataHandler.new(record_mapper: mapper,
+                                                             client: client,
+                                                             cache: cache,
+                                                             config: config) }
+    let(:datahash) { get_datahash(path: hashpath) }
+    let(:response) { handler.process(datahash) }
+    let(:mapped_doc) { remove_namespaces(response.doc) }
+    let(:mapped_xpaths) { list_xpaths(mapped_doc) }
+    let(:fixture_doc) { get_xml_fixture(fixturepath) }
+    let(:fixture_xpaths) { test_xpaths(fixture_doc, handler.mapper.mappings) }
+    let(:diff) { mapped_xpaths - fixture_xpaths }
 
     context 'non-hierarchical relationship record', services_call: true do
       # NOTE!
       # These tests are prone to failing if one of the records used in the test in core.dev is deleted
       # If a UUID is expected but you get blank, recreate the record in core.dev, rerun the test to
       #   get the UUID for the new record, and replace the old UUID in both fixture XML files used. 
-      before(:all) do
-        @nhr_mapper = get_json_record_mapper(
-          'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_nonhierarchicalrelationship.json'
-        )
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @nhr_mapper,
-                                                            client: @client,
-                                                            cache: @cache,
-                                                            config: @config)
-      end
+      let(:mapper) { get_json_record_mapper(
+        'spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_nonhierarchicalrelationship.json'
+      ) }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/nonHierarchicalRelationship1.json')
-          @response = @handler.process(@datahash)
-          @mapped_doc1 = remove_namespaces(@response[0].doc)
-          @mapped_doc2 = remove_namespaces(@response[1].doc)
-          @mapped_xpaths1 = list_xpaths(@mapped_doc1)
-          @mapped_xpaths2 = list_xpaths(@mapped_doc2)
-          @fixture_doc1 = get_xml_fixture('core/nonHierarchicalRelationship1A.xml')
-          @fixture_xpaths1 = test_xpaths(@fixture_doc1, @handler.mapper.mappings)
-          @fixture_doc2 = get_xml_fixture('core/nonHierarchicalRelationship1B.xml')
-          @fixture_xpaths2 = test_xpaths(@fixture_doc2, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/nonHierarchicalRelationship1.json' }
+        let(:mapped_doc1) { remove_namespaces(response[0].doc) }
+        let(:mapped_doc2) { remove_namespaces(response[1].doc) }
+        let(:mapped_xpaths1) { list_xpaths(mapped_doc1) }
+        let(:mapped_xpaths2) { list_xpaths(mapped_doc2) }
+        let(:fixture_doc1) { get_xml_fixture('core/nonHierarchicalRelationship1A.xml') }
+        let(:fixture_xpaths1) { test_xpaths(fixture_doc1, handler.mapper.mappings) }
+        let(:fixture_doc2) { get_xml_fixture('core/nonHierarchicalRelationship1B.xml') }
+        let(:fixture_xpaths2) { test_xpaths(fixture_doc2, handler.mapper.mappings) }
 
         context 'with original data' do
           it 'sets response id field as expected' do
-            expect(@response[0].identifier).to eq('2020.1.107 TEST (collectionobjects) -> LOC2020.1.24 (movements)')
+            expect(response[0].identifier).to eq('2020.1.107 TEST (collectionobjects) -> LOC2020.1.24 (movements)')
           end
           
           it 'does not map unexpected fields' do
-            diff = @mapped_xpaths1 - @fixture_xpaths1
-            expect(diff).to eq([])
+            thisdiff = mapped_xpaths1 - fixture_xpaths1
+            expect(thisdiff).to eq([])
           end
 
           it 'maps as expected' do
-            @fixture_xpaths1.each do |xpath|
-              fixture_node = standardize_value(@fixture_doc1.xpath(xpath).text)
-              mapped_node = standardize_value(@mapped_doc1.xpath(xpath).text)
+            fixture_xpaths1.each do |xpath|
+              fixture_node = standardize_value(fixture_doc1.xpath(xpath).text)
+              mapped_node = standardize_value(mapped_doc1.xpath(xpath).text)
               expect(mapped_node).to eq(fixture_node)
             end
           end
@@ -64,18 +61,18 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
 
         context 'with flipped data' do
           it 'sets response id field as expected' do
-            expect(@response[1].identifier).to eq('LOC2020.1.24 (movements) -> 2020.1.107 TEST (collectionobjects)')
+            expect(response[1].identifier).to eq('LOC2020.1.24 (movements) -> 2020.1.107 TEST (collectionobjects)')
           end
           
           it 'does not map unexpected fields' do
-            diff = @mapped_xpaths2 - @fixture_xpaths2
-            expect(diff).to eq([])
+            thisdiff = mapped_xpaths2 - fixture_xpaths2
+            expect(thisdiff).to eq([])
           end
 
           it 'maps as expected' do
-            @fixture_xpaths2.each do |xpath|
-              fixture_node = standardize_value(@fixture_doc2.xpath(xpath).text)
-              mapped_node = standardize_value(@mapped_doc2.xpath(xpath).text)
+            fixture_xpaths2.each do |xpath|
+              fixture_node = standardize_value(fixture_doc2.xpath(xpath).text)
+              mapped_node = standardize_value(mapped_doc2.xpath(xpath).text)
               expect(mapped_node).to eq(fixture_node)
             end
           end
@@ -84,36 +81,25 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'authority hierarchy record', services_call: true do
-      before(:all) do
-        @ah_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_authorityhierarchy.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @ah_mapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_authorityhierarchy.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/authorityHierarchy1.json')
-#          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-#          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @response = @handler.process(@datahash)
-          @mapped_doc = remove_namespaces(@response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/authorityHierarchy1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/authorityHierarchy1.json' }
+        let(:fixturepath) { 'core/authorityHierarchy1.xml' }
 
         it 'sets response id field as expected' do
-          expect(@response.identifier).to eq('Cats > Siamese cats')
+          expect(response.identifier).to eq('Cats > Siamese cats')
         end
         
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
+          
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -121,35 +107,24 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'object hierarchy record', services_call: true do
-      before(:all) do
-        @oh_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_objecthierarchy.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @oh_mapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_objecthierarchy.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/objectHierarchy1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/objectHierarchy1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/objectHierarchy1.json' }
+        let(:fixturepath) { 'core/objectHierarchy1.xml' }
 
         it 'sets response id field as expected' do
-          expect(@mapper.response.identifier).to eq('2020.1.105 > 2020.1.1055')
+          expect(response.identifier).to eq('2020.1.105 > 2020.1.1055')
         end
         
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -157,30 +132,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'acquisition record', services_call: true do
-      before(:all) do
-        @acquisition_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_acquisition.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @acquisition_mapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_acquisition.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/acquisition1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/acquisition1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/acquisition1.json' }
+        let(:fixturepath) { 'core/acquisition1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -188,55 +153,55 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     
     context 'collectionobject record' do
-      before(:all) do
-        @collectionobject_mapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_collectionobject.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/collectionobject1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/collectionobject1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/collectionobject1.json' }
+        let(:fixturepath) { 'core/collectionobject1.xml' }
+        
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
       end
 
       context 'record 4 (bomb and %NULLVALUE% terms)' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/collectionobject4.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/collectionobject4.xml', false)
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/collectionobject4.json' }
+        let(:fixture_doc) { get_xml_fixture('core/collectionobject4.xml', false) }
+
         it 'does not map unexpected fields' do
-          puts @mapped_doc
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq(['/document/collectionobjects_common/namedCollections/namedCollection/text()'])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
+            expect(mapped_node).to eq(fixture_node)
+          end
+        end
+      end
+
+      context 'record 5 (%NULLVALUE% term in repeating group)' do
+        let(:config) { {delimiter: '|'} }
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/collectionobject5.json' }
+        let(:fixturepath) { 'core/collectionobject5.xml' }
+        
+        it 'does not map unexpected fields' do
+          expect(diff).to eq([])
+        end
+
+        it 'maps as expected' do
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -244,30 +209,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     
     context 'conditioncheck record', services_call: true do
-      before(:all) do
-        @conditioncheckmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_conditioncheck.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @conditioncheckmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_conditioncheck.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/conditioncheck1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/conditioncheck1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/conditioncheck1.json' }
+        let(:fixturepath) { 'core/conditioncheck1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -275,30 +230,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'conservation record', services_call: true do
-      before(:all) do
-        @conservationmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_conservation.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @conservationmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_conservation.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/conservation1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/conservation1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/conservation1.json' }
+        let(:fixturepath) { 'core/conservation1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -306,30 +251,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'exhibition record', services_call: true do
-      before(:all) do
-        @exhibitionmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_exhibition.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @exhibitionmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_exhibition.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/exhibition1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/exhibition1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/exhibition1.json' }
+        let(:fixturepath) { 'core/exhibition1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -337,30 +272,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     
     context 'group record' do
-      before(:all) do
-        @groupmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_group.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @groupmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_group.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/group1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/group1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/group1.json'}
+        let(:fixturepath) { 'core/group1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -368,30 +293,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'intake record' do
-      before(:all) do
-        @intakemapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_intake.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @intakemapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_intake.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/intake1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/intake1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/intake1.json' }
+        let(:fixturepath) { 'core/intake1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -399,30 +314,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'loanin record' do
-      before(:all) do
-        @rm_core_co = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_loanin.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @rm_core_co, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_loanin.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/loanin1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/loanin1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/loanin1.json' }
+        let(:fixturepath) { 'core/loanin1.xml' }
+      
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths 
           expect(diff).to eq([]) 
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -430,60 +335,41 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
     
     context 'loanout record' do
-      before(:all) do
-        @loanoutmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_loanout.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @loanoutmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_loanout.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/loanout1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/loanout1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/loanout1.json' }
+        let(:fixturepath) { 'core/loanout1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
       end
     end
+    
     context 'movement record' do
-      before(:all) do
-        @movementmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_movement.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @movementmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_movement.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/movement1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/movement1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/movement1.json' }
+        let(:fixturepath) { 'core/movement1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
-	        it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+        it 'maps as expected' do
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -491,30 +377,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'media record' do
-      before(:all) do
-        @movementmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_media.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @movementmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_media.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/media1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/media1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/media1.json' }
+        let(:fixturepath) { 'core/media1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -522,31 +398,22 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'objectexit record' do
-      before(:all) do
-        @objectexitmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_objectexit.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @objectexitmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_objectexit.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/objectexit1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/objectexit1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/objectexit1.json' }
+        let(:fixturepath) { 'core/objectexit1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths 
           expect(diff).to eq([]) 
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
+          fixture_xpaths.each do |xpath|
+            # todo - why is this next clause here?
             next if xpath.start_with?('/document/objectexit_common/exitDateGroup')
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
@@ -554,30 +421,20 @@ RSpec.describe CollectionSpace::Mapper::DataMapper do
     end
 
     context 'uoc record' do
-      before(:all) do
-        @uocmapper = get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_uoc.json')
-        @handler = CollectionSpace::Mapper::DataHandler.new(record_mapper: @uocmapper, client: @client, cache: @cache, config: @config)
-      end
+      let(:mapper) { get_json_record_mapper('spec/fixtures/files/mappers/release_6_1/core/core_6-1-0_uoc.json') }
 
       context 'record 1' do
-        before(:all) do
-          @datahash = get_datahash(path: 'spec/fixtures/files/datahashes/core/uoc1.json')
-          @prepper = CollectionSpace::Mapper::DataPrepper.new(@datahash, @handler)
-          @mapper = CollectionSpace::Mapper::DataMapper.new(@prepper.prep.response, @handler, @prepper.xphash)
-          @mapped_doc = remove_namespaces(@mapper.response.doc)
-          @mapped_xpaths = list_xpaths(@mapped_doc)
-          @fixture_doc = get_xml_fixture('core/uoc1.xml')
-          @fixture_xpaths = test_xpaths(@fixture_doc, @handler.mapper.mappings)
-        end
+        let(:hashpath) { 'spec/fixtures/files/datahashes/core/uoc1.json' }
+        let(:fixturepath) { 'core/uoc1.xml' }
+
         it 'does not map unexpected fields' do
-          diff = @mapped_xpaths - @fixture_xpaths
           expect(diff).to eq([])
         end
 
         it 'maps as expected' do
-          @fixture_xpaths.each do |xpath|
-            fixture_node = standardize_value(@fixture_doc.xpath(xpath).text)
-            mapped_node = standardize_value(@mapped_doc.xpath(xpath).text)
+          fixture_xpaths.each do |xpath|
+            fixture_node = standardize_value(fixture_doc.xpath(xpath).text)
+            mapped_node = standardize_value(mapped_doc.xpath(xpath).text)
             expect(mapped_node).to eq(fixture_node)
           end
         end
