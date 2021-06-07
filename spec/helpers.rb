@@ -120,6 +120,7 @@ module Helpers
     terms.each do |term|
       cache.put(*term)
     end
+  cache
   end
 
 
