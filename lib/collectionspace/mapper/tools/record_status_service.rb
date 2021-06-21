@@ -8,6 +8,8 @@ module CollectionSpace
         @message = "#{count} matching records found in CollectionSpace. Cannot determine which to update."
       end
     end
+
+    class NoClientServiceError < StandardError; end
     
     module Tools
       class RecordStatusService
@@ -55,7 +57,7 @@ module CollectionSpace
         def lookup_relationship(value)
           @client.get(
             @path, query: { 'sbj' => value[:sub], 'obj' => value[:obj] }
-            )
+          )
         end
         
         def lookup_non_relationship(value)
@@ -76,16 +78,23 @@ module CollectionSpace
 
         def get_service
           if @is_authority
-            @client.service(
-              type: @mapper.config.authority_type,
-              subtype: @mapper.config.authority_subtype
-            )
+            begin
+              @client.service(
+                type: @mapper.config.authority_type,
+                subtype: @mapper.config.authority_subtype
+              )
+            rescue KeyError
+              raise CS::Mapper::NoClientServiceError, "#{@mapper.config.authority_type} > #{@mapper.config.authority_subtype}"
+            end
           else
-            @client.service(type: @mapper.config.service_path)
+            begin
+              @client.service(type: @mapper.config.service_path)
+            rescue KeyError
+              raise CS::Mapper::NoClientServiceError, @mapper.config.service_path
+            end
           end
         end
       end
     end
   end
 end
-
