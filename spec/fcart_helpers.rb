@@ -24,8 +24,29 @@ module Helpers
 
   def populate_fcart(cache)
     terms = [
-      ['personauthorities', 'person', 'Elizabeth', "urn:cspace:fcart.collectionspace.org:personauthorities:name(person):item:name(Elizabeth123)'Elizabeth'"]    ]
+      ['vocabularies', 'dateera', 'CE', "urn:cspace:fcart.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'"]
+    ]
     populate(cache, terms)
   end
 
+  # this is a fake "client-specific" config based on the fcart profile.
+  # for testing, we'll name it something else, make the customizations in the cache,
+  #   and use fcart for other functionality
+  def ba_cache
+    cache_config = {
+      domain: 'fcart.collectionspace.org',
+      search_enabled: false,
+      search_identifiers: false
+    }
+    CollectionSpace::RefCache.new(config: cache_config, client: fcart_client)
+  end
+
+  def populate_ba(cache)
+    terms = [
+      ['vocabularies', 'dateera', 'CE', "urn:cspace:fcart.collectionspace.org:vocabularies:name(dateera):item:name(ce)'CE'"],
+      ['vocabularies', 'datecertainty', 'supplied or inferred', "urn:cspace:fcart.collectionspace.org:vocabularies:name(datecertainty):item:name(suppliedorinferred1613499928079)'supplied or inferred'"],
+      ['personauthorities', 'person', 'Elizabeth', "urn:cspace:fcart.collectionspace.org:personauthorities:name(person):item:name(Elizabeth123)'Elizabeth'"]
+    ]
+    populate(cache, terms)
+  end
 end

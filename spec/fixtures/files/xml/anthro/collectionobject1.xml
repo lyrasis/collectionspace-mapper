@@ -478,7 +478,7 @@
       <dateEarliestSingleCertainty/>
       <dateEarliestSingleQualifierUnit/>
       <dateDisplayDate>1/2/2019</dateDisplayDate>
-      <dateLatestScalarValue>2019-01-03T00:00:00.000Z</dateLatestScalarValue>
+      <dateLatestScalarValue>2019-01-02T00:00:00.000Z</dateLatestScalarValue>
       <dateEarliestSingleQualifierValue/>
       <datePeriod/>
       <dateLatestEra/>
@@ -726,7 +726,7 @@
           <dateEarliestSingleCertainty/>
           <dateEarliestSingleQualifierUnit/>
           <dateDisplayDate>2019-09-30</dateDisplayDate>
-          <dateLatestScalarValue>2019-10-01T00:00:00.000Z</dateLatestScalarValue>
+          <dateLatestScalarValue>2019-09-30T00:00:00.000Z</dateLatestScalarValue>
           <dateEarliestSingleQualifierValue/>
           <datePeriod/>
           <dateLatestEra/>
@@ -766,7 +766,7 @@
           <dateEarliestSingleCertainty/>
           <dateEarliestSingleQualifierUnit/>
           <dateDisplayDate>4/5/2020</dateDisplayDate>
-          <dateLatestScalarValue>2020-04-06T00:00:00.000Z</dateLatestScalarValue>
+          <dateLatestScalarValue>2020-04-05T00:00:00.000Z</dateLatestScalarValue>
           <dateEarliestSingleQualifierValue/>
           <datePeriod/>
           <dateLatestEra/>

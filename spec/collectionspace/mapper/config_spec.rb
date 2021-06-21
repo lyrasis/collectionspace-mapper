@@ -35,7 +35,22 @@ RSpec.describe CollectionSpace::Mapper::Config do
   let(:with_hash) { described_class.new(config: confighash) }
   let(:with_nothing) { described_class.new }
   let(:with_array) { described_class.new(config: [2, 3]) }
-  let(:expected_hash) { {:delimiter=>";", :subgroup_delimiter=>"^^", :response_mode=>"verbose", :force_defaults=>false, :check_record_status=>true, :check_terms=>true, :date_format=>"month day year", :two_digit_year_handling=>"convert to four digit", :transforms=>{"collection"=>{:special=>["downcase_value"], :replacements=>[{:find=>" ", :replace=>"-", :type=>"plain"}]}}, :default_values=>{"publishto"=>"DPLA;Omeka", "collection"=>"library-collection"}} }
+  let(:expected_hash) { {:delimiter=>";",
+                         :subgroup_delimiter=>"^^",
+                         :response_mode=>"verbose",
+                         :check_terms=>true,
+                         :check_record_status=>true,
+                         :force_defaults=>false,
+                         :two_digit_year_handling=>"convert to four digit",
+                         :ambiguous_month_day=>:as_month_day,
+                         :ambiguous_month_year=>:as_year,
+                         :ambiguous_year_rollback_threshold=>21,
+                         :square_bracket_interpretation=>:supplied_date,
+                         :pluralized_date_interpretation=>:decade,
+                         :date_format=>"month day year",
+                         :transforms=>
+                         {"collection"=>{:special=>["downcase_value"], :replacements=>[{:find=>" ", :replace=>"-", :type=>"plain"}]}},
+                         :default_values=>{"publishto"=>"DPLA;Omeka", "collection"=>"library-collection"}} }
   let(:invalid_response) { {response_mode: 'mouthy'} }
   let(:with_invalid_response) { described_class.new(config: invalid_response) }
 
@@ -56,7 +71,7 @@ RSpec.describe CollectionSpace::Mapper::Config do
       expect(with_nothing).to be_a(described_class)
     end
     it 'uses default config' do
-      expected = described_class::DEFAULT_CONFIG.clone
+      expected = described_class::DEFAULT_CONFIG.clone.merge(Emendate::Options.new.options)
       expected[:default_values] = {}
       expect(with_nothing.hash).to eq(expected)
     end

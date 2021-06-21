@@ -7,6 +7,7 @@ require 'json'
 require 'logger'
 require 'pp'
 
+require 'emendate'
 require 'facets/array/before'
 require 'facets/kernel/blank'
 require 'nokogiri'

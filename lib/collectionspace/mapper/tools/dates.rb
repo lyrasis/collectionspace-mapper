@@ -11,96 +11,137 @@ module CollectionSpace
         extend self
 
         class CspaceDate
-          attr_reader :date_string, :client, :cache, :config, :timestamp, :stamp
-          attr_accessor :mappable
+          include TermSearchable
+          TIMESTAMP_SUFFIX = 'T00:00:00.000Z'
+          attr_reader :date_string,
+            :parsed_date, :mappable, :warnings,
+            :timestamp, :stamp
 
-          def initialize(date_string, client, cache, config)
+          def initialize(date_string:, client:, cache:, config:)
             @date_string = date_string
             @client = client
             @cache = cache
             @config = config
             @mappable = {}
-            @timestamp_suffix = 'T00:00:00.000Z'
-            @ce = "urn:cspace:#{@cache.domain}:vocabularies:name(dateera):item:name(ce)'CE'"
+            @warnings = []
 
-            date_formats = [
-              '^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$', #02-15-2020, 2-15-2020, 2/15/2020, 02/15/2020
-              '^\d{4}-\d{2}-\d{2}$', #2020-02-15
-              '^\w+ \d{1,2},? \d{4}$', #Feb 15 2020, February 15, 2020
-              '^\d{1,2} \w+ \d{4}$' #15 Feb 2020, 15 February 2020
-            ].map{ |f| Regexp.new(f) }
+            @ce = "urn:cspace:#{@client.domain}:vocabularies:name(dateera):item:name(ce)'CE'"
+            @nodate = "urn:cspace:#{@client.domain}:vocabularies:name(datecertainty):item:name(nodate)'no date'"
 
-            two_digit_year_date_formats = [
-              '^\d{1,2}[-\/]\d{1,2}[-\/]\d{2}$'
-            ].map{ |f| Regexp.new(f) }
-            
-            service_parseable_month_formats = [
-              '^\w+ \d{4}$',
-              '^\d{4} \w+$',
-            ].map{ |f| Regexp.new(f) }
+            process
+          end
 
-            other_month_formats = [
-              '^\d{4}-\d{2}$',
-              '^\d{1,2}[-\/]\d{4}$'
-            ].map{ |f| Regexp.new(f) }
+          def process
+            return if date_string == '%NULLVALUE%'
 
-            if date_string == '%NULLVALUE%'
-              #do nothing
-            elsif date_string == THE_BOMB
+            if date_string == THE_BOMB
               @timestamp = date_string
+              @stamp = date_string
               blow_up_date
-            elsif
-              date_formats.any?{ |re| @date_string.match?(re) }
-              try_chronic_parse(@date_string)
-              @timestamp ? create_mappable_date : try_services_query
-            elsif two_digit_year_date_formats.any?{ |re| @date_string.match?(re) }
-              if @config.two_digit_year_handling == 'literal'
-                try_services_query
-              else
-                try_chronic_parse(coerced_year_date)
-                @timestamp ? create_mappable_date : try_services_query
+              return
+            end
+            
+            @parsed_date = Emendate.parse(date_string, @config.date_config)
+
+            if parsing_warnings?
+              parsed_date.warnings.each do |warning|
+                warnings << {
+                  category: :date_parser_warning,
+                  field: nil,
+                  message: warning
+                }
               end
-            elsif service_parseable_month_formats.any?{ |re| @date_string.match?(re) }
-              try_services_query
-            elsif other_month_formats.any?{ |re| @date_string.match?(re) }
-              create_mappable_month
-            elsif @date_string.match?(/^\d{4}$/)
-              create_mappable_year
-            else
-              try_services_query
             end
 
-            stamp = @mappable.fetch('dateEarliestScalarValue', nil)
-            @stamp = stamp.blank? ? @date_string : stamp
+            if parsing_errors?
+              warnings << {
+                category: :date_cannot_be_processed,
+                field: nil,
+                message: "\"#{date_string}\" will be passed through as dateDisplayDate with no scalar values"
+              }
+              passthrough_display_date
+              return
+            end
+
+            if no_dates?
+              passthrough_display_date
+
+              set_certainty('no date')
+              return
+            end
+
+            process_dates
+
+            @stamp = mappable['dateEarliestScalarValue'] ? mappable['dateEarliestScalarValue'] : mappable['dateLatestScalarValue']
           end
 
-          def coerced_year_date
-            val = @date_string.gsub('/', '-').split('-')
-            yr = val.pop
-            this_year = Time.now.year.to_s
-            this_year_century = this_year[0,2]
-            this_year_last_two = this_year[2,2].to_i
-
-            if yr.to_i > this_year_last_two
-              val <<  "#{this_year_century.to_i - 1}#{yr}"
-            else
-              val << "#{this_year_century}#{yr}"
-            end
-            val.join('-')
+          def warnings?
+            !@warnings.empty?
           end
           
-          def try_chronic_parse(string)
-            if @config.date_format == 'day month year'
-              @timestamp = Chronic.parse(string, endian_precedence: :little)
-            else
-              @timestamp = Chronic.parse(string)
+          private
+
+          def process_dates
+            if parsed_date.dates.length > 1
+              warnings << {
+                category: :date_multiple_returned,
+                field: nil,
+                message: "\"#{date_string}\" is parsed into #{parsed_date.dates.length} parsed dates. Only the first will be processed as scalar values."
+              }
             end
+
+            thedate = parsed_date.dates[0]
+
+            set_display_date
+            set_scalar_values(thedate)
+            set_certainty_values(thedate.certainty)
           end
 
-          def create_mappable_passthrough
-            @mappable['dateDisplayDate'] = @date_string
+          def set_certainty_values(certainty)
+            return if certainty.empty?
+
+            certainty.sort!
+            
+            lookup = {
+              %i[approximate] => 'approximate',
+              %i[inferred] => 'supplied or inferred',
+              %i[uncertain] => 'possibly',
+              %i[approximate inferred uncertain] => 'approximate, possibly, and supplied',
+              %i[approximate inferred] => 'approximate and supplied',
+              %i[approximate uncertain] => 'approximate and possibly',
+              %i[inferred uncertain] => 'possibly and supplied'
+            }
+
+            term = lookup[certainty]
+
+            if term.nil?
+              warnings << {
+                category: :date_certainty_value_combination,
+                field: nil,
+                message: "Parsing \"#{date_string}\" results in this combination of certainty values, which cannot currently be handled by the mapper: #{certainty.join(', ')}"
+              }
+              return
+            end
+
+            set_certainty(term)
           end
-          
+
+          def set_certainty(term)
+            refname = get_vocabulary_term(vocab: 'datecertainty', term: term)
+            if refname.nil?
+              warnings << {
+                category: :date_certainty_vocab_term_missing,
+                field: nil,
+                message: "datecertainty vocabulary does not include: \"#{term}\""
+              }
+              return
+            end
+            
+            mappable['dateEarliestSingleCertainty'] = refname
+            return if term == 'no date'
+            mappable['dateLatestCertainty'] = refname unless mappable['dateLatestScalarValue'].nil?
+          end
+
           def create_mappable_date
             date = @timestamp.to_date
             next_day = date + 1
@@ -177,18 +218,71 @@ module CollectionSpace
             end
           end
 
-          def fix_services_scalars(services_result)
-            new_hash = {}
-            services_result.each do |k, v|
-              if k.end_with?('ScalarValue')
-                new_hash[k] = "#{v}#{@timestamp_suffix}"
-              else
-                new_hash[k] = v
-              end
-            end
-            new_hash
+          def set_earliest_scalar_values(pdate)
+            return if pdate.nil?
+            date = Date.parse(pdate)
+            mappable['dateEarliestSingleYear'] = date.year.to_s
+            mappable['dateEarliestSingleMonth'] = date.month.to_s
+            mappable['dateEarliestSingleDay'] = date.day.to_s
+            mappable['dateEarliestSingleEra'] = @ce
+            mappable['dateEarliestScalarValue'] = "#{date.iso8601}#{TIMESTAMP_SUFFIX}"
           end
 
+          def set_latest_scalar_values(pdate)
+            return if pdate.nil?
+            date = Date.parse(pdate)
+            mappable['dateLatestYear'] = date.year.to_s
+            mappable['dateLatestMonth'] = date.month.to_s
+            mappable['dateLatestDay'] = date.day.to_s
+            mappable['dateLatestEra'] = @ce
+            mappable['dateLatestScalarValue'] = "#{date.iso8601}#{TIMESTAMP_SUFFIX}"
+          end
+
+          def set_scalar_values(pdate)
+            set_earliest_scalar_values(pdate.date_start_full)
+            set_latest_scalar_values(pdate.date_end_full) unless pdate.date_end_full == pdate.date_start_full
+
+            unless mappable.key?('dateLatestScalarValue')
+              mappable['dateLatestScalarValue'] = mappable['dateEarliestScalarValue']
+            end
+            
+            mappable['scalarValuesComputed'] = 'true'
+          end
+          
+          def set_earliest_certainty(refname)
+            mappable['dateEarliestSingleCertainty'] = refname
+          end
+
+          def set_latest_certainty(refname)
+            mappable['dateLatestCertainty'] = refname
+          end
+
+          def set_both_certainty(refname)
+            set_earliest_certainty(refname)
+            set_latest_certainty(refname)
+          end
+
+          def passthrough_display_date
+            @mappable = {"dateDisplayDate"=>date_string,
+                         "scalarValuesComputed"=>"false"}
+          end
+
+          def set_display_date
+            @mappable = {"dateDisplayDate"=>date_string}
+          end
+
+          def no_dates?
+            parsed_date.dates.empty? ? true : false
+          end
+          
+          def parsing_errors?
+            parsed_date.errors.empty? ? false : true
+          end
+
+          def parsing_warnings?
+            parsed_date.warnings.empty? ? false : true
+          end
+          
           def map(doc, parentnode, groupname)
             @parser_result.each do |datefield, value|
               value = DateTime.parse(value).iso8601(3).sub('+00:00', "Z") if datefield['ScalarValue']

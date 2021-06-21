@@ -34,7 +34,7 @@ RSpec.describe CollectionSpace::Mapper::Response do
   describe '#normal', services_call: true do
     context 'when response_mode = normal in config' do
       before(:all) do
-        @data = { 'termDisplayName' => 'Tanacetum;Tansy', 'termStatus' => 'made up' }
+        @data = { 'termDisplayName' => 'Tanacetum|Tansy', 'termStatus' => 'made up' }
         vresponse = @handler.validate(@data)
         @response = @handler.process(vresponse)
       end

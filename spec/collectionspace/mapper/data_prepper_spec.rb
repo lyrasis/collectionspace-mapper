@@ -66,12 +66,12 @@ RSpec.describe CollectionSpace::Mapper::DataPrepper do
           end
           context 'and :force_defaults = true' do
             it 'maps the default value, overwriting value in the incoming data', services_call: true do
-              config = {
+              config = CS::Mapper::Config.new(config: {
                 default_values: {
                   'collection' => 'library-collection'
                 },
-                force_defaults: true,
-              }
+                force_defaults: true
+              })
               dh = CollectionSpace::Mapper::DataHandler.new(record_mapper: @collectionobject_mapper, client: @client, cache: @cache, config: config)
               dp = CollectionSpace::Mapper::DataPrepper.new(anthro_co_1, dh)
               res = dp.prep.response.merged_data['collection']

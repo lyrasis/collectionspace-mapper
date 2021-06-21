@@ -169,9 +169,9 @@ module CollectionSpace
           if type['date']
             case type
             when 'structured date group'
-              sourcedata[column] = structured_date_transform(data)
+              sourcedata[column] = structured_date_transform(data, column)
             when 'date'
-              sourcedata[column] = unstructured_date_transform(data)
+              sourcedata[column] = unstructured_date_transform(data, column)
             end
           else
             sourcedata[column] = data  
@@ -213,35 +213,37 @@ module CollectionSpace
           nil
         end
       end
+
+      def process_date(date_string, column)
+        processed = CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(date_string: date_string,
+                                                                  client: @client,
+                                                                  cache: @cache,
+                                                                  config: @config)
+        if processed.warnings?
+          @response.warnings.flatten.each{ |w| w[:field] = column }
+          @response.warnings << processed.warnings
+          @response.warnings.flatten!
+        end
+        
+        processed
+      end
       
-      def structured_date_transform(data)
+      def structured_date_transform(data, column)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
-                                                                  @client,
-                                                                  @cache,
-                                                                  @handler.mapper.batchconfig).mappable
+              process_date(d, column).mappable
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
-                                                                             @client,
-                                                                             @cache,
-                                                                             @handler.mapper.batchconfig).mappable }
+            d.map{ |v| process_date(v, column).mappable }
           end
         end
       end
 
-      def unstructured_date_transform(data)
+      def unstructured_date_transform(data, column)
         data.map do |d|
           if d.is_a?(String)
-            CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(d,
-                                                                  @client,
-                                                                  @cache,
-                                                                  @handler.mapper.batchconfig).stamp
+            process_date(d, column).stamp
           else
-            d.map{ |v| CollectionSpace::Mapper::Tools::Dates::CspaceDate.new(v,
-                                                                             @client,
-                                                                             @cache,
-                                                                             @handler.mapper.batchconfig).stamp }
+            d.map{ |v| process_date(v, column).stamp }
           end
         end
       end
