@@ -10,6 +10,10 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
+## [2.4.3] - 2021-06-21
+### Changed
+- Bumps version of `collectionspace-refcache` to 0.7.3, as this is the version now required by `collectionspace-csv-importer` for playing nice with Heroku
+
 ## [2.4.2] - 2021-06-07
 ### Added
 - Test coverage for %NULLVALUE% authority terms in repeating subgroups
