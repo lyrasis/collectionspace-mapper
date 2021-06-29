@@ -10,12 +10,18 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
-## [2.4.4] - 2021-06-29
+## [2.4.5] - 2021-06-29
 ### Changed
 - Bumps version of `collectionspace-client` to 0.8.0, to add support for all 6.1 record types and new 7.0 record types
 - Bumps version of `collectionspace-refcache` to 0.7.4, which now also depends on `collectionspace-client` 0.8.0
 - Sorts Dir files before requiring them to avoid load-order problems that are tricky to reproduce
 - Explicitly requires dependent files to fix failures highlighted by introducing sort before requiring
+
+Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.4.4...v2.4.5
+
+## [2.4.4] - 2021-06-21
+### Added
+- `Tools::RecordStatusService` raises `NoClientServiceError` instead of passing along a mysterious, hard to debug `KeyError`. This allows `collectionspace-csv-importer` to fail with an informative message.
 
 Details: https://github.com/collectionspace/collectionspace-mapper/compare/v2.4.3...v2.4.4
 
