@@ -10,6 +10,10 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
+## [2.4.6] - 2021-07-13
+### Changed
+- `mediaFileURI` is included in the list of known columns for media procedure records.
+
 ## [2.4.5] - 2021-06-29
 ### Changed
 - Bumps version of `collectionspace-client` to 0.8.0, to add support for all 6.1 record types and new 7.0 record types
