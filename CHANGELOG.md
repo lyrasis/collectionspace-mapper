@@ -10,6 +10,12 @@ This project bumps the version number for any changes (including documentation u
 
 ## [Unreleased]
 
+## [2.4.7] - 2021-07-14
+### Changed
+- use ruby v2.7.3
+- use `collectionspace-client` v0.9.0
+- use `collectionspace-refcache` v0.7.6
+
 ## [2.4.6] - 2021-07-13
 ### Changed
 - `mediaFileURI` is included in the list of known columns for media procedure records.
